@@ -12,7 +12,7 @@ from __future__ import absolute_import, print_function
 from . import config
 
 
-class Marc21Records(object):
+class InvenioRecordsMARC21(object):
     """Invenio-Records-Marc21 extension."""
 
     def __init__(self, app=None):

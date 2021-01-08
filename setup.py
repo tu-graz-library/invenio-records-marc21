@@ -6,7 +6,7 @@
 # modify it under the terms of the MIT License; see LICENSE file for more
 # details.
 
-"""Marc21 converter"""
+"""Marc21 datamodel"""
 
 import os
 
@@ -78,7 +78,7 @@ setup(
     platforms="any",
     entry_points={
         "invenio_base.apps": [
-            "invenio_records_marc21 = invenio_records_marc21:InvenioMarc21",
+            "invenio_records_marc21 = invenio_records_marc21:InvenioRecordsMARC21",
         ],
         "invenio_base.blueprints": [
             "invenio_records_marc21 = invenio_records_marc21.views:blueprint",

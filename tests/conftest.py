@@ -19,7 +19,7 @@ import pytest
 from flask import Flask
 from flask_babelex import Babel
 
-from invenio_records_marc21 import Marc21Records
+from invenio_records_marc21 import InvenioRecordsMARC21
 from invenio_records_marc21.views import blueprint
 
 
@@ -40,7 +40,7 @@ def create_app(instance_path):
         app = Flask("testapp", instance_path=instance_path)
         app.config.update(**config)
         Babel(app)
-        Marc21Records(app)
+        InvenioRecordsMARC21(app)
         app.register_blueprint(blueprint)
         return app
 

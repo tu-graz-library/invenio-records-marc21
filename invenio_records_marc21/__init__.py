@@ -10,7 +10,7 @@
 
 from __future__ import absolute_import, print_function
 
-from .ext import Marc21Records
+from .ext import InvenioRecordsMARC21
 from .version import __version__
 
-__all__ = ("__version__", "Marc21Records")
+__all__ = ("__version__", "InvenioRecordsMARC21")

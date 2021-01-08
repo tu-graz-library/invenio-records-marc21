@@ -8,6 +8,6 @@
 Changes
 =======
 
-Version 0.1.0 (released TBD)
+Version 0.0.1 (released TBD)
 
 - Initial public release.

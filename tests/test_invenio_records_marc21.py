@@ -10,7 +10,7 @@
 
 from flask import Flask
 
-from invenio_records_marc21 import Marc21Records
+from invenio_records_marc21 import InvenioRecordsMARC21
 
 
 def test_version():
@@ -23,18 +23,11 @@ def test_version():
 def test_init():
     """Test extension initialization."""
     app = Flask("testapp")
-    ext = Marc21Records(app)
+    ext = InvenioRecordsMARC21(app)
     assert "invenio-records-marc21" in app.extensions
 
     app = Flask("testapp")
-    ext = Marc21Records()
+    ext = InvenioRecordsMARC21()
     assert "invenio-records-marc21" not in app.extensions
     ext.init_app(app)
     assert "invenio-records-marc21" in app.extensions
-
-
-def test_view(base_client):
-    """Test view."""
-    res = base_client.get("/")
-    assert res.status_code == 200
-    assert "Welcome to Invenio-Records-Marc21" in str(res.data)
