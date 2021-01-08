@@ -24,38 +24,20 @@ jobs:
           # a new item to the following lists.
           # You can see the complete list of services and versions that are available at:
           # https://docker-services-cli.readthedocs.io/en/latest/configuration.html
-          python-version: [3.6, 3.7, 3.8, 3.9]
+          python-version: [3.7, 3.8, 3.9]
           requirements-level: [min, pypi]
           cache-service: [redis]
           db-service: [postgresql9, postgresql12, mysql5, mysql8]
           mq-service: [rabbitmq, redis]
-          search-service: [elasticsearch6, elasticsearch7]
+          search-service: [elasticsearch7]
 
           exclude:
           # Add combinations to this list that should be excluded from the final
           # build. Doing this will help keeping the number of jobs down.
           # E.g. removing 3.8 - min combination will avoid 8 jobs to be submited
           # [3.8] * [min] * [postgresql9, postgresql11, mysql5, mysql8] * [elasticsearch6, elasticsearch7]
-          - python-version: 3.8
-            requirements-level: min
-
           - python-version: 3.9
             requirements-level: min
-
-          - db-service: postgresql12
-            python-version: 3.6
-
-          - db-service: mysql8
-            python-version: 3.6
-
-          - search-service: elasticsearch7
-            python-version: 3.6
-
-          - search-service: elasticsearch6
-            db-service: postgresql12
-
-          - search-service: elasticsearch6
-            db-service: mysql8
 
           - search-service: elasticsearch7
             db-service: postgresql9
@@ -75,9 +57,6 @@ jobs:
 
           - db-service: mysql8
             DB_EXTRAS: "mysql"
-
-          - search-service: elasticsearch6
-            SEARCH_EXTRAS: "elasticsearch6"
 
           - search-service: elasticsearch7
             SEARCH_EXTRAS: "elasticsearch7"
