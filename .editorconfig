@@ -31,7 +31,7 @@ indent_size = 4
 [*.{css,html,js,json,yml}]
 indent_size = 2
 
-# Matches the exact files either package.json or .travis.yml
+# Matches the exact files either package.json or .github/workflows/*.yml
 [{package.json,.github/workflows/*.ym}]
 indent_size = 2
 
