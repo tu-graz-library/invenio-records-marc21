@@ -17,6 +17,10 @@ history = open("CHANGES.rst").read()
 
 tests_require = [
     "invenio-records>=1.1.0",
+    "invenio-app>=1.3.0,<2.0.0",
+    "invenio-access>=1.4.1",
+    "invenio-indexer>=1.1.0",
+    "invenio_search>=1.3.1",
     "pytest-invenio>=1.4.0",
     "mock>=4.0.3",
 ]
@@ -39,18 +43,23 @@ extras_require = {
 }
 
 extras_require["all"] = []
-for reqs in extras_require.values():
+for name, reqs in extras_require.items():
+    if name[0] == ":" or name in ("elasticsearch7", "postgresql"):
+        continue
     extras_require["all"].extend(reqs)
 
 setup_requires = [
     "Babel>=2.8",
-    "pytest-runner>=2.6.2",
+    "pytest-runner>=3.0.0,<5",
 ]
 
 install_requires = [
     "invenio-i18n>=1.2.0",
     "dojson>=1.4.0",
     "invenio-jsonschemas>=1.1.0",
+    "invenio-records>=1.4.0a4,<2.0.0",
+    "invenio-records-rest>=1.4.0,<2.0.0",
+    "invenio-records-ui>=1.2.0a1,<2.0.0",
 ]
 
 packages = find_packages()
