@@ -10,7 +10,22 @@
 
 """Blueprint definitions."""
 
-from __future__ import absolute_import, print_function
+from flask import Blueprint
+
+blueprint = Blueprint("invenio_records_marc21_ext", __name__)
+
+
+@blueprint.record_once
+def init(state):
+    """Init app."""
+    app = state.app
+    # Register services - cannot be done in extension because
+    # Invenio-Records-Resources might not have been initialized.
+    registry = app.extensions["invenio-records-resources"].registry
+    ext = app.extensions["invenio-records-marc21"]
+    registry.register(ext.records_service, service_id="marc21-records")
+    registry.register(ext.records_service.files, service_id="marc21-files")
+    registry.register(ext.records_service.draft_files, service_id="marc21-draft-files")
 
 
 def create_record_bp(app):

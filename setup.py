@@ -104,6 +104,7 @@ setup(
         ],
         "invenio_base.blueprints": [
             "invenio_records_marc21_ui = invenio_records_marc21.ui:create_blueprint",
+            "invenio_records_marc21_ext = invenio_records_marc21.views:blueprint",
         ],
         "invenio_db.models": [
             "invenio_records_marc21_model = invenio_records_marc21.records.models",
