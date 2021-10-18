@@ -18,6 +18,16 @@ from dojson.contrib.marc21.utils import create_record
 from marshmallow.fields import Field
 
 
+def remove_order(obj):
+    if isinstance(obj, dict):
+        obj = {
+            key: remove_order(value) for key, value in obj.items() if key != "__order__"
+        }
+    elif isinstance(obj, list):
+        obj = [remove_order(item) for item in obj]
+    return obj
+
+
 class MetadataField(Field):
     """Schema for the record metadata."""
 
@@ -44,7 +54,7 @@ class MetadataField(Field):
             Added ``**kwargs`` to signature.
         """
         if "xml" in value:
-            value = marc21.do(create_record(value["xml"]))
+            value = remove_order(marc21.do(create_record(value["xml"])))
         return value
 
     def _validate(self, value):
