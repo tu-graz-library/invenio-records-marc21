@@ -95,8 +95,10 @@ class Marc21Metadata(object):
         """Return True if record contains reference datafield, which contains reference subfield."""
         for df in self.datafields:
             if (
-                df.tag == ref_df.tag and df.ind1 == ref_df.ind1
-            ) and df.ind2 == ref_df.ind2:
+                df.tag == ref_df.tag
+                and df.ind1 == ref_df.ind1
+                and df.ind2 == ref_df.ind2
+            ):
                 for sf in df.subfields:
                     if sf.code == ref_sf.code and sf.value == ref_sf.value:
                         return True
