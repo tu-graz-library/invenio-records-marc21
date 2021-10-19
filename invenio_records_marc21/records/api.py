@@ -15,6 +15,11 @@ from __future__ import absolute_import, print_function
 from invenio_drafts_resources.records import Draft, Record
 from invenio_drafts_resources.records.api import ParentRecord as BaseParentRecord
 from invenio_drafts_resources.records.systemfields import ParentField
+from invenio_rdm_records.records.systemfields import (
+    HasDraftCheckField,
+    ParentRecordAccessField,
+    RecordAccessField,
+)
 from invenio_records.systemfields import ConstantField, ModelField
 from invenio_records_resources.records.api import FileRecord as BaseFileRecord
 from invenio_records_resources.records.systemfields import (
@@ -26,13 +31,11 @@ from werkzeug.local import LocalProxy
 
 from . import models
 from .systemfields import (
-    HasDraftField,
     MarcDraftProvider,
     MarcPIDFieldContext,
     MarcRecordProvider,
     MarcResolver,
 )
-from .systemfields.access import ParentRecordAccessField, RecordAccessField
 
 
 #
@@ -90,7 +93,7 @@ class Marc21Draft(Draft):
         delete=False,
     )
     access = RecordAccessField()
-    has_draft = HasDraftField()
+    has_draft = HasDraftCheckField()
 
     bucket_id = ModelField(dump=False)
 
@@ -133,7 +136,7 @@ class Marc21Record(Record):
     )
 
     access = RecordAccessField()
-    has_draft = HasDraftField(Marc21Draft)
+    has_draft = HasDraftCheckField(Marc21Draft)
 
     bucket_id = ModelField(dump=False)
 

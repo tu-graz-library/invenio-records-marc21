@@ -9,14 +9,14 @@
 # details.
 
 """Marc21 record schemas."""
-
 from invenio_drafts_resources.services.records.schema import ParentSchema
+from invenio_rdm_records.services.schemas.access import AccessSchema
+from invenio_rdm_records.services.schemas.parent.access import ParentAccessSchema
 from invenio_records_resources.services.records.schema import BaseRecordSchema
 from marshmallow.decorators import post_dump
 from marshmallow.fields import Boolean, Integer, List, Nested, Str
 from marshmallow_utils.fields import NestedAttribute
 
-from .access import AccessSchema, ParentAccessSchema
 from .files import FilesSchema
 from .metadata import MetadataField
 from .pids import PIDSchema
@@ -25,6 +25,10 @@ from .versions import VersionsSchema
 
 class Marc21ParentSchema(ParentSchema):
     """Record schema."""
+
+    field_dump_permissions = {
+        "access": "manage",
+    }
 
     access = Nested(ParentAccessSchema)
 

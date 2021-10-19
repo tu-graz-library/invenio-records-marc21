@@ -7,6 +7,9 @@
 // details.
 
 import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import _camelCase from "lodash/camelCase";
+import _truncate from "lodash/truncate";
 import {
   Button,
   Card,
@@ -19,13 +22,9 @@ import {
 } from "semantic-ui-react";
 import { BucketAggregation } from "react-searchkit";
 import _get from "lodash/get";
-import _truncate from "lodash/truncate";
+import { loadComponents } from "@js/invenio_theme/templates";
 import Overridable from "react-overridable";
 import { SearchBar, SearchApp } from "@js/invenio_search_ui/components";
-
-import _camelCase from "lodash/camelCase";
-import { loadComponents } from "@js/invenio_theme/templates";
-import ReactDOM from "react-dom";
 
 export const Marc21RecordResultsListItem = ({ result, index }) => {
 
@@ -40,7 +39,7 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
     "ui.updated",
     "No update date found."
   );
-  const access = _get(result, ["ui", "access"], []);
+  const access = _get(result, ["ui", "access_status"], []);
   const access_id = _get(access, "id", "public");
   const access_status = _get(access, "title", "Public");
   const access_icon = _get(access, "icon", "unlock");

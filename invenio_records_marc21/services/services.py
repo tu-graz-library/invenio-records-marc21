@@ -10,13 +10,14 @@
 
 """Marc21 Record Service."""
 
-import arrow
 from invenio_db import db
 from invenio_drafts_resources.services.records import RecordService
+from invenio_rdm_records.records.systemfields.access.field.record import (
+    AccessStatusEnum,
+)
 from invenio_records_resources.services.files.service import FileService
 from invenio_records_resources.services.records.results import RecordItem
 
-from ..records.systemfields.access import AccessStatusEnum
 from .config import (
     Marc21DraftFilesServiceConfig,
     Marc21RecordFilesServiceConfig,
@@ -46,8 +47,8 @@ class Marc21RecordService(RecordService):
             default_access = {
                 "access": {
                     "owned_by": [{"user": identity.id}],
-                    "metadata": AccessStatusEnum.PUBLIC.value,
-                    "files": AccessStatusEnum.PUBLIC.value,
+                    "metadata": AccessStatusEnum.OPEN.value,
+                    "files": AccessStatusEnum.OPEN.value,
                 },
             }
             if access is not None:
@@ -91,7 +92,7 @@ class Marc21RecordService(RecordService):
 
     def _lift_embargo_from(self, record):
         """Lifts embargo from record or draft."""
-        if not record.access.embargo.lift():
+        if not record.access.lift_embargo():
             raise EmbargoNotLiftedError(record["id"])
         record.access.protection.metadata = "public"
         record.access.protection.files = "public"

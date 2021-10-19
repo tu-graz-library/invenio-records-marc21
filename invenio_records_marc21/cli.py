@@ -20,10 +20,12 @@ import click
 from flask.cli import with_appcontext
 from flask_principal import Identity
 from invenio_access import any_user
+from invenio_rdm_records.records.systemfields.access.field.record import (
+    AccessStatusEnum,
+)
 
 from .errors import log_exceptions
 from .proxies import current_records_marc21
-from .records.systemfields.access import AccessStatusEnum
 from .services.record import Marc21Metadata
 
 
@@ -67,7 +69,7 @@ def create_fake_metadata(filename):
     data_acces = {
         "owned_by": [{"user": system_identity().id}],
         "files": "public",
-        "metadata": metadata_access,
+        "record": metadata_access,
     }
     if metadata_access == AccessStatusEnum.EMBARGOED.value:
         embargo = {
@@ -97,8 +99,8 @@ def create_fake_record(filename):
     metadata_access = fake_access_right()
     data_acces = {
         "owned_by": [{"user": system_identity().id}],
-        "files": AccessStatusEnum.PUBLIC.value,
-        "metadata": metadata_access,
+        "files": AccessStatusEnum.OPEN.value,
+        "record": metadata_access,
     }
     if metadata_access == AccessStatusEnum.EMBARGOED.value:
         data_acces.update({"embargo_date": fake_feature_date()})

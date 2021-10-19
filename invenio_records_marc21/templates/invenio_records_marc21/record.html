@@ -38,11 +38,11 @@
               </div>
             </div><div class="panel-spacing">
               <div class="right floated right aligned column">
-                <div class="ui accordion panel {{ record.ui.access.message_class }} message">
+                <div class="ui accordion panel {{ record.ui.access_status.message_class }} message">
                   <div class="title">
-                    <i class="ui {{ record.ui.access.icon }} icon"></i>{{ record.ui.access.title }}
+                    <i class="ui {{ record.ui.access_status.icon }} icon"></i>{{ record.ui.access_status.title_l10n }}
                   </div>
-                  <div class="content">{{ record.ui.access.description }}</p>
+                  <div class="content">{{ record.ui.access_status.description_l10n }}</p>
                     {% if record.access.embargo.reason %}
                       <p>{{_("Reason")}}: {{record.access.embargo.reason}}</p>
                     {% endif%}

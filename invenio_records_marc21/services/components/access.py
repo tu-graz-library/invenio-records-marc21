@@ -12,9 +12,10 @@
 
 from enum import Enum
 
+from invenio_rdm_records.records.systemfields.access.field.record import (
+    AccessStatusEnum,
+)
 from invenio_records_resources.services.records.components import ServiceComponent
-
-from ...records.systemfields.access import AccessStatusEnum
 
 
 class AccessComponent(ServiceComponent):
@@ -25,8 +26,8 @@ class AccessComponent(ServiceComponent):
         default_access = {
             "access": {
                 "owned_by": [{"user": identity.id}],
-                "metadata": AccessStatusEnum.PUBLIC.value,
-                "files": AccessStatusEnum.PUBLIC.value,
+                "record": AccessStatusEnum.OPEN.value,
+                "files": AccessStatusEnum.OPEN.value,
             },
         }
 

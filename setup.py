@@ -53,14 +53,11 @@ setup_requires = [
 ]
 
 install_requires = [
-    "invenio-i18n>=1.3.0",
     "arrow>=1.0.0",
     "dojson>=1.4.0",
     "lxml>=4.6.2",
     "invenio-celery>=1.2.0,<2.0.0",
-    "invenio-records-rest>=1.5.0,<2.0.0",
-    "invenio-drafts-resources>=0.13.0,<0.14.0",
-    "invenio-vocabularies>=0.8.0,<0.9.0",
+    "invenio-rdm-records>=0.32.2,<1.0.0",
 ]
 
 packages = find_packages()

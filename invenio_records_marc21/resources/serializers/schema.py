@@ -28,7 +28,7 @@ class Marc21Schema(Schema):
         """Meta class to accept unknwon fields."""
 
         additional = (
-            "access",
+            "access_status",
             "created",
             "updated",
             "links",

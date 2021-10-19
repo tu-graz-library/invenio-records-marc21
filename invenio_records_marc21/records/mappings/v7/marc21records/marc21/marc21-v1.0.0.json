@@ -8,7 +8,7 @@
       },
       "access": {
         "properties": {
-          "metadata": {
+          "record": {
             "type": "keyword"
           },
           "files": {
@@ -27,13 +27,6 @@
               }
             }
           },
-          "owned_by": {
-            "properties": {
-              "user": {
-                "type": "keyword"
-              }
-            }
-          },
           "status": {
             "type": "keyword"
           }
@@ -49,6 +42,29 @@
               "owned_by": {
                 "properties": {
                   "user": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "grants": {
+                "properties": {
+                  "subject": {
+                    "type": "keyword"
+                  },
+                  "id": {
+                    "type": "keyword"
+                  },
+                  "level": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "grant_tokens": {
+                "type": "keyword"
+              },
+              "links": {
+                "properties": {
+                  "id": {
                     "type": "keyword"
                   }
                 }
