@@ -14,6 +14,9 @@
 from datetime import timedelta
 
 import arrow
+from invenio_rdm_records.records.systemfields.access.field.record import (
+    AccessStatusEnum,
+)
 
 from invenio_records_marc21.cli import (
     create_fake_metadata,
@@ -23,7 +26,6 @@ from invenio_records_marc21.cli import (
     marc21,
     system_identity,
 )
-from invenio_records_marc21.records.systemfields.access import AccessStatusEnum
 
 
 def test_system_identity():
@@ -36,7 +38,7 @@ def test_system_identity():
 def test_fake_access_right():
     """Test random access right for demo."""
     access = fake_access_right()
-    assert access in AccessStatusEnum.list()
+    assert access in list(map(lambda c: c.value, AccessStatusEnum))
 
 
 def test_fake_feature_date():

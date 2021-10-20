@@ -78,28 +78,29 @@ def empty_data():
     [
         {
             "input": {
-                "metadata": "public",
+                "record": "public",
             },
             "expect": {
                 "access": {
-                    "metadata": "public",
+                    "record": "public",
                     "files": "public",
                     "embargo": {
                         "active": False,
                         "reason": None,
                     },
-                    "status": "public",
+                    "status": "metadata-only",
                 },
             },
         },
         {
             "input": {
-                "metadata": "restricted",
+                "record": "restricted",
+                "files": "restricted",
             },
             "expect": {
                 "access": {
                     "files": "restricted",
-                    "metadata": "restricted",
+                    "record": "restricted",
                     "embargo": {
                         "active": False,
                         "reason": None,
@@ -110,7 +111,7 @@ def empty_data():
         },
         {
             "input": {
-                "metadata": "embargoed",
+                "record": "restricted",
                 "embargo": {
                     "until": (arrow.utcnow().datetime + timedelta(days=2)).strftime(
                         "%Y-%m-%d"
@@ -122,7 +123,7 @@ def empty_data():
             "expect": {
                 "access": {
                     "files": "public",
-                    "metadata": "embargoed",
+                    "record": "public",
                     "embargo": {
                         "until": (arrow.utcnow().datetime + timedelta(days=2)).strftime(
                             "%Y-%m-%d"
@@ -147,13 +148,4 @@ def test_create_with_access(running_app, empty_data, access):
         ["access"],
         record.data,
         access["expect"],
-    )
-    _assert_fields(
-        ["access"],
-        record.data["parent"],
-        {
-            "access": {
-                "owned_by": [{"user": 1}],
-            }
-        },
     )

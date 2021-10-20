@@ -16,16 +16,14 @@ from datetime import timedelta
 import arrow
 import pytest
 from flask_babelex import lazy_gettext as _
+from invenio_rdm_records.services.schemas.access import AccessSchema
 from marshmallow import ValidationError
 from marshmallow.exceptions import ValidationError
-
-from invenio_records_marc21.services.schemas.access import AccessSchema
 
 
 def test_valid_full():
     valid_full = {
-        "metadata": "embargoed",
-        "owned_by": [{"user": 1}],
+        "record": "restricted",
         "embargo": {
             "until": (arrow.utcnow().datetime + timedelta(days=2)).strftime("%Y-%m-%d"),
             "active": True,
@@ -36,20 +34,19 @@ def test_valid_full():
     assert valid_full == AccessSchema().load(valid_full)
 
 
-@pytest.mark.parametrize("value", ["public", "embargoed", "restricted"])
+@pytest.mark.parametrize("value", ["public", "restricted"])
 def test_valid_metadata_protection(value):
-    assert AccessSchema().validate_metadata_protection(value) is None
+    assert AccessSchema().validate_record_protection(value) is None
 
 
 def test_invalid_metadata_protection():
     with pytest.raises(ValidationError) as e:
-        AccessSchema().validate_metadata_protection("invalid")
-    assert e.value.messages[0] == _(
-        "'metadata' must be either 'public', 'embargoed' or 'restricted'")
-    assert e.value.field_name == "metadata"
+        AccessSchema().validate_record_protection("invalid")
+    assert e.value.messages[0] == _("'record' must be either 'public' or 'restricted'")
+    assert e.value.field_name == "record"
 
 
-@pytest.mark.parametrize("value", ["public", "embargoed", "restricted"])
+@pytest.mark.parametrize("value", ["public", "restricted"])
 def test_valid_files_protection(value):
     assert AccessSchema().validate_files_protection(value) is None
 
@@ -57,6 +54,5 @@ def test_valid_files_protection(value):
 def test_invalid_files_protection():
     with pytest.raises(ValidationError) as e:
         AccessSchema().validate_files_protection("invalid")
-    assert e.value.messages[0] == _(
-        "'files' must be either 'public', 'embargoed' or 'restricted'")
-    assert e.value.field_name == "files"
+    assert e.value.messages[0] == _("'files' must be either 'public' or 'restricted'")
+    assert e.value.field_name == "record"

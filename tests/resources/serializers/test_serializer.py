@@ -33,8 +33,8 @@ def test_marcxml_serializer_init():
 
 def test_marcxml_serializer_serialize_object(full_record):
     marc = Marc21XMLSerializer()
-    test_keys = ["metadata", "access", "id", "files"]
-    exept_keys = ["pid"]
+    test_keys = ["metadata", "id", "files"]
+    exept_keys = ["pid", "access"]
     obj = marc.serialize_object(full_record)
     assert isinstance(obj, str)
     _test_key_in_serialized_obj(obj, test_keys, exept_keys)
@@ -43,8 +43,8 @@ def test_marcxml_serializer_serialize_object(full_record):
 
 
 def test_marcxml_serializer_serialize_object_list(list_records):
-    test_keys = ["metadata", "access", "id", "files"]
-    exept_keys = ["pid"]
+    test_keys = ["metadata", "id", "files"]
+    exept_keys = ["pid", "access"]
     marc = Marc21XMLSerializer()
     obj_list = marc.serialize_object_list(list_records)
     assert isinstance(obj_list, str)
@@ -62,8 +62,8 @@ def test_json_serializer_init():
 
 
 def test_json_serializer_serialize_object(full_record):
-    test_keys = ["metadata", "access", "id", "files"]
-    exept_keys = ["pid"]
+    test_keys = ["metadata", "id", "files"]
+    exept_keys = ["pid", "access"]
     marc = Marc21JSONSerializer()
     obj = marc.serialize_object(full_record)
     assert isinstance(obj, str)
@@ -71,8 +71,8 @@ def test_json_serializer_serialize_object(full_record):
 
 
 def test_json_serializer_serialize_object_list(list_records):
-    test_keys = ["metadata", "access", "id", "files"]
-    exept_keys = ["pid"]
+    test_keys = ["metadata", "id", "files"]
+    exept_keys = ["pid", "access"]
     marc = Marc21JSONSerializer()
     obj_list = marc.serialize_object_list(list_records)
     assert isinstance(obj_list, str)

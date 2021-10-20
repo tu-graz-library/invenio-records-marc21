@@ -29,7 +29,7 @@ def test_component_access_default_access(parent, identity_simple):
     component.create(identity=identity_simple, data=marc21_record, record=record)
 
     prot = record.access.protection
-    assert prot.metadata == "public"
+    assert prot.record == "public"
     assert prot.files == "public"
 
     assert len(record.parent.access.owners) > 0
@@ -41,7 +41,7 @@ def test_component_access_update_access_via_json(
 ):
     next_year = arrow.utcnow().datetime + timedelta(days=+365)
     restricted_access = {
-        "metadata": "restricted",
+        "record": "restricted",
         "files": "restricted",
         "embargo": {
             "until": next_year.strftime("%Y-%m-%d"),
@@ -58,12 +58,12 @@ def test_component_access_update_access_via_json(
     prot = record.access.protection
     assert record.access.embargo is not None
     assert "embargo" in record["access"]
-    assert prot.metadata == record["access"]["metadata"] == "restricted"
+    assert prot.record == record["access"]["record"] == "restricted"
     assert prot.files == record["access"]["files"] == "restricted"
 
     new_data = marc21_record.copy()
     new_data["access"] = {
-        "metadata": "public",
+        "record": "public",
         "files": "public",
     }
     component.create(identity_simple, new_data, record)
@@ -71,5 +71,5 @@ def test_component_access_update_access_via_json(
     prot = record.access.protection
     assert not record.access.embargo
     assert "embargo" not in record["access"]
-    assert prot.metadata == record["access"]["metadata"] == "public"
+    assert prot.record == record["access"]["record"] == "public"
     assert prot.files == record["access"]["files"] == "public"

@@ -1,11 +1,6 @@
 {
   "access": {
-    "owned_by": [
-      {
-        "user": 1
-      }
-    ],
-    "metadata": "public",
+    "record": "public",
     "files": "public"
   },
   "metadata": {
