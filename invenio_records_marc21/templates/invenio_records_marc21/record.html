@@ -42,7 +42,8 @@
                   <div class="title">
                     <i class="ui {{ record.ui.access_status.icon }} icon"></i>{{ record.ui.access_status.title_l10n }}
                   </div>
-                  <div class="content">{{ record.ui.access_status.description_l10n }}</p>
+                  <div class="content">
+                    <p>{{ record.ui.access_status.description_l10n }}</p>
                     {% if record.access.embargo.reason %}
                       <p>{{_("Reason")}}: {{record.access.embargo.reason}}</p>
                     {% endif%}
@@ -57,6 +58,7 @@
         {%- block record_title -%}
           <h1>{{ marcrecord.get('title_statement').get('title') | sanitize_title() }}</h1>
         {%- endblock record_title -%}
+
         {%- block record_content -%}
           <div class="top-padded"></div>
           {%- include "invenio_records_marc21/records/helpers/authors.html" %}
@@ -64,31 +66,28 @@
           {%- include "invenio_records_marc21/records/helpers/subjects.html" %}
           <div class="top-padded"></div>
           {%- include "invenio_records_marc21/records/helpers/description.html" %}
-          
-          
         {%- endblock record_content -%}
+
         {%- block record_files -%}
           <div class="top-padded"></div>
           {%- include "invenio_records_marc21/records/helpers/files.html" %}
-        
         {%- endblock record_files -%}
+
         {%- block record_details -%}
           <div class="top-padded"></div>
-        {%- include "invenio_records_marc21/records/helpers/details.html" %}
+          {%- include "invenio_records_marc21/records/helpers/details.html" %}
         {%- endblock record_details -%}
 
-      
         {%- block record_footer -%}
           {%- include "invenio_records_marc21/records/helpers/footer.html" %}
         {%- endblock record_footer -%}
-        {%- endblock record_body %} 
+        {%- endblock record_body %}
       </div>
-    
 
-        {% block record_sidebar %}
-          {%- include "invenio_records_marc21/records/helpers/side_bar.html" %}
-        {% endblock record_sidebar %}
-
+      {% block record_sidebar %}
+        {%- include "invenio_records_marc21/records/helpers/side_bar.html" %}
+      {% endblock record_sidebar %}
+    </div>
   </div>
 </div>
 {%- endblock page_body %}

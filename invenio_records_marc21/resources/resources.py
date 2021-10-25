@@ -35,7 +35,6 @@ class Marc21RecordResource(RecordResource):
 
     def create_url_rules(self):
         """Create the URL rules for the record resource."""
-        routes = self.config.routes
         url_rules = super(RecordResource, self).create_url_rules()
         return url_rules
 

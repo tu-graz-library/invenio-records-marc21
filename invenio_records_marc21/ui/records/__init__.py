@@ -19,7 +19,12 @@ from .errors import (
     record_tombstone_error,
 )
 from .filters import pid_url, sanitize_title
-from .records import record_detail, record_export
+from .records import (
+    record_detail,
+    record_export,
+    record_file_download,
+    record_file_preview,
+)
 
 
 #
@@ -38,6 +43,12 @@ def init_records_views(blueprint, app):
     blueprint.add_url_rule(
         routes["record-export"],
         view_func=record_export,
+    )
+
+    blueprint.add_url_rule(routes["record_file_preview"], view_func=record_file_preview)
+
+    blueprint.add_url_rule(
+        routes["record_file_download"], view_func=record_file_download
     )
 
     # Register error handlers

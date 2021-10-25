@@ -44,6 +44,8 @@ INVENIO_MARC21_RECORD_EXPORTER_OPTIONS = {
 INVENIO_MARC21_UI_ENDPOINTS = {
     "record-detail": "/<pid_value>",
     "record-export": "/<pid_value>/export/<export_format>",
+    "record_file_preview": "marc21/<pid_value>/preview/<path:filename>",
+    "record_file_download": "marc21/<pid_value>/files/<path:filename>",
 }
 """Marc21 Record ui endpoints."""
 
