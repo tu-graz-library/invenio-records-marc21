@@ -28,7 +28,6 @@ class ParentMetadata(db.Model, RecordMetadataBase):
     """Metadata store for the parent record."""
 
     __tablename__ = "marc21_parents_metadata"
-    __versioned__ = {}
 
 
 class RecordMetadata(db.Model, RecordMetadataBase, ParentRecordMixin):
@@ -47,7 +46,6 @@ class DraftMetadata(db.Model, DraftMetadataBase, ParentRecordMixin):
 
     __tablename__ = "marc21_drafts_metadata"
     __parent_record_model__ = ParentMetadata
-    __versioned__ = {}
 
     bucket_id = db.Column(UUIDType, db.ForeignKey(Bucket.id))
     bucket = db.relationship(Bucket)
@@ -58,7 +56,6 @@ class RecordFile(db.Model, RecordMetadataBase, FileRecordModelMixin):
 
     __tablename__ = "marc21_records_files"
     __record_model_cls__ = RecordMetadata
-    __versioned__ = {}
 
 
 class DraftFile(db.Model, RecordMetadataBase, FileRecordModelMixin):
@@ -66,7 +63,6 @@ class DraftFile(db.Model, RecordMetadataBase, FileRecordModelMixin):
 
     __tablename__ = "marc21_drafts_files"
     __record_model_cls__ = DraftMetadata
-    __versioned__ = {}
 
 
 class VersionsState(db.Model, ParentRecordStateMixin):
