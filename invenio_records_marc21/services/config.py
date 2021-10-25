@@ -12,6 +12,7 @@
 
 
 from flask_babelex import gettext as _
+from invenio_drafts_resources.services.records.components import DraftFilesComponent
 from invenio_drafts_resources.services.records.config import (
     RecordServiceConfig,
     SearchDraftsOptions,
@@ -96,6 +97,7 @@ class Marc21RecordServiceConfig(RecordServiceConfig):
         MetadataComponent,
         AccessComponent,
         PIDComponent,
+        DraftFilesComponent,
     ]
 
     links_item = {

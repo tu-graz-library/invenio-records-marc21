@@ -15,6 +15,7 @@
 
 from marshmallow import Schema, fields
 from marshmallow_utils.fields import SanitizedUnicode
+from marshmallow_utils.permissions import FieldPermissionsMixin
 
 
 class FileSchema(Schema):
@@ -30,7 +31,7 @@ class FileSchema(Schema):
     storage_class = SanitizedUnicode()
 
 
-class FilesSchema(Schema):
+class FilesSchema(Schema, FieldPermissionsMixin):
     """Files metadata schema."""
 
     enabled = fields.Bool()
