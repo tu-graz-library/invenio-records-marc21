@@ -32,7 +32,6 @@ You can then resolve marc21 records using the type:
 
 """
 
-from invenio_pidstore.errors import PIDDoesNotExistError
 from invenio_records.systemfields import RelatedModelFieldContext
 
 

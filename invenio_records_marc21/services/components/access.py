@@ -10,8 +10,6 @@
 
 """Marc21 AccessComponent."""
 
-from enum import Enum
-
 from invenio_rdm_records.records.systemfields.access.field.record import (
     AccessStatusEnum,
 )

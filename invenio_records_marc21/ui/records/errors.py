@@ -10,7 +10,7 @@
 
 """Records error handlers."""
 
-from flask import current_app, render_template, request
+from flask import current_app, render_template
 from flask_login import current_user
 
 

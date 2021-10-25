@@ -10,9 +10,6 @@
 
 """Marc21 Theme Package."""
 
-from flask_babelex import lazy_gettext as _
-from flask_menu import current_menu
-
 from .views import index, search
 
 

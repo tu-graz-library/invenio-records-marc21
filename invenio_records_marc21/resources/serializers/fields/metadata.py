@@ -10,14 +10,10 @@
 
 """Metadata field for marc21 records."""
 
-import json
-
 from dojson.contrib.to_marc21 import to_marc21
 from dojson.contrib.to_marc21.utils import dumps
 from dojson.utils import GroupableOrderedDict
-from marshmallow import Schema
-from marshmallow.decorators import pre_dump
-from marshmallow.fields import Dict, Field, Nested, Str
+from marshmallow.fields import Field
 
 from ..errors import Marc21XMLConvertError
 

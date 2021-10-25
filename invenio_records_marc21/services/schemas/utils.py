@@ -10,9 +10,9 @@
 
 """Marc21 record schema utilities."""
 
-from marshmallow import Schema, ValidationError, fields
-from marshmallow.schema import SchemaMeta
-from marshmallow_utils.fields import NestedAttribute
+# from marshmallow import Schema, ValidationError, fields
+# from marshmallow.schema import SchemaMeta
+# from marshmallow_utils.fields import NestedAttribute
 
 # from ...vocabularies import Vocabularies
 

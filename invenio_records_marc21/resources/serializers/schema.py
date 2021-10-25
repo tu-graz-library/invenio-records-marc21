@@ -10,8 +10,6 @@
 
 """Schemas for marc21 records serializers."""
 
-from functools import partial
-
 from marshmallow import Schema
 from marshmallow_utils.fields import SanitizedUnicode
 
