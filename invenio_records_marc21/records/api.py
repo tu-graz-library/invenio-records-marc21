@@ -65,7 +65,10 @@ class DraftFile(BaseFileRecord):
     """Marc21 file associated with a marc21 draft model."""
 
     model_cls = models.DraftFile
-    record_cls = None
+
+    @property
+    def record_cls(self):
+        return Marc21Draft
 
 
 class Marc21Draft(Draft):
@@ -102,14 +105,14 @@ class Marc21Draft(Draft):
     bucket = ModelField(dump=False)
 
 
-DraftFile.record_cls = Marc21Draft
-
-
 class RecordFile(BaseFileRecord):
     """Marc21 record file API."""
 
     model_cls = models.RecordFile
-    record_cls = None
+
+    @property
+    def record_cls(self):
+        return Marc21Record
 
 
 class Marc21Record(Record):
@@ -150,6 +153,3 @@ class Marc21Record(Record):
     is_published = PIDStatusCheckField(status=PIDStatus.REGISTERED, dump=True)
 
     pids = DictField("pids")
-
-
-RecordFile.record_cls = Marc21Record

@@ -10,9 +10,9 @@
 
 """Routes for record-related pages provided by Invenio-App-RDM."""
 
+from os.path import splitext
+
 from flask import abort, current_app, render_template, request, url_for
-from invenio_app_rdm.records_ui.views.decorators import pass_is_preview
-from invenio_app_rdm.records_ui.views.records import PreviewFile
 from invenio_base.utils import obj_or_import_string
 from invenio_previewer.extensions import default
 from invenio_previewer.proxies import current_previewer
@@ -21,9 +21,47 @@ from ...resources.serializers.ui import Marc21UIJSONSerializer
 from .decorators import (
     pass_file_item,
     pass_file_metadata,
+    pass_is_preview,
     pass_record_files,
     pass_record_or_draft,
 )
+
+
+class PreviewFile:
+    """Preview file implementation for InvenioRDM.
+
+    This class was apparently created because of subtle differences with
+    `invenio_previewer.api.PreviewFile`.
+    """
+
+    def __init__(self, file_item, record_pid_value, url=None):
+        """Create a new PreviewFile."""
+        self.file = file_item
+        self.data = file_item.data
+        self.size = self.data["size"]
+        self.filename = self.data["key"]
+        self.bucket = self.data["bucket_id"]
+        self.uri = url or url_for(
+            "invenio_app_rdm_records.record_file_download",
+            pid_value=record_pid_value,
+            filename=self.filename,
+        )
+
+    def is_local(self):
+        """Check if file is local."""
+        return True
+
+    def has_extensions(self, *exts):
+        """Check if file has one of the extensions.
+
+        Each `exts` has the format `.{file type}` e.g. `.txt` .
+        """
+        file_ext = splitext(self.data["key"])[1].lower()
+        return file_ext in exts
+
+    def open(self):
+        """Open the file."""
+        return self.file._file.file.storage().open()
 
 
 #

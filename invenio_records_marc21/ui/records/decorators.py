@@ -13,9 +13,9 @@
 
 
 """Routes for record-related pages provided by Invenio-Records-Marc21."""
-
 from functools import wraps
 
+import request
 from flask import g
 from invenio_records_resources.services.errors import PermissionDeniedError
 from sqlalchemy.orm.exc import NoResultFound
@@ -68,6 +68,21 @@ def pass_record_or_draft(f):
         else:
             record = get_record()
         kwargs["record"] = record
+        return f(**kwargs)
+
+    return view
+
+
+def pass_is_preview(f):
+    """Decorate a view to check if it's a preview."""
+
+    @wraps(f)
+    def view(**kwargs):
+        preview = request.args.get("preview")
+        is_preview = False
+        if preview == "1":
+            is_preview = True
+        kwargs["is_preview"] = is_preview
         return f(**kwargs)
 
     return view
