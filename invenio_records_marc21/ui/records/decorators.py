@@ -15,8 +15,7 @@
 """Routes for record-related pages provided by Invenio-Records-Marc21."""
 from functools import wraps
 
-import request
-from flask import g
+from flask import g, request
 from invenio_records_resources.services.errors import PermissionDeniedError
 from sqlalchemy.orm.exc import NoResultFound
 
