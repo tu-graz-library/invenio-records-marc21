@@ -22,6 +22,8 @@ tests_require = [
     "invenio-indexer>=1.2.0",
     "pytest-invenio>=1.4.0,<2.0.0",
     "mock>=4.0.3",
+    "invenio-previewer>=1.3.4",
+    "invenio-pidstore>=1.2.2",
 ]
 
 # Should follow inveniosoftware/invenio versions
@@ -57,10 +59,7 @@ install_requires = [
     "dojson>=1.4.0",
     "lxml>=4.6.2",
     "invenio-celery>=1.2.0,<2.0.0",
-    "invenio-drafts-resources>=0.14.1",
     "invenio-rdm-records>=0.32.2,<1.0.0",
-    "invenio-previewer>=1.3.4",
-    "invenio-pidstore>=1.2.2",
 ]
 
 packages = find_packages()
