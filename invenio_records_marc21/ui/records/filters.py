@@ -65,7 +65,7 @@ def personal_name(personal):
 
 
 def physical_description(physical_description):
-    """ "Phsyical description for frontent."""
+    """Physical description for frontend."""
     extent = physical_description.get("extent", "")
     other_physical_details = physical_description.get("other_physical_details", "")
 
