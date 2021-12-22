@@ -34,6 +34,8 @@ class Marc21Metadata(object):
     @property
     def json(self):
         """Metadata json getter method."""
+        record = create_record(self._etree)
+        self._json = {"metadata": marc21.do(record)}
         return self._json
 
     @property
