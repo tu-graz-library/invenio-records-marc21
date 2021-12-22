@@ -14,22 +14,25 @@ from io import StringIO
 from os import linesep
 from os.path import dirname, join
 
+from dojson.contrib.marc21 import marc21
+from dojson.contrib.marc21.utils import create_record
 from lxml import etree
-
-from .fields import ControlField, DataField, LeaderField, SubField
+from lxml.builder import ElementMaker
 
 
 class Marc21Metadata(object):
     """MARC21 Record class to facilitate storage of records in MARC21 format."""
 
-    def __init__(self, leader: LeaderField = LeaderField()):
+    def __init__(self):
         """Default constructor of the class."""
         self._xml = ""
         self._json = {}
-        self._etree = None
-        self.leader = leader
-        self.controlfields = list()
-        self.datafields = list()
+        self._etree = etree.Element(
+            "record", xmlns="http://www.loc.gov/MARC21/slim", type="Bibliographic"
+        )
+        leader = etree.Element("leader")
+        leader.text = "00000nam a2200000zca4500"
+        self._etree.append(leader)
 
     @property
     def json(self):
@@ -74,44 +77,46 @@ class Marc21Metadata(object):
     def _to_xml_tree_from_string(self, xml: str):
         """Xml string to internal representation method."""
         tree = etree.parse(StringIO(xml))
-        self._to_xml_tree(tree)
         return tree
-
-    def _to_xml_tree(self, xml: etree):
-        """Xml to internal representation method."""
-        for element in xml.iter():
-            if "leader" in element.tag:
-                self.leader = LeaderField(data=element.text)
-            elif "datafield" in element.tag:
-                self.datafields.append(
-                    DataField(**element.attrib, subfields=element.getchildren())
-                )
-            elif "controlfield" in element.tag:
-                self.controlfields.append(ControlField(**element.attrib))
 
     def _to_string(self, tagsep: str = linesep, indent: int = 4) -> str:
         """Get a pretty-printed XML string of the record."""
-        self._xml = "<?xml version='1.0' ?>"
-        self._xml += '<record xmlns="http://www.loc.gov/MARC21/slim" xsi:schemaLocation="http://www.loc.gov/MARC21/slim schema.xsd" type="Bibliographic" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
-        self._xml += tagsep
-        if self.leader:
-            self._xml += self.leader.to_xml_tag(tagsep, indent)
-        for controlfield in self.controlfields:
-            self._xml += controlfield.to_xml_tag(tagsep, indent)
-        for datafield in self.datafields:
-            self._xml += datafield.to_xml_tag(tagsep, indent)
-        self._xml += "</record>"
+        self._xml = etree.tostring(self._etree, pretty_print=True).decode("UTF-8")
 
-    def contains(self, ref_df: DataField, ref_sf: SubField) -> bool:
-        """Return True if record contains reference datafield, which contains reference subfield."""
-        for df in self.datafields:
-            if (
-                df.tag == ref_df.tag and df.ind1 == ref_df.ind1
-            ) and df.ind2 == ref_df.ind2:
-                for sf in df.subfields:
-                    if sf.code == ref_sf.code and sf.value == ref_sf.value:
-                        return True
+    def contains(self, ref_df: dict, ref_sf: dict):
+        """Return True if record contains reference datafield, which contains reference subfield.
+
+        @param ref_df dict: datafield element specific information, containing keys [tag,ind1,ind2]
+        @param ref_sf dict: subfield element specific information, containing keys [code,value]
+        @return bool: true if a datafield with the subfield are found
+        """
+        element = self._etree.xpath(
+            ".//datafield[@ind1='{ind1}' and @ind2='{ind2}' and @tag='{tag}']//subfield[@code='{code}']".format(
+                **ref_df, code=ref_sf["code"]
+            )
+        )
+        if element and len(element) > 0 and element[0].text == ref_sf["value"]:
+            return True
+
         return False
+
+    def emplace_leader(
+        self,
+        value: str = "",
+    ):
+        """Change leader string in record."""
+        for leader in self._etree.iter("leader"):
+            leader.text = value
+
+    def emplace_controlfield(
+        self,
+        tag: str = "",
+        value: str = "",
+    ):
+        """Add value to record for given datafield and subfield."""
+        controlfield = etree.Element("controlfield", tag=tag)
+        controlfield.text = value
+        self._etree.append(controlfield)
 
     def emplace_field(
         self,
@@ -122,10 +127,13 @@ class Marc21Metadata(object):
         value: str = "",
     ) -> None:
         """Add value to record for given datafield and subfield."""
-        datafield = DataField(tag, ind1, ind2)
-        subfield = SubField(code, value)
-        datafield.subfields.append(subfield)
-        self.datafields.append(datafield)
+        datafield = etree.Element(
+            "datafield", tag=tag, ind1=ind1, ind2=ind2
+        )  # DataField(tag, ind1, ind2)
+        subfield = etree.Element("subfield", code=code)
+        subfield.text = value
+        datafield.append(subfield)
+        self._etree.append(datafield)
 
     def emplace_unique_field(
         self,
@@ -134,13 +142,19 @@ class Marc21Metadata(object):
         ind2: str = " ",
         code: str = "",
         value: str = "",
-    ) -> None:
+    ):
         """Add value to record if it doesn't already contain it."""
-        datafield = DataField(tag, ind1, ind2)
-        subfield = SubField(code, value)
-        if not self.contains(datafield, subfield):
-            datafield.subfields.append(subfield)
-            self.datafields.append(datafield)
+        subfield = etree.Element("subfield", code=code)
+        subfield.text = value
+        datafield = self._etree.xpath(
+            ".//datafield[@ind1='{ind1}' and @ind2='{ind2}' and @tag='{tag}']"
+        )
+        if not datafield:
+            datafield = etree.Element(
+                "datafield", tag=tag, ind1=ind1, ind2=ind2
+            )  # DataField(tag, ind1, ind2)
+        datafield.append(subfield)
+        self._etree.append(datafield)
 
     def is_valid_marc21_xml_string(self) -> bool:
         """Validate the record against a Marc21XML Schema."""
