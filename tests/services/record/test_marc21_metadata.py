@@ -10,30 +10,17 @@
 """Tests for record MetadataSchema."""
 
 import pytest
+from lxml import etree
 
 from invenio_records_marc21.services.record import Marc21Metadata
-from invenio_records_marc21.services.record.fields import (
-    ControlField,
-    DataField,
-    LeaderField,
-    SubField,
-)
 
 
 def test_create_metadata():
 
     metadata = Marc21Metadata()
-    assert metadata.leader.to_xml_tag() == LeaderField().to_xml_tag()
-    assert metadata.controlfields == list()
-    assert metadata.datafields == list()
 
-    assert "<?xml version='1.0' ?>" in metadata.xml
     assert '<record xmlns="http://www.loc.gov/MARC21/slim"' in metadata.xml
-    assert (
-        'xsi:schemaLocation="http://www.loc.gov/MARC21/slim schema.xsd" type="Bibliographic"'
-        in metadata.xml
-    )
-    assert 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' in metadata.xml
+    assert 'type="Bibliographic"' in metadata.xml
 
     metadata.emplace_field(
         tag="245", ind1="1", ind2="0", code="a", value="laborum sunt ut nulla"
@@ -45,6 +32,8 @@ def test_create_metadata():
 
 def test_validate_metadata():
     metadata = Marc21Metadata()
+
+    assert metadata.is_valid_marc21_xml_string()
     metadata.emplace_field(
         tag="245", ind1="1", ind2="0", code="a", value="laborum sunt ut nulla"
     )
@@ -59,27 +48,52 @@ def test_validate_metadata():
 
 def test_subfield_metadata():
     metadata = Marc21Metadata()
+
+    leader = metadata.etree.find(".//leader")
+    assert leader.text == "00000nam a2200000zca4500"
+
+    assert not metadata.etree.find(".//datafield")
+
     metadata.emplace_field(
         tag="245", ind1="1", ind2="0", code="a", value="laborum sunt ut nulla"
     )
 
+    datafield = metadata.etree.find(".//datafield")
+    assert datafield
+    assert not datafield.text
+    assert len(metadata.etree.findall(".//datafield")) == 1
+    assert datafield.attrib == {"tag": "245", "ind1": "1", "ind2": "0"}
+
+    subfield = metadata.etree.find(".//subfield")
+    assert subfield is not None
+    assert len(datafield.findall(".//subfield")) == 1
+    assert subfield.attrib == {"code": "a"}
+    assert subfield.text == "laborum sunt ut nulla"
+
     metadata.emplace_field(
         tag="245", ind1="1", ind2="0", code="b", value="laborum sunt ut nulla"
     )
+
+    assert len(metadata.etree.findall(".//datafield")) == 2
+    assert len(metadata.etree.findall(".//subfield")) == 2
 
     assert metadata.is_valid_marc21_xml_string()
 
 
 def test_controlfields_metadata():
     metadata = Marc21Metadata()
-    controlfield = ControlField(tag="123", value="laborum sunt ut nulla")
 
-    assert len(metadata.datafields) == 0
-    assert len(metadata.controlfields) == 0
+    assert "<controlfield" not in metadata.xml
+    assert not metadata.etree.find(".//controlfield")
 
-    metadata.controlfields.append(controlfield)
-    assert len(metadata.datafields) == 0
-    assert len(metadata.controlfields) == 1
+    metadata.emplace_controlfield(tag="123", value="laborum sunt ut nulla")
+
+    controlfield = metadata.etree.find(".//controlfield")
+    assert controlfield is not None
+    assert controlfield.text == "laborum sunt ut nulla"
+    assert controlfield.attrib == {"tag": "123"}
+    assert len(metadata.etree.findall(".//controlfield")) == 1
+
     assert '<controlfield tag="123">laborum sunt ut nulla' in metadata.xml
 
 
@@ -89,14 +103,56 @@ def test_uniqueness_metadata():
         tag="245", ind1="1", ind2="0", code="a", value="laborum sunt ut nulla"
     )
 
+    datafield = metadata.etree.find(".//datafield")
+    assert datafield is not None
+    assert not datafield.text
+    assert len(metadata.etree.findall(".//datafield")) == 1
+    assert datafield.attrib == {"tag": "245", "ind1": "1", "ind2": "0"}
+
+    subfield = metadata.etree.find(".//subfield")
+    assert subfield is not None
+    assert len(datafield.findall(".//subfield")) == 1
+    assert subfield.attrib == {"code": "a"}
+    assert subfield.text == "laborum sunt ut nulla"
+
     metadata.emplace_unique_field(
         tag="245", ind1="1", ind2="0", code="a", value="laborum sunt ut nulla"
     )
 
-    assert len(metadata.datafields) == 1
-    assert len(metadata.controlfields) == 0
-    assert len(metadata.datafields[0].subfields) == 1
+    datafield = metadata.etree.find(".//datafield")
+    assert datafield
+    assert not datafield.text
+    assert len(metadata.etree.findall(".//datafield")) == 1
+    assert datafield.attrib == {"tag": "245", "ind1": "1", "ind2": "0"}
+
+    subfield = metadata.etree.find(".//subfield")
+    assert subfield is not None
+    assert len(datafield.findall(".//subfield")) == 1
+    assert subfield.attrib == {"code": "a"}
+    assert subfield.text == "laborum sunt ut nulla"
+
     assert metadata.is_valid_marc21_xml_string()
+
+
+def test_contains_metadata():
+    metadata = Marc21Metadata()
+
+    assert not metadata.contains(
+        ref_df={"tag": "245", "ind1": "1", "ind2": "0"},
+        ref_sf={"code": "a", "value": "laborum sunt ut nulla"},
+    )
+    metadata.emplace_field(
+        tag="246", ind1="1", ind2="0", code="a", value="laborum sunt ut nulla"
+    )
+    assert not metadata.contains(
+        ref_df={"tag": "246", "ind1": "1", "ind2": "0"},
+        ref_sf={"code": "b", "value": "laborum sunt ut nulla"},
+    )
+
+    assert metadata.contains(
+        ref_df={"tag": "246", "ind1": "1", "ind2": "0"},
+        ref_sf={"code": "a", "value": "laborum sunt ut nulla"},
+    )
 
 
 def test_xml_type():
@@ -116,48 +172,8 @@ def test_json_type():
 
     test = dict()
     metadata.json = test
-    assert metadata.json == {}
+    assert "metadata" in metadata.json.keys()
 
     test = ""
     with pytest.raises(TypeError):
         metadata.json = test
-
-
-def test_xml_metadata():
-    metadata = Marc21Metadata()
-    test = DataField(tag="245", ind1="0", ind2="0")
-
-    metadata.xml = test.to_xml_tag()
-
-    assert metadata.leader.to_xml_tag() == LeaderField().to_xml_tag()
-    assert len(metadata.datafields) == 1
-    assert len(metadata.controlfields) == 0
-    assert len(metadata.datafields[0].subfields) == 0
-    assert test.to_xml_tag() in metadata.xml
-
-    test.subfields.append(SubField(code="a", value="Brain-Computer Interface"))
-    metadata = Marc21Metadata()
-    metadata.xml = test.to_xml_tag()
-
-    assert len(metadata.datafields) == 1
-    assert len(metadata.controlfields) == 0
-    assert len(metadata.datafields[0].subfields) == 1
-    assert test.to_xml_tag() in metadata.xml
-
-    test.subfields.append(SubField(code="b", value="Subtitle field."))
-    metadata = Marc21Metadata()
-    metadata.xml = test.to_xml_tag()
-
-    assert len(metadata.datafields) == 1
-    assert len(metadata.controlfields) == 0
-    assert len(metadata.datafields[0].subfields) == 2
-    assert test.to_xml_tag() in metadata.xml
-
-    test.subfields.append(SubField(code="c", value="hrsg. von Josef Frank"))
-    metadata = Marc21Metadata()
-    metadata.xml = test.to_xml_tag()
-
-    assert len(metadata.datafields) == 1
-    assert len(metadata.controlfields) == 0
-    assert len(metadata.datafields[0].subfields) == 3
-    assert test.to_xml_tag() in metadata.xml
