@@ -144,17 +144,22 @@ class Marc21Metadata(object):
         value: str = "",
     ):
         """Add value to record if it doesn't already contain it."""
-        subfield = etree.Element("subfield", code=code)
-        subfield.text = value
         datafield = self._etree.xpath(
-            ".//datafield[@ind1='{ind1}' and @ind2='{ind2}' and @tag='{tag}']"
+            f".//datafield[@ind1='{ind1}' and @ind2='{ind2}' and @tag='{tag}']"
         )
         if not datafield:
             datafield = etree.Element(
                 "datafield", tag=tag, ind1=ind1, ind2=ind2
             )  # DataField(tag, ind1, ind2)
-        datafield.append(subfield)
-        self._etree.append(datafield)
+        else:
+            datafield = datafield[0]
+        subfield = self._etree.xpath(f".//subfield[@code='{code}']")
+        if not subfield:
+            subfield = etree.Element("subfield", code=code)
+            subfield.text = value
+            datafield.append(subfield)
+            self._etree.append(datafield)
+        pass
 
     def is_valid_marc21_xml_string(self) -> bool:
         """Validate the record against a Marc21XML Schema."""
