@@ -95,10 +95,7 @@ class Marc21Metadata(object):
                 **ref_df, code=ref_sf["code"]
             )
         )
-        if element and len(element) > 0 and element[0].text == ref_sf["value"]:
-            return True
-
-        return False
+        return element and len(element) > 0 and element[0].text == ref_sf["value"]
 
     def emplace_leader(
         self,
