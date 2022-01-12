@@ -129,7 +129,7 @@ class Marc21Metadata(object):
         """Add value to record for given datafield and subfield."""
         datafield = etree.Element(
             "datafield", tag=tag, ind1=ind1, ind2=ind2
-        )  # DataField(tag, ind1, ind2)
+        )
         subfield = etree.Element("subfield", code=code)
         subfield.text = value
         datafield.append(subfield)
@@ -159,7 +159,6 @@ class Marc21Metadata(object):
             subfield.text = value
             datafield.append(subfield)
             self._etree.append(datafield)
-        pass
 
     def is_valid_marc21_xml_string(self) -> bool:
         """Validate the record against a Marc21XML Schema."""

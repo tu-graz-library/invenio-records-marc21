@@ -10,8 +10,7 @@
 
 """Marc21 Record Service."""
 
-from dojson.contrib.marc21 import marc21
-from dojson.contrib.marc21.utils import create_record
+
 from invenio_db import db
 from invenio_drafts_resources.services.records import RecordService
 from invenio_rdm_records.records.systemfields.access.field.record import (
