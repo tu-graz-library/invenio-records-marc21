@@ -10,12 +10,9 @@
 
 """Marc21 field class."""
 
-from .fields import ControlField, DataField, SubField
+
 from .metadata import Marc21Metadata
 
 __all__ = (
     "Marc21Metadata",
-    "ControlField",
-    "DataField",
-    "SubField",
 )
