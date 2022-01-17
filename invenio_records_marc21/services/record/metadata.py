@@ -72,7 +72,6 @@ class Marc21Metadata(object):
     def load(self, xml: etree):
         """Load metadata from etree."""
         self._etree = xml
-        self._to_xml_tree(xml)
 
     def _to_xml_tree_from_string(self, xml: str):
         """Xml string to internal representation method."""
