@@ -155,6 +155,50 @@ def test_contains_metadata():
     )
 
 
+def test_load_metadata():
+    metadata = Marc21Metadata()
+
+    etree_metadata = etree.Element("record")
+    control = etree.Element("controlfield", tag="001")
+    control.text = "990079940640203331"
+    etree_metadata.append(control)
+
+    datafield = etree.Element("datafield", tag="245", ind1="0", ind2="0")
+    title = etree.Element("subfield", code="a")
+    title.text = "International Brain-Computer Interface"
+    datafield.append(title)
+
+    subtitle = etree.Element("subfield", code="b")
+    subtitle.text = "Subtitle field"
+    datafield.append(subtitle)
+
+    etree_metadata.append(datafield)
+
+    metadata.load(etree_metadata)
+    assert metadata._etree == etree_metadata
+
+    controlfield = metadata._etree.xpath(".//controlfield[@tag='001']")
+    assert controlfield
+    assert len(controlfield) == 1
+    assert controlfield[0].text == "990079940640203331"
+
+    datafield = metadata._etree.xpath(".//datafield[@tag='245' and @ind2='0' and @ind1='0']")
+    assert datafield
+    assert len(datafield) == 1
+
+    title_field = datafield[0].xpath(".//subfield[@code='a']")
+
+    assert title_field
+    assert len(title_field) == 1
+    assert title_field[0].text == "International Brain-Computer Interface"
+
+    subfields = datafield[0].xpath(".//subfield[@code='b']")
+
+    assert subfields
+    assert len(subfields) == 1
+    subfields[0].text = "Subtitle field"
+
+
 def test_xml_type():
     metadata = Marc21Metadata()
 
