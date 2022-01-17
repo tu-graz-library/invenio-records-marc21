@@ -65,8 +65,7 @@ class Marc21Metadata(object):
         if not isinstance(xml, str):
             raise TypeError("xml must be from type str")
 
-        tree = self._to_xml_tree_from_string(xml)
-        self._etree = tree
+        self._etree = self._to_xml_tree_from_string(xml)
         self._xml = xml
 
     def load(self, xml: etree):
