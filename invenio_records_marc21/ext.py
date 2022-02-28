@@ -93,30 +93,11 @@ class InvenioRecordsMARC21(object):
 
     def service_configs(self, app):
         """Customized service configs."""
-        permission_policy = app.config.get(
-            "RDM_PERMISSION_POLICY", Marc21RecordPermissionPolicy
-        )
-
-        doi_enabled = app.config["DATACITE_ENABLED"]
-        pid_providers = app.config["INVENIO_MARC21_PERSISTENT_IDENTIFIER_PROVIDERS"]
-        pids = app.config["INVENIO_MARC21_PERSISTENT_IDENTIFIERS"]
 
         class ServiceConfigs:
-            record = Marc21RecordServiceConfig.customize(
-                permission_policy=permission_policy,
-                pid_providers=pid_providers,
-                pids=pids,
-                doi_enabled=doi_enabled,
-                # search=search_opts,
-                # search_drafts=search_drafts_opts,
-                # search_versions=search_versions_opts,
-            )
-            file = Marc21RecordFilesServiceConfig.customize(
-                permission_policy=permission_policy,
-            )
-            file_draft = Marc21DraftFilesServiceConfig.customize(
-                permission_policy=permission_policy,
-            )
+            record = Marc21RecordServiceConfig.build(app)
+            file = Marc21RecordFilesServiceConfig.build(app)
+            file_draft = Marc21DraftFilesServiceConfig.build(app)
 
         return ServiceConfigs
 
