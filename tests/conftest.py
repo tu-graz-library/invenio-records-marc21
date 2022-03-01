@@ -21,10 +21,13 @@ import arrow
 import pytest
 from invenio_app.factory import create_api
 from invenio_files_rest.models import Location
-from invenio_rdm_records.services.pids import PIDManager, PIDsService
+from invenio_rdm_records.services.pids import PIDManager, PIDsService, providers
 from invenio_records_resources.services import FileService
 
-from invenio_records_marc21.records import Marc21Draft, Marc21Parent, Marc21Record
+from invenio_records_marc21.records import Marc21Draft, Marc21Parent
+from invenio_records_marc21.resources.serializers.datacite import (
+    Marc21DataCite43JSONSerializer,
+)
 from invenio_records_marc21.services import (
     Marc21DraftFilesServiceConfig,
     Marc21RecordFilesServiceConfig,
@@ -32,6 +35,13 @@ from invenio_records_marc21.services import (
     Marc21RecordService,
     Marc21RecordServiceConfig,
 )
+
+from .fake_datacite_client import FakeDataCiteClient
+
+
+def _(x):
+    """Identity function for string extraction."""
+    return x
 
 
 @pytest.fixture()
@@ -118,6 +128,23 @@ def app_config(app_config):
     app_config["DATACITE_USERNAME"] = "INVALID"
     app_config["DATACITE_PASSWORD"] = "INVALID"
     app_config["DATACITE_PREFIX"] = "10.123"
+    app_config["INVENIO_MARC21_PERSISTENT_IDENTIFIER_PROVIDERS"] = [
+        # DataCite DOI provider with fake client
+        providers.DataCitePIDProvider(
+            "datacite",
+            client=FakeDataCiteClient("datacite", config_prefix="DATACITE"),
+            pid_type="doi",
+            serializer=Marc21DataCite43JSONSerializer(),
+            label=_("DOI"),
+        ),
+        # DOI provider for externally managed DOIs
+        providers.ExternalPIDProvider(
+            "external",
+            "doi",
+            validators=[providers.BlockedPrefixes(config_names=["DATACITE_PREFIX"])],
+            label=_("DOI"),
+        ),
+    ]
 
     return app_config
 
@@ -125,16 +152,8 @@ def app_config(app_config):
 @pytest.fixture(scope="module")
 def service(app):
     """Service instance."""
-    doi_enabled = False
-    pid_providers = app.config["INVENIO_MARC21_PERSISTENT_IDENTIFIER_PROVIDERS"]
-    pids = app.config["INVENIO_MARC21_PERSISTENT_IDENTIFIERS"]
+    config = Marc21RecordServiceConfig.build(app)
 
-    config = Marc21RecordServiceConfig.customize(
-        permission_policy=Marc21RecordPermissionPolicy,
-        pid_providers=pid_providers,
-        pids=pids,
-        doi_enabled=doi_enabled,
-    )
     return Marc21RecordService(
         config=config,
         files_service=FileService(Marc21RecordFilesServiceConfig()),

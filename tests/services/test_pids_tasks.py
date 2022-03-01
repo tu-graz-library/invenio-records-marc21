@@ -32,15 +32,19 @@ def test_register_pid(running_app, full_metadata, mocker, identity_simple):
     draft = service.create(identity=identity_simple, metadata=full_metadata)
     draft = service.pids.create(identity=identity_simple, id_=draft.id, scheme="doi")
     doi = draft["pids"]["doi"]["identifier"]
+
     provider = service.pids.pid_manager._get_provider("doi", "datacite")
     pid = provider.get(pid_value=doi)
     record = service.record_cls.publish(draft._record)
     record.pids = {pid.pid_type: {"identifier": pid.pid_value, "provider": "datacite"}}
     record.metadata = draft["metadata"]
+
     record.register()
     record.commit()
     assert pid.status == PIDStatus.NEW
+
     pid.reserve()
     assert pid.status == PIDStatus.RESERVED
+
     register_or_update_pid(recid=record["id"], scheme="doi")
     assert pid.status == PIDStatus.REGISTERED

@@ -151,11 +151,11 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
 
     # PIDs providers - set from config in customizations.
     pids_providers = FromConfigPIDsProviders(
-        persistent_identifiers="INVENIO_MARC21__PERSISTENT_IDENTIFIERS",
-        persistent_identifier_providers="RDM_PERSISTENT_IDENTIFIER_PROVIDERS",
+        persistent_identifiers="INVENIO_MARC21_PERSISTENT_IDENTIFIERS",
+        persistent_identifier_providers="INVENIO_MARC21_PERSISTENT_IDENTIFIER_PROVIDERS",
     )
     pids_required = FromConfigRequiredPIDs(
-        persistent_identifiers="INVENIO_MARC21__PERSISTENT_IDENTIFIERS",
+        persistent_identifiers="INVENIO_MARC21_PERSISTENT_IDENTIFIERS",
     )
 
 

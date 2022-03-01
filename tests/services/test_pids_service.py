@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2022 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -14,8 +14,14 @@ This tests both the PIDsService and the RDMService behaviour related to pids.
 """
 
 import pytest
+from flask import current_app
 from invenio_pidstore.errors import PIDDoesNotExistError
 from invenio_pidstore.models import PIDStatus
+from invenio_rdm_records.records import RDMDraft, RDMRecord
+from invenio_rdm_records.services.pids.providers import (
+    DataCiteClient,
+    DataCitePIDProvider,
+)
 
 from invenio_records_marc21.proxies import current_records_marc21
 
@@ -44,6 +50,38 @@ def mock_hide_doi(mocker):
         "DataCiteRESTClient.hide_doi",
         hide_doi,
     )
+
+
+@pytest.fixture(scope="function")
+def record(location):
+    """Creates an empty record."""
+    draft = RDMDraft.create({})
+    record = RDMRecord.publish(draft)
+
+    return record
+
+
+def test_datacite_provider_configuration(record, mocker):
+    def custom_format_func(*args):
+        return "10.123/custom.func"
+
+    client = DataCiteClient("datacite")
+
+    # check with default func
+    datacite_provider = DataCitePIDProvider("datacite", client=client)
+    expected_result = datacite_provider.generate_id(record)
+    assert datacite_provider.create(record).pid_value == expected_result
+
+    # check id generation from env func
+    current_app.config["DATACITE_FORMAT"] = custom_format_func
+    datacite_provider = DataCitePIDProvider("datacite", client=client)
+    assert datacite_provider.create(record).pid_value == "10.123/custom.func"
+
+    # check id generation from env f-string
+    current_app.config["DATACITE_FORMAT"] = "{prefix}/datacite2.{id}"  # noqa
+    datacite_provider = DataCitePIDProvider("datacite", client=client)
+    expected_result = datacite_provider.generate_id(record)
+    assert datacite_provider.create(record).pid_value == expected_result
 
 
 #
