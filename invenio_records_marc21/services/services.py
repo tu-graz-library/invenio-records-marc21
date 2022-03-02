@@ -108,7 +108,9 @@ class Marc21RecordService(RDMRecordService):
         :rtype: `invenio_records_resources.services.records.results.RecordItem`
         """
         data = self._create_data(identity, data, metadata, access)
-        return super().update_draft(id_, identity, data, revision_id)
+        return super().update_draft(
+            id_=id_, identity=identity, data=data, revision_id=revision_id
+        )
 
     def _lift_embargo_from(self, record):
         """Lifts embargo from record or draft."""
