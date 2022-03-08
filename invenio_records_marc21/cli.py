@@ -124,6 +124,18 @@ def marc21():
     pass
 
 
+@marc21.command("rebuild-index")
+@with_appcontext
+def rebuild_index():
+    """Reindex all drafts, records."""
+    click.secho("Reindexing records and drafts...", fg="green")
+
+    rec_service = current_records_marc21.records_service
+    rec_service.rebuild_index(identity=system_identity)
+
+    click.secho("Reindexed records!", fg="green")
+
+
 @marc21.command("demo")
 @with_appcontext
 @click.option(
