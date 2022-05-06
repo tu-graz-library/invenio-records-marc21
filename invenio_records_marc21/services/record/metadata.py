@@ -10,12 +10,11 @@
 
 """Marc21 record class."""
 
-from io import StringIO
-from os import linesep
 from os.path import dirname, join
+from xml.etree.ElementTree import Element, QName, fromstring, parse, tostring
 
-from lxml import etree
-from lxml.etree import _Element as Element
+# TODO: move to ElementTree
+from lxml.etree import XMLSchema
 
 
 class XmlToJsonVisitor:
@@ -25,20 +24,20 @@ class XmlToJsonVisitor:
         """Constructor."""
         self.record = {"leader": "", "fields": {}}
 
-    def process(self, node: Element):
+    def process(self, node):
         """Execute the corresponding method to the tag name."""
 
         def func_not_found(*args, **kwargs):
-            localname = etree.QName(node).localname
-            namespace = etree.QName(node).namespace
+            localname = QName(node).localname
+            namespace = QName(node).namespace
             raise ValueError(f"NO visitor node: '{localname}' ns: '{namespace}'")
 
-        tag_name = etree.QName(node).localname
+        tag_name = QName(node).localname
         visit_func = getattr(self, f"visit_{tag_name}", func_not_found)
         result = visit_func(node)
         return result
 
-    def visit(self, node: Element):
+    def visit(self, node):
         """Visit default method and entry point for the class."""
         for child in node:
             self.process(child)
@@ -58,21 +57,21 @@ class XmlToJsonVisitor:
         """Get the mij representation of the marc21 xml record."""
         return self.record
 
-    def visit_record(self, node: Element):
+    def visit_record(self, node):
         """Visit the record."""
         self.record = {"leader": "", "fields": []}
         self.visit(node)
 
-    def visit_leader(self, node: Element):
+    def visit_leader(self, node):
         """Visit the controlfield field."""
         self.record["leader"] = node.text
 
-    def visit_controlfield(self, node: Element):
+    def visit_controlfield(self, node):
         """Visit the controlfield field."""
         field = node.text
         self.append_string(node.get("tag"), field)
 
-    def visit_datafield(self, node: Element):
+    def visit_datafield(self, node):
         """Visit the datafield field."""
         self.subfields = {}
         self.visit(node)
@@ -88,7 +87,7 @@ class XmlToJsonVisitor:
         }
         self.append(tag, field)
 
-    def visit_subfield(self, node: Element):
+    def visit_subfield(self, node):
         """Visit the subfield field."""
         subf_code = node.get("code")
 
@@ -108,16 +107,28 @@ def convert_marc21xml_to_json(record):
 class Marc21Metadata(object):
     """MARC21 Record class to facilitate storage of records in MARC21 format."""
 
-    def __init__(self):
+    def __init__(self, metadata=None):
         """Default constructor of the class."""
         self._xml = ""
         self._json = {}
-        self._etree = etree.Element(
-            "record", xmlns="http://www.loc.gov/MARC21/slim", type="Bibliographic"
-        )
-        leader = etree.Element("leader")
-        leader.text = "00000nam a2200000zca4500"
-        self._etree.append(leader)
+
+        if metadata:
+            self._etree = metadata
+        else:
+            self._etree = Element("record", xmlns="http://www.loc.gov/MARC21/slim")
+            leader = Element("leader")
+            leader.text = "00000nam a2200000zca4500"
+            self._etree.append(leader)
+
+    @property
+    def etree(self):
+        """Metadata etree getter method."""
+        return self._etree
+
+    @etree.setter
+    def etree(self, _etree):
+        """Etree setter."""
+        self._etree = _etree
 
     @property
     def json(self):
@@ -125,13 +136,8 @@ class Marc21Metadata(object):
         self._json = {"metadata": convert_marc21xml_to_json(self._etree)}
         return self._json
 
-    @property
-    def etree(self):
-        """Metadata etree getter method."""
-        return self._etree
-
     @json.setter
-    def json(self, json: dict):
+    def json(self, json):
         """Metadata json setter method."""
         if not isinstance(json, dict):
             raise TypeError("json must be from type dict")
@@ -140,108 +146,56 @@ class Marc21Metadata(object):
     @property
     def xml(self):
         """Metadata xml getter method."""
-        self._to_string()
-        return self._xml
+        return tostring(self._etree).decode("UTF-8")
 
     @xml.setter
-    def xml(self, xml: str):
+    def xml(self, xml):
         """Metadata xml setter method."""
         if not isinstance(xml, str):
             raise TypeError("xml must be from type str")
 
-        self._etree = self._to_xml_tree_from_string(xml)
+        self._etree = fromstring(xml)
         self._xml = xml
 
-    def load(self, xml: etree):
-        """Load metadata from etree."""
-        self._etree = xml
-
-    def _to_xml_tree_from_string(self, xml: str):
-        """Xml string to internal representation method."""
-        tree = etree.parse(StringIO(xml))
-        return tree.getroot()
-
-    def _to_string(self, tagsep: str = linesep, indent: int = 4) -> str:
-        """Get a pretty-printed XML string of the record."""
-        self._xml = etree.tostring(self._etree, pretty_print=True).decode("UTF-8")
-
-    def contains(self, ref_df: dict, ref_sf: dict):
+    def contains(self, ref_df, ref_sf):
         """Return True if record contains reference datafield, which contains reference subfield.
 
         @param ref_df dict: datafield element specific information, containing keys [tag,ind1,ind2]
         @param ref_sf dict: subfield element specific information, containing keys [code,value]
         @return bool: true if a datafield with the subfield are found
         """
-        element = self._etree.xpath(
+        element = self._etree.find(
             ".//datafield[@ind1='{ind1}' and @ind2='{ind2}' and @tag='{tag}']//subfield[@code='{code}']".format(
                 **ref_df, code=ref_sf["code"]
             )
         )
         return element and len(element) > 0 and element[0].text == ref_sf["value"]
 
-    def emplace_leader(
-        self,
-        value: str = "",
-    ):
+    def emplace_leader(self, value=""):
         """Change leader string in record."""
         for leader in self._etree.iter("leader"):
             leader.text = value
 
-    def emplace_controlfield(
-        self,
-        tag: str = "",
-        value: str = "",
-    ):
+    def emplace_controlfield(self, tag="", value=""):
         """Add value to record for given datafield and subfield."""
-        controlfield = etree.Element("controlfield", tag=tag)
-        controlfield.text = value
+        controlfield = Element("controlfield", tag=tag, text=value)
         self._etree.append(controlfield)
 
-    def emplace_field(
-        self,
-        tag: str = "",
-        ind1: str = " ",
-        ind2: str = " ",
-        code: str = "",
-        value: str = "",
-    ) -> None:
-        """Add value to record for given datafield and subfield."""
-        datafield = etree.Element("datafield", tag=tag, ind1=ind1, ind2=ind2)
-        subfield = etree.Element("subfield", code=code)
-        subfield.text = value
+    def emplace_field(self, selector, value) -> None:
+        """Add value to record for given datafield and subfield.
+        :params selector e.g. "100...a", "100" """
+
+        tag, ind1, ind2, code = selector.split(".")
+
+        datafield = Element("datafield", tag=tag, ind1=ind1, ind2=ind2)
+        subfield = Element("subfield", code=code, text=value)
         datafield.append(subfield)
         self._etree.append(datafield)
 
-    def emplace_unique_field(
-        self,
-        tag: str = "",
-        ind1: str = " ",
-        ind2: str = " ",
-        code: str = "",
-        value: str = "",
-    ):
-        """Add value to record if it doesn't already contain it."""
-        datafield = self._etree.xpath(
-            f".//datafield[@ind1='{ind1}' and @ind2='{ind2}' and @tag='{tag}']"
-        )
-        if not datafield:
-            datafield = etree.Element(
-                "datafield", tag=tag, ind1=ind1, ind2=ind2
-            )  # DataField(tag, ind1, ind2)
-        else:
-            datafield = datafield[0]
-        subfield = self._etree.xpath(f".//subfield[@code='{code}']")
-        if not subfield:
-            subfield = etree.Element("subfield", code=code)
-            subfield.text = value
-            datafield.append(subfield)
-            self._etree.append(datafield)
-
-    def is_valid_marc21_xml_string(self) -> bool:
+    def is_valid_marc21_xml_string(self):
         """Validate the record against a Marc21XML Schema."""
-        with open(
-            join(dirname(__file__), "schema", "MARC21slim.xsd"), "r", encoding="utf-8"
-        ) as fp:
-            marc21xml_schema = etree.XMLSchema(etree.parse(fp))
-            marc21xml = etree.parse(StringIO(self.xml))
+        filename = join(dirname(__file__), "schema", "MARC21slim.xsd")
+        with open(filename, "r", encoding="utf-8") as fp:
+            marc21xml_schema = XMLSchema(parse(fp))
+            marc21xml = fromstring(self.xml)
             return marc21xml_schema.validate(marc21xml)
