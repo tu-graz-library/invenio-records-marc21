@@ -23,12 +23,12 @@ class QName:
     @property
     def localname(self):
         """Return localname from node with xpath."""
-        return self.node.xpath("local-name(.)")
+        return self.node.tag.split("}")[-1]
 
     @property
     def namespace(self):
         """Return namespace from node with xpath."""
-        return self.node.xpath("namespace-uri(.)")
+        return self.node.tag.split("}")[0][1:]
 
 
 def convert_marc21xml_to_json(record):
