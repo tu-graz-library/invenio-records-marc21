@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2022 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -10,11 +10,32 @@
 
 """Marc21 record class."""
 
-from os.path import dirname, join
-from xml.etree.ElementTree import Element, QName, fromstring, parse, tostring
+from xml.etree.ElementTree import Element, fromstring, tostring
 
-# TODO: move to ElementTree
-from lxml.etree import XMLSchema
+
+class QName:
+    """Local Rewrite for lxml.etree.QName."""
+
+    def __init__(self, node):
+        """Constructor for QName"""
+        self.node = node
+
+    @property
+    def localname(self):
+        """Return localname from node with xpath."""
+        return self.node.xpath("local-name(.)")
+
+    @property
+    def namespace(self):
+        """Return namespace from node with xpath."""
+        return self.node.xpath("namespace-uri(.)")
+
+
+def convert_marc21xml_to_json(record):
+    """MARC21 Record class convert to json."""
+    visitor = XmlToJsonVisitor()
+    visitor.visit(record)
+    return visitor.get_json_record()
 
 
 class XmlToJsonVisitor:
@@ -43,11 +64,11 @@ class XmlToJsonVisitor:
             self.process(child)
 
     def append_string(self, tag: str, value: str):
-        """Append to the field list a single string."""
+        """Append to the field dict a single string."""
         self.record["fields"][tag] = value
 
     def append(self, tag: str, field: dict):
-        """Append to the field list."""
+        """Append to the field tag list."""
         if tag not in self.record["fields"]:
             self.record["fields"][tag] = []
 
@@ -59,7 +80,7 @@ class XmlToJsonVisitor:
 
     def visit_record(self, node):
         """Visit the record."""
-        self.record = {"leader": "", "fields": []}
+        self.record = {"leader": "", "fields": {}}
         self.visit(node)
 
     def visit_leader(self, node):
@@ -97,19 +118,11 @@ class XmlToJsonVisitor:
         self.subfields[subf_code].append(node.text)
 
 
-def convert_marc21xml_to_json(record):
-    """MARC21 Record class convert to json."""
-    visitor = XmlToJsonVisitor()
-    visitor.visit(record)
-    return visitor.get_json_record()
-
-
 class Marc21Metadata(object):
     """MARC21 Record class to facilitate storage of records in MARC21 format."""
 
     def __init__(self, metadata=None):
         """Default constructor of the class."""
-        self._xml = ""
         self._json = {}
 
         if metadata:
@@ -155,21 +168,6 @@ class Marc21Metadata(object):
             raise TypeError("xml must be from type str")
 
         self._etree = fromstring(xml)
-        self._xml = xml
-
-    def contains(self, ref_df, ref_sf):
-        """Return True if record contains reference datafield, which contains reference subfield.
-
-        @param ref_df dict: datafield element specific information, containing keys [tag,ind1,ind2]
-        @param ref_sf dict: subfield element specific information, containing keys [code,value]
-        @return bool: true if a datafield with the subfield are found
-        """
-        element = self._etree.find(
-            ".//datafield[@ind1='{ind1}' and @ind2='{ind2}' and @tag='{tag}']//subfield[@code='{code}']".format(
-                **ref_df, code=ref_sf["code"]
-            )
-        )
-        return element and len(element) > 0 and element[0].text == ref_sf["value"]
 
     def emplace_leader(self, value=""):
         """Change leader string in record."""
@@ -183,7 +181,9 @@ class Marc21Metadata(object):
 
     def emplace_field(self, selector, value) -> None:
         """Add value to record for given datafield and subfield.
-        :params selector e.g. "100...a", "100" """
+
+        :params selector e.g. "100...a", "100"
+        """
 
         tag, ind1, ind2, code = selector.split(".")
 
@@ -191,11 +191,3 @@ class Marc21Metadata(object):
         subfield = Element("subfield", code=code, text=value)
         datafield.append(subfield)
         self._etree.append(datafield)
-
-    def is_valid_marc21_xml_string(self):
-        """Validate the record against a Marc21XML Schema."""
-        filename = join(dirname(__file__), "schema", "MARC21slim.xsd")
-        with open(filename, "r", encoding="utf-8") as fp:
-            marc21xml_schema = XMLSchema(parse(fp))
-            marc21xml = fromstring(self.xml)
-            return marc21xml_schema.validate(marc21xml)
