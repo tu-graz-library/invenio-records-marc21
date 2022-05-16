@@ -31,6 +31,11 @@ class QName:
         return self.node.tag.split("}")[0][1:]
 
 
+def convert_json_to_marc21xml(record):
+    """Convert marc21 json to marc21 xml."""
+    raise Exception("not yet implemented")
+
+
 def convert_marc21xml_to_json(record):
     """MARC21 Record class convert to json."""
     visitor = XmlToJsonVisitor()
@@ -118,7 +123,7 @@ class XmlToJsonVisitor:
         self.subfields[subf_code].append(node.text)
 
 
-class Marc21Metadata(object):
+class Marc21Metadata:
     """MARC21 Record class to facilitate storage of records in MARC21 format."""
 
     def __init__(self, metadata=None):
@@ -155,6 +160,7 @@ class Marc21Metadata(object):
         if not isinstance(json, dict):
             raise TypeError("json must be from type dict")
         self._json = json
+        self._etree = convert_json_to_marc21xml(self._json)
 
     @property
     def xml(self):
@@ -176,18 +182,19 @@ class Marc21Metadata(object):
 
     def emplace_controlfield(self, tag="", value=""):
         """Add value to record for given datafield and subfield."""
-        controlfield = Element("controlfield", tag=tag, text=value)
+        controlfield = Element("controlfield", tag=tag)
+        controlfield.text = value
         self._etree.append(controlfield)
 
-    def emplace_field(self, selector, value) -> None:
+    def emplace_datafield(self, selector, value) -> None:
         """Add value to record for given datafield and subfield.
 
         :params selector e.g. "100...a", "100"
         """
-
         tag, ind1, ind2, code = selector.split(".")
 
         datafield = Element("datafield", tag=tag, ind1=ind1, ind2=ind2)
-        subfield = Element("subfield", code=code, text=value)
+        subfield = Element("subfield", code=code)
+        subfield.text = value
         datafield.append(subfield)
         self._etree.append(datafield)
