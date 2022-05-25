@@ -17,7 +17,7 @@ class QName:
     """Local Rewrite for lxml.etree.QName."""
 
     def __init__(self, node):
-        """Constructor for QName"""
+        """Constructor for QName."""
         self.node = node
 
     @property

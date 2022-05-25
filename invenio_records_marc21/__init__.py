@@ -157,7 +157,7 @@ Marc21Metadata
 
 >>> from invenio_records_marc21.services.record import Marc21Metadata
 >>> metadata = Marc21Metadata()
->>> metadata.emplace_field(tag="245", ind1="1", ind2="0", value="nulla sunt laborum")
+>>> metadata.emplace_datafield(selector="245.1.0.", value="nulla sunt laborum")
 
 or set a whole Marc21 xml string
 
