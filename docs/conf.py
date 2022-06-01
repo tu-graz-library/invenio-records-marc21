@@ -9,6 +9,7 @@
 """Sphinx configuration."""
 
 import os
+from datetime import datetime, timezone
 
 from invenio_records_marc21 import __version__
 
@@ -47,9 +48,9 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"Invenio-Records-Marc21"
-copyright = u"2021, Graz University of Technology"
-author = u"Graz University of Technology"
+project = "Invenio-Records-Marc21"
+copyright = f"{datetime.now(timezone.utc).year}, Graz University of Technology"
+author = "Graz University of Technology"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -67,7 +68,7 @@ release = __version__
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = "en"
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -246,8 +247,8 @@ latex_documents = [
     (
         master_doc,
         "invenio-records-marc21.tex",
-        u"invenio-records-marc21 Documentation",
-        u"Graz University of Technology",
+        "invenio-records-marc21 Documentation",
+        "Graz University of Technology",
         "manual",
     ),
 ]
@@ -281,7 +282,7 @@ man_pages = [
     (
         master_doc,
         "invenio-records-marc21",
-        u"invenio-records-marc21 Documentation",
+        "invenio-records-marc21 Documentation",
         [author],
         1,
     )
@@ -300,7 +301,7 @@ texinfo_documents = [
     (
         master_doc,
         "invenio-records-marc21",
-        u"Invenio-Records-Marc21 Documentation",
+        "Invenio-Records-Marc21 Documentation",
         author,
         "invenio-records-marc21",
         "Marc21 converter",
