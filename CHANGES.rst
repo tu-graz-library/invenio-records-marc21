@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.5.1 (release 2022-07-07)
+
+
+
+
 Version 0.0.1 (released TBD)
 
 - Initial public release.
