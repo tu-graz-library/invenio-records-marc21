@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.5.2 (release 2022-07-29)
+
+- use search react components provided by invenio-app-rdm
+- update the search initial query state
+
+
 Version v0.5.1 (release 2022-07-07)
 
 

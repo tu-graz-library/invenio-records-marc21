@@ -71,6 +71,7 @@ class PreviewFile:
 @pass_record_files
 def record_detail(record=None, files=None, pid_value=None, is_preview=False):
     """Record detail page (aka landing page)."""
+    print("record_detail marc21")
     files_dict = None if files is None else files.to_dict()
     return render_template(
         "invenio_records_marc21/record.html",

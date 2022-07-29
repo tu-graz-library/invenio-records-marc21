@@ -11,13 +11,26 @@
 """Metadata field for marc21 records."""
 
 
+from pprint import pprint
+
 from marshmallow.fields import Field
 
 
+# TODO:
+# ATTENTION:
+# this function has to be refactored!!!!!!! the solution introduces a bug!!!
+# only one element is used
+# this quick fix was only done because it was not thought about that value could
+# be really a list with more then one element
 def field_subfields(value: list):
     """MARC21 get list of subfields from json."""
-    subfields = dict(*[field.get("subfields", {}) for field in value])
-    return subfields
+    pprint(value)
+    # subfields = dict(*[field.get("subfields", {}) for field in value])
+    # return subfields
+    if len(value) > 0:
+        return value[0].get("subfields", {})
+    else:
+        return {}
 
 
 def field_subfield(key: str, subfields: dict):
