@@ -24,6 +24,24 @@ def _(x):
     return x
 
 
+INVENIO_MARC21_FACETS = {}
+
+INVENIO_MARC21_SORT_OPTIONS = {
+    "bestmatch": {
+        "title": _("Best match"),
+        "fields": ["_score"],  # ES defaults to desc on `_score` field
+    },
+    "newest": {
+        "title": _("Newest"),
+        "fields": ["-created"],
+    },
+}
+
+INVENIO_MARC21_SEARCH = {
+    "sort": ["bestmatch", "newest"],
+}
+"""Record search configuration."""
+
 INVENIO_MARC21_BASE_TEMPLATE = "invenio_records_marc21/base.html"
 
 INVENIO_MARC21_REST_ENDPOINTS = {}

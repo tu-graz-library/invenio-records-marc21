@@ -13,68 +13,6 @@
 
 {%- block page_body %}
 
-<div data-invenio-search-config='{
-  "aggs": [
-    {
-      "aggName": "access_right",
-      "field": "access.access_right",
-      "title": "Access Right"
-    }
-  ],
-  "appId": "marc21-search",
-  "initialQueryState": {
-    "filters": [],
-    "hiddenParams": null,
-    "layout": "list",
-    "page": 1,
-    "size": 10,
-    "sortBy": "bestmatch"
-  },
-  "layoutOptions": {
-    "gridView": false,
-    "listView": true
-  },
-  "paginationOptions": {
-    "defaultValue": 10,
-    "resultsPerPage": [
-      {
-        "text": "10",
-        "value": 10
-      },
-      {
-        "text": "20",
-        "value": 20
-      },
-      {
-        "text": "50",
-        "value": 50
-      },
-      {
-        "text": "100",
-        "value": 100
-      }
-    ]
-  },
-  "searchApi": {
-    "axios": {
-      "headers": {
-        "Accept":  "application/vnd.inveniomarc21.v1+json"
-      },
-      "url": "/api/marc21",
-      "withCredentials": true
-    }
-  },
-  "sortOrderDisabled": true,
-  "sortOptions": [
-    {
-      "sortBy": "bestmatch",
-      "text": "Best match"
-    },
-    {
-      "sortBy": "newest",
-      "text": "Newest"
-    }
-  ]
-}'></div>
+<div id="invenio-search-marc21-config" data-invenio-search-config='{{ search_app_marc21_config() | tojson }}'></div>
 
 {%- endblock page_body %}
