@@ -38,7 +38,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -48,7 +48,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "8": {
                                       "description": "Field link and sequence number",
@@ -88,7 +88,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -98,7 +98,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -166,7 +166,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -176,7 +176,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source",
@@ -230,7 +230,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "type": "string"
@@ -240,7 +240,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source",
@@ -280,7 +280,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -290,7 +290,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source",
@@ -360,7 +360,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -370,7 +370,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -403,7 +403,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -413,7 +413,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -467,7 +467,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -477,7 +477,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source",
@@ -545,7 +545,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "type": "string"
@@ -555,7 +555,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of number or code",
@@ -623,7 +623,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -633,7 +633,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "8": {
                                       "description": "Field link and sequence number",
@@ -659,7 +659,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -669,7 +669,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source",
@@ -744,7 +744,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -754,7 +754,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -801,7 +801,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["3", "2", "5", "1", "4", "0"]
@@ -811,7 +811,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -858,7 +858,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -868,7 +868,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -908,7 +908,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -918,7 +918,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "System code",
@@ -1070,7 +1070,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -1080,7 +1080,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -1120,7 +1120,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "2", "_"]
@@ -1130,7 +1130,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number",
@@ -1205,7 +1205,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "3", "0"]
@@ -1215,7 +1215,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -1395,7 +1395,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -1405,7 +1405,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -1447,7 +1447,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -1457,7 +1457,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -1497,7 +1497,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["2", "3", "_"]
@@ -1507,7 +1507,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -1591,7 +1591,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -1601,7 +1601,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -1636,7 +1636,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -1646,7 +1646,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -1707,7 +1707,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -1717,7 +1717,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of code",
@@ -1829,7 +1829,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -1839,7 +1839,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "a": {
                                       "description": "Authentication code",
@@ -1860,7 +1860,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -1870,7 +1870,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -1933,7 +1933,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -1943,7 +1943,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of local subentity code",
@@ -1999,7 +1999,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "2", "_"]
@@ -2009,7 +2009,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -2056,7 +2056,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -2066,7 +2066,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of date",
@@ -2183,7 +2183,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -2193,7 +2193,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of code",
@@ -2226,7 +2226,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -2236,7 +2236,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of code",
@@ -2276,7 +2276,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -2286,7 +2286,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -2333,7 +2333,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -2343,7 +2343,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "8": {
                                       "description": "Field link and sequence number",
@@ -2383,7 +2383,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "type": "string"
@@ -2393,7 +2393,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Code source",
@@ -2447,7 +2447,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -2457,7 +2457,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of call/class number",
@@ -2504,7 +2504,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -2514,7 +2514,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "8": {
                                       "description": "Field link and sequence number",
@@ -2547,7 +2547,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -2557,7 +2557,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "8": {
                                       "description": "Field link and sequence number",
@@ -2599,7 +2599,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -2609,7 +2609,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "a": {
                                       "description": "Primary G0 character set",
@@ -2642,7 +2642,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -2652,7 +2652,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "8": {
                                       "description": "Field link and sequence number (R",
@@ -2685,7 +2685,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -2695,7 +2695,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "8": {
                                       "description": "Field link and sequence number",
@@ -2735,7 +2735,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -2745,7 +2745,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source",
@@ -2792,7 +2792,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -2802,7 +2802,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "8": {
                                       "description": "Field link and sequence number",
@@ -2835,7 +2835,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -2845,7 +2845,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Edition identifier",
@@ -2899,7 +2899,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "type": "string"
@@ -2909,7 +2909,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Edition number",
@@ -2970,7 +2970,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "type": "string"
@@ -2980,7 +2980,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Edition number",
@@ -3055,7 +3055,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -3065,7 +3065,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Number source",
@@ -3119,7 +3119,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -3129,7 +3129,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -3239,7 +3239,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "type": "string"
@@ -3249,7 +3249,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Number source",
@@ -3296,7 +3296,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -3306,7 +3306,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -3348,7 +3348,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "3", "0"]
@@ -3358,7 +3358,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -3505,7 +3505,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "0"]
@@ -3515,7 +3515,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -3648,7 +3648,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "0"]
@@ -3658,7 +3658,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -3798,7 +3798,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "9", "3", "2", "5", "1", "4", "6", "7", "0"]
@@ -3808,7 +3808,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -3939,7 +3939,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -3949,7 +3949,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source",
@@ -3996,7 +3996,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -4006,7 +4006,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -4048,7 +4048,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -4058,7 +4058,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -4182,7 +4182,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -4192,7 +4192,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -4269,7 +4269,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -4279,7 +4279,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -4398,7 +4398,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -4408,7 +4408,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -4504,7 +4504,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "3", "2", "0"]
@@ -4514,7 +4514,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "5": {
                                       "description": "Institution to which field applies",
@@ -4603,7 +4603,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -4613,7 +4613,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -4695,7 +4695,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -4705,7 +4705,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -4754,7 +4754,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -4764,7 +4764,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -4797,7 +4797,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -4807,7 +4807,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -4884,7 +4884,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -4894,7 +4894,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -4927,7 +4927,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -4937,7 +4937,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source",
@@ -4977,7 +4977,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -4987,7 +4987,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -5027,7 +5027,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["2", "3", "_"]
@@ -5037,7 +5037,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -5114,7 +5114,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -5124,7 +5124,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -5187,7 +5187,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -5197,7 +5197,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -5260,7 +5260,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -5270,7 +5270,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -5303,7 +5303,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["2", "3", "_"]
@@ -5313,7 +5313,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -5367,7 +5367,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "_"]
@@ -5377,7 +5377,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relator code",
@@ -5536,7 +5536,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -5546,7 +5546,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -5623,7 +5623,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -5633,7 +5633,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -5666,7 +5666,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "_"]
@@ -5676,7 +5676,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -5718,7 +5718,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -5728,7 +5728,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -5768,7 +5768,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -5778,7 +5778,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -5818,7 +5818,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -5828,7 +5828,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -5889,7 +5889,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -5899,7 +5899,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -5960,7 +5960,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -5970,7 +5970,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -6031,7 +6031,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -6041,7 +6041,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -6179,7 +6179,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -6189,7 +6189,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Reference method used",
@@ -6383,7 +6383,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -6393,7 +6393,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -6482,7 +6482,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -6492,7 +6492,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -6595,7 +6595,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -6605,7 +6605,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -6666,7 +6666,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -6676,7 +6676,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -6737,7 +6737,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -6747,7 +6747,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -6836,7 +6836,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -6846,7 +6846,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -6907,7 +6907,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -6917,7 +6917,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -6971,7 +6971,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -6981,7 +6981,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -7070,7 +7070,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "3", "2", "5", "1", "4", "0"]
@@ -7080,7 +7080,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -7171,7 +7171,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -7181,7 +7181,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -7235,7 +7235,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -7245,7 +7245,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -7285,7 +7285,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -7295,7 +7295,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -7440,7 +7440,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -7450,7 +7450,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of price type code",
@@ -7567,7 +7567,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -7577,7 +7577,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of availability status code",
@@ -7680,7 +7680,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -7690,7 +7690,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -7779,7 +7779,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -7789,7 +7789,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source",
@@ -7836,7 +7836,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -7846,7 +7846,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Record control number",
@@ -7893,7 +7893,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -7903,7 +7903,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Record control number",
@@ -7964,7 +7964,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -7974,7 +7974,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -8084,7 +8084,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -8094,7 +8094,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source",
@@ -8164,7 +8164,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -8174,7 +8174,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -8207,7 +8207,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -8217,7 +8217,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -8292,7 +8292,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -8302,7 +8302,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -8377,7 +8377,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "_"]
@@ -8387,7 +8387,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -8441,7 +8441,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "3", "0"]
@@ -8451,7 +8451,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relator code",
@@ -8589,7 +8589,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "0"]
@@ -8599,7 +8599,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relator code",
@@ -8737,7 +8737,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "0"]
@@ -8747,7 +8747,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relator code",
@@ -8885,7 +8885,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -8895,7 +8895,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number",
@@ -8970,7 +8970,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -8980,7 +8980,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -9041,7 +9041,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -9051,7 +9051,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -9098,7 +9098,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -9108,7 +9108,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "5": {
                                       "description": "Institution to which field applies",
@@ -9148,7 +9148,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -9158,7 +9158,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -9226,7 +9226,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -9236,7 +9236,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -9276,7 +9276,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "8", "2", "0"]
@@ -9286,7 +9286,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -9347,7 +9347,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -9357,7 +9357,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of term",
@@ -9455,7 +9455,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -9465,7 +9465,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -9505,7 +9505,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -9515,7 +9515,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -9548,7 +9548,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["3", "2", "1", "4", "0"]
@@ -9558,7 +9558,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -9626,7 +9626,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -9636,7 +9636,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -9669,7 +9669,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -9679,7 +9679,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -9721,7 +9721,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -9731,7 +9731,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -9855,7 +9855,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -9865,7 +9865,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -9898,7 +9898,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "_"]
@@ -9908,7 +9908,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -9941,7 +9941,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -9951,7 +9951,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Record control number",
@@ -10026,7 +10026,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "3", "2", "_", "1", "4", "0"]
@@ -10036,7 +10036,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source",
@@ -10104,7 +10104,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "3", "2", "_", "1", "4", "0"]
@@ -10114,7 +10114,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -10161,7 +10161,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "_"]
@@ -10171,7 +10171,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -10204,7 +10204,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "_"]
@@ -10214,7 +10214,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of schema used",
@@ -10261,7 +10261,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -10271,7 +10271,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -10304,7 +10304,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "0"]
@@ -10314,7 +10314,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "5": {
                                       "description": "Institution to which field applies",
@@ -10396,7 +10396,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -10406,7 +10406,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -10474,7 +10474,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -10484,7 +10484,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -10587,7 +10587,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -10597,7 +10597,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -10728,7 +10728,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2"]
@@ -10738,7 +10738,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -10806,7 +10806,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -10816,7 +10816,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -10898,7 +10898,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -10908,7 +10908,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -10969,7 +10969,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -10979,7 +10979,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -11054,7 +11054,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -11064,7 +11064,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -11167,7 +11167,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -11177,7 +11177,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -11350,7 +11350,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -11360,7 +11360,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -11435,7 +11435,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -11445,7 +11445,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -11492,7 +11492,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -11502,7 +11502,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -11549,7 +11549,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -11559,7 +11559,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -11592,7 +11592,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -11602,7 +11602,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -11635,7 +11635,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -11645,7 +11645,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -11797,7 +11797,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "0", "_"]
@@ -11807,7 +11807,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -11875,7 +11875,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "_"]
@@ -11885,7 +11885,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -11925,7 +11925,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -11935,7 +11935,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -11989,7 +11989,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -11999,7 +11999,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -12074,7 +12074,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -12084,7 +12084,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -12138,7 +12138,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "0", "_"]
@@ -12148,7 +12148,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -12216,7 +12216,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "_"]
@@ -12226,7 +12226,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -12259,7 +12259,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -12269,7 +12269,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -12302,7 +12302,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "_"]
@@ -12312,7 +12312,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -12359,7 +12359,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -12369,7 +12369,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of term",
@@ -12528,7 +12528,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -12538,7 +12538,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -12592,7 +12592,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -12602,7 +12602,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -12649,7 +12649,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "_"]
@@ -12659,7 +12659,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -12699,7 +12699,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -12709,7 +12709,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "5": {
                                       "description": "Institution to which field applies",
@@ -12749,7 +12749,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "3", "0"]
@@ -12759,7 +12759,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -12981,7 +12981,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "0"]
@@ -12991,7 +12991,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -13199,7 +13199,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "0"]
@@ -13209,7 +13209,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -13403,7 +13403,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "9", "3", "2", "5", "1", "4", "6", "7", "0"]
@@ -13413,7 +13413,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -13600,7 +13600,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -13610,7 +13610,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -13692,7 +13692,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "2", "_"]
@@ -13702,7 +13702,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -13826,7 +13826,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -13836,7 +13836,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -13939,7 +13939,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "2", "_"]
@@ -13949,7 +13949,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -13982,7 +13982,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "2", "_"]
@@ -13992,7 +13992,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number",
@@ -14095,7 +14095,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["0", "_"]
@@ -14105,7 +14105,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number",
@@ -14208,7 +14208,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -14218,7 +14218,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number",
@@ -14307,7 +14307,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -14317,7 +14317,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number",
@@ -14399,7 +14399,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -14409,7 +14409,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of term or code",
@@ -14470,7 +14470,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -14480,7 +14480,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number",
@@ -14583,7 +14583,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "3", "0"]
@@ -14593,7 +14593,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -14801,7 +14801,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "0"]
@@ -14811,7 +14811,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -15005,7 +15005,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "0"]
@@ -15015,7 +15015,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -15195,7 +15195,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "_"]
@@ -15205,7 +15205,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relator code",
@@ -15252,7 +15252,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "9", "3", "2", "5", "1", "4", "6", "7", "0"]
@@ -15262,7 +15262,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -15421,7 +15421,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["8", "9", "3", "2", "5", "1", "4", "6", "7", "0"]
@@ -15431,7 +15431,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "5": {
                                       "description": "Institution to which field applies",
@@ -15492,7 +15492,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -15502,7 +15502,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number",
@@ -15570,7 +15570,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -15580,7 +15580,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number",
@@ -15669,7 +15669,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -15679,7 +15679,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -15740,7 +15740,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -15750,7 +15750,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number",
@@ -15825,7 +15825,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -15835,7 +15835,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -15980,7 +15980,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -15990,7 +15990,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -16135,7 +16135,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -16145,7 +16145,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -16318,7 +16318,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -16328,7 +16328,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -16501,7 +16501,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -16511,7 +16511,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -16684,7 +16684,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -16694,7 +16694,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -16867,7 +16867,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -16877,7 +16877,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "3": {
                                       "description": "Materials specified",
@@ -17064,7 +17064,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -17074,7 +17074,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -17247,7 +17247,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -17257,7 +17257,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -17444,7 +17444,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -17454,7 +17454,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -17627,7 +17627,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -17637,7 +17637,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -17789,7 +17789,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -17799,7 +17799,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -17972,7 +17972,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -17982,7 +17982,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -18155,7 +18155,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -18165,7 +18165,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -18359,7 +18359,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0"]
@@ -18369,7 +18369,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "4": {
                                       "description": "Relationship code",
@@ -18542,7 +18542,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "3", "0"]
@@ -18552,7 +18552,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -18774,7 +18774,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "0"]
@@ -18784,7 +18784,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -18992,7 +18992,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "0"]
@@ -19002,7 +19002,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -19196,7 +19196,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -19206,7 +19206,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -19379,7 +19379,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -19389,7 +19389,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "8": {
                                       "description": "Field link and sequence number",
@@ -19415,7 +19415,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "type": "string"
@@ -19425,7 +19425,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of classification or shelving scheme",
@@ -19612,7 +19612,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "type": "string"
@@ -19622,7 +19622,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Access method",
@@ -19830,7 +19830,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -19840,7 +19840,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Same as associated field",
@@ -20106,7 +20106,7 @@
 
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -20116,7 +20116,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "6": {
                                       "description": "Linkage",
@@ -20163,7 +20163,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "0", "_"]
@@ -20173,7 +20173,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Authority record control number or standard number",
@@ -20248,7 +20248,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -20258,7 +20258,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "a": {
                                       "description": "Conversion process",
@@ -20305,7 +20305,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["1", "2", "0"]
@@ -20315,7 +20315,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "0": {
                                       "description": "Foreign MARC subfield",
@@ -20579,7 +20579,7 @@
                   "type": "array",
                   "items": {
                       "type":"object",
-                      "additionalProperties":false,
+                      "additionalProperties":true,
                       "properties": {
                           "ind1": {
                               "enum": ["_"]
@@ -20589,7 +20589,7 @@
                           },
                           "subfields": {
                               "type":"object" ,
-                              "additionalProperties":false,
+                              "additionalProperties":true,
                               "properties":{
                                   "2": {
                                       "description": "Source of data",

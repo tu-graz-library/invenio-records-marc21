@@ -105,28 +105,3 @@ def test_cli_create_demo_metadata(running_app):
     )
     assert result.exit_code == 0
     assert result.output == "Creating demo records...\nCreated records!\n"
-
-
-def test_cli_create_validation_error(running_app):
-    """Test cli marc21 validation error in metadata."""
-    app = running_app.app
-    runner = app.test_cli_runner()
-    result = runner.invoke(
-        marc21,
-        [
-            "demo",
-            "-f",
-            "../tests/test-error-metadata.xml",
-            "-m",
-            "True",
-            "-n",
-            "10",
-        ],
-    )
-    assert result.exit_code == 0
-    assert "Creating demo records..." in result.output
-    assert "Field: $.fields.245[0].subfields" in result.output
-    assert (
-        "Message: Additional properties are not allowed (\\'z\\' was unexpected)"
-        in result.output
-    )
