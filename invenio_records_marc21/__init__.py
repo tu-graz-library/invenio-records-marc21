@@ -211,7 +211,7 @@ from __future__ import absolute_import, print_function
 from .ext import InvenioRecordsMARC21
 from .proxies import current_records_marc21
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 
 __all__ = (
     "__version__",

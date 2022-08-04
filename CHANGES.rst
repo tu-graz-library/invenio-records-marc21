@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.7.0 (release 2022-08-04)
+
+- improve (WIP) landing page and search results
+
+
 Version v0.6.0 (release 2022-08-01)
 
 - make the jsonschema less restrictive
