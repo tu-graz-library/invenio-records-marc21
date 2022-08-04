@@ -6,25 +6,17 @@
   under the terms of the MIT License; see LICENSE file for more details.
 #}
 
-
-{% set title = marcrecord.get('title_statement') %}
-{% set publisher = marcrecord.get('production_publication_distribution_manufacture_and_copyright_notice') %}
-
-{% if title %}
-
-{% set personal = marcrecord.get('main_entry_personal_name') %}
-
 <div class="top-bottom-padded" id="marc21-landing-page-record-title">
-  <h1>{{title.get('title') | sanitize_title() }}</h1>
-  {% if personal %}
-    <p>{{ personal.get('personal_name')}}</p>
-  {% endif %}
+  <h1 class="wrap-overflowing-text">
+    {% for title in marcrecord.get('titles') %}
+    {{title}}
+    {% endfor %}
+  </h1>
 
-  {% if publisher %}
-    {% set location = publisher.get('place_of_production_publication_distribution_manufacture') %}
-    {% set date = publisher.get('date_of_production_publication_distribution_manufacture_or_copyright_notice') %}
-
-    <p>{{location if location}} {{date if date}}</p>
-  {% endif %}
+  <div style="margin: 14px 0 21px 0;">
+  {% for author in marcrecord.get("authors") %}
+  <span>{{author.get("a") | join(", ")}}</span>
+  {% endfor %}
+  </div>
+  {# TODO: affiliation #}
 </div>
-{% endif %}

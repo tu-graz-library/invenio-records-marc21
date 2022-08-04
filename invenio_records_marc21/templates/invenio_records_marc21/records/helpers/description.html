@@ -7,13 +7,10 @@
 #}
 
 
-{% set desciption = marcrecord.get('summary') %}
-{% if desciption %}
-{% if desciption is iterable and desciption is not string  %}
-{% set desciption = desciption.get('summary') %}
-{% endif %}
-<h5 class="ui header">{{_('Desciption')}}</h5>
-<div class="top-bottom-padded">
-  {{ desciption }}
+{% set description = marcrecord.get('description') %}
+{% if description %}
+<h2 class="ui header">{{_('Description')}}</h2>
+<div class="top-bottom-padded" style="margin-bottom: 30px;">
+  <p>{{ description }}</p>
 </div>
 {% endif %}

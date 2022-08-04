@@ -26,7 +26,11 @@
       <p><b>{{ _(title) if title }}</b></p>
     </div>
     <div class="twelve wide column">
-      {% if value is iterable and (value is not string and value is not mapping) %}
+      {% if type == "authors" %}
+        {% for author in authors %}
+        <span>{author.get("a")}</span>
+        {% endfor %}
+      {% elif value is iterable and (value is not string and value is not mapping) %}
         {%- set value = value|join(', ') %}
       {% elif type == "link" %}
         <a href={{value}}>{{ value }}</a>
@@ -40,8 +44,8 @@
 
 {% macro show_personal_name(details) %}
   {% set key = _("Name") %}
-  {% set value = details.main_entry_personal_name | personal_name %}
-  {{ show_detail(key, value) }}
+  {% set value = details.authors %}
+  {{ show_detail(key, value, authors) }}
 {%- endmacro %}
 
 {% macro show_description(details) %}
@@ -52,34 +56,36 @@
 
 {% macro show_creation_date(details) %}
   {% set key = _("Creation Date") %}
-  {% set value = details.production_publication_distribution_manufacture_and_copyright_notice.date_of_production_publication_distribution_manufacture_or_copyright_notice %}
+  {% set value = details.createdDate %}
   {{ show_detail(key, value) }}
 {%- endmacro %}
 
 {% macro show_language(details) %}
   {% set key = _("Language") %}
-  {% set value = details.language_code.language_code_of_text_sound_track_or_separate_title %}
+  {% set value = details.language_codes %}
   {{ show_detail(key, value) }}
 {%- endmacro %}
 
 {% macro show_thesis_information(details) %}
   {% set key = _("Thesis Information") %}
-  {% set value = details.dissertation_note.dissertation_note %}
+  {% set value = details.notes %}
   {{ show_detail(key, value) }}
 {%- endmacro %}
 
 {% macro show_title(details) %}
   {% set key = _("Title") %}
-  {% set value = details.title_statement.title %}
+  {% set value = details.titles %}
   {{ show_detail(key, value) }}
 
+  {#
   {% set key = _("Stmt. of Responsibility") %}
   {% set value = details.title_statement.statement_of_responsibility %}
   {{ show_detail(key, value) }}
+  #}
 {% endmacro %}
 
 {% macro show_physical_description(details) %}
   {% set key = _("Type/Extent/Format") %}
-  {% set value = details.physical_description | physical_description %}
+  {% set value = details.descriptions %}
   {{ show_detail(key, value) }}
 {% endmacro %}

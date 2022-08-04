@@ -8,8 +8,7 @@
 
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import _camelCase from "lodash/camelCase";
-import _truncate from "lodash/truncate";
+import { truncate, get } from "lodash";
 import {
   Button,
   Card,
@@ -21,43 +20,29 @@ import {
   List,
 } from "semantic-ui-react";
 import { BucketAggregation } from "react-searchkit";
-import _get from "lodash/get";
 import { loadComponents } from "@js/invenio_theme/templates";
 import Overridable from "react-overridable";
 import { SearchBar, SearchApp } from "@js/invenio_search_ui/components";
 
 export const Marc21RecordResultsListItem = ({ result, index }) => {
-  const createdDate = _get(result, "ui.created", "No creation date found.");
+  const version = get(result, "revision_id", null);
 
-  const publicationDate = _get(result, "ui.updated", "No update date found.");
-  const access = _get(result, ["ui", "access_status"], []);
+  const createdDate = get(result, "ui.created", "No creation date found");
+  const publicationDate = get(result, "ui.updated", "No update date found");
 
-  const access_id = _get(access, "id", "public");
-  const access_status = _get(access, "title", "Public");
-  const access_icon = _get(access, "icon", "unlock");
+  const access_id = get(result, "ui.access_status.id", "public");
+  const access_status = get(result, "ui.access_status.title", "Public");
+  const access_icon = get(result, "ui.access_status.icon", "unlock");
 
-  const metadata = _get(result, ["ui", "metadata"], []);
-  const description = _get(metadata, ["summary", "summary"], "No description");
-  const subjects = _get(metadata, "subject_added_entry_topical_term", []);
-
-  const publication = _get(
-    metadata,
-    ["production_publication_distribution_manufacture_and_copyright_notice"],
-    []
-  );
-  const creators = _get(
-    publication,
-    "name_of_producer_publisher_distributor_manufacturer",
-    []
-  );
-
-  const title = _get(metadata, ["title_statement", "title"], "No title");
-  const version = _get(result, "revision_id", null);
+  const description = get(result, "ui.metadata.description", "No description");
+  const subjects = get(result, "ui.metadata.subjects", []);
+  const creators = get(result, "ui.metadata.authors", []);
+  const titles = get(result, "ui.metadata.titles", ["No titles"]);
 
   const viewLink = `/marc21/${result.id}`;
 
   return (
-    <Item key={index} href={viewLink}>
+    <Item key={index}>
       <Item.Content>
         <Item.Extra>
           <div>
@@ -74,17 +59,21 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
             </Button>
           </div>
         </Item.Extra>
-        <Item.Header>{title}</Item.Header>
+        <Item.Header href={viewLink}>
+          {titles.map((title) => (
+            <span>{title}</span>
+          ))}
+        </Item.Header>
         <Item.Meta>
           {creators.map((creator, index) => (
             <span key={index}>
-              {creator}
+              {creator.a}
               {index < creators.length - 1 && ","}
             </span>
           ))}
         </Item.Meta>
         <Item.Description>
-          {_truncate(description, { length: 350 })}
+          {truncate(description, { length: 350 })}
         </Item.Description>
         <Item.Extra>
           {subjects.map((subject, index) => (
@@ -106,8 +95,8 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
 };
 
 export const Marc21RecordResultsGridItem = ({ result, index }) => {
-  const metadata = _get(result, ["ui", "metadata", "json"], []);
-  const description = _get(
+  const metadata = get(result, ["ui", "metadata", "json"], []);
+  const description = get(
     metadata,
     ["summary", "0", "summary"],
     "No description"
@@ -117,7 +106,7 @@ export const Marc21RecordResultsGridItem = ({ result, index }) => {
       <Card.Content>
         <Card.Header>{result.metadata.json.title_statement.title}</Card.Header>
         <Card.Description>
-          {_truncate(description, { length: 200 })}
+          {truncate(description, { length: 200 })}
         </Card.Description>
       </Card.Content>
     </Card>

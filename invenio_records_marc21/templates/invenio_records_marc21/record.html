@@ -20,9 +20,9 @@
 {%- block page_body %}
 
 <div class="ui container" id="marc21-landing-page">
-  <div class="ui relaxed grid">
-    <div class="two column row">
-      <div class="twelve wide column">
+  <div class="ui relaxed grid mt-5">
+    <div class="two column row top-padded">
+      <article class="sixteen wide tablet eleven wide computer column main-record-content">
         {%- block record_body %}
 
         {%- block record_header -%}
@@ -31,25 +31,27 @@
           <div class="two column row">
             <div class="left floated left aligned column">
               <div class="twelve wide column">
-              <span class="ui" title="{{_('Creation date')}}">{{  record.ui.created }}</span>
-              {%- if record.ui.version %}
-              <span class="label text-muted"> | Version {{ record.ui.version }}</span>
+                <span class="ui" title="{{_('Creation date')}}">{{  record.ui.created }}</span>
+                {%- if record.ui.version %}
+                <span class="label text-muted"> | Version {{ record.ui.version }}</span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="right floated right aligned column">
+              {% if record.ui.metadata.resource_type %}
+              <span class="ui label small neutral"
+                    title="{{ _('Resource type') }}">{{ record.ui.metadata.resource_type }}</span>
               {% endif %}
-              </div>
-            </div><div class="panel-spacing">
-              <div class="right floated right aligned column">
-                <div class="ui accordion panel {{ record.ui.access_status.message_class }} message">
-                  <div class="title">
-                    <i class="ui {{ record.ui.access_status.icon }} icon"></i>{{ record.ui.access_status.title_l10n }}
-                  </div>
-                  <div class="content">
-                    <p>{{ record.ui.access_status.description_l10n }}</p>
-                    {% if record.access.embargo.reason %}
-                      <p>{{_("Reason")}}: {{record.access.embargo.reason}}</p>
-                    {% endif%}
-                  </div>
-                </div>
-              </div>
+              <span class="ui label small access-status {{ record.ui.access_status.id }}"
+                    title="{{ _('Access status') }}"
+                    data-tooltip="{{ record.ui.access_status.description_l10n }}"
+                    data-inverted=""
+              >
+                {% if record.ui.access_status.icon %}
+                <i class="icon {{ record.ui.access_status.icon }}"></i>
+                {% endif %}
+                {{ record.ui.access_status.title_l10n }}
+              </span>
             </div>
           </div>
         </div>
@@ -75,16 +77,18 @@
           {%- include "invenio_records_marc21/records/helpers/files.html" %}
         {%- endblock record_files -%}
 
+          {#
         {%- block record_details -%}
           <div class="top-padded"></div>
           {%- include "invenio_records_marc21/records/helpers/details.html" %}
         {%- endblock record_details -%}
+          #}
 
         {%- block record_footer -%}
           {%- include "invenio_records_marc21/records/helpers/footer.html" %}
         {%- endblock record_footer -%}
         {%- endblock record_body %}
-      </div>
+      </article>
 
       {% block record_sidebar %}
         {%- include "invenio_records_marc21/records/helpers/side_bar.html" %}

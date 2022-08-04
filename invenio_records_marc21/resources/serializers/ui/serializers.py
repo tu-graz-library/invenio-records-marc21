@@ -33,7 +33,6 @@ class Marc21UIBASESerializer(Marc21BASESerializer):
 
     def dump_obj(self, obj):
         """Dump the object into a JSON string."""
-        print("Marc21UIBaseSerializer.dump_obj")
         obj[self._object_key] = self.object_schema_cls().dump(deepcopy(obj))
         return obj
 
