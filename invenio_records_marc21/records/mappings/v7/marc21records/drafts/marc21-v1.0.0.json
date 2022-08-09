@@ -1,6 +1,140 @@
 {
   "mappings": {
     "date_detection": false,
-    "numeric_detection": false
+    "numeric_detection": false,
+    "dynamic_templates": [
+      {
+        "#text": {
+          "match": "#text",
+          "mapping": {
+            "type": "text"
+          }
+        }
+      }
+    ],
+    "properties": {
+      "id": {
+        "type": "keyword"
+      },
+      "access": {
+        "properties": {
+          "record": {
+            "type": "keyword"
+          },
+          "files": {
+            "type": "keyword"
+          },
+          "embargo": {
+            "properties": {
+              "active": {
+                "type": "boolean"
+              },
+              "until": {
+                "type": "date"
+              },
+              "reason": {
+                "type": "text"
+              }
+            }
+          },
+          "status": {
+            "type": "keyword"
+          }
+        }
+      },
+      "parent": {
+        "properties": {
+          "id": {
+            "type": "keyword"
+          },
+          "access": {
+            "properties": {
+              "owned_by": {
+                "properties": {
+                  "user": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "grants": {
+                "properties": {
+                  "subject": {
+                    "type": "keyword"
+                  },
+                  "id": {
+                    "type": "keyword"
+                  },
+                  "level": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "grant_tokens": {
+                "type": "keyword"
+              },
+              "links": {
+                "properties": {
+                  "id": {
+                    "type": "keyword"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "pids": {
+        "properties": {
+          "identifier": {
+            "type": "keyword"
+          },
+          "scheme": {
+            "type": "keyword"
+          },
+          "client": {
+            "type": "keyword",
+            "index": false
+          },
+          "provider": {
+            "type": "keyword",
+            "index": false
+          }
+        }
+      },
+      "has_draft": {
+        "type": "boolean"
+      },
+      "created": {
+        "type": "date"
+      },
+      "updated": {
+        "type": "date"
+      },
+      "is_published": {
+        "type": "boolean"
+      },
+      "versions": {
+        "properties": {
+          "index": {
+            "type": "integer"
+          },
+          "is_latest": {
+            "type": "boolean"
+          },
+          "is_latest_draft": {
+            "type": "boolean"
+          },
+          "latest_id": {
+            "type": "keyword"
+          },
+          "latest_index": {
+            "type": "integer"
+          },
+          "next_draft_id": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
   }
 }
