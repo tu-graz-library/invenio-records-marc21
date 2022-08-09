@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.7.1 (release 2022-08-09)
+
+- fix: the missing mappings causes an error with the empty search feature
+
+
 Version v0.7.0 (release 2022-08-04)
 
 - improve (WIP) landing page and search results
