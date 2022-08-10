@@ -80,8 +80,8 @@ class Marc21DataCite43Schema(Schema):
 
     def get_publication_year(self, obj):
         """Get publication year from edtf date."""
-        publication_dates = self._get_field(obj, "005")
-        publication_date = publication_dates[0:4]
+        publication_dates = self._get_field(obj, "008")
+        publication_date = publication_dates[7:11]
         return publication_date
 
     def get_identifiers(self, obj):
