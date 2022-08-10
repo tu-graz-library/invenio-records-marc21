@@ -8,6 +8,13 @@
 Changes
 =======
 
+Version v0.7.2 (release 2022-08-10)
+
+- modification: datacite schema\n\n changing the field numbers
+- tests: modification datacite testset
+- bugfix: pids components from rdm records
+
+
 Version v0.7.1 (release 2022-08-09)
 
 - fix: the missing mappings causes an error with the empty search feature
