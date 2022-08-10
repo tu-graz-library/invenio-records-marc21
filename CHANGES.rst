@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.7.3 (release 2022-08-10)
+
+- fix use 009[7:11] for publication year
+
+
 Version v0.7.2 (release 2022-08-10)
 
 - modification: datacite schema\n\n changing the field numbers
