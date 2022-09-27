@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.7.4 (release 2022-09-27)
+
+- fix: ConfigurationMixin changed location
+- global: increase version of invenio-search
+
+
 Version v0.7.3 (release 2022-08-10)
 
 - fix use 009[7:11] for publication year
