@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.7.5 (release 2022-09-27)
+
+- fix: javascript dependencies
+
+
 Version v0.7.4 (release 2022-09-27)
 
 - fix: ConfigurationMixin changed location
