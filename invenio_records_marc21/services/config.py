@@ -25,14 +25,14 @@ from invenio_rdm_records.records.systemfields.access.field.record import (
 )
 from invenio_rdm_records.services.components import AccessComponent
 from invenio_rdm_records.services.config import has_doi, is_record_and_has_doi
-from invenio_rdm_records.services.customizations import (
-    ConfiguratorMixin,
-    SearchOptionsMixin,
-)
 from invenio_records_resources.services import (
     ConditionalLink,
     FileServiceConfig,
     pagination_links,
+)
+from invenio_records_resources.services.base.config import (
+    ConfiguratorMixin,
+    SearchOptionsMixin,
 )
 from invenio_records_resources.services.base.links import Link
 from invenio_records_resources.services.files.links import FileLink
