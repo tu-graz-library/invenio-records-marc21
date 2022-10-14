@@ -8,6 +8,14 @@
 Changes
 =======
 
+Version v0.8.0 (release 2022-10-14)
+
+- tests: move to resuable workflows
+- tests: remove CACHE and MQ
+- setup: sort imports, remove doublets
+- global: migrate to opensearch2
+
+
 Version v0.7.5 (release 2022-09-27)
 
 - fix: javascript dependencies
