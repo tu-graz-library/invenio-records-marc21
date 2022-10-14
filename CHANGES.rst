@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.8.1 (release 2022-10-14)
+
+- global: migrate publish to reusable workflows
+- setup: fix classifier
+
+
 Version v0.8.0 (release 2022-10-14)
 
 - tests: move to resuable workflows
