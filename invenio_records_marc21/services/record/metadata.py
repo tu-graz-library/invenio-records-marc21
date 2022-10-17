@@ -186,7 +186,7 @@ class Marc21Metadata:
         controlfield.text = value
         self._etree.append(controlfield)
 
-    def emplace_datafield(self, selector, value) -> None:
+    def emplace_datafield(self, selector, value=None, subfs=None) -> None:
         """Add value to record for given datafield and subfield.
 
         :params selector e.g. "100...a", "100"
@@ -194,7 +194,18 @@ class Marc21Metadata:
         tag, ind1, ind2, code = selector.split(".")
 
         datafield = Element("datafield", tag=tag, ind1=ind1, ind2=ind2)
-        subfield = Element("subfield", code=code)
-        subfield.text = value
-        datafield.append(subfield)
+        if value:
+            subfield = Element("subfield", code=code)
+            subfield.text = value
+            datafield.append(subfield)
+
+        elif subfs:
+            for key, val in subfs.items():
+                subfield = Element("subfield", code=key)
+                subfield.text = val
+                datafield.append(subfield)
+
+        else:
+            raise Error()
+
         self._etree.append(datafield)
