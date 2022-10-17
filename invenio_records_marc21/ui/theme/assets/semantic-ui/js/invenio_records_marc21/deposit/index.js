@@ -8,7 +8,6 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import "semantic-ui-css/semantic.min.css";
 
 import { getInputFromDOM } from "react-invenio-deposit";
 import { Marc21DepositForm } from "./Marc21DepositForm";
