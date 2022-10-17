@@ -12,5 +12,6 @@
 
 
 from .metadata import Marc21Metadata
+from .utils import add_file_to_record, create_record
 
-__all__ = ("Marc21Metadata",)
+__all__ = ("Marc21Metadata", "add_file_to_record", "create_record")

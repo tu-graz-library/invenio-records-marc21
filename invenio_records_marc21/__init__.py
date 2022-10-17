@@ -210,6 +210,8 @@ from __future__ import absolute_import, print_function
 
 from .ext import InvenioRecordsMARC21
 from .proxies import current_records_marc21
+from .records import MarcDraftProvider
+from .services import Marc21Metadata, add_file_to_record, create_record
 
 __version__ = "0.8.2"
 
@@ -217,4 +219,8 @@ __all__ = (
     "__version__",
     "InvenioRecordsMARC21",
     "current_records_marc21",
+    "Marc21Metadata",
+    "add_file_to_record",
+    "create_record",
+    "MarcDraftProvider",
 )

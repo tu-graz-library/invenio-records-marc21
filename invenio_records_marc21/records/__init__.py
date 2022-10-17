@@ -12,6 +12,7 @@
 
 from .api import DraftFile, Marc21Draft, Marc21Parent, Marc21Record, RecordFile
 from .models import DraftMetadata, RecordMetadata
+from .systemfields import MarcDraftProvider
 
 __all__ = (
     "DraftFile",
@@ -21,4 +22,5 @@ __all__ = (
     "Marc21Parent",
     "DraftMetadata",
     "RecordMetadata",
+    "MarcDraftProvider",
 )
