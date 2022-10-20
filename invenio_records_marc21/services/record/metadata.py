@@ -193,6 +193,15 @@ class Marc21Metadata:
         """
         tag, ind1, ind2, code = selector.split(".")
 
+        if not ind1:
+            ind1 = "_"
+
+        if not ind2:
+            ind2 = "_"
+
+        if not code:
+            code = "a"
+
         datafield = Element("datafield", tag=tag, ind1=ind1, ind2=ind2)
         if value:
             subfield = Element("subfield", code=code)
