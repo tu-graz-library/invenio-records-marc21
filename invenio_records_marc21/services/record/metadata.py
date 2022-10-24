@@ -33,7 +33,58 @@ class QName:
 
 def convert_json_to_marc21xml(record):
     """Convert marc21 json to marc21 xml."""
-    raise Exception("not yet implemented")
+    visitor = JsonToXmlVisitor(record["leader"])
+    visitor.visit(record["fields"])
+    return visitor.get_xml_record()
+
+
+class JsonToXmlVisitor:
+    """JsonToXmlVisitor class."""
+
+    def __init__(self, leader_):
+        """Constructor."""
+        self.record = Element("record", xmlns="http://www.loc.gov/MARC21/slim")
+        leader = Element("leader")
+        leader.text = leader_
+        self.record.append(leader)
+
+    def process(self, item):
+        """Process."""
+        visit_func = getattr(self, f"visit_")
+        reslt = visit_func(item)
+        return result
+
+    def get_xml_record(self):
+        """Get xml record."""
+        return self.record
+
+    def visit(self, fields):
+        """Default visit method."""
+        for category, items in fields.items():
+            if int(category) < 10:
+                self.visit_controlfield(category, items)
+            else:
+                self.visit_datafield(category, items)
+
+    def visit_controlfield(self, category, value):
+        """Visit controlfield."""
+        controlfield = Element("controlfield", {tag: catagory})
+        controlfield.text = value
+        self.record.append(controlfield)
+
+    def visit_datafield(self, category, items):
+        """Visit datafield."""
+        for item in items:
+            datafield = Element(
+                "datafield",
+                {"ind1": item["ind1"], "ind2": item["ind2"], "tag": category},
+            )
+            for subfn, subfv in item["subfields"].items():
+                subfield = Element("subfield", {"code": subfn})
+                subfield.text = " ".join(subfv)
+                datafield.append(subfield)
+
+            self.record.append(datafield)
 
 
 def convert_marc21xml_to_json(record):
@@ -126,17 +177,23 @@ class XmlToJsonVisitor:
 class Marc21Metadata:
     """MARC21 Record class to facilitate storage of records in MARC21 format."""
 
-    def __init__(self, metadata=None):
+    def __init__(self, *, metadata=None, json=None):
         """Default constructor of the class."""
-        self._json = {}
+        self.set_default()
 
         if metadata:
-            self._etree = metadata
-        else:
-            self._etree = Element("record", xmlns="http://www.loc.gov/MARC21/slim")
-            leader = Element("leader")
-            leader.text = "00000nam a2200000zca4500"
-            self._etree.append(leader)
+            self.etree = metadata
+
+        if json:
+            self.json = json
+
+    def set_default(self):
+        self._json = {}
+
+        leader = Element("leader")
+        leader.text = "00000nam a2200000zca4500"
+        self._etree = Element("record", xmlns="http://www.loc.gov/MARC21/slim")
+        self._etree.append(leader)
 
     @property
     def etree(self):
