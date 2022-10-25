@@ -48,12 +48,6 @@ class JsonToXmlVisitor:
         leader.text = leader_
         self.record.append(leader)
 
-    def process(self, item):
-        """Process."""
-        visit_func = getattr(self, f"visit_")
-        reslt = visit_func(item)
-        return result
-
     def get_xml_record(self):
         """Get xml record."""
         return self.record
@@ -68,7 +62,7 @@ class JsonToXmlVisitor:
 
     def visit_controlfield(self, category, value):
         """Visit controlfield."""
-        controlfield = Element("controlfield", {tag: catagory})
+        controlfield = Element("controlfield", {"tag": category})
         controlfield.text = value
         self.record.append(controlfield)
 
@@ -243,7 +237,7 @@ class Marc21Metadata:
         controlfield.text = value
         self._etree.append(controlfield)
 
-    def emplace_datafield(self, selector, value=None, subfs=None) -> None:
+    def emplace_datafield(self, selector, *, value=None, subfs=None) -> None:
         """Add value to record for given datafield and subfield.
 
         :params selector e.g. "100...a", "100"
@@ -272,6 +266,6 @@ class Marc21Metadata:
                 datafield.append(subfield)
 
         else:
-            raise Error()
+            raise RuntimeError("Neither of value or subfs is set.")
 
         self._etree.append(datafield)
