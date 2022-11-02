@@ -8,6 +8,16 @@
 Changes
 =======
 
+Version v0.8.3 (release 2022-11-02)
+
+- fix
+- metadata: implement convert_json_to_marc21xml
+- metadata: add default values to selector
+- api: add two functions moved from invenio-alma
+- improve: add subfs parameter to emplace_datafield
+- fix: remove import of semantic css
+
+
 Version v0.8.2 (release 2022-10-14)
 
 - fix: pypi-publish inherit secrets
