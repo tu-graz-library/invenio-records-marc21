@@ -29,6 +29,13 @@ import {
 import PropTypes from "prop-types";
 
 export class Marc21DepositForm extends Component {
+
+  accordionStyle = {
+    header: { className: "segment inverted brand" },
+  };
+
+  sidebarRef = createRef();
+
   constructor(props) {
     super(props);
     const { files, record } = this.props;
@@ -46,12 +53,6 @@ export class Marc21DepositForm extends Component {
       this.noFiles = true;
     }
   }
-
-  sidebarRef = createRef();
-
-  accordionStyle = {
-    header: { className: "segment inverted brand" },
-  };
 
   render() {
     const { record, files, permissions, preselectedCommunity} = this.props;
