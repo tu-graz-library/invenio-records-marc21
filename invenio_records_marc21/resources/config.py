@@ -82,14 +82,6 @@ class Marc21RecordFilesResourceConfig(FileResourceConfig):
     blueprint_name = "marc21_files"
     url_prefix = f"{url_prefix}/<pid_value>"
 
-    links_config = {}
-    routes = {
-        "list": "/files",
-        "item": "/files/<key>",
-        "item-content": "/files/<key>/content",
-        "item-commit": "/files/<key>/commit",
-    }
-
 
 #
 # Draft files
