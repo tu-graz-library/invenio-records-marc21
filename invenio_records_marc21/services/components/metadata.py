@@ -22,9 +22,6 @@ class MetadataComponent(BaseMetadataComponent):
     def create(self, identity, data=None, record=None, errors=None, **kwargs):
         """Inject parsed metadata to the record."""
         record.metadata = data.get("metadata", {})
-        if errors:
-            messages = [str(e) for e in errors]
-            raise ValidationError(messages, field_name="metadata")
 
     def update(self, identity, data=None, record=None, **kwargs):
         """Inject parsed metadata to the record."""
