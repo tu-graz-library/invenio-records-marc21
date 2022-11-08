@@ -158,6 +158,15 @@ INVENIO_MARC21_PERSISTENT_IDENTIFIERS = {
     }
 """
 
+
+INVENIO_MARC21_API_HEADERS = {
+    "vnd+json": {
+        "Content-Type": "application/json",
+        "Accept": "application/vnd.inveniomarc21.v1+marcxml",
+    },
+}
+"""The api headers for the RDM deposit app."""
+
 # Configuration for the DataCiteClient used by the DataCitePIDProvider
 # Configuration may come from RDM records module
 DATACITE_ENABLED = False

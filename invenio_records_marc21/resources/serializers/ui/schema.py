@@ -35,7 +35,17 @@ class Marc21UISchema(Marc21Schema):
 
     id = SanitizedUnicode(data_key="id", attribute="id")
 
-    access_status = AccessStatusField(attribute="access")
+    class Meta:
+        """Meta class to accept unknwon fields."""
+
+        additional = (
+            "access",
+            "status",
+            "parent",
+            "links",
+            "files",
+            "versions",
+        )
 
     metadata = MetadataField(attribute="metadata")
 

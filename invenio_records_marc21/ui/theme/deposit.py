@@ -7,45 +7,22 @@
 
 """Marc21 records deposit backend."""
 
-from os.path import dirname, join
 
 from flask import current_app
-from marshmallow import Schema, fields
-from marshmallow.schema import SchemaMeta
-from marshmallow_utils.fields import NestedAttribute
+from invenio_i18n.ext import current_i18n
+from invenio_rdm_records.services.schemas.utils import dump_empty
 
 from invenio_records_marc21.services.schemas import Marc21RecordSchema
 
 from ...proxies import current_records_marc21
 
 
-def dump_empty(schema_or_field):
-    """Return a full marc21 record dict with empty values."""
-    if isinstance(schema_or_field, (Schema,)):
-        schema = schema_or_field
-        return {k: dump_empty(v) for (k, v) in schema.fields.items()}
-    if isinstance(schema_or_field, SchemaMeta):
-        schema = schema_or_field()
-        return {k: dump_empty(v) for (k, v) in schema.fields.items()}
-    if isinstance(schema_or_field, fields.List):
-        field = schema_or_field
-        return [dump_empty(field.inner)]
-    if isinstance(schema_or_field, NestedAttribute):
-        field = schema_or_field
-        return dump_empty(field.nested)
-
-    return None
-
-
 def empty_record():
     """Create an empty record."""
     record = dump_empty(Marc21RecordSchema)
-
-    record["metadata"] = "<record> <leader>00000nam a2200000zca4500</leader></record>"
-    record["is_published"] = False
-    record["files"] = {"enabled": True}
+    record["metadata"] = "<record><leader>00000nam a2200000zca4500</leader></record>"
     record["access"] = {"record": "public", "files": "public"}
-    del record["pids"]
+    record["files"] = {"enabled": True}
     return record
 
 
@@ -60,12 +37,21 @@ def deposit_templates():
 
 def deposit_config(**kwargs):
     """Create an deposit configuration."""
+    app_config = current_app.config
     jsonschema = current_app.extensions["invenio-jsonschemas"]
     schema = {}
     if jsonschema:
         schema = jsonschema.get_schema(path="marc21/marc21-structure-v1.0.0.json")
-    config = {**kwargs}
-    config.setdefault("error", "")
-    config.setdefault("schema", schema)
-    config.setdefault("createUrl", "/api/marc21")
+    config = dict(
+        current_locale=str(current_i18n.locale),
+        default_locale=app_config.get("BABEL_DEFAULT_LOCALE", "en"),
+        error="",
+        schema=schema,
+        quota=app_config.get("APP_RDM_DEPOSIT_FORM_QUOTA"),
+        createUrl="/api/marc21",
+        apiHeaders=app_config.get("INVENIO_MARC21_API_HEADERS"),
+        # UploadFilesToolbar  disable file upload
+        canHaveMetadataOnlyRecords=True,
+        **kwargs
+    )
     return config

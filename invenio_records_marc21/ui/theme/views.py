@@ -35,6 +35,7 @@ def deposit_create():
     return render_template(
         "invenio_records_marc21/deposit.html",
         record=empty_record(),
+        files=dict(default_preview=None, entries=[], links={}),
         templates=deposit_templates(),
         forms_config=deposit_config(),
     )

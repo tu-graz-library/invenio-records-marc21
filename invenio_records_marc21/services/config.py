@@ -141,6 +141,11 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
                 }
             ),
         ),
+        "files": ConditionalLink(
+            cond=is_record,
+            if_=RecordLink("{+api}/marc21/{id}/files"),
+            else_=RecordLink("{+api}/marc21/{id}/draft/files"),
+        ),
         "latest": RecordLink("{+api}/marc21/{id}/versions/latest"),
         "latest_html": RecordLink("{+ui}/marc21/{id}/latest"),
         "draft": RecordLink("{+api}/marc21/{id}/draft", when=is_record),

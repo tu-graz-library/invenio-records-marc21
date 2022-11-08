@@ -10,7 +10,7 @@
 
 """Permissions for Invenio Marc21 Records."""
 
-from invenio_records_permissions.generators import AnyUser, SystemProcess
+from invenio_records_permissions.generators import AnyUser, Disable, SystemProcess
 from invenio_records_permissions.policies.records import RecordPermissionPolicy
 
 
@@ -47,12 +47,13 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_draft_create_files = [AnyUser(), SystemProcess()]
     can_draft_update_files = [AnyUser()]
     can_draft_delete_files = [AnyUser()]
-
+    can_draft_commit_files = [AnyUser()]
     # Files permissions
     can_read_files = [AnyUser()]
     can_create_files = [AnyUser(), SystemProcess()]
     can_update_files = [AnyUser()]
     can_delete_files = [AnyUser()]
+    can_commit_files = [Disable()]
 
     #
     # PIDs
