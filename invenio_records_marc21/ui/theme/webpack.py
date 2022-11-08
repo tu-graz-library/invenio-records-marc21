@@ -27,6 +27,7 @@ theme = WebpackThemeBundle(
             dependencies={
                 "@babel/runtime": "^7.9.0",
                 "react-records-marc21": "^0.1.0",
+                "react-invenio-deposit": "^1.0.2",
             },
             aliases={
                 "@less/invenio_records_marc21": "./less/invenio_records_marc21",

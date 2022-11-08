@@ -1,24 +1,50 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021 Graz University of Technology.
+// Copyright (C) 2021-2022 Graz University of Technology.
 //
 // Invenio-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
 // details.
 
 import _get from "lodash/get";
+import { i18next } from "@translations/invenio_app_rdm/i18next";
 import React, { Component, createRef } from "react";
-import { Marc21DepositApp, AccordionField, MetadataFields, TemplateField, SaveButton, PublishButton } from "react-records-marc21";
+import {
+  Marc21RecordSerializer,
+  MetadataFields,
+  TemplateField,
+} from "react-records-marc21";
+import { AccordionField } from "react-invenio-forms";
 import { Card, Container, Grid, Ref, Sticky } from "semantic-ui-react";
-import { AccessRightField } from "react-invenio-deposit";
+import {
+  AccessRightField,
+  FileUploader,
+  SaveButton,
+  PublishButton,
+  PreviewButton,
+  DepositFormApp,
+  FormFeedback,
+  DeleteButton,
+} from "react-invenio-deposit";
+import PropTypes from "prop-types";
+
 export class Marc21DepositForm extends Component {
   constructor(props) {
     super(props);
+    const { files, record } = this.props;
     this.props = props;
     this.config = props.config || {};
     this.templates = props.templates || [];
     this.files = props.files;
-    this.noFiles = true;
+    this.recordSerializer = new Marc21RecordSerializer();
+
+    this.noFiles = false;
+    if (
+      !Array.isArray(files.entries) ||
+      (!files.entries.length && record.is_published)
+    ) {
+      this.noFiles = true;
+    }
   }
 
   sidebarRef = createRef();
@@ -28,39 +54,84 @@ export class Marc21DepositForm extends Component {
   };
 
   render() {
+    const { record, files, permissions, preselectedCommunity} = this.props;
     return (
-      <Marc21DepositApp
+      <DepositFormApp
         config={this.config}
-        record={this.props.record}
-        files={this.props.files}
-        permissions={this.props.permissions}
-        templates={this.templates}
+        record={record}
+        preselectedCommunity={preselectedCommunity}
+        files={files}
+        permissions={permissions}
+        recordSerializer={this.recordSerializer}
       >
+        <FormFeedback fieldPath="message" />
         <Container style={{ marginTop: "10px" }}>
-          {/* <DepositFormTitle /> */}
           <Grid>
             <Grid.Row>
-              <Grid.Column width={11}>
+              <Grid.Column mobile={16} tablet={16} computer={11}>
+              <AccordionField
+                includesPaths={["files.enabled"]}
+                active
+                label={i18next.t("Files")}
+              >
+                {this.noFiles && record.is_published && (
+                  <div className="text-align-center pb-10">
+                    <em>{i18next.t("The record has no files.")}</em>
+                  </div>
+                )}
+                <FileUploader
+                  isDraftRecord={!record.is_published}
+                  quota={this.config.quota}
+                  decimalSizeDisplay={this.config.decimal_size_display}
+                />
+              </AccordionField>
+
                 <AccordionField
-                  fieldPath=""
-                  active={true}
-                  label={"Metadata"}
-                  ui={this.accordionStyle}
+                  includesPaths={["metadata.leader", "metadata.fields"]}
+                  active
+                  label={i18next.t("Metadata")}
                 >
                   <MetadataFields className={"metadata"} fieldPath="metadata" />
                 </AccordionField>
               </Grid.Column>
               {/* Sidebar start */}
               <Ref innerRef={this.sidebarRef}>
-                <Grid.Column width={5} className="deposit-sidebar">
-                  <Card className="actions">
-                    <Card.Content>
-                      <div className="sidebar-buttons">
-                        <SaveButton fluid className="save-button" />
-                      </div>
-                      <PublishButton fluid />
-                    </Card.Content>
-                  </Card>
+                <Grid.Column
+                  mobile={16}
+                  tablet={16}
+                  computer={5}
+                  className="deposit-sidebar"
+                >
+                  <Sticky context={this.sidebarRef} offset={20}>
+                    <Card>
+                      <Card.Content>
+                      </Card.Content>
+                      <Card.Content>
+                        <Grid relaxed>
+                          <Grid.Column
+                            computer={8}
+                            mobile={16}
+                            className="pb-0 left-btn-col"
+                          >
+                            <SaveButton fluid />
+                          </Grid.Column>
+
+                          <Grid.Column
+                            computer={8}
+                            mobile={16}
+                            className="pb-0 right-btn-col"
+                          >
+                            <PreviewButton fluid type="submit"/>
+                          </Grid.Column>
+
+                          <Grid.Column width={16} className="pt-10">
+                            <PublishButton fluid type="submit"/>
+                          </Grid.Column>
+                        </Grid>
+                      </Card.Content>
+                    </Card>
+                  </Sticky>
+
                   <Sticky context={this.sidebarRef} offset={10}>
                     {this.templates.length > 0 && (
                       <TemplateField
@@ -70,13 +141,43 @@ export class Marc21DepositForm extends Component {
                       />
                     )}
                   </Sticky>
-                  <AccessRightField label={"Visibility"} labelIcon={"shield"} />
+                  <AccessRightField
+                    label={i18next.t("Visibility")}
+                    labelIcon="shield"
+                    fieldPath="access"
+                  />
+                  {permissions?.can_delete_draft && (
+                    <Card>
+                      <Card.Content>
+                        <DeleteButton
+                          fluid
+                          // TODO: make is_published part of the API response
+                          //       so we don't have to do this
+                          isPublished={record.is_published}
+                        />
+                      </Card.Content>
+                    </Card>
+                  )}
                 </Grid.Column>
               </Ref>
             </Grid.Row>
           </Grid>
         </Container>
-      </Marc21DepositApp>
+      </DepositFormApp>
     );
   }
 }
+
+DepositFormApp.propTypes = {
+  config: PropTypes.object.isRequired,
+  record: PropTypes.object.isRequired,
+  preselectedCommunity: PropTypes.object,
+  files: PropTypes.object,
+  permissions: PropTypes.object,
+};
+
+DepositFormApp.defaultProps = {
+  preselectedCommunity: undefined,
+  permissions: null,
+  files: null,
+};
