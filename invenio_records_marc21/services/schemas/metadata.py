@@ -10,14 +10,13 @@
 
 """Marc21 record metadata field."""
 
-
 import json
-import typing
 from os.path import dirname, join
 
-from jsonschema import ValidationError, validate
+from fastjsonschema import compile
+from fastjsonschema.exceptions import JsonSchemaValueException
+from marshmallow import Schema, validates_schema
 from marshmallow.exceptions import ValidationError as MarshmallowValidationError
-from marshmallow.fields import Field
 
 
 def get_schema():
@@ -33,46 +32,34 @@ def get_schema():
         return json.loads(input.decode("utf-8"))
 
 
-class MetadataField(Field):
+_schema = get_schema()
+_schema_validator = compile(_schema)
+
+
+class MetadataSchema(Schema):
     """Schema for the record metadata."""
 
-    # FIXME: get_schema
+    class Meta:
+        """Meta class to accept additional fields."""
 
-    schema = get_schema()
+        additional = (
+            "leader",
+            "fields",
+        )
 
-    def _deserialize(
-        self,
-        value: typing.Any,
-        attr: typing.Optional[str],
-        data: typing.Optional[typing.Mapping[str, typing.Any]],
-        **kwargs,
-    ):
-        """Deserialize value. Concrete :class:`Field` classes should implement this method.
-
-        :param value: The value to be deserialized.
-        :param attr: The attribute/key in `data` to be deserialized.
-        :param data: The raw input data passed to the `Schema.load`.
-        :param kwargs: Field-specific keyword arguments.
-        :raise ValidationError: In case of formatting or validation failure.
-        :return: The deserialized value.
-
-        .. versionchanged:: 2.0.0
-            Added ``attr`` and ``data`` parameters.
-
-        .. versionchanged:: 3.0.0
-            Added ``**kwargs`` to signature.
-        """
-        return value
-
-    def _validate(self, value):
-        """Perform validation on ``value``.
+    @validates_schema
+    def validate(self, data, **kwargs):
+        """Perform validation on ``data``.
 
         Raise a :exc:`ValidationError` if validation
         does not succeed.
         """
         try:
-            validate(instance=value, schema=self.schema)
-        except ValidationError as e:
-            message = f"Field: {e.json_path} Message: {e.message}"
-            raise MarshmallowValidationError(message)
-        self._validate_all(value)
+            _schema_validator(data)
+        except JsonSchemaValueException as e:
+            path = e.path[1:]
+            raise MarshmallowValidationError(
+                field_name=".".join(path), message=" ".join(e.message.split(" ")[1:])
+            )
+
+        pass

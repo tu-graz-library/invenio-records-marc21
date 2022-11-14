@@ -24,7 +24,7 @@ from marshmallow.fields import Boolean, Dict, Integer, Nested, Str
 from marshmallow_utils.fields import NestedAttribute, SanitizedUnicode
 from marshmallow_utils.permissions import FieldPermissionsMixin
 
-from .metadata import MetadataField
+from .metadata import MetadataSchema
 from .pids import PIDSchema
 
 
@@ -59,7 +59,7 @@ class Marc21RecordSchema(BaseRecordSchema, FieldPermissionsMixin):
 
     parent = NestedAttribute(Marc21ParentSchema, dump_only=True)
 
-    metadata = MetadataField(attribute="metadata")
+    metadata = NestedAttribute(MetadataSchema)
     access = NestedAttribute(AccessSchema)
     files = NestedAttribute(FilesSchema)
 
