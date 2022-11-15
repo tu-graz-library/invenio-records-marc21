@@ -44,8 +44,9 @@ class Marc21UISchema(Marc21Schema):
             "parent",
             "links",
             "files",
-            "versions",
         )
+
+    access_status = AccessStatusField(attribute="access", dump_only=True)
 
     metadata = MetadataField(attribute="metadata")
 
