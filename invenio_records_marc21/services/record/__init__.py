@@ -12,6 +12,17 @@
 
 
 from .metadata import Marc21Metadata
-from .utils import add_file_to_record, create_record
+from .utils import (
+    DuplicateRecordError,
+    add_file_to_record,
+    check_about_duplicate,
+    create_record,
+)
 
-__all__ = ("Marc21Metadata", "add_file_to_record", "create_record")
+__all__ = (
+    "Marc21Metadata",
+    "add_file_to_record",
+    "create_record",
+    "DuplicateRecordError",
+    "check_about_duplicate",
+)

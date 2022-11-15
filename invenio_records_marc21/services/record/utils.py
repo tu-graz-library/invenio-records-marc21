@@ -9,8 +9,21 @@
 # details.
 
 """Marc21 utils."""
+
 import time
 from os.path import basename
+
+from invenio_search import RecordsSearch
+from invenio_search.engine import dsl
+
+
+class DuplicateRecordError(Exception):
+    """Duplicate Record Exception."""
+
+    def __init__(self, ac_number, id_):
+        """Constructor for class DuplicateRecordException."""
+        msg = f"DuplicateRecordError ac_number: {ac_number} already exists id={id_} in the database"
+        super().__init__(msg)
 
 
 def add_file_to_record(
@@ -47,3 +60,13 @@ def create_record(service, marc21_metadata, file_path, identity):
     time.sleep(0.5)
 
     return service.publish(id_=draft.id, identity=identity)
+
+
+def check_about_duplicate(ac_number):
+    """Check if the record with the ac number is already within the database."""
+    search = RecordsSearch(index="marc21records-marc21")
+    search.query = dsl.Q("match", **{"metadata.fields.009": ac_number})
+    results = search.execute()
+
+    if len(results) > 0:
+        raise DuplicateRecordError(ac_number=ac_number, id_=results[0]["id"])
