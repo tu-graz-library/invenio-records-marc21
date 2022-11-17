@@ -182,6 +182,7 @@ class Marc21Metadata:
             self.json = json
 
     def set_default(self):
+        """Set default marc21 structure."""
         self._json = {}
 
         leader = Element("leader")

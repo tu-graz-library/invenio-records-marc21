@@ -68,7 +68,7 @@ def test_validate_metadata():
                     {
                         "ind1": "1",
                         "ind2": "0",
-                        "subfields": {"": ["laborum sunt ut nulla"]},
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
                     },
                 ]
             },
@@ -165,7 +165,7 @@ def test_load_metadata():
 
     etree_metadata.append(datafield)
 
-    metadata = Marc21Metadata(etree_metadata)
+    metadata = Marc21Metadata(metadata=etree_metadata)
     assert metadata.etree == etree_metadata
 
 
