@@ -60,11 +60,11 @@ def create_record(service, marc21_metadata, file_path, identity):
 def check_about_duplicate(value: str, category: str = None):
     """Check if the record with the ac number is already within the database."""
     search = RecordsSearch(index="marc21records-marc21")
+
     if category:
         query = {f"metadata.fields.{category}": value}
-    # TODO:
-    # else:
-    #     # implement common search over all fields
+    else:
+        raise RuntimeError("common search not implemented yet")
 
     search.query = dsl.Q("match", **query)
     results = search.execute()
