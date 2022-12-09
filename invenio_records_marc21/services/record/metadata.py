@@ -227,6 +227,17 @@ class Marc21Metadata:
 
         self._etree = fromstring(xml)
 
+    def exists(self, to_check_category: Element, art_of_category):
+        """Check if a category is already in the tree. Only completely
+        equal tags will be dismissed."""
+        to_check_category_str = tostring(to_check_category, method="xml").strip()
+        for category in self._etree.findall(art_of_category):
+            category_str = tostring(category, method="xml").strip()
+            if to_check_category_str == category_str:
+                return True
+
+        return False
+
     def emplace_leader(self, value=""):
         """Change leader string in record."""
         for leader in self._etree.iter("leader"):
@@ -236,6 +247,10 @@ class Marc21Metadata:
         """Add value to record for given datafield and subfield."""
         controlfield = Element("controlfield", tag=tag)
         controlfield.text = value
+
+        if self.exists(controlfield, "controlfield"):
+            return
+
         self._etree.append(controlfield)
 
     def emplace_datafield(self, selector, *, value=None, subfs=None) -> None:
@@ -268,5 +283,9 @@ class Marc21Metadata:
 
         else:
             raise RuntimeError("Neither of value or subfs is set.")
+
+        # double check
+        if self.exists(datafield, "datafield"):
+            return
 
         self._etree.append(datafield)
