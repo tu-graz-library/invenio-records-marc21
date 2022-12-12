@@ -41,7 +41,8 @@ class Marc21RecordService(RDMRecordService):
         """
         if data is None:
             data = metadata.json
-        data["files"] = {"enabled": files}
+        if not "files" in data:
+            data["files"] = {"enabled": files}
         if "access" not in data:
             default_access = {
                 "access": {
@@ -104,7 +105,7 @@ class Marc21RecordService(RDMRecordService):
         :return: marc21 record item
         :rtype: `invenio_records_resources.services.records.results.RecordItem`
         """
-        data = self._create_data(identity, data, metadata, access)
+        data = self._create_data(identity, data, metadata, access=access)
         return super().update_draft(
             identity=identity, id_=id_, data=data, revision_id=revision_id
         )
