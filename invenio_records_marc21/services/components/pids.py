@@ -21,6 +21,18 @@ from ..pids.tasks import register_or_update_pid
 class PIDsComponent(BasePIDsComponent):
     """Service component for PIDs."""
 
+    def _doi_identifier_to_metadata(self, doi, data):
+        metadata = data.get("metadata", {})
+        fields = metadata.get("fields", {})
+        other_standard_identifier = fields.get("024", [])
+        matadata_doi = {
+            "ind1": "7",
+            "ind2": "_",
+            "subfields": {"a": [doi.get("identifier")], "2": ["doi"]},
+        }
+        other_standard_identifier.append(matadata_doi)
+        fields.update({"024": other_standard_identifier})
+
     def create(self, identity, data=None, record=None, errors=None):
         """This method is called on draft creation.
 
@@ -35,6 +47,8 @@ class PIDsComponent(BasePIDsComponent):
             pids=pids,
             schemes=set(self.service.config.pids_required),
         )
+        if "doi" in pids and data:
+            self._doi_identifier_to_metadata(pids["doi"], data)
         record.pids = pids
 
     def publish(self, identity, draft=None, record=None):
