@@ -38,9 +38,9 @@ def add_file_to_record(
         file_service.commit_file(id_=marcid, file_key=filename, identity=identity)
 
 
-def create_record(service, marc21_metadata, file_path, identity):
+def create_record(service, data, file_path, identity, do_publish=True):
     """Create the record."""
-    draft = service.create(metadata=marc21_metadata, identity=identity, files=True)
+    draft = service.create(data=data, identity=identity, files=True)
 
     add_file_to_record(
         marcid=draft._record["id"],  # pylint: disable=protected-access
@@ -49,11 +49,14 @@ def create_record(service, marc21_metadata, file_path, identity):
         identity=identity,
     )
 
-    # to prevent the race condition bug.
-    # see https://github.com/inveniosoftware/invenio-rdm-records/issues/809
-    time.sleep(0.5)
+    if do_publish:
+        # to prevent the race condition bug.
+        # see https://github.com/inveniosoftware/invenio-rdm-records/issues/809
+        time.sleep(0.5)
 
-    return service.publish(id_=draft.id, identity=identity)
+        return service.publish(id_=draft.id, identity=identity)
+
+    return draft
 
 
 @singledispatch
