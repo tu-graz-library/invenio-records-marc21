@@ -21,6 +21,22 @@ from ..pids.tasks import register_or_update_pid
 class PIDsComponent(BasePIDsComponent):
     """Service component for PIDs."""
 
+    def create(self, identity, data=None, record=None, errors=None):
+        """This method is called on draft creation.
+
+        It validates and add the pids to the draft.
+        """
+        pids = data.get("pids", {})
+        self.service.pids.pid_manager.validate(pids, record, errors)
+
+        record.pids = pids
+        pids = self.service.pids.pid_manager.create_all(
+            record,
+            pids=pids,
+            schemes=set(self.service.config.pids_required),
+        )
+        record.pids = pids
+
     def publish(self, identity, draft=None, record=None):
         """Publish handler."""
         draft_pids = draft.get("pids", {})
