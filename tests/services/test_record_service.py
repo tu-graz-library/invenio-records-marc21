@@ -24,10 +24,11 @@ from invenio_records_marc21.proxies import current_records_marc21
 from invenio_records_marc21.services.errors import EmbargoNotLiftedError
 
 
-def _test_metadata(test, expected):
-    assert test.keys() == expected.keys()
+def _test_metadata(test, expected, exept=[]):
+    # assert test.keys() == expected.keys()
     for key in test.keys():
-        assert key in expected
+        if key not in exept:
+            assert test[key] == expected[key]
 
 
 def test_full_metadata_xml_schema(running_app, full_metadata, full_metadata_expected):
@@ -42,6 +43,7 @@ def test_full_metadata_xml_schema(running_app, full_metadata, full_metadata_expe
     _test_metadata(
         data["metadata"]["fields"],
         full_metadata_expected["metadata"]["fields"],
+        exept=["024"],  # ignore since it automatically created in PIDsComponent
     )
 
 

@@ -30,7 +30,7 @@ def test_register_pid(running_app, full_metadata, mocker, identity_simple):
     )
     service = current_records_marc21.records_service
     draft = service.create(identity=identity_simple, metadata=full_metadata)
-    draft = service.pids.create(identity=identity_simple, id_=draft.id, scheme="doi")
+    # draft = service.pids.create(identity=identity_simple, id_=draft.id, scheme="doi")
     doi = draft["pids"]["doi"]["identifier"]
 
     provider = service.pids.pid_manager._get_provider("doi", "datacite")

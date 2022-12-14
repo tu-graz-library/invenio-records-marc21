@@ -126,7 +126,7 @@ def test_reserve_pid(running_app, full_metadata):
     identity_simple = running_app.identity_simple
 
     draft = service.create(identity=identity_simple, metadata=full_metadata)
-    draft = service.pids.create(identity=identity_simple, id_=draft.id, scheme="doi")
+    # draft = service.pids.create(identity=identity_simple, id_=draft.id, scheme="doi")
 
     doi = draft["pids"]["doi"]["identifier"]
     provider = service.pids.pid_manager._get_provider("doi", "datacite")
@@ -141,7 +141,7 @@ def test_discard_existing_pid(running_app, full_metadata):
 
     draft = service.create(identity=identity_simple, metadata=full_metadata)
 
-    draft = service.pids.create(identity=identity_simple, id_=draft.id, scheme="doi")
+    # draft = service.pids.create(identity=identity_simple, id_=draft.id, scheme="doi")
 
     doi = draft["pids"]["doi"]["identifier"]
     provider = service.pids.pid_manager._get_provider("doi", "datacite")
@@ -153,6 +153,7 @@ def test_discard_existing_pid(running_app, full_metadata):
         pid = provider.get(pid_value=doi)
 
 
+@pytest.mark.skip("Cannot be tested. Since the pids are created with a draft.")
 def test_discard_non_exisisting_pid(running_app, full_metadata):
     """Discard a PID with error."""
     service = current_records_marc21.records_service
