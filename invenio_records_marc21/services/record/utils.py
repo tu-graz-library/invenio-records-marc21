@@ -38,16 +38,17 @@ def add_file_to_record(
         file_service.commit_file(id_=marcid, file_key=filename, identity=identity)
 
 
-def create_record(service, data, file_path, identity, do_publish=True):
+def create_record(service, data, file_paths, identity, do_publish=True):
     """Create the record."""
     draft = service.create(data=data, identity=identity, files=True)
 
-    add_file_to_record(
-        marcid=draft._record["id"],  # pylint: disable=protected-access
-        file_path=file_path,
-        file_service=service.draft_files,
-        identity=identity,
-    )
+    for file_path in file_paths:
+        add_file_to_record(
+            marcid=draft._record["id"],  # pylint: disable=protected-access
+            file_path=file_path,
+            file_service=service.draft_files,
+            identity=identity,
+        )
 
     if do_publish:
         # to prevent the race condition bug.
