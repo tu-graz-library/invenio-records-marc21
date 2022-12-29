@@ -22,6 +22,8 @@ from .record import (
     Marc21Metadata,
     add_file_to_record,
     check_about_duplicate,
+    convert_json_to_marc21xml,
+    convert_marc21xml_to_json,
     create_record,
 )
 from .services import (
@@ -45,4 +47,6 @@ __all__ = (
     "RecordItem",
     "DuplicateRecordError",
     "check_about_duplicate",
+    "convert_json_to_marc21xml",
+    "convert_marc21xml_to_json",
 )

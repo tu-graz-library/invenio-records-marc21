@@ -11,7 +11,11 @@
 """Marc21 field class."""
 
 
-from .metadata import Marc21Metadata
+from .metadata import (
+    Marc21Metadata,
+    convert_json_to_marc21xml,
+    convert_marc21xml_to_json,
+)
 from .utils import (
     DuplicateRecordError,
     add_file_to_record,
@@ -25,4 +29,6 @@ __all__ = (
     "create_record",
     "DuplicateRecordError",
     "check_about_duplicate",
+    "convert_marc21xml_to_json",
+    "convert_json_to_marc21xml",
 )
