@@ -9,7 +9,6 @@
 
 """Tests for record MetadataSchema."""
 
-from pprint import pprint
 from xml.etree.ElementTree import Element
 
 import pytest
@@ -51,10 +50,11 @@ def test_validate_metadata():
             },
         }
     }
-    pprint(metadata.json["metadata"]["fields"]["245"])
     assert metadata.json == expected_json
 
-    metadata.emplace_datafield(selector="245.1.0.", value="laborum sunt ut nulla")
+    metadata.emplace_datafield(
+        selector="245.1.0.", value="laborum sunt ut nulla et infinitum"
+    )
     expected_json = {
         "metadata": {
             "leader": "00000nam a2200000zca4500",
@@ -68,7 +68,7 @@ def test_validate_metadata():
                     {
                         "ind1": "1",
                         "ind2": "0",
-                        "subfields": {"a": ["laborum sunt ut nulla"]},
+                        "subfields": {"a": ["laborum sunt ut nulla et infinitum"]},
                     },
                 ]
             },

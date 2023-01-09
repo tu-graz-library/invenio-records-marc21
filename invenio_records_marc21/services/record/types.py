@@ -21,12 +21,15 @@ class Marc21Category:
     category: str
 
     def __init__(self, value):
+        """Constructor of the Marc21Category class."""
         self.value = value
 
     def __repr__(self):
+        """Representation magic method."""
         return self.value
 
     def __str__(self):
+        """String representation magic method."""
         return self.value
 
 

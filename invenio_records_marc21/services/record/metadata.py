@@ -228,8 +228,10 @@ class Marc21Metadata:
         self._etree = fromstring(xml)
 
     def exists(self, to_check_category: Element, art_of_category):
-        """Check if a category is already in the tree. Only completely
-        equal tags will be dismissed."""
+        """Check if a category is already in the tree.
+
+        Only completely equal tags will be dismissed.
+        """
         to_check_category_str = tostring(to_check_category, method="xml").strip()
         for category in self._etree.findall(art_of_category):
             category_str = tostring(category, method="xml").strip()
