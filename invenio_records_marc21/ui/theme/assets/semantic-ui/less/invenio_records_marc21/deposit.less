@@ -8,20 +8,50 @@
 
 /** Deposit page styles */
 #marc21-deposit-form {
-  .metadata {
-    border: 0px;
-    margin: 0px;
-    padding: 0px;
+  .leader {
+    margin-right: -1.7em;
   }
-  // Metadata specific styles
-  .metadata * {
-    font-size: @depositFontSize;
+
+  .metadata {
+    margin-right: -1.7em;
   }
 
   .fields {
-    margin: 0px -0.5rem 0px -0.5rem;
+    font-size: @depositFontSize;
+    margin-left: 0.1em;
+    margin-top: 0em;
+    margin-bottom: 0em;
     padding: 0px;
-    padding-bottom: 0.1rem;
+  }
+
+  .fields {
+    .field {
+      padding-left: 0em;
+      padding-right: 0.1em;
+    }
+
+    .key {
+      min-width: 3em;
+      max-width: 3em;
+    }
+
+    .narrow > .input > input {
+      padding: 0.1em 0.2em 0.1em 0.2em;
+    }
+
+    .narrow > .input > input {
+      padding: 0.1em 0.2em 0.1em 0.2em;
+    }
+
+    .ind1,
+    .ind2 {
+      min-width: 1em;
+      max-width: 2em;
+    }
+  }
+
+  .field > button {
+    padding: 0.4em 0.4em 0.4em 0.4em;
   }
 
   // Sidebar specific styles
