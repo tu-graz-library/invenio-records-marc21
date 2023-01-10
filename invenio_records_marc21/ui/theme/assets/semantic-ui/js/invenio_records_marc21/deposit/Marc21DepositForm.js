@@ -29,7 +29,6 @@ import {
 import PropTypes from "prop-types";
 
 export class Marc21DepositForm extends Component {
-
   accordionStyle = {
     header: { className: "segment inverted brand" },
   };
@@ -55,7 +54,7 @@ export class Marc21DepositForm extends Component {
   }
 
   render() {
-    const { record, files, permissions, preselectedCommunity} = this.props;
+    const { record, files, permissions, preselectedCommunity } = this.props;
     return (
       <DepositFormApp
         config={this.config}
@@ -70,22 +69,22 @@ export class Marc21DepositForm extends Component {
           <Grid>
             <Grid.Row>
               <Grid.Column mobile={16} tablet={16} computer={11}>
-              <AccordionField
-                includesPaths={["files.enabled"]}
-                active
-                label={i18next.t("Files")}
-              >
-                {this.noFiles && record.is_published && (
-                  <div className="text-align-center pb-10">
-                    <em>{i18next.t("The record has no files.")}</em>
-                  </div>
-                )}
-                <FileUploader
-                  isDraftRecord={!record.is_published}
-                  quota={this.config.quota}
-                  decimalSizeDisplay={this.config.decimal_size_display}
-                />
-              </AccordionField>
+                <AccordionField
+                  includesPaths={["files.enabled"]}
+                  active
+                  label={i18next.t("Files")}
+                >
+                  {this.noFiles && record.is_published && (
+                    <div className="text-align-center pb-10">
+                      <em>{i18next.t("The record has no files.")}</em>
+                    </div>
+                  )}
+                  <FileUploader
+                    isDraftRecord={!record.is_published}
+                    quota={this.config.quota}
+                    decimalSizeDisplay={this.config.decimal_size_display}
+                  />
+                </AccordionField>
 
                 <AccordionField
                   includesPaths={["metadata.leader", "metadata.fields"]}
@@ -105,8 +104,7 @@ export class Marc21DepositForm extends Component {
                 >
                   <Sticky context={this.sidebarRef} offset={20}>
                     <Card>
-                      <Card.Content>
-                      </Card.Content>
+                      <Card.Content></Card.Content>
                       <Card.Content>
                         <Grid relaxed>
                           <Grid.Column
@@ -122,11 +120,11 @@ export class Marc21DepositForm extends Component {
                             mobile={16}
                             className="pb-0 right-btn-col"
                           >
-                            <PreviewButton fluid type="submit"/>
+                            <PreviewButton fluid type="submit" />
                           </Grid.Column>
 
                           <Grid.Column width={16} className="pt-10">
-                            <PublishButton fluid type="submit"/>
+                            <PublishButton fluid type="submit" />
                           </Grid.Column>
                         </Grid>
                       </Card.Content>
