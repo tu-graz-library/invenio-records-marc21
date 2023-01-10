@@ -44,7 +44,7 @@ def create_record(service, data, file_paths, identity, do_publish=True):
 
     for file_path in file_paths:
         add_file_to_record(
-            marcid=draft._record["id"],  # pylint: disable=protected-access
+            marcid=draft.id,
             file_path=file_path,
             file_service=service.draft_files,
             identity=identity,
