@@ -8,6 +8,26 @@
 Changes
 =======
 
+Version v0.9.0 (release 2023-01-11)
+
+- metadata: use id property instead
+- fixes:
+- global: pass through exports
+- modification: add multiple files to record
+- metadata: add param do_publish
+- metadata: add exists method
+- ui: update react-records-marc21
+- services: add exception for common search
+- services: add types
+- codestyle: deposit form
+- modification: deposit form style
+- tests: testset update
+- modification: put doi into the metadata
+- modification: create identifier with draft
+- bugfix: files enabled
+- fix: correct CHANGES.rst
+
+
 Version v0.8.4 (release 2022-11-17)
 
 - fix:
