@@ -68,7 +68,7 @@ def check_about_duplicate(value: str, category: str = None):
     if category:
         query = {f"metadata.fields.{category}": value}
     else:
-        raise RuntimeError("common search not implemented yet")
+        return
 
     search.query = dsl.Q("match", **query)
     results = search.execute()

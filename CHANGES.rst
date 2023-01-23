@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.9.1 (release 2023-01-23)
+
+- fix: wrong alias for drafts and records
+- modification: record status in deposit
+
+
 Version v0.9.0 (release 2023-01-11)
 
 - metadata: use id property instead
