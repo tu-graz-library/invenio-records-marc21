@@ -63,7 +63,7 @@ def create_record(service, data, file_paths, identity, do_publish=True):
 @singledispatch
 def check_about_duplicate(value: str, category: str = None):
     """Check if the record with the ac number is already within the database."""
-    search = RecordsSearch(index="marc21records-marc21")
+    search = RecordsSearch(index="marc21records")
 
     if category:
         query = {f"metadata.fields.{category}": value}
