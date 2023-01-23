@@ -70,6 +70,7 @@ class Marc21RecordSchema(BaseRecordSchema, FieldPermissionsMixin):
     versions = NestedAttribute(VersionsSchema, dump_only=True)
 
     is_published = Boolean(dump_only=True)
+    status = Str(dump_only=True)
 
     # Add version to record schema
     # versions = NestedAttribute(VersionsSchema, dump_only=True)

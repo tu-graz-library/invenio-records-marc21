@@ -14,10 +14,12 @@
 from .context import MarcPIDFieldContext
 from .providers import MarcDraftProvider, MarcRecordProvider
 from .resolver import MarcResolver
+from .status import Marc21Status
 
 __all__ = (
     "MarcPIDFieldContext",
     "MarcDraftProvider",
     "MarcRecordProvider",
     "MarcResolver",
+    "Marc21Status",
 )

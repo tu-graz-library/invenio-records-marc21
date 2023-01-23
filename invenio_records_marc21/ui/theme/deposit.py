@@ -23,6 +23,7 @@ def empty_record():
     record["metadata"] = "<record><leader>00000nam a2200000zca4500</leader></record>"
     record["access"] = {"record": "public", "files": "public"}
     record["files"] = {"enabled": True}
+    record["status"] = "draft"
     return record
 
 

@@ -25,6 +25,7 @@ import {
   DepositFormApp,
   FormFeedback,
   DeleteButton,
+  DepositStatusBox,
 } from "react-invenio-deposit";
 import PropTypes from "prop-types";
 
@@ -104,7 +105,9 @@ export class Marc21DepositForm extends Component {
                 >
                   <Sticky context={this.sidebarRef} offset={20}>
                     <Card>
-                      <Card.Content></Card.Content>
+                      <Card.Content>
+                        <DepositStatusBox />
+                      </Card.Content>
                       <Card.Content>
                         <Grid relaxed>
                           <Grid.Column

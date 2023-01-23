@@ -32,6 +32,7 @@ from invenio_records_resources.records.systemfields import (
 
 from . import models
 from .systemfields import (
+    Marc21Status,
     MarcDraftProvider,
     MarcPIDFieldContext,
     MarcRecordProvider,
@@ -95,6 +96,7 @@ class Marc21Draft(Draft):
     )
     access = RecordAccessField()
     has_draft = HasDraftCheckField()
+    status = Marc21Status()
 
     bucket_id = ModelField(dump=False)
 
@@ -149,6 +151,7 @@ class Marc21Record(Record):
     bucket = ModelField(dump=False)
 
     is_published = PIDStatusCheckField(status=PIDStatus.REGISTERED, dump=True)
+    status = Marc21Status()
 
     pids = DictField("pids")
 
