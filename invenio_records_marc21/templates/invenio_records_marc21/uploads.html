@@ -1,0 +1,54 @@
+{#
+Copyright (C) 2023 Graz University of Technology
+
+invenio-records-marc21 is free software; you can redistribute it and/or modify
+it under the terms of the MIT License; see LICENSE file for more details.
+#}
+{%- set title = _("Uploads") %}
+{%- extends config.INVENIO_MARC21_BASE_TEMPLATE %}
+  
+{% set active_dashboard_menu_item = 'Marc21' %}
+  
+{%- block javascript %}
+    {{ super() }}
+    {{ webpack['invenio-records-marc21-search.js'] }}
+{%- endblock %}
+
+{%- block page_body %}
+
+{%- block user_dashboard_header %}
+{% include "invenio_app_rdm/users/header.html" %}
+{%- endblock user_dashboard_header %}
+
+{%- block frontpage_form %}
+
+<div class="ui container rel-mt-2">
+
+<div class="ui center aligned grid">
+    <div class="right floated eight wide computer fourteen wide mobile ten wide tablet column">
+    <form action="{{url_for('invenio_records_marc21.uploads_marc21') }}" class="ui form" role="search">
+      <div class="ui fluid big action icon input">
+        <input type="text" name="q" autofocus="autofocus" placeholder="{{ _('Type and press enter to search') }}">
+        <button aria-label="Search" class="ui icon button search">
+            <i aria-hidden="true" class="search icon"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="four wide computer sixteen wide mobile five wide tablet column" align="right">
+    <a href="{{url_for("invenio_records_marc21.deposit_create")}}" class="ui positive right floated button" role="button">
+        <i aria-hidden="true" class="upload icon"></i>New upload</a>
+    </div>
+</div>
+
+
+<div class="ui divider hidden"></div>
+{%- endblock frontpage_form %}
+
+    <div id="invenio-search-marc21-config" data-invenio-search-config='{{ search_app_marc21_config() | tojson }}'></div>
+</div>
+
+
+
+{%- endblock page_body %}
+  

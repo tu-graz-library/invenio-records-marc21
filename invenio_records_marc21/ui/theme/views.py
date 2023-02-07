@@ -10,8 +10,9 @@
 
 """Routes for general pages provided by Invenio-Records-Marc21."""
 
-from flask import render_template
-from flask_login import login_required
+from flask import g, render_template
+from flask_login import current_user, login_required
+from invenio_users_resources.proxies import current_user_resources
 
 from invenio_records_marc21.resources.serializers.ui import Marc21UIXMLSerializer
 
@@ -27,6 +28,16 @@ def index():
 def search():
     """Search help guide."""
     return render_template("invenio_records_marc21/search.html")
+
+
+@login_required
+def uploads_marc21():
+    """Display user dashboard page."""
+    url = current_user_resources.users_service.links_item_tpl.expand(current_user)["avatar"]
+    return render_template(
+        "invenio_records_marc21/uploads.html",
+        user_avatar=url,
+    )
 
 
 @login_required
