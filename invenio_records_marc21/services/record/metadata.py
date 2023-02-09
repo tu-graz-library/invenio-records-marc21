@@ -280,7 +280,7 @@ class Marc21Metadata:
         elif subfs:
             for key, val in subfs.items():
                 subfield = Element("subfield", code=key)
-                subfield.text = val
+                subfield.text = " ".join(val)
                 datafield.append(subfield)
 
         else:
