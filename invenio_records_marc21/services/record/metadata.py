@@ -71,7 +71,7 @@ class JsonToXmlVisitor:
         for item in items:
             datafield = Element(
                 "datafield",
-                {"ind1": item["ind1"], "ind2": item["ind2"], "tag": category},
+                {"tag": category, "ind1": item["ind1"], "ind2": item["ind2"]},
             )
             for subfn, subfv in item["subfields"].items():
                 subfield = Element("subfield", {"code": subfn})

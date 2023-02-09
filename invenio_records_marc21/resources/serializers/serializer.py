@@ -82,7 +82,6 @@ class Marc21XMLMixin:
                 controlfield.attrib["tag"] = key
                 rec.append(controlfield)
             else:
-
                 for subfields in value:
                     datafield = E.datafield()
                     datafield.attrib["tag"] = key
