@@ -73,7 +73,7 @@ class JsonToXmlVisitor:
                 "datafield",
                 {"tag": category, "ind1": item["ind1"], "ind2": item["ind2"]},
             )
-            for subfn, subfv in item["subfields"].items():
+            for subfn, subfv in sorted(item["subfields"].items()):
                 subfield = Element("subfield", {"code": subfn})
                 subfield.text = " ".join(subfv)
                 datafield.append(subfield)
@@ -278,7 +278,7 @@ class Marc21Metadata:
             datafield.append(subfield)
 
         elif subfs:
-            for key, val in subfs.items():
+            for key, val in sorted(subfs.items()):
                 subfield = Element("subfield", code=key)
                 subfield.text = " ".join(val)
                 datafield.append(subfield)
