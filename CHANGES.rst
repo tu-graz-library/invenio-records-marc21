@@ -8,6 +8,13 @@
 Changes
 =======
 
+Version v0.9.2 (release 2023-02-09)
+
+- fix: sort xml subfields generation
+- fix: the value in subfs is a list
+- fix: unify order of et.Element attributes
+
+
 Version v0.9.1 (release 2023-01-23)
 
 - fix: wrong alias for drafts and records
