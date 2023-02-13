@@ -32,6 +32,7 @@ def init_theme_views(blueprint, app):
     blueprint.add_url_rule(routes["deposit-create"], view_func=deposit_create)
     blueprint.add_url_rule(routes["deposit-edit"], view_func=deposit_edit)
 
+    # TODO: Fix this after inveniosoftware/invenio-base#171 has been solved
     @blueprint.before_app_first_request
     def register_marc21_dashboard():
         """Register entry for marc21 in the `flask_menu`-submenu "dashboard"."""

@@ -33,7 +33,9 @@ def search():
 @login_required
 def uploads_marc21():
     """Display user dashboard page."""
-    url = current_user_resources.users_service.links_item_tpl.expand(current_user)["avatar"]
+    url = current_user_resources.users_service.links_item_tpl.expand(current_user)[
+        "avatar"
+    ]
     return render_template(
         "invenio_records_marc21/uploads.html",
         user_avatar=url,
