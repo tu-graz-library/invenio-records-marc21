@@ -8,6 +8,13 @@
 Changes
 =======
 
+Version v0.10.0 (release 2023-02-13)
+
+- fix: category could be AVA
+- modification: add fix me in the future
+- modification: create dashboard entry for marc21
+
+
 Version v0.9.2 (release 2023-02-09)
 
 - fix: sort xml subfields generation
