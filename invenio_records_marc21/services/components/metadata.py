@@ -10,10 +10,11 @@
 
 """Marc21 record metadata component."""
 
+from copy import copy
+
 from invenio_records_resources.services.records.components import (
     MetadataComponent as BaseMetadataComponent,
 )
-from marshmallow import ValidationError
 
 
 class MetadataComponent(BaseMetadataComponent):
@@ -38,3 +39,7 @@ class MetadataComponent(BaseMetadataComponent):
     def edit(self, identity, draft=None, record=None, **kwargs):
         """Update draft metadata."""
         draft.metadata = record.get("metadata", {})
+
+    def new_version(self, identity, draft=None, record=None, **kwargs):
+        """New version metadata."""
+        draft.metadata = copy(record.get("metadata", {}))

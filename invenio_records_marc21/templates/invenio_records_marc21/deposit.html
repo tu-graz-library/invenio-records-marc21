@@ -31,9 +31,9 @@
   <input type="hidden" name="marc21-deposit-templates" value='{{templates | tojson }}'/>
 {%- endif %}
   {%- if permissions %}
-  <input id="marc21-deposits-record-permissions" type="hidden" name="marc21-deposits-record-permissions" value='{{permissions | tojson }}'/>
+  <input id="marc21-deposit-permissions" type="hidden" name="marc21-deposit-permissions" value='{{permissions | tojson }}'/>
   {%- endif %}
-  
+
   <div id="marc21-deposit-form"></div>
 
 {%- endblock page_body %}
