@@ -3,7 +3,7 @@
 # Copyright (C) 2020-2021 CERN.
 # Copyright (C) 2020 Northwestern University.
 # Copyright (C) 2021 TU Wien.
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-RDM-Records is free software; you can redistribute it and/or modify
 # it under the terms of the MIT License; see LICENSE file for more details.
@@ -84,3 +84,10 @@ class PIDsComponent(BasePIDsComponent):
 
         for scheme in pids.keys():
             self.uow.register(TaskOp(register_or_update_pid, record["id"], scheme))
+
+    def new_version(self, identity, draft=None, record=None):
+        """A new draft should not have any pids from the previous record."""
+        if record.pids.get("doi", {}).get("provider") == "external":
+            draft.pids = {"doi": {"provider": "external", "identifier": ""}}
+        else:
+            draft.pids = {}
