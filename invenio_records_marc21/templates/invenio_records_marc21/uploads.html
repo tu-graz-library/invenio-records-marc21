@@ -6,9 +6,9 @@ it under the terms of the MIT License; see LICENSE file for more details.
 #}
 {%- set title = _("Uploads") %}
 {%- extends config.INVENIO_MARC21_BASE_TEMPLATE %}
-  
+
 {% set active_dashboard_menu_item = 'Marc21' %}
-  
+
 {%- block javascript %}
     {{ super() }}
     {{ webpack['invenio-records-marc21-search.js'] }}

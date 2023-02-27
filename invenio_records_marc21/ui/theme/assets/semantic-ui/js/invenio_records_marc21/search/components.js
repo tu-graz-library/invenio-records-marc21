@@ -1,28 +1,15 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021 Graz University of Technology.
+// Copyright (C) 2021-2023 Graz University of Technology.
 //
 // Invenio-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
 // details.
 
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import { truncate, get } from "lodash";
-import {
-  Button,
-  Card,
-  Checkbox,
-  Icon,
-  Input,
-  Item,
-  Label,
-  List,
-} from "semantic-ui-react";
-import { BucketAggregation } from "react-searchkit";
-import { loadComponents } from "@js/invenio_theme/templates";
-import Overridable from "react-overridable";
-import { SearchBar, SearchApp } from "@js/invenio_search_ui/components";
+import { Button, Card, Item, Label } from "semantic-ui-react";
+import { EditButton } from "../components/EditButton";
 
 export const Marc21RecordResultsListItem = ({ result, index }) => {
   const version = get(result, "revision_id", null);
@@ -41,6 +28,13 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
 
   const viewLink = `/marc21/${result.id}`;
 
+  const [error, setError] = useState("");
+
+  const handleError = (errorMessage) => {
+    console.error(errorMessage);
+    setError(errorMessage);
+  };
+
   return (
     <Item key={index}>
       <Item.Content>
@@ -53,10 +47,15 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
               {access_icon && <i className={`icon ${access_icon}`}></i>}
               {access_status}
             </Label>
-            <Button basic floated="right">
-              <Icon name="eye" />
-              View
-            </Button>
+            <EditButton recid={result.id} onError={handleError} />
+            <Button
+              basic
+              compact
+              size="small"
+              floated="right"
+              icon="eye"
+              content={"View"}
+            />
           </div>
         </Item.Extra>
         <Item.Header href={viewLink}>

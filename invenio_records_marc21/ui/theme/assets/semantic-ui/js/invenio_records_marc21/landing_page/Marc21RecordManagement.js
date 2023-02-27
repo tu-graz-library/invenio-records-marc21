@@ -11,7 +11,7 @@
 import React, { useState } from "react";
 import { Grid, Icon } from "semantic-ui-react";
 
-import { EditButton } from "./EditButton";
+import { EditButton } from "../components/EditButton";
 import { NewVersionButton } from "react-invenio-deposit";
 
 export const RecordManagement = (props) => {

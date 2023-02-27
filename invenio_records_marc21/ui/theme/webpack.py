@@ -30,6 +30,7 @@ theme = WebpackThemeBundle(
                 "react-invenio-deposit": "^1.0.2",
             },
             aliases={
+                "@js/invenio_records_marc21": "js/invenio_records_marc21",
                 "@less/invenio_records_marc21": "./less/invenio_records_marc21",
             },
         ),
