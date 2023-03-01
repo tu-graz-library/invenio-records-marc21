@@ -107,9 +107,11 @@ Let's **create** a very simple record:
 >>> service = current_records_marc21.records_service
 
 >>> from flask_principal import Identity
->>> from invenio_access import any_user
+>>> from invenio_access.permissions import any_user, authenticated_user, system_process
 >>> identity = Identity(1)
 >>> identity.provides.add(any_user)
+>>> identity.provides.add(authenticated_user)
+>>> identity.provides.add(system_process)
 >>> draft = service.create(identity=identity, data={"metadata": {"title_statement": {"title": "The title of the record"}}})
 
 
@@ -124,9 +126,11 @@ Publish
 Let's **publish** our very simple record:
 
 >>> from flask_principal import Identity
->>> from invenio_access import any_user
+>>> from invenio_access.permissions import any_user, authenticated_user, system_process
 >>> identity = Identity(1)
 >>> identity.provides.add(any_user)
+>>> identity.provides.add(authenticated_user)
+>>> identity.provides.add(system_process)
 >>> record = service.publish(identity=identity, id_=draft.id)
 
 A new row has been added to the database, in the table ``marc21_records_metadata``:
@@ -194,9 +198,11 @@ Now let us put this all together
 ... }
 >>> from invenio_records_marc21.services.record import Marc21Metadata
 >>> from flask_principal import Identity
->>> from invenio_access import any_user
+>>> from invenio_access.permissions import any_user, authenticated_user, system_process
 >>> identity = Identity(1)
 >>> identity.provides.add(any_user)
+>>> identity.provides.add(authenticated_user)
+>>> identity.provides.add(system_process)
 >>> metadata = Marc21Metadata()
 >>> metadata.xml = "<record><leader>00000nam a2200000zca4500</leader></record>"
 >>> draft = service.create(identity=identity, metadata=metadata, access=access)

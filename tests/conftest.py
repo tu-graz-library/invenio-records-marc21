@@ -14,18 +14,13 @@ See https://pytest-invenio.readthedocs.io/ for documentation on which test
 fixtures are available.
 """
 
-import tempfile
 from collections import namedtuple
 from datetime import timedelta
 
 import arrow
 import pytest
-from invenio_access.models import ActionRoles
-from invenio_access.permissions import superuser_access
-from invenio_accounts.models import Role
-from invenio_admin.permissions import action_admin_access
+from invenio_access.permissions import any_user
 from invenio_app.factory import create_api
-from invenio_files_rest.models import Location
 from invenio_rdm_records.services.pids import PIDManager, PIDsService, providers
 from invenio_records_resources.services import FileService
 
@@ -132,6 +127,7 @@ def app_config(app_config, db_uri):
     app_config["JSONSCHEMAS_HOST"] = "not-used"
     app_config["RDM_PERMISSION_POLICY"] = Marc21RecordPermissionPolicy
     # Enable DOI miting
+    app_config["WORKFLOWS_TUGRAZ_RECORD_MANAGER_NEEDS"] = [any_user]
     app_config["DATACITE_ENABLED"] = True
     app_config["DATACITE_USERNAME"] = "INVALID"
     app_config["DATACITE_PASSWORD"] = "INVALID"

@@ -19,9 +19,7 @@ from os.path import dirname, join
 
 import pytest
 from flask_principal import Identity
-from invenio_access import any_user
-from invenio_app.factory import create_api
-from invenio_rdm_records.services.pids import PIDManager, PIDsService
+from invenio_access.permissions import any_user, authenticated_user, system_process
 
 from invenio_records_marc21.proxies import current_records_marc21
 from invenio_records_marc21.services.record import Marc21Metadata
@@ -43,9 +41,11 @@ def running_app(app, identity_simple, location):
 @pytest.fixture(scope="module")
 def identity_simple():
     """Simple identity fixture."""
-    i = Identity(1)
-    i.provides.add(any_user)
-    return i
+    identity = Identity(1)
+    identity.provides.add(any_user)
+    identity.provides.add(authenticated_user)
+    identity.provides.add(system_process)
+    return identity
 
 
 @pytest.fixture(scope="session")

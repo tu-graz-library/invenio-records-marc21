@@ -10,8 +10,17 @@
 
 """Permissions for Invenio Marc21 Records."""
 
-from invenio_records_permissions.generators import AnyUser, Disable, SystemProcess
+from flask import current_app
+from invenio_rdm_records.services.generators import IfRestricted
+from invenio_records_permissions.generators import (
+    AnyUser,
+    AuthenticatedUser,
+    Disable,
+    SystemProcess,
+)
 from invenio_records_permissions.policies.records import RecordPermissionPolicy
+
+from .generators import Marc21RecordManagers
 
 
 class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
@@ -27,38 +36,51 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     - Delete access given to admins only. (inherited)
     """
 
-    # TODO: Change all below when permissions settled
-    can_create = [AnyUser()]
-    can_update_files = [AnyUser()]
-    can_publish = [AnyUser()]
-    can_read = [AnyUser()]
-    can_update = [AnyUser()]
-    can_new_version = [AnyUser()]
-    can_edit = [AnyUser()]
-    can_lift_embargo = [AnyUser()]
-    can_search = [AnyUser(), SystemProcess()]
+    #
+    # High-level permissions (used by low-level)
+    #
+    can_all = [AnyUser(), SystemProcess()]
+    can_authenticated = [AuthenticatedUser(), SystemProcess()]
+    can_manage = [
+        SystemProcess(),
+        Marc21RecordManagers(),
+    ]
+    can_view = can_manage
+
+    can_create = can_manage
+    can_edit = can_manage
+    can_publish = can_manage
+    can_lift_embargo = can_manage
+    can_new_version = can_manage
 
     # Draft permissions
-    can_read_draft = [AnyUser()]
-    can_delete_draft = [AnyUser()]
-    can_update_draft = [AnyUser()]
-    can_search_drafts = [AnyUser()]
-    can_draft_read_files = [AnyUser()]
-    can_draft_create_files = [AnyUser(), SystemProcess()]
-    can_draft_update_files = [AnyUser()]
-    can_draft_delete_files = [AnyUser()]
-    can_draft_commit_files = [AnyUser()]
+    can_read_draft = can_manage
+    can_delete_draft = can_manage
+    can_update_draft = can_manage
+    can_search_drafts = can_manage
+
+    # Draft files permissions
+    can_draft_read_files = can_manage
+    can_draft_create_files = can_manage
+    can_draft_update_files = can_manage
+    can_draft_delete_files = can_manage
+    can_draft_commit_files = can_manage
+
     # Files permissions
-    can_read_files = [AnyUser()]
-    can_create_files = [AnyUser(), SystemProcess()]
-    can_update_files = [AnyUser()]
-    can_delete_files = [AnyUser()]
-    can_commit_files = [Disable()]
+    can_read_files = [
+        IfRestricted("files", then_=can_view, else_=can_all),
+    ]
 
     #
     # PIDs
-    can_pid_create = [AnyUser()]
-    can_pid_register = [AnyUser(), SystemProcess()]
-    can_pid_update = [AnyUser()]
-    can_pid_discard = [AnyUser()]
-    can_pid_delete = [AnyUser()]
+    can_pid_create = can_manage
+    can_pid_register = can_manage
+    can_pid_update = can_manage
+    can_pid_discard = can_manage
+    can_pid_delete = can_manage
+
+    # Disabled actions
+    can_create_files = [Disable()]
+    can_update_files = [Disable()]
+    can_delete_files = [Disable()]
+    can_commit_files = [Disable()]

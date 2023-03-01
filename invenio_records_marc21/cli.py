@@ -19,7 +19,7 @@ import arrow
 import click
 from flask.cli import with_appcontext
 from flask_principal import Identity
-from invenio_access import any_user
+from invenio_access.permissions import any_user, authenticated_user, system_process
 from invenio_rdm_records.records.systemfields.access.field.record import (
     AccessStatusEnum,
 )
@@ -33,6 +33,8 @@ def system_identity():
     """System identity."""
     identity = Identity(1)
     identity.provides.add(any_user)
+    identity.provides.add(authenticated_user)
+    identity.provides.add(system_process)
     return identity
 
 

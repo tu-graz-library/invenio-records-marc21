@@ -34,6 +34,12 @@ ERROR_MESSAGE_WRAPPER = {
             "message": "SERVICES_CONNECTION_REFUSED",
         },
     ],
+    "PermissionDeniedError": [
+        {
+            "args": "",
+            "message": "PERMISSIONS_ERROR",
+        },
+    ],
 }
 
 ERROR_MESSAGES = {
@@ -47,6 +53,7 @@ ERROR_MESSAGES = {
         "Maybe you missed to start the services.\n"
         "Try to do a invenio-cli services setup -f"
     ),
+    "PERMISSIONS_ERROR": _("User has not the permissions.\n"),
 }
 
 
@@ -68,7 +75,8 @@ def _create_errormessage(e: Exception):
     message = ""
     errors = ERROR_MESSAGE_WRAPPER.get(type(e).__name__, {})
     for error in errors:
-        if error.get("args") in e.args[0]:
+        args = error.get("args")
+        if args is None or args in e.args[0]:
             wrap = error.get("message", "")
             message = ERROR_MESSAGES.get(wrap)
             break
