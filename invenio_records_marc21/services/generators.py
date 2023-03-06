@@ -26,5 +26,5 @@ class Marc21RecordCurators(Generator):
     """Allows curator to modify other records."""
 
     def needs(self, **kwargs):
-        """Enabling needs"""
+        """Enabling needs."""
         return current_app.config.get("MARC21_RECORD_CURATOR_NEEDS", [])

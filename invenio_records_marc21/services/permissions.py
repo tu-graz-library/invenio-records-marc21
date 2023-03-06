@@ -40,7 +40,7 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     #
     can_all = [AnyUser(), SystemProcess()]
     can_authenticated = [AuthenticatedUser(), SystemProcess()]
-    can_manage = [Marc21RecordManagers()]
+    can_manage = [Marc21RecordManagers(), SystemProcess()]
     can_curate = can_manage + [Marc21RecordCurators()]
     can_view = can_curate
 

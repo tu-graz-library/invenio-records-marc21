@@ -127,7 +127,6 @@ def app_config(app_config, db_uri):
     app_config["JSONSCHEMAS_HOST"] = "not-used"
     app_config["RDM_PERMISSION_POLICY"] = Marc21RecordPermissionPolicy
     # Enable DOI miting
-    app_config["WORKFLOWS_TUGRAZ_RECORD_MANAGER_NEEDS"] = [any_user]
     app_config["DATACITE_ENABLED"] = True
     app_config["DATACITE_USERNAME"] = "INVALID"
     app_config["DATACITE_PASSWORD"] = "INVALID"
