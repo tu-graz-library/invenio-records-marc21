@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -10,7 +10,6 @@
 
 """Permissions for Invenio Marc21 Records."""
 
-from flask import current_app
 from invenio_rdm_records.services.generators import IfRestricted
 from invenio_records_permissions.generators import (
     AnyUser,
@@ -20,7 +19,7 @@ from invenio_records_permissions.generators import (
 )
 from invenio_records_permissions.policies.records import RecordPermissionPolicy
 
-from .generators import Marc21RecordManagers
+from .generators import Marc21RecordCurators, Marc21RecordManagers
 
 
 class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
@@ -41,30 +40,28 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     #
     can_all = [AnyUser(), SystemProcess()]
     can_authenticated = [AuthenticatedUser(), SystemProcess()]
-    can_manage = [
-        SystemProcess(),
-        Marc21RecordManagers(),
-    ]
-    can_view = can_manage
+    can_manage = [Marc21RecordManagers()]
+    can_curate = can_manage + [Marc21RecordCurators()]
+    can_view = can_curate
 
     can_create = can_manage
-    can_edit = can_manage
-    can_publish = can_manage
-    can_lift_embargo = can_manage
+    can_edit = can_curate
+    can_publish = can_curate
+    can_lift_embargo = can_curate
     can_new_version = can_manage
 
     # Draft permissions
-    can_read_draft = can_manage
-    can_delete_draft = can_manage
-    can_update_draft = can_manage
-    can_search_drafts = can_manage
+    can_read_draft = can_curate
+    can_delete_draft = can_curate
+    can_update_draft = can_curate
+    can_search_drafts = can_curate
 
     # Draft files permissions
-    can_draft_read_files = can_manage
-    can_draft_create_files = can_manage
-    can_draft_update_files = can_manage
-    can_draft_delete_files = can_manage
-    can_draft_commit_files = can_manage
+    can_draft_read_files = can_curate
+    can_draft_create_files = can_curate
+    can_draft_update_files = can_curate
+    can_draft_delete_files = can_curate
+    can_draft_commit_files = can_curate
 
     # Files permissions
     can_read_files = [
@@ -73,11 +70,11 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
 
     #
     # PIDs
-    can_pid_create = can_manage
-    can_pid_register = can_manage
-    can_pid_update = can_manage
-    can_pid_discard = can_manage
-    can_pid_delete = can_manage
+    can_pid_create = can_curate
+    can_pid_register = can_curate
+    can_pid_update = can_curate
+    can_pid_discard = can_curate
+    can_pid_delete = can_curate
 
     # Disabled actions
     can_create_files = [Disable()]

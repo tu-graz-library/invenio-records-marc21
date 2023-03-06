@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -53,7 +53,7 @@ ERROR_MESSAGES = {
         "Maybe you missed to start the services.\n"
         "Try to do a invenio-cli services setup -f"
     ),
-    "PERMISSIONS_ERROR": _("User has not the permissions.\n"),
+    "PERMISSIONS_ERROR": _("User has not the permissions."),
 }
 
 

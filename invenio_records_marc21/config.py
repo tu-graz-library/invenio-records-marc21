@@ -14,6 +14,7 @@ from __future__ import absolute_import, print_function
 
 import idutils
 from celery.schedules import crontab
+from flask_principal import RoleNeed
 from invenio_rdm_records.services.pids import providers
 
 from .resources.serializers.datacite import Marc21DataCite43JSONSerializer
@@ -204,3 +205,9 @@ You can also provide a callable instead:
 
     DATACITE_FORMAT = make_doi
 """
+
+MARC21_RECORD_MANAGER_NEEDS = [RoleNeed("Marc21Manager")]
+"""This Role has the most powerfull below of the admin. It will have create/modify/delete permissions."""
+
+MARC21_RECORD_CURATOR_NEEDS = [RoleNeed("Marc21Curator")]
+"""This Role is to modify records only, no creation, no deletion possible."""

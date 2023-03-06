@@ -17,6 +17,14 @@ from invenio_records_permissions.generators import Generator
 class Marc21RecordManagers(Generator):
     """Allows record owners."""
 
-    def needs(self, record=None, **kwargs):
+    def needs(self, **kwargs):
         """Enabling Needs."""
-        return current_app.config.get("WORKFLOWS_TUGRAZ_RECORD_MANAGER_NEEDS", [])
+        return current_app.config.get("MARC21_RECORD_MANAGER_NEEDS", [])
+
+
+class Marc21RecordCurators(Generator):
+    """Allows curator to modify other records."""
+
+    def needs(self, **kwargs):
+        """Enabling needs"""
+        return current_app.config.get("MARC21_RECORD_CURATOR_NEEDS", [])
