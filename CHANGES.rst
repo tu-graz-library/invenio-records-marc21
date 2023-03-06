@@ -8,6 +8,18 @@
 Changes
 =======
 
+Version v0.11.0 (release 2023-03-06)
+
+- permissions: re-add SystemProcess to can_manage
+- fix: to keep flask-babelex
+- permissions: enlarge permission system
+- modification: update marc21 record permissions
+- modification: remove duplicate code
+- modification: add pids to new version
+- bugfix: create new version
+- modification: dashboard records edit
+
+
 Version v0.10.0 (release 2023-02-13)
 
 - fix: category could be AVA
