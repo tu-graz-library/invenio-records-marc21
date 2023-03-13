@@ -8,18 +8,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: invenio-records-marc21 0.2.1\n"
 "Report-Msgid-Bugs-To: info@tugraz.at\n"
-"POT-Creation-Date: 2021-11-09 12:13+0100\n"
+"POT-Creation-Date: 2023-03-13 07:48+0100\n"
 "PO-Revision-Date: 2021-11-09 12:13+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
 "Language-Team: de <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
+"Generated-By: Babel 2.11.0\n"
 
-#: invenio_records_marc21/errors.py:40
+#: invenio_records_marc21/config.py:32
+msgid "Best match"
+msgstr "Höchste Übereinstimmung"
+
+#: invenio_records_marc21/config.py:36
+msgid "Newest"
+msgstr "Neuester"
+
+#: invenio_records_marc21/config.py:118 invenio_records_marc21/config.py:125
+#: invenio_records_marc21/config.py:140 invenio_records_marc21/config.py:148
+#: tests/conftest.py:141 tests/conftest.py:148
+msgid "DOI"
+msgstr "DOI"
+
+#: invenio_records_marc21/errors.py:46
 msgid ""
 "The table you are looking for does not exist.\n"
 "Maybe you missed to re-setup the services after the marc21 module was "
@@ -27,58 +41,76 @@ msgid ""
 "Try to do a invenio-cli services setup -f"
 msgstr ""
 
-#: invenio_records_marc21/errors.py:45
+#: invenio_records_marc21/errors.py:51
 msgid ""
 "Connection to Services refused.\n"
 "Maybe you missed to start the services.\n"
 "Try to do a invenio-cli services setup -f"
 msgstr ""
 
-#: invenio_records_marc21/services/config.py:42
+#: invenio_records_marc21/errors.py:56
+msgid "User has not the permissions."
+msgstr "Benutzer hat nicht die erforderliche Berechtigung."
+
+#: invenio_records_marc21/services/config.py:50
+#: invenio_records_marc21/templates/invenio_records_marc21/record.html:46
 msgid "Access status"
-msgstr ""
-
-#: invenio_records_marc21/services/config.py:44
-msgid "Public"
-msgstr ""
-
-#: invenio_records_marc21/services/config.py:45
-msgid "Embargoed"
-msgstr ""
-
-#: invenio_records_marc21/services/config.py:46
-msgid "Restricted"
-msgstr ""
+msgstr "Zugriffsstatus"
 
 #: invenio_records_marc21/services/config.py:52
+msgid "Public"
+msgstr "Öffentlich"
+
+#: invenio_records_marc21/services/config.py:53
+msgid "Embargoed"
+msgstr "Gesperrt"
+
+#: invenio_records_marc21/services/config.py:54
+msgid "Restricted"
+msgstr "Eingeschränkt"
+
+#: invenio_records_marc21/services/config.py:60
 msgid "State"
-msgstr ""
+msgstr "Status"
 
-#: invenio_records_marc21/services/config.py:53
+#: invenio_records_marc21/services/config.py:61
 msgid "Published"
-msgstr ""
+msgstr "Veröffentlicht"
 
-#: invenio_records_marc21/services/config.py:53
+#: invenio_records_marc21/services/config.py:61
 msgid "Unpublished"
-msgstr ""
+msgstr "Unveröffentlicht"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/deposit.html:11
+#: invenio_records_marc21/services/schemas/__init__.py:34
+msgid "Invalid persistent identifier scheme."
+msgstr "Ungültiges Schema für permanente Kennung."
+
+#: invenio_records_marc21/templates/invenio_records_marc21/deposit.html:12
+msgid "New version"
+msgstr "Neue Version"
+
+#: invenio_records_marc21/templates/invenio_records_marc21/deposit.html:14
+#: invenio_records_marc21/templates/invenio_records_marc21/uploads.html:40
 msgid "New upload"
 msgstr "Neuer upload"
 
+#: invenio_records_marc21/templates/invenio_records_marc21/deposit.html:16
+#, fuzzy
+msgid "Edit upload"
+msgstr "Eintrag bearbeiten"
+
 #: invenio_records_marc21/templates/invenio_records_marc21/index.html:25
+#: invenio_records_marc21/templates/invenio_records_marc21/uploads.html:31
 msgid "Type and press enter to search"
-msgstr ""
+msgstr "Begriff eingeben und 'Enter' drücken"
 
 #: invenio_records_marc21/templates/invenio_records_marc21/record.html:34
 msgid "Creation date"
 msgstr "Erstellungsdatum"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/record.html:48
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/files.html:42
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:111
-msgid "Reason"
-msgstr ""
+#: invenio_records_marc21/templates/invenio_records_marc21/record.html:43
+msgid "Resource type"
+msgstr "Ressource-Typ"
 
 #: invenio_records_marc21/templates/invenio_records_marc21/tombstone.html:11
 msgid "Tombstone"
@@ -98,6 +130,11 @@ msgid ""
 "  "
 msgstr ""
 
+#: invenio_records_marc21/templates/invenio_records_marc21/uploads.html:7
+#, fuzzy
+msgid "Uploads"
+msgstr "Upload"
+
 #: invenio_records_marc21/templates/invenio_records_marc21/records/export.html:27
 msgid "Back to details"
 msgstr "Zurück zu den Details"
@@ -105,55 +142,35 @@ msgstr "Zurück zu den Details"
 #: invenio_records_marc21/templates/invenio_records_marc21/records/details/subjects.html:12
 #: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/subjects.html:12
 msgid "Subjects"
-msgstr "Themen"
+msgstr "Schlagworte"
 
 #: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/authors.html:13
 msgid "Rights Holder(s)"
 msgstr "Rechteinhaber"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/description.html:15
-msgid "Desciption"
+#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/description.html:12
+#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:52
+#, fuzzy
+msgid "Description"
 msgstr "Beschreibung"
 
-#: invenio_records_marSsc21/templates/invenio_records_marc21/records/helpers/details.html:12
+#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/details.html:12
 msgid "Details"
 msgstr "Details"
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/details.html:15
-#: invenio_records_marc21/ui/records/wrappers.py:16
-msgid "Author"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/details.html:16
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:62
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:129
-msgid "Publisher"
-msgstr "Herausgeber"
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/details.html:17
-msgid "Publication date"
-msgstr "Erscheinungsdatum"
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/details.html:18
-msgid "Dissertation"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/details.html:19
-msgid "Location and Access"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/details.html:20
-msgid "Metadata"
-msgstr ""
 
 #: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/files.html:34
 #: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:101
 msgid "Files"
 msgstr "Dateien"
 
+#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/files.html:42
+#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:111
+msgid "Reason"
+msgstr "Grund"
+
 #: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/footer.html:14
 msgid "Upload infromation"
-msgstr "Upload infromation"
+msgstr "Informationen zum Eintrag"
 
 #: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/footer.html:18
 msgid "Created:"
@@ -163,81 +180,61 @@ msgstr "Erstellt:"
 msgid "Modified:"
 msgstr "Bearbeitet:"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/side_bar.html:10
+#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/side_bar.html:24
 msgid "Export"
-msgstr "Export"
+msgstr "Exportieren"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:48
+#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:46
 #: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:51
 msgid "Name"
 msgstr "Name"
 
+#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:58
+#, fuzzy
+msgid "Creation Date"
+msgstr "Erstellungsdatum"
+
 #: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:64
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:131
-msgid "Place of publication"
-msgstr ""
+msgid "Language"
+msgstr "Sprache"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:66
-msgid "Publication Date"
-msgstr ""
+#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:70
+#, fuzzy
+msgid "Thesis Information"
+msgstr "Informationen zur Abschlussarbeit"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:68
-msgid "Function"
-msgstr ""
+#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:76
+#, fuzzy
+msgid "Title"
+msgstr "Titel"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:79
-msgid "Dissertation Type"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:81
-msgid "Institution"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:83
-msgid "Year of degree"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:96
-msgid "Link"
-msgstr "Link"
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:99
-msgid "Note"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:101
-msgid "Materials"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:113
-msgid "Control number"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:115
-msgid "Type"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:127
-msgid "Sequence"
+#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:88
+msgid "Type/Extent/Format"
 msgstr ""
 
 #: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:52
 msgid "Size"
-msgstr ""
+msgstr "Größe"
 
 #: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:71
 msgid ""
 "This is the file fingerprint (checksum), which can be used to verify the "
 "file integrity."
 msgstr ""
+"Dies ist der Datei-Fingerabdruck (Prüfsumme), der zur Überprüfung der "
+"Dateiintegrität verwendet werden kann."
 
 #: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:81
 msgid "Preview"
-msgstr ""
+msgstr "Vorschau"
 
 #: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:86
 msgid "Download"
-msgstr ""
+msgstr "Herunterladen"
+
+#: invenio_records_marc21/ui/records/wrappers.py:16
+msgid "Author"
+msgstr "Verfasser"
 
 #: invenio_records_marc21/ui/records/wrappers.py:17
 msgid "Author of dialog"
@@ -245,21 +242,33 @@ msgstr ""
 
 #: invenio_records_marc21/ui/records/wrappers.py:18
 msgid "Actor"
-msgstr ""
+msgstr "Darsteller"
 
 #: invenio_records_marc21/ui/records/wrappers.py:19
 msgid "Architect"
-msgstr ""
+msgstr "Architekt"
 
 #: invenio_records_marc21/ui/records/wrappers.py:20
 msgid "Book producer"
-msgstr ""
+msgstr "Hersteller des Buches"
 
 #: invenio_records_marc21/ui/records/wrappers.py:21
 msgid "Creator"
-msgstr ""
+msgstr "ErstellerInnen"
 
 #: invenio_records_marc21/ui/records/wrappers.py:22
 msgid "Curator"
-msgstr ""
+msgstr "Kurator"
+
+#: invenio_records_marc21/ui/theme/__init__.py:42
+msgid "Marc21"
+msgstr "Marc21"
+
+#: tests/services/schemas/access/test_record.py:45
+msgid "'record' must be either 'public' or 'restricted'"
+msgstr "'Eintrag' muss entweder 'Öffentlich' oder 'Eingeschränkt' sein."
+
+#: tests/services/schemas/access/test_record.py:57
+msgid "'files' must be either 'public' or 'restricted'"
+msgstr "'Datei' muss entweder 'Öffentlich' oder 'Eingeschränkt' sein."
 
