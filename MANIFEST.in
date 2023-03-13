@@ -19,7 +19,7 @@ include .editorconfig
 include .tx/config
 prune docs/_build
 recursive-include .github/workflows *.yml
-recursive-include invenio_records_marc21/translations *.po *.pot *.mo
+recursive-include invenio_records_marc21 *.po *.pot *.mo
 
 
 include *.rst
