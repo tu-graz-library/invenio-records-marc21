@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { Button } from "semantic-ui-react";
 import { http } from "react-invenio-forms";
 import PropTypes from "prop-types";
+import { i18next } from "@translations/invenio_records_marc21/i18next";
 
 export const EditButton = ({ recid, onError }) => {
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ export const EditButton = ({ recid, onError }) => {
       floated="right"
       onClick={() => handleClick()}
       icon="edit"
-      content={"Edit"}
+      content={i18next.t("Edit")}
     />
   );
 };

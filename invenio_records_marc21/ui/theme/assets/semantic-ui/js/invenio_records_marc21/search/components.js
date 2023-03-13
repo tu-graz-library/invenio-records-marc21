@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { truncate, get } from "lodash";
 import { Button, Card, Item, Label } from "semantic-ui-react";
 import { EditButton } from "../components/EditButton";
+import { i18next } from "@translations/invenio_records_marc21/i18next";
 
 export const Marc21RecordResultsListItem = ({ result, index }) => {
   const version = get(result, "revision_id", null);
@@ -54,7 +55,7 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
               size="small"
               floated="right"
               icon="eye"
-              content={"View"}
+              content={i18next.t("View")}
             />
           </div>
         </Item.Extra>

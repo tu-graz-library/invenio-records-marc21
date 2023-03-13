@@ -1,13 +1,13 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021-2022 Graz University of Technology.
+// Copyright (C) 2021-2023 Graz University of Technology.
 //
 // Invenio-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
 // details.
 
 import _get from "lodash/get";
-import { i18next } from "@translations/invenio_app_rdm/i18next";
+import { i18next } from "@translations/invenio_records_marc21/i18next";
 import React, { Component, createRef } from "react";
 import {
   Marc21RecordSerializer,
@@ -137,7 +137,7 @@ export class Marc21DepositForm extends Component {
                   <Sticky context={this.sidebarRef} offset={10}>
                     {this.templates.length > 0 && (
                       <TemplateField
-                        label={"Templates"}
+                        label={i18next.t("Templates")}
                         labelIcon={"bookmark"}
                         templates={this.templates}
                       />

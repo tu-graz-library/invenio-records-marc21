@@ -2,7 +2,7 @@
 //
 // Copyright (C) 2020-2021 CERN.
 // Copyright (C) 2020-2021 Northwestern University.
-// Copyright (C) 2021 Graz University of Technology.
+// Copyright (C) 2021-2023 Graz University of Technology.
 //
 // Invenio-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
@@ -13,6 +13,7 @@ import { Grid, Icon } from "semantic-ui-react";
 
 import { EditButton } from "../components/EditButton";
 import { NewVersionButton } from "react-invenio-deposit";
+import { i18next } from "@translations/invenio_records_marc21/i18next";
 
 export const RecordManagement = (props) => {
   const record = props.record;
@@ -29,7 +30,7 @@ export const RecordManagement = (props) => {
       <Grid.Column>
         <Grid.Row>
           <Icon name="cogs" />
-          <span>{"Manage"}</span>
+          <span>{i18next.t("Manage")}</span>
         </Grid.Row>
         <Grid.Row className="record-management-row">
           <EditButton recid={recid} onError={handleError} />
