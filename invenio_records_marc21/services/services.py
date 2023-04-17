@@ -24,7 +24,9 @@ from .record import Marc21Metadata
 class Marc21RecordService(RDMRecordService):
     """Marc21 record service class."""
 
-    def _create_data(self, identity, data, metadata, files=False, access=None):
+    def _create_data(
+        self, identity, data=None, metadata=None, files=False, access=None
+    ):
         """Create a data json.
 
         :param identity: Identity of user creating the record.
@@ -41,7 +43,7 @@ class Marc21RecordService(RDMRecordService):
         """
         if data is None:
             data = metadata.json
-        if not "files" in data:
+        if "files" not in data:
             data["files"] = {"enabled": files}
         if "access" not in data:
             default_access = {

@@ -122,8 +122,13 @@ def create_fake_record(filename):
 
     service = current_records_marc21.records_service
 
+    marc21_metadata = Marc21Metadata()
+    marc21_metadata.xml = data_to_use["metadata"]["xml"]
     draft = service.create(
-        data=data_to_use, identity=system_identity(), access=data_access, files=False
+        metadata=marc21_metadata,
+        identity=system_identity(),
+        access=data_access,
+        files=False,
     )
 
     record = service.publish(id_=draft.id, identity=system_identity())

@@ -61,5 +61,3 @@ class MetadataSchema(Schema):
             raise MarshmallowValidationError(
                 field_name=".".join(path), message=" ".join(e.message.split(" ")[1:])
             )
-
-        pass
