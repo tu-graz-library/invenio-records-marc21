@@ -72,6 +72,7 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_draft_create_files = can_curate
     can_draft_update_files = can_curate
     can_draft_delete_files = can_curate
+    can_draft_set_content_files = can_curate
     can_draft_commit_files = can_curate
 
     #
