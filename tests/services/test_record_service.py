@@ -68,7 +68,7 @@ def test_create_empty_draft(running_app):
 
     Errors (missing required fields) are reported, but don't prevent creation.
     """
-    input_data = {"metadata": {}}
+    input_data = {"metadata": {"fields": {}, "leader": ""}}
     service = running_app.service
     identity_simple = running_app.identity_simple
 
@@ -205,9 +205,12 @@ def test_embargo_lift_without_draft(mock_arrow, running_app, marc21_record):
     # Add embargo to record
     marc21_record["access"]["files"] = "restricted"
     marc21_record["access"]["status"] = "embargoed"
-    marc21_record["access"]["embargo"] = dict(
-        active=True, until="2020-06-01", reason=None
-    )
+    marc21_record["access"]["embargo"] = {
+        "active": True,
+        "until": "2020-06-01",
+        "reason": None,
+    }
+
     # We need to set the current date in the past to pass the validations
     mock_arrow.return_value = arrow.get(datetime(1954, 9, 29), tz.gettz("UTC"))
     draft = service.create(identity=identity_simple, data=marc21_record)
@@ -231,9 +234,11 @@ def test_embargo_lift_with_draft(mock_arrow, running_app, marc21_record):
     # Add embargo to record
     marc21_record["access"]["files"] = "restricted"
     marc21_record["access"]["status"] = "embargoed"
-    marc21_record["access"]["embargo"] = dict(
-        active=True, until="2020-06-01", reason=None
-    )
+    marc21_record["access"]["embargo"] = {
+        "active": True,
+        "until": "2020-06-01",
+        "reason": None,
+    }
 
     mock_arrow.return_value = arrow.get(datetime(1954, 9, 29), tz.gettz("UTC"))
     draft = service.create(identity=identity_simple, data=marc21_record)
@@ -263,9 +268,11 @@ def test_embargo_lift_with_updated_draft(mock_arrow, running_app, marc21_record)
     # Add embargo to record
     marc21_record["access"]["files"] = "restricted"
     marc21_record["access"]["status"] = "embargoed"
-    marc21_record["access"]["embargo"] = dict(
-        active=True, until="2020-06-01", reason=None
-    )
+    marc21_record["access"]["embargo"] = {
+        "active": True,
+        "until": "2020-06-01",
+        "reason": None,
+    }
 
     # We need to set the current date in the past to pass the validations
     mock_arrow.return_value = arrow.get(datetime(1954, 9, 29), tz.gettz("UTC"))
@@ -279,7 +286,11 @@ def test_embargo_lift_with_updated_draft(mock_arrow, running_app, marc21_record)
     # Change record's title and access field to be restricted
     marc21_record["metadata"]["title"] = "Record modified by the user"
     marc21_record["access"]["status"] = "restricted"
-    marc21_record["access"]["embargo"] = dict(active=False, until=None, reason=None)
+    marc21_record["access"]["embargo"] = {
+        "active": False,
+        "until": None,
+        "reason": None,
+    }
     # Update the ongoing draft with the new data simulating the user's input
     ongoing_draft = service.update_draft(
         identity=identity_simple, id_=draft.id, data=marc21_record
@@ -304,9 +315,12 @@ def test_embargo_lift_with_error(running_app, marc21_record):
     # Add embargo to record
     marc21_record["access"]["files"] = "restricted"
     marc21_record["access"]["status"] = "embargoed"
-    marc21_record["access"]["embargo"] = dict(
-        active=True, until="3220-06-01", reason=None
-    )
+    marc21_record["access"]["embargo"] = {
+        "active": True,
+        "until": "3220-06-01",
+        "reason": None,
+    }
+
     draft = service.create(identity=identity_simple, data=marc21_record)
     record = service.publish(identity=identity_simple, id_=draft.id)
 

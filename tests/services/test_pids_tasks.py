@@ -16,7 +16,9 @@ from invenio_records_marc21.proxies import current_records_marc21
 from invenio_records_marc21.services.pids.tasks import register_or_update_pid
 
 
-def test_register_pid(running_app, full_metadata, mocker, identity_simple):
+def test_register_pid(
+    running_app, full_metadata, mocker, identity_simple, search_clear
+):
     """Registers a PID."""
 
     def public_doi(self, metadata, url, doi):

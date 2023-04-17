@@ -35,6 +35,7 @@ from invenio_records_marc21.services import (
     Marc21RecordService,
     Marc21RecordServiceConfig,
 )
+from invenio_records_marc21.services.pids import Marc21DataCitePIDProvider
 
 from .fake_datacite_client import FakeDataCiteClient
 
@@ -48,7 +49,153 @@ def _(x):
 def embargoed_record():
     """Embargoed record."""
     embargoed_record = {
-        "metadata": {"json": "test"},
+        "metadata": {
+            "fields": {
+                "001": "990004519310204517",
+                "005": "20200511091822.0",
+                "007": "tu",
+                "008": "131003|2012    |||      m    ||| 0 eng c",
+                "009": "AC11056824",
+                "015": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {"a": ["OeBB"], "2": ["oeb"]},
+                    }
+                ],
+                "035": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {"a": ["(EXLNZ-43ACC_NETWORK)990110601970203331"]},
+                    }
+                ],
+                "040": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {
+                            "a": ["TUG"],
+                            "b": ["ger"],
+                            "d": ["AT-UBTUG"],
+                            "e": ["rakwb"],
+                        },
+                    }
+                ],
+                "041": [{"ind1": "_", "ind2": "_", "subfields": {"a": ["eng"]}}],
+                "044": [{"ind1": "_", "ind2": "_", "subfields": {"c": ["XA-AT"]}}],
+                "084": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {"a": ["53.16"], "2": ["bkl"]},
+                    }
+                ],
+                "090": [{"ind1": "_", "ind2": "_", "subfields": {"h": ["g"]}}],
+                "100": [
+                    {
+                        "ind1": "1",
+                        "ind2": "_",
+                        "subfields": {"a": ["Sch\u00fctz, Denis"], "4": ["aut"]},
+                    }
+                ],
+                "245": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {
+                            "a": [
+                                "<<The>> development of high strain actuator materials"
+                            ],
+                            "c": ["Denis Sch\u00fctz"],
+                        },
+                    }
+                ],
+                "264": [{"ind1": "3", "ind2": " ", "subfields": {"b": ["TU Graz"]}}],
+                "264": [{"ind1": "_", "ind2": "1", "subfields": {"c": ["2012"]}}],
+                "300": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {
+                            "a": ["Getr. Z\u00e4hlung"],
+                            "b": ["Ill., zahlr. graph. Darst."],
+                        },
+                    }
+                ],
+                "502": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {"a": ["Graz, Techn. Univ., Diss., 2012"]},
+                    }
+                ],
+                "689": [
+                    {"ind1": "0", "ind2": "_", "subfields": {"5": ["AT-OBV", "ONBREB"]}}
+                ],
+                "856": [
+                    {
+                        "ind1": "4",
+                        "ind2": "_",
+                        "subfields": {
+                            "u": [
+                                "http://diglib.tugraz.at/download.php?id=576a7df056602&location=aleph"
+                            ],
+                            "x": ["TUG"],
+                            "3": ["Volltext"],
+                        },
+                    }
+                ],
+                "970": [
+                    {
+                        "ind1": "2",
+                        "ind2": "_",
+                        "subfields": {"a": ["TUG"], "d": ["HS-DISS"]},
+                    }
+                ],
+                "974": [
+                    {
+                        "ind1": "0",
+                        "ind2": "s",
+                        "subfields": {"F": ["051"], "A": ["mu||w||"]},
+                    }
+                ],
+                "996": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {
+                            "a": [
+                                "Fak. f\u00fcr Techn. Chemie, Verfahrenstechn. und Biotechnologie"
+                            ],
+                            "9": ["local"],
+                        },
+                    }
+                ],
+                "AVA": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {
+                            "0": ["990004519310204517"],
+                            "8": ["2237724340004517"],
+                            "a": ["43ACC_TUG"],
+                            "b": ["FHB"],
+                            "c": ["TUG Hochschulschriften (TUGHS)"],
+                            "d": ["6000/2012 S385"],
+                            "e": ["available"],
+                            "f": ["1"],
+                            "g": ["0"],
+                            "j": ["TUGHS"],
+                            "k": ["8"],
+                            "p": ["1"],
+                            "q": ["Hauptbibliothek"],
+                        },
+                    }
+                ],
+            },
+            "leader": "01198nam a2200397 c 4500",
+        },
         "access": {
             "record": "restricted",
             "files": "restricted",
@@ -61,8 +208,9 @@ def embargoed_record():
                 "reason": None,
             },
         },
+        "pids": {},
         "files": {
-            "enabled": False,  # Most tests don't care about files
+            "enabled": False,  # Most tests don"t care about files
         },
     }
     return embargoed_record
@@ -72,7 +220,153 @@ def embargoed_record():
 def marc21_record():
     """Normal record."""
     marc21_record = {
-        "metadata": {"json": "test"},
+        "metadata": {
+            "fields": {
+                "001": "990004519310204517",
+                "005": "20200511091822.0",
+                "007": "tu",
+                "008": "131003|2012    |||      m    ||| 0 eng c",
+                "009": "AC11056824",
+                "015": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {"a": ["OeBB"], "2": ["oeb"]},
+                    }
+                ],
+                "035": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {"a": ["(EXLNZ-43ACC_NETWORK)990110601970203331"]},
+                    }
+                ],
+                "040": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {
+                            "a": ["TUG"],
+                            "b": ["ger"],
+                            "d": ["AT-UBTUG"],
+                            "e": ["rakwb"],
+                        },
+                    }
+                ],
+                "041": [{"ind1": "_", "ind2": "_", "subfields": {"a": ["eng"]}}],
+                "044": [{"ind1": "_", "ind2": "_", "subfields": {"c": ["XA-AT"]}}],
+                "084": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {"a": ["53.16"], "2": ["bkl"]},
+                    }
+                ],
+                "090": [{"ind1": "_", "ind2": "_", "subfields": {"h": ["g"]}}],
+                "100": [
+                    {
+                        "ind1": "1",
+                        "ind2": "_",
+                        "subfields": {"a": ["Sch\u00fctz, Denis"], "4": ["aut"]},
+                    }
+                ],
+                "245": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {
+                            "a": [
+                                "<<The>> development of high strain actuator materials"
+                            ],
+                            "c": ["Denis Sch\u00fctz"],
+                        },
+                    }
+                ],
+                "264": [{"ind1": "3", "ind2": " ", "subfields": {"b": ["TU Graz"]}}],
+                "264": [{"ind1": "_", "ind2": "1", "subfields": {"c": ["2012"]}}],
+                "300": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {
+                            "a": ["Getr. Z\u00e4hlung"],
+                            "b": ["Ill., zahlr. graph. Darst."],
+                        },
+                    }
+                ],
+                "502": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {"a": ["Graz, Techn. Univ., Diss., 2012"]},
+                    }
+                ],
+                "689": [
+                    {"ind1": "0", "ind2": "_", "subfields": {"5": ["AT-OBV", "ONBREB"]}}
+                ],
+                "856": [
+                    {
+                        "ind1": "4",
+                        "ind2": "_",
+                        "subfields": {
+                            "u": [
+                                "http://diglib.tugraz.at/download.php?id=576a7df056602&location=aleph"
+                            ],
+                            "x": ["TUG"],
+                            "3": ["Volltext"],
+                        },
+                    }
+                ],
+                "970": [
+                    {
+                        "ind1": "2",
+                        "ind2": "_",
+                        "subfields": {"a": ["TUG"], "d": ["HS-DISS"]},
+                    }
+                ],
+                "974": [
+                    {
+                        "ind1": "0",
+                        "ind2": "s",
+                        "subfields": {"F": ["051"], "A": ["mu||w||"]},
+                    }
+                ],
+                "996": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {
+                            "a": [
+                                "Fak. f\u00fcr Techn. Chemie, Verfahrenstechn. und Biotechnologie"
+                            ],
+                            "9": ["local"],
+                        },
+                    }
+                ],
+                "AVA": [
+                    {
+                        "ind1": "_",
+                        "ind2": "_",
+                        "subfields": {
+                            "0": ["990004519310204517"],
+                            "8": ["2237724340004517"],
+                            "a": ["43ACC_TUG"],
+                            "b": ["FHB"],
+                            "c": ["TUG Hochschulschriften (TUGHS)"],
+                            "d": ["6000/2012 S385"],
+                            "e": ["available"],
+                            "f": ["1"],
+                            "g": ["0"],
+                            "j": ["TUGHS"],
+                            "k": ["8"],
+                            "p": ["1"],
+                            "q": ["Hauptbibliothek"],
+                        },
+                    }
+                ],
+            },
+            "leader": "01198nam a2200397 c 4500",
+        },
         "access": {
             "files": "public",
             "status": "public",
@@ -82,6 +376,7 @@ def marc21_record():
                 "reason": None,
             },
         },
+        "pids": {},
         "files": {"enabled": False},
     }
     return marc21_record
@@ -131,9 +426,10 @@ def app_config(app_config, db_uri):
     app_config["DATACITE_USERNAME"] = "INVALID"
     app_config["DATACITE_PASSWORD"] = "INVALID"
     app_config["DATACITE_PREFIX"] = "10.123"
+    app_config["OAISERVER_ID_PREFIX"] = "oai:repo"
     app_config["INVENIO_MARC21_PERSISTENT_IDENTIFIER_PROVIDERS"] = [
         # DataCite DOI provider with fake client
-        providers.DataCitePIDProvider(
+        Marc21DataCitePIDProvider(
             "datacite",
             client=FakeDataCiteClient("datacite", config_prefix="DATACITE"),
             pid_type="doi",
@@ -183,3 +479,42 @@ def running_app(app, db, location):
 def create_app(instance_path):
     """Application factory fixture."""
     return create_api
+
+
+from invenio_records_marc21.records import Marc21Draft, Marc21Record
+
+
+def _search_create_indexes(current_search, current_search_client):
+    """Create all registered search indexes."""
+    to_create = [
+        Marc21Record.index._name,
+        Marc21Draft.index._name,
+    ]
+    # list to trigger iter
+    list(current_search.create(ignore_existing=True, index_list=to_create))
+    current_search_client.indices.refresh()
+
+
+def _search_delete_indexes(current_search):
+    """Delete all registered search indexes."""
+    to_delete = [
+        Marc21Record.index._name,
+        Marc21Draft.index._name,
+    ]
+    list(current_search.delete(index_list=to_delete))
+
+
+# overwrite pytest_invenio.fixture to only delete record indices
+# keeping vocabularies.
+@pytest.fixture()
+def search_clear(search):
+    """Clear search indices after test finishes (function scope).
+
+    This fixture rollback any changes performed to the indexes during a test,
+    in order to leave search in a clean state for the next test.
+    """
+    from invenio_search import current_search, current_search_client
+
+    yield search
+    _search_delete_indexes(current_search)
+    _search_create_indexes(current_search, current_search_client)

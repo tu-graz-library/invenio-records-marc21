@@ -46,6 +46,9 @@
       <subfield code="a">Getr. Zählung</subfield>
       <subfield code="b">Ill., zahlr. graph. Darst.</subfield>
     </datafield>
+    <datafield tag="362" ind1="0" ind2=" ">
+      <subfield code="a">2022</subfield>
+    </datafield>
     <datafield tag="502" ind1=" " ind2=" ">
       <subfield code="a">Graz, Techn. Univ., Diss., 2012</subfield>
     </datafield>

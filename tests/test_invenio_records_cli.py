@@ -80,7 +80,7 @@ def test_cli_create_demo_record(running_app):
             "-m",
             "False",
             "-n",
-            "10",
+            "1",
         ],
     )
     assert result.exit_code == 0
@@ -100,7 +100,7 @@ def test_cli_create_demo_metadata(running_app):
             "-m",
             "True",
             "-n",
-            "10",
+            "1",
         ],
     )
     assert result.exit_code == 0

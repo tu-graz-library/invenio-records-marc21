@@ -87,9 +87,8 @@ def test_datacite_provider_configuration(record, mocker):
 #
 # Reserve & Discard
 #
-def test_resolve_pid(running_app, full_metadata):
+def test_resolve_pid(running_app, full_metadata, search_clear):
     """Resolve a PID."""
-
     service = current_records_marc21.records_service
     identity_simple = running_app.identity_simple
     # create the draft

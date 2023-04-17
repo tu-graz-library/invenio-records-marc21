@@ -96,6 +96,15 @@
       ],
       "264": [
         {
+          "ind1": "3",
+          "ind2": " ",
+          "subfields": {
+            "b": ["TU Graz"]
+          }
+        }
+      ],
+      "264": [
+        {
           "ind1": "_",
           "ind2": "1",
           "subfields": {
@@ -110,6 +119,15 @@
           "subfields": {
             "a": ["Getr. Z\u00e4hlung"],
             "b": ["Ill., zahlr. graph. Darst."]
+          }
+        }
+      ],
+      "362": [
+        {
+          "ind1": "0",
+          "ind2": "_",
+          "subfields": {
+            "a": ["2022"]
           }
         }
       ],
