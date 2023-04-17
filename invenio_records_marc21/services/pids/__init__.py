@@ -10,6 +10,10 @@
 
 """PIDs module."""
 
+from .datacite import Marc21DataCitePIDProvider
 from .tasks import register_or_update_pid
 
-__all__ = ("register_or_update_pid",)
+__all__ = (
+    "Marc21DataCitePIDProvider",
+    "register_or_update_pid",
+)

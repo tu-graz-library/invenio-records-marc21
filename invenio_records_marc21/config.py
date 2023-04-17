@@ -18,6 +18,7 @@ from flask_principal import RoleNeed
 from invenio_rdm_records.services.pids import providers
 
 from .resources.serializers.datacite import Marc21DataCite43JSONSerializer
+from .services.pids import Marc21DataCitePIDProvider
 
 
 def _(x):
@@ -110,7 +111,7 @@ CELERY_BEAT_SCHEDULE = {
 #
 INVENIO_MARC21_PERSISTENT_IDENTIFIER_PROVIDERS = [
     # DataCite DOI provider
-    providers.DataCitePIDProvider(
+    Marc21DataCitePIDProvider(
         "datacite",
         client=providers.DataCiteClient("datacite", config_prefix="DATACITE"),
         pid_type="doi",

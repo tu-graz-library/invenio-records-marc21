@@ -52,14 +52,14 @@ class Marc21DataCite43Schema(Schema):
             "resourceType": "Text",
         }
 
-    def _get_field(self, obj, id, default=""):
+    def _get_field(self, obj, field_number, default=""):
         """Get field from metadata."""
-        fields = obj["metadata"]["fields"]
-        return fields.get(id, default)
+        fields = obj["metadata"].get("fields", {})
+        return fields.get(field_number, default)
 
-    def _get_subfields(self, obj, id):
+    def _get_subfields(self, obj, field_number):
         """Get subfields from metadata."""
-        return self._get_field(obj, id, default=[{"subfields": {}}])[0].get(
+        return self._get_field(obj, field_number, default=[{"subfields": {}}])[0].get(
             "subfields", {}
         )
 
@@ -76,7 +76,10 @@ class Marc21DataCite43Schema(Schema):
     def get_publisher(self, obj):
         """Get publisher."""
         publisher_field = self._get_subfields(obj, "260")
-        return publisher_field.get("b", ["Graz University of Technology"])[0]
+        return publisher_field.get(
+            "b",
+            [current_app.config.get("INVENIO_MARC21_DATACITE_DEFAULT_PUBLISHER")],
+        )[0]
 
     def get_publication_year(self, obj):
         """Get publication year from edtf date."""
@@ -89,7 +92,7 @@ class Marc21DataCite43Schema(Schema):
         serialized_identifiers = []
 
         # pids go first so the DOI from the record is included
-        pids = obj["pids"]
+        pids = obj.get("pids", {})
         for scheme, id_ in pids.items():
             id_scheme = get_scheme_datacite(
                 scheme,
