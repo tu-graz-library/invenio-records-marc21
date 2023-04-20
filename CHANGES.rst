@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.12.1 (release 2023-04-20)
+
+
+
+
 Version v0.11.0 (release 2023-03-06)
 
 - permissions: re-add SystemProcess to can_manage
