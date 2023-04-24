@@ -10,7 +10,7 @@
 
 """Permissions for Invenio Marc21 Records."""
 
-from invenio_rdm_records.services.generators import IfRestricted
+from invenio_rdm_records.services.generators import IfFileIsLocal, IfRestricted
 from invenio_records_permissions.generators import (
     AnyUser,
     AuthenticatedUser,
@@ -49,6 +49,14 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_publish = can_curate
     can_lift_embargo = can_curate
     can_new_version = can_manage
+
+    can_read_files = [
+        IfRestricted("files", then_=can_view, else_=can_all),
+    ]
+
+    can_get_content_files = [
+        IfFileIsLocal(then_=can_read_files, else_=[SystemProcess()])
+    ]
 
     #  Records
     can_search = can_all
