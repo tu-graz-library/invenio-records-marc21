@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.12.2 (release 2023-04-25)
+
+- bugfix: previewer allow to access files
+
+
 Version v0.12.1 (release 2023-04-20)
 
 
