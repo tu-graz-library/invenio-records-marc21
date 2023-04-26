@@ -8,7 +8,7 @@
 """Marc21 records deposit backend."""
 
 
-from flask import current_app
+from flask import current_app, g
 from invenio_i18n.ext import current_i18n
 from invenio_rdm_records.services.schemas.utils import dump_empty
 
@@ -27,9 +27,16 @@ def empty_record():
     return record
 
 
+def get_user_roles(identity):
+    """Get user role names."""
+    roles = [role.name for role in identity.user.roles]
+    return roles
+
+
 def deposit_templates():
     """Retrieve from DB the tamplates for marc21 deposit form."""
-    templates = current_records_marc21.templates_service.get_templates()
+    roles = get_user_roles(g.identity)
+    templates = current_records_marc21.templates_service.get_templates(roles=roles)
 
     if templates:
         return [template.to_dict() for template in templates]

@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 
-"""Marc21 Record and Draft models."""
+"""Marc21 Templates models."""
 
 from copy import deepcopy
-from datetime import datetime
 
 from invenio_db import db
+from invenio_records.models import Timestamp
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy_utils.types import JSONType
 
 
-class Marc21Templates(db.Model):
+class Marc21Templates(db.Model, Timestamp):
     """Represent a base class for record metadata.
 
     The RecordMetadata object contains a ``created`` and  a ``updated``
@@ -64,9 +64,6 @@ class Marc21Templates(db.Model):
 
     active = db.Column(db.Boolean, default=True)
     """Active Template flag."""
-
-    created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    """Creation timestamp."""
 
     @classmethod
     def create(cls, name: str, data: dict, id_=None, **kwargs):
@@ -126,7 +123,7 @@ class Marc21Templates(db.Model):
             return query.first()
 
     @classmethod
-    def get_templates(cls, names=None, with_deleted=False):
+    def get_templates(cls, names=None, roles=None, with_deleted=False):
         """Retrieve multiple templates by id.
 
         :param names: List of template names.
@@ -135,12 +132,19 @@ class Marc21Templates(db.Model):
         """
         with db.session.no_autoflush:
             query = cls.query
+            query_filters = []
             if names:
-                query = query.filter(cls.name.in_(names))
+                query_filters.append(query.filter(cls.name.in_(names)))
             if with_deleted:
-                query = query.filter(cls.is_active != with_deleted)
+                query_filters.append((cls.is_active != with_deleted))
 
-            return query.all()
+            all_templates = query.filter(*query_filters).all()
+            templates = []
+            for template in all_templates:
+                if template.data.get("role", "") in roles:
+                    templates.append(template)
+
+            return templates
 
     @hybrid_property
     def is_active(self):
