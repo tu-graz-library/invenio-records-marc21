@@ -282,7 +282,7 @@ class Marc21Metadata:
         elif subfs:
             for key, val in sorted(subfs.items()):
                 subfield = Element("subfield", code=key)
-                subfield.text = " ".join(val)
+                subfield.text = " ".join(val) if isinstance(val, list) else val
                 datafield.append(subfield)
 
         else:
