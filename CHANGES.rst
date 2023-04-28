@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.12.3 (release 2023-04-28)
+
+- fix: distinguish between str and list
+
+
 Version v0.12.2 (release 2023-04-25)
 
 - bugfix: previewer allow to access files

@@ -228,7 +228,7 @@ from .services import (
     create_record,
 )
 
-__version__ = "0.12.2"
+__version__ = "0.12.3"
 
 __all__ = (
     "__version__",
