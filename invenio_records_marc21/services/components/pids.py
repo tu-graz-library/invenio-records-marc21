@@ -21,17 +21,43 @@ from ..pids.tasks import register_or_update_pid
 class PIDsComponent(BasePIDsComponent):
     """Service component for PIDs."""
 
-    def _doi_identifier_to_metadata(self, doi, data):
-        metadata = data.get("metadata", {})
-        fields = metadata.get("fields", {})
-        other_standard_identifier = fields.get("024", [])
+    def _add_other_standard_identifier(self, doi, fields):
+        """Add the other standard identifier to fields"""
         matadata_doi = {
             "ind1": "7",
             "ind2": "_",
-            "subfields": {"a": [doi.get("identifier")], "2": ["doi"]},
+            "subfields": {"a": [doi], "2": ["doi"]},
         }
-        other_standard_identifier.append(matadata_doi)
-        fields.update({"024": other_standard_identifier})
+
+        field = fields.get("024", [])
+        field.append(matadata_doi)
+
+        fields.update({"024": field})
+
+    def _add_electronic_location_and_access(self, doi, fields):
+        """Add electronic location and access field to fields."""
+        metadata_doi = {
+            "ind1": "4",
+            "ind2": "1",
+            "subfields": {
+                "u": [f"https://dx.doi.org/{doi}"],
+                "x": ["TUG"],
+                "z": ["kostenfrei"],
+                "3": ["Volltext"],
+                "7": ["0"],
+            },
+        }
+        field = fields.get("856", [])
+        field.append(metadata_doi)
+
+        fields.update({"856": field})
+
+    def _doi_identifier_to_metadata(self, doi, data):
+        metadata = data.get("metadata", {})
+        fields = metadata.get("fields", {})
+
+        self._add_other_standard_identifier(doi.get("identifier"), fields)
+        self._add_electronic_location_and_access(doi.get("identifier"), fields)
 
     def create(self, identity, data=None, record=None, errors=None):
         """This method is called on draft creation.
