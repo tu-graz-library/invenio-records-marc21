@@ -26,7 +26,7 @@ class PIDsComponent(BasePIDsComponent):
         matadata_doi = {
             "ind1": "7",
             "ind2": "_",
-            "subfields": {"a": [doi], "2": ["doi"]},
+            "subfields": {"2": ["doi"], "a": [doi]},
         }
 
         field = fields.get("024", [])
@@ -38,7 +38,7 @@ class PIDsComponent(BasePIDsComponent):
         """Add electronic location and access field to fields."""
         metadata_doi = {
             "ind1": "4",
-            "ind2": "1",
+            "ind2": "0",
             "subfields": {
                 "u": [f"https://dx.doi.org/{doi}"],
                 "x": ["TUG"],
