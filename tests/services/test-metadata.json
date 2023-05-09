@@ -154,9 +154,7 @@
           "ind1": "4",
           "ind2": "_",
           "subfields": {
-            "u": [
-              "http://diglib.tugraz.at/download.php?id=576a7df056602&location=aleph"
-            ],
+            "u": ["https://url-of-page.com/file/download"],
             "x": ["TUG"],
             "3": ["Volltext"]
           }

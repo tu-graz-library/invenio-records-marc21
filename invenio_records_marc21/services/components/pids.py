@@ -22,7 +22,7 @@ class PIDsComponent(BasePIDsComponent):
     """Service component for PIDs."""
 
     def _add_other_standard_identifier(self, doi, fields):
-        """Add the other standard identifier to fields"""
+        """Add the other standard identifier to fields."""
         matadata_doi = {
             "ind1": "7",
             "ind2": "_",

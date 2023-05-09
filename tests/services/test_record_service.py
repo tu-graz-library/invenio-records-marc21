@@ -43,7 +43,7 @@ def test_full_metadata_xml_schema(running_app, full_metadata, full_metadata_expe
     _test_metadata(
         data["metadata"]["fields"],
         full_metadata_expected["metadata"]["fields"],
-        exept=["024"],  # ignore since it automatically created in PIDsComponent
+        exept=["024", "856"],  # ignore, as it is automatically created in PIDsComponent
     )
 
 
@@ -73,7 +73,6 @@ def test_create_empty_draft(running_app):
     identity_simple = running_app.identity_simple
 
     draft = service.create(identity_simple, input_data)
-    draft_dict = draft.to_dict()
 
     assert draft["id"]
     assert draft._record.pid.status == PIDStatus.NEW

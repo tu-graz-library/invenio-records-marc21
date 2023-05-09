@@ -19,12 +19,11 @@ from datetime import timedelta
 
 import arrow
 import pytest
-from invenio_access.permissions import any_user
 from invenio_app.factory import create_api
 from invenio_rdm_records.services.pids import PIDManager, PIDsService, providers
 from invenio_records_resources.services import FileService
 
-from invenio_records_marc21.records import Marc21Draft, Marc21Parent
+from invenio_records_marc21.records import Marc21Draft, Marc21Parent, Marc21Record
 from invenio_records_marc21.resources.serializers.datacite import (
     Marc21DataCite43JSONSerializer,
 )
@@ -111,8 +110,10 @@ def embargoed_record():
                         },
                     }
                 ],
-                "264": [{"ind1": "3", "ind2": " ", "subfields": {"b": ["TU Graz"]}}],
-                "264": [{"ind1": "_", "ind2": "1", "subfields": {"c": ["2012"]}}],
+                "264": [
+                    {"ind1": "3", "ind2": "0", "subfields": {"b": ["TU Graz"]}},
+                    {"ind1": "_", "ind2": "1", "subfields": {"c": ["2012"]}},
+                ],
                 "300": [
                     {
                         "ind1": "_",
@@ -138,9 +139,7 @@ def embargoed_record():
                         "ind1": "4",
                         "ind2": "_",
                         "subfields": {
-                            "u": [
-                                "http://diglib.tugraz.at/download.php?id=576a7df056602&location=aleph"
-                            ],
+                            "u": ["https://url-of-page.com/file/download"],
                             "x": ["TUG"],
                             "3": ["Volltext"],
                         },
@@ -282,8 +281,10 @@ def marc21_record():
                         },
                     }
                 ],
-                "264": [{"ind1": "3", "ind2": " ", "subfields": {"b": ["TU Graz"]}}],
-                "264": [{"ind1": "_", "ind2": "1", "subfields": {"c": ["2012"]}}],
+                "264": [
+                    {"ind1": "3", "ind2": "0", "subfields": {"b": ["TU Graz"]}},
+                    {"ind1": "_", "ind2": "1", "subfields": {"c": ["2012"]}},
+                ],
                 "300": [
                     {
                         "ind1": "_",
@@ -309,9 +310,7 @@ def marc21_record():
                         "ind1": "4",
                         "ind2": "_",
                         "subfields": {
-                            "u": [
-                                "http://diglib.tugraz.at/download.php?id=576a7df056602&location=aleph"
-                            ],
+                            "u": ["https://url-of-page.com/file/download"],
                             "x": ["TUG"],
                             "3": ["Volltext"],
                         },
@@ -397,15 +396,6 @@ def example_record(app, db):
 
 
 @pytest.fixture(scope="module")
-def celery_config():
-    """Override pytest-invenio fixture.
-
-    TODO: Remove this fixture if you add Celery support.
-    """
-    return {}
-
-
-@pytest.fixture(scope="module")
 def app_config(app_config, db_uri):
     """Application config fixture."""
     app_config["SQLALCHEMY_DATABASE_URI"] = db_uri
@@ -479,9 +469,6 @@ def running_app(app, db, location):
 def create_app(instance_path):
     """Application factory fixture."""
     return create_api
-
-
-from invenio_records_marc21.records import Marc21Draft, Marc21Record
 
 
 def _search_create_indexes(current_search, current_search_client):
