@@ -8,6 +8,14 @@
 Changes
 =======
 
+Version v0.12.4 (release 2023-05-10)
+
+- doi: apply marc21 request changes
+- tests: cleaned tests, remove unused statements
+- metadata: add 856 field after doi creation
+- modification: templates load from roles
+
+
 Version v0.12.3 (release 2023-04-28)
 
 - fix: distinguish between str and list
