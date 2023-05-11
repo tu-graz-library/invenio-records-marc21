@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.12.5 (release 2023-05-11)
+
+- fix: metadata export needs a space
+
+
 Version v0.12.4 (release 2023-05-10)
 
 - doi: apply marc21 request changes
