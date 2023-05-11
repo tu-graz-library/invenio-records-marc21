@@ -71,9 +71,15 @@ class JsonToXmlVisitor:
     def visit_datafield(self, category, items):
         """Visit datafield."""
         for item in items:
+            ind1 = item["ind1"].replace("_", " ")
+            ind2 = item["ind2"].replace("_", " ")
             datafield = Element(
                 "datafield",
-                {"tag": category, "ind1": item["ind1"], "ind2": item["ind2"]},
+                {
+                    "tag": category,
+                    "ind1": ind1,
+                    "ind2": ind2,
+                },
             )
             for subfn, subfv in sorted(item["subfields"].items()):
                 subfield = Element("subfield", {"code": subfn})
