@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.12.6 (release 2023-05-11)
+
+- pids: remove 2 subfields
+
+
 Version v0.12.5 (release 2023-05-11)
 
 - fix: metadata export needs a space
