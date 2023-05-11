@@ -41,10 +41,8 @@ class PIDsComponent(BasePIDsComponent):
             "ind2": "0",
             "subfields": {
                 "u": [f"https://dx.doi.org/{doi}"],
-                "x": ["TUG"],
                 "z": ["kostenfrei"],
                 "3": ["Volltext"],
-                "7": ["0"],
             },
         }
         field = fields.get("856", [])
