@@ -81,7 +81,10 @@ class JsonToXmlVisitor:
                     "ind2": ind2,
                 },
             )
-            for subfn, subfv in sorted(item["subfields"].items()):
+            for subfn, subfv in sorted(
+                item["subfields"].items(),
+                key=lambda x: f"zz{x}" if x[0].isnumeric() else x[0],
+            ):
                 subfield = Element("subfield", {"code": subfn})
                 subfield.text = " ".join(subfv)
                 datafield.append(subfield)
@@ -286,7 +289,10 @@ class Marc21Metadata:
             datafield.append(subfield)
 
         elif subfs:
-            for key, val in sorted(subfs.items()):
+            for key, val in sorted(
+                subfs.items(),
+                key=lambda x: f"zz{x}" if x[0].isnumeric() else x[0],
+            ):
                 subfield = Element("subfield", code=key)
                 subfield.text = " ".join(val) if isinstance(val, list) else val
                 datafield.append(subfield)

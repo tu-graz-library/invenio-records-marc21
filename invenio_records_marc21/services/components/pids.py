@@ -26,7 +26,7 @@ class PIDsComponent(BasePIDsComponent):
         matadata_doi = {
             "ind1": "7",
             "ind2": "_",
-            "subfields": {"2": ["doi"], "a": [doi]},
+            "subfields": {"a": [doi], "2": ["doi"]},
         }
 
         field = fields.get("024", [])
