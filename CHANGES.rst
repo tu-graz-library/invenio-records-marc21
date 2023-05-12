@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.12.7 (release 2023-05-12)
+
+- metadata: subfs, character before numbers
+
+
 Version v0.12.6 (release 2023-05-11)
 
 - pids: remove 2 subfields
