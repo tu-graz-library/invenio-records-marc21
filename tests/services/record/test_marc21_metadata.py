@@ -194,3 +194,32 @@ def test_json_type():
     test = ""
     with pytest.raises(TypeError):
         metadata.json = test
+
+
+def test_get_field(marc21_record):
+    marc21_record = Marc21Metadata(json=marc21_record["metadata"])
+
+    assert marc21_record.get_value(category="001") == "990004519310204517"
+    assert marc21_record.get_value(category="264", subf_code="b") == "TU Graz"
+    assert (
+        marc21_record.get_value(category="264", ind1=" ", ind2="1", subf_code="c")
+        == "2012"
+    )
+    assert marc21_record.get_values(category="264") == ["TU Graz", "2012"]
+
+    _, datafields = marc21_record.get_fields(category="971", ind1="7", ind2=" ")
+
+    assert datafields[0].findall("subfield[@code='a']")[0].text == "gesperrt"
+
+    assert (
+        marc21_record.exists_field(
+            category="971", ind1="7", ind2=" ", subf_code="a", subf_value="gesperrt"
+        )
+        is True
+    )
+    assert (
+        marc21_record.exists_field(
+            category="971", ind1="7", ind2=" ", subf_code="a", subf_value="world"
+        )
+        is False
+    )

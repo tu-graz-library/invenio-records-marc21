@@ -251,6 +251,86 @@ class Marc21Metadata:
 
         return False
 
+    def get_fields(
+        self,
+        category: str,
+        ind1: str = None,
+        ind2: str = None,
+        return_type: str = "xml",
+    ) -> tuple[list[Element], list[Element]]:
+        """Return fields found by category.
+
+        The return value could be found more precisely by defining ind1, ind2
+        and subf_code.
+        """
+        ind_options = ""
+
+        if ind1:
+            ind_options += f"[@ind1='{ind1}']"
+
+        if ind2:
+            ind_options += f"[@ind2='{ind2}']"
+
+        controlfields = self._etree.findall(f"./controlfield[@tag='{category}']")
+        datafields = self._etree.findall(f"./datafield[@tag='{category}']{ind_options}")
+
+        return (controlfields, datafields)
+
+    def get_value(
+        self,
+        category: str,
+        ind1: str = None,
+        ind2: str = None,
+        subf_code: str = None,
+    ) -> str:
+        """Get the value of the found field."""
+        subfield_options = f"[@code='{subf_code}']" if subf_code else ""
+
+        controlfields, datafields = self.get_fields(category, ind1, ind2)
+
+        if len(controlfields) > 0:
+            return controlfields[0].text
+
+        if len(datafields) > 0:
+            # per definition every datafield has at least one subfield
+            return datafields[0].findall(f"subfield{subfield_options}")[0].text
+
+        return ""
+
+    def get_values(
+        self,
+        category: str,
+        ind1: str = None,
+        ind2: str = None,
+        subf_code: str = None,
+    ) -> list[str]:
+        """Get values of the found field."""
+        subfield_options = f"[@code='{subf_code}']" if subf_code else ""
+
+        controlfields, datafields = self.get_fields(category, ind1, ind2)
+        values = []
+
+        for controlfield in controlfields:
+            values.append(controlfield.text)
+
+        for datafield in datafields:
+            for subfield in datafield.findall(f"subfield{subfield_options}"):
+                values.append(subfield.text)
+
+        return values
+
+    def exists_field(
+        self,
+        category: str,
+        ind1: str = None,
+        ind2: str = None,
+        subf_code: str = None,
+        subf_value: str = None,
+    ) -> bool:
+        """Check if the field exists."""
+        values = self.get_values(category, ind1, ind2, subf_code)
+        return any((value == subf_value for value in values))
+
     def emplace_leader(self, value=""):
         """Change leader string in record."""
         for leader in self._etree.iter("leader"):
