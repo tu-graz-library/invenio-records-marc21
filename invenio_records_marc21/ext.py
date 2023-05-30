@@ -56,7 +56,11 @@ class InvenioRecordsMARC21(object):
         """
         with_endpoints = app.config.get("INVENIO_MARC21_ENDPOINTS_ENABLED", True)
         for k in dir(config):
-            if k.startswith("INVENIO_MARC21_") or k.startswith("DATACITE_"):
+            if (
+                k.startswith("MARC21_")
+                or k.startswith("INVENIO_MARC21_")
+                or k.startswith("DATACITE_")
+            ):
                 app.config.setdefault(k, getattr(config, k))
             elif k == "SEARCH_UI_JSTEMPLATE_RESULTS":
                 app.config["SEARCH_UI_JSTEMPLATE_RESULTS"] = getattr(config, k)
