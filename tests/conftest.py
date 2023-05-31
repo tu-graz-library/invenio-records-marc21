@@ -428,7 +428,7 @@ def app_config(app_config, db_uri):
     app_config["DATACITE_PASSWORD"] = "INVALID"
     app_config["DATACITE_PREFIX"] = "10.123"
     app_config["OAISERVER_ID_PREFIX"] = "oai:repo"
-    app_config["INVENIO_MARC21_PERSISTENT_IDENTIFIER_PROVIDERS"] = [
+    app_config["MARC21_PERSISTENT_IDENTIFIER_PROVIDERS"] = [
         # DataCite DOI provider with fake client
         Marc21DataCitePIDProvider(
             "datacite",

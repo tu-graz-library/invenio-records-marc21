@@ -57,7 +57,7 @@ def deposit_config(**kwargs):
         schema=schema,
         quota=app_config.get("APP_RDM_DEPOSIT_FORM_QUOTA"),
         createUrl="/api/marc21",
-        apiHeaders=app_config.get("INVENIO_MARC21_API_HEADERS"),
+        apiHeaders=app_config.get("MARC21_API_HEADERS"),
         # UploadFilesToolbar  disable file upload
         canHaveMetadataOnlyRecords=True,
         **kwargs

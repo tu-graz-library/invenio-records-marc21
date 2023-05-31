@@ -95,14 +95,12 @@ def record_export(
     is_preview=False,
 ):
     """Export marc21 record page view."""
-    exporter = current_app.config.get("INVENIO_MARC21_RECORD_EXPORTERS", {}).get(
-        export_format
-    )
+    exporter = current_app.config.get("MARC21_RECORD_EXPORTERS", {}).get(export_format)
     if exporter is None:
         abort(404)
 
     options = current_app.config.get(
-        "INVENIO_MARC21_RECORD_EXPORTER_OPTIONS",
+        "MARC21_RECORD_EXPORTER_OPTIONS",
         {
             "indent": 2,
             "sort_keys": True,

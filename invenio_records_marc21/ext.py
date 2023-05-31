@@ -54,13 +54,9 @@ class InvenioRecordsMARC21(object):
 
         Override configuration variables with the values in this package.
         """
-        with_endpoints = app.config.get("INVENIO_MARC21_ENDPOINTS_ENABLED", True)
+        with_endpoints = app.config.get("MARC21_ENDPOINTS_ENABLED", True)
         for k in dir(config):
-            if (
-                k.startswith("MARC21_")
-                or k.startswith("INVENIO_MARC21_")
-                or k.startswith("DATACITE_")
-            ):
+            if k.startswith("MARC21_") or k.startswith("DATACITE_"):
                 app.config.setdefault(k, getattr(config, k))
             elif k == "SEARCH_UI_JSTEMPLATE_RESULTS":
                 app.config["SEARCH_UI_JSTEMPLATE_RESULTS"] = getattr(config, k)
@@ -71,8 +67,8 @@ class InvenioRecordsMARC21(object):
                     app.config.setdefault(k, getattr(config, k))
             else:
                 for n in [
-                    "INVENIO_MARC21_REST_ENDPOINTS",
-                    "INVENIO_MARC21_UI_ENDPOINTS",
+                    "MARC21_REST_ENDPOINTS",
+                    "MARC21_UI_ENDPOINTS",
                 ]:
                     if k == n and with_endpoints:
                         app.config.setdefault(n, {})

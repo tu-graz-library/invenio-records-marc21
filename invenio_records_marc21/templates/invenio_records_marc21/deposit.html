@@ -1,43 +1,44 @@
 {#
-  Copyright (C) 2021 Graz University of Technology
+Copyright (C) 2021 Graz University of Technology
 
-  invenio-records-marc21 is free software; you can redistribute it and/or modify
-  it under the terms of the MIT License; see LICENSE file for more details.
+invenio-records-marc21 is free software; you can redistribute it and/or modify
+it under the terms of the MIT License; see LICENSE file for more details.
 #}
 
-{%- extends config.INVENIO_MARC21_BASE_TEMPLATE %}
+{%- extends config.MARC21_BASE_TEMPLATE %}
 
 
 {%- if not record.is_published and record.versions.index and record.versions.index > 1%}
-  {%- set title = _("New version") %}
+{%- set title = _("New version") %}
 {%- elif not record.is_published %}
-  {%- set title = _("New upload") %}
+{%- set title = _("New upload") %}
 {% else %}
-  {%- set title = _("Edit upload") %}
+{%- set title = _("Edit upload") %}
 {%- endif %}
 
 
 {%- block page_body %}
-  {%- if record %}
-    <input id="marc21-deposit-record" type="hidden" name="marc21-deposit-record" value='{{record | tojson }}'/>
-  {%- endif %}
-  {%- if files %}
-  <input id="marc21-deposit-files" type="hidden" name="marc21-deposit-files" value='{{files | tojson }}'/>
-  {%- endif %}
-  {%- if forms_config %}
-    <input type="hidden" name="marc21-deposit-config" value='{{forms_config | tojson }}'/>
-  {%- endif %}
-  {%- if templates %}
-  <input type="hidden" name="marc21-deposit-templates" value='{{templates | tojson }}'/>
+{%- if record %}
+<input id="marc21-deposit-record" type="hidden" name="marc21-deposit-record" value='{{record | tojson }}' />
 {%- endif %}
-  {%- if permissions %}
-  <input id="marc21-deposit-permissions" type="hidden" name="marc21-deposit-permissions" value='{{permissions | tojson }}'/>
-  {%- endif %}
+{%- if files %}
+<input id="marc21-deposit-files" type="hidden" name="marc21-deposit-files" value='{{files | tojson }}' />
+{%- endif %}
+{%- if forms_config %}
+<input type="hidden" name="marc21-deposit-config" value='{{forms_config | tojson }}' />
+{%- endif %}
+{%- if templates %}
+<input type="hidden" name="marc21-deposit-templates" value='{{templates | tojson }}' />
+{%- endif %}
+{%- if permissions %}
+<input id="marc21-deposit-permissions" type="hidden" name="marc21-deposit-permissions"
+  value='{{permissions | tojson }}' />
+{%- endif %}
 
-  <div id="marc21-deposit-form"></div>
+<div id="marc21-deposit-form"></div>
 
 {%- endblock page_body %}
 
 {%- block javascript %}
-    {{ webpack["invenio-records-marc21-deposit.js"] }}
+{{ webpack["invenio-records-marc21-deposit.js"] }}
 {%- endblock %}

@@ -32,7 +32,7 @@ from .records import (
 #
 def init_records_views(blueprint, app):
     """Register blueprint routes on app."""
-    routes = app.config.get("INVENIO_MARC21_UI_ENDPOINTS")
+    routes = app.config.get("MARC21_UI_ENDPOINTS")
 
     # Record URL rules
     blueprint.add_url_rule(

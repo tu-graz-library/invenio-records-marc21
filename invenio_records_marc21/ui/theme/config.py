@@ -19,9 +19,9 @@ def search_app_context():
     return {
         "search_app_marc21_config": partial(
             search_app_config,
-            "INVENIO_MARC21_SEARCH",
-            current_app.config["INVENIO_MARC21_FACETS"],
-            current_app.config["INVENIO_MARC21_SORT_OPTIONS"],
+            "MARC21_SEARCH",
+            current_app.config["MARC21_FACETS"],
+            current_app.config["MARC21_SORT_OPTIONS"],
             "/api/marc21",
             {"Accept": "application/vnd.inveniomarc21.v1+json"},
         )

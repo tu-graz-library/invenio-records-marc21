@@ -23,7 +23,7 @@ from .views import deposit_create, deposit_edit, index, search, uploads_marc21
 #
 def init_theme_views(blueprint, app):
     """Blueprint for the routes and resources provided by Invenio-Records-Marc21."""
-    routes = app.config.get("INVENIO_MARC21_UI_THEME_ENDPOINTS")
+    routes = app.config.get("MARC21_UI_THEME_ENDPOINTS")
 
     blueprint.add_url_rule(routes["index"], view_func=index)
 

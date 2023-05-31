@@ -30,7 +30,7 @@ from .pids import PIDSchema
 
 def validate_scheme(scheme):
     """Validate a PID scheme."""
-    if scheme not in current_app.config["INVENIO_MARC21_PERSISTENT_IDENTIFIERS"]:
+    if scheme not in current_app.config["MARC21_PERSISTENT_IDENTIFIERS"]:
         raise ValidationError(_("Invalid persistent identifier scheme."))
 
 

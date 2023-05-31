@@ -78,7 +78,7 @@ class Marc21DataCite43Schema(Schema):
         publisher_field = self._get_subfields(obj, "260")
         return publisher_field.get(
             "b",
-            [current_app.config.get("INVENIO_MARC21_DATACITE_DEFAULT_PUBLISHER")],
+            [current_app.config.get("MARC21_DATACITE_DEFAULT_PUBLISHER")],
         )[0]
 
     def get_publication_year(self, obj):
@@ -96,7 +96,7 @@ class Marc21DataCite43Schema(Schema):
         for scheme, id_ in pids.items():
             id_scheme = get_scheme_datacite(
                 scheme,
-                "INVENIO_MARC21_IDENTIFIERS_SCHEMES",
+                "MARC21_IDENTIFIERS_SCHEMES",
                 default=scheme,
             )
 

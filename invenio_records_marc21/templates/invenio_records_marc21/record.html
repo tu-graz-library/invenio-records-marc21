@@ -1,14 +1,14 @@
 {#
-  This file is part of Invenio.
+This file is part of Invenio.
 
-  Copyright (C) 2021 Graz University of Technology.
+Copyright (C) 2021 Graz University of Technology.
 
-  Invenio-Records-Marc21 is free software; you can redistribute it and/or
-  modify it under the terms of the MIT License; see LICENSE file for more
-  details.
+Invenio-Records-Marc21 is free software; you can redistribute it and/or
+modify it under the terms of the MIT License; see LICENSE file for more
+details.
 #}
 
-{%- extends config.INVENIO_MARC21_BASE_TEMPLATE %}
+{%- extends config.MARC21_BASE_TEMPLATE %}
 
 
 {%- from "invenio_records_marc21/records/macros/detail.html" import record_detail %}
@@ -31,7 +31,7 @@
           <div class="two column row">
             <div class="left floated left aligned column">
               <div class="twelve wide column">
-                <span class="ui" title="{{_('Creation date')}}">{{  record.ui.created }}</span>
+                <span class="ui" title="{{_('Creation date')}}">{{ record.ui.created }}</span>
                 {%- if record.ui.version %}
                 <span class="label text-muted"> | Version {{ record.ui.version }}</span>
                 {% endif %}
@@ -39,14 +39,12 @@
             </div>
             <div class="right floated right aligned column">
               {% if record.ui.metadata.resource_type %}
-              <span class="ui label small neutral"
-                    title="{{ _('Resource type') }}">{{ record.ui.metadata.resource_type }}</span>
+              <span class="ui label small neutral" title="{{ _('Resource type') }}">{{ record.ui.metadata.resource_type
+                }}</span>
               {% endif %}
               <span class="ui label small access-status {{ record.ui.access_status.id }}"
-                    title="{{ _('Access status') }}"
-                    data-tooltip="{{ record.ui.access_status.description_l10n }}"
-                    data-inverted=""
-              >
+                title="{{ _('Access status') }}" data-tooltip="{{ record.ui.access_status.description_l10n }}"
+                data-inverted="">
                 {% if record.ui.access_status.icon %}
                 <i class="icon {{ record.ui.access_status.icon }}"></i>
                 {% endif %}
@@ -58,40 +56,40 @@
         {%- endblock record_header -%}
 
         {%- block record_title -%}
-          <div class="top-padded"></div>
-          {%- include "invenio_records_marc21/records/helpers/title.html" %}
+        <div class="top-padded"></div>
+        {%- include "invenio_records_marc21/records/helpers/title.html" %}
         {%- endblock record_title -%}
 
         {%- block record_content -%}
-          <div class="top-padded"></div>
-          {%- include "invenio_records_marc21/records/helpers/authors.html" %}
-          <div class="top-padded"></div>
-          {%- include "invenio_records_marc21/records/helpers/subjects.html" %}
-          <div class="top-padded"></div>
-          {%- include "invenio_records_marc21/records/helpers/description.html" %}
+        <div class="top-padded"></div>
+        {%- include "invenio_records_marc21/records/helpers/authors.html" %}
+        <div class="top-padded"></div>
+        {%- include "invenio_records_marc21/records/helpers/subjects.html" %}
+        <div class="top-padded"></div>
+        {%- include "invenio_records_marc21/records/helpers/description.html" %}
         {%- endblock record_content -%}
 
         {%- block record_files -%}
-          <div class="top-padded"></div>
-          <hr class="thin-line">
-          {%- include "invenio_records_marc21/records/helpers/files.html" %}
+        <div class="top-padded"></div>
+        <hr class="thin-line">
+        {%- include "invenio_records_marc21/records/helpers/files.html" %}
         {%- endblock record_files -%}
 
-          {#
+        {#
         {%- block record_details -%}
-          <div class="top-padded"></div>
-          {%- include "invenio_records_marc21/records/helpers/details.html" %}
+        <div class="top-padded"></div>
+        {%- include "invenio_records_marc21/records/helpers/details.html" %}
         {%- endblock record_details -%}
-          #}
+        #}
 
         {%- block record_footer -%}
-          {%- include "invenio_records_marc21/records/helpers/footer.html" %}
+        {%- include "invenio_records_marc21/records/helpers/footer.html" %}
         {%- endblock record_footer -%}
         {%- endblock record_body %}
       </article>
 
       {% block record_sidebar %}
-        {%- include "invenio_records_marc21/records/helpers/side_bar.html" %}
+      {%- include "invenio_records_marc21/records/helpers/side_bar.html" %}
       {% endblock record_sidebar %}
     </div>
   </div>

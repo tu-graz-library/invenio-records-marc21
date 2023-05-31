@@ -26,9 +26,9 @@ def _(x):
     return x
 
 
-INVENIO_MARC21_FACETS = {}
+MARC21_FACETS = {}
 
-INVENIO_MARC21_SORT_OPTIONS = {
+MARC21_SORT_OPTIONS = {
     "bestmatch": {
         "title": _("Best match"),
         "fields": ["_score"],  # ES defaults to desc on `_score` field
@@ -39,17 +39,17 @@ INVENIO_MARC21_SORT_OPTIONS = {
     },
 }
 
-INVENIO_MARC21_SEARCH = {
+MARC21_SEARCH = {
     "sort": ["bestmatch", "newest"],
 }
 """Record search configuration."""
 
-INVENIO_MARC21_BASE_TEMPLATE = "invenio_records_marc21/base.html"
+MARC21_BASE_TEMPLATE = "invenio_records_marc21/base.html"
 
-INVENIO_MARC21_REST_ENDPOINTS = {}
+MARC21_REST_ENDPOINTS = {}
 """REST API for invenio-records-marc21."""
 
-INVENIO_MARC21_RECORD_EXPORTERS = {
+MARC21_RECORD_EXPORTERS = {
     "json": {
         "name": "JSON",
         "serializer": (
@@ -65,13 +65,13 @@ INVENIO_MARC21_RECORD_EXPORTERS = {
 }
 """Marc21 Record export serializers."""
 
-INVENIO_MARC21_RECORD_EXPORTER_OPTIONS = {
+MARC21_RECORD_EXPORTER_OPTIONS = {
     "indent": 4,
     "sort_keys": True,
 }
 """Marc21 Record export options."""
 
-INVENIO_MARC21_UI_ENDPOINTS = {
+MARC21_UI_ENDPOINTS = {
     "record-detail": "/<pid_value>",
     "record-export": "/<pid_value>/export/<export_format>",
     "record_file_preview": "marc21/<pid_value>/preview/<path:filename>",
@@ -79,7 +79,7 @@ INVENIO_MARC21_UI_ENDPOINTS = {
 }
 """Marc21 Record ui endpoints."""
 
-INVENIO_MARC21_UI_THEME_ENDPOINTS = {
+MARC21_UI_THEME_ENDPOINTS = {
     "index": "/",
     "record-search": "/search",
     "uploads-marc21": "/uploads",
@@ -91,7 +91,7 @@ INVENIO_MARC21_UI_THEME_ENDPOINTS = {
 SEARCH_UI_JSTEMPLATE_RESULTS = "templates/invenio_records_marc21/results.html"
 """Result list template."""
 
-INVENIO_MARC21_ENDPOINTS_ENABLED = True
+MARC21_ENDPOINTS_ENABLED = True
 """Enable/disable automatic endpoint registration."""
 
 CELERY_BEAT_SCHEDULE = {
@@ -109,7 +109,7 @@ CELERY_BEAT_SCHEDULE = {
 #
 # Persistent identifiers configuration
 #
-INVENIO_MARC21_PERSISTENT_IDENTIFIER_PROVIDERS = [
+MARC21_PERSISTENT_IDENTIFIER_PROVIDERS = [
     # DataCite DOI provider
     Marc21DataCitePIDProvider(
         "datacite",
@@ -133,16 +133,16 @@ This name is stored in the database and used in the REST API in order to
 identify the given provider and client.
 
 The name is further used to configure the desired persistent identifiers (see
-``INVENIO_MARC21_PERSISTENT_IDENTIFIER_PROVIDERS`` below)
+``MARC21_PERSISTENT_IDENTIFIER_PROVIDERS`` below)
 """
 
 
-INVENIO_MARC21_IDENTIFIERS_SCHEMES = {
+MARC21_IDENTIFIERS_SCHEMES = {
     "doi": {"label": _("DOI"), "validator": idutils.is_doi, "datacite": "DOI"},
 }
 """These are used for main, alternate and related identifiers."""
 
-INVENIO_MARC21_PERSISTENT_IDENTIFIERS = {
+MARC21_PERSISTENT_IDENTIFIERS = {
     "doi": {
         "providers": ["datacite", "external"],
         "required": True,
@@ -162,7 +162,7 @@ INVENIO_MARC21_PERSISTENT_IDENTIFIERS = {
 """
 
 
-INVENIO_MARC21_API_HEADERS = {
+MARC21_API_HEADERS = {
     "vnd+json": {
         "Content-Type": "application/json",
         "Accept": "application/vnd.inveniomarc21.v1+marcxml",
