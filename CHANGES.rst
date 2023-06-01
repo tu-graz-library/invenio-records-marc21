@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.13.1 (release 2023-06-01)
+
+- bugfix: load default roles needed
+
+
 Version v0.13.0 (release 2023-05-25)
 
 - setup: remove compatibility check with python3.8
