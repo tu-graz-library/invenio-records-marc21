@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.13.2 (release 2023-06-05)
+
+- bugfix: draft get file content
+
+
 Version v0.13.1 (release 2023-06-01)
 
 - bugfix: load default roles needed
