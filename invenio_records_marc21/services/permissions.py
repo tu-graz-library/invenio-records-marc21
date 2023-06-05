@@ -50,14 +50,6 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_lift_embargo = can_curate
     can_new_version = can_manage
 
-    can_read_files = [
-        IfRestricted("files", then_=can_view, else_=can_all),
-    ]
-
-    can_get_content_files = [
-        IfFileIsLocal(then_=can_read_files, else_=[SystemProcess()])
-    ]
-
     #  Records
     can_search = can_all
     # Allow reading metadata of a record
@@ -67,6 +59,9 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     # Files permissions
     can_read_files = [
         IfRestricted("files", then_=can_view, else_=can_all),
+    ]
+    can_get_content_files = [
+        IfFileIsLocal(then_=can_read_files, else_=[SystemProcess()])
     ]
 
     # Draft
@@ -82,6 +77,10 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_draft_delete_files = can_curate
     can_draft_set_content_files = can_curate
     can_draft_commit_files = can_curate
+
+    can_draft_get_content_files = [
+        IfFileIsLocal(then_=can_read_files, else_=[SystemProcess()])
+    ]
 
     #
     # PIDs
