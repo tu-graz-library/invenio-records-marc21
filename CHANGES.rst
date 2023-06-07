@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.14.1 (release 2023-06-07)
+
+- fix: remove whitespace and close div tag
+
+
 Version v0.14.0 (release 2023-06-07)
 
 - modification: alembic scripts
