@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.14.0 (release 2023-06-07)
+
+- modification: alembic scripts
+- modification: remove prefix in configuration variables
+
+
 Version v0.13.2 (release 2023-06-05)
 
 - bugfix: draft get file content
