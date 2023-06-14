@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2021 CERN.
 # Copyright (C) 2021 Northwestern University.
-# Copyright (C) 2022 Graz University of Technology.
+# Copyright (C) 2022-2023 Graz University of Technology.
 #
 # Invenio-RDM-Records is free software; you can redistribute it and/or modify
 # it under the terms of the MIT License; see LICENSE file for more details.
@@ -11,7 +11,7 @@
 """DataCite based Schema for Invenio RDM Records."""
 
 from flask import current_app
-from flask_babelex import lazy_gettext as _
+from invenio_i18n import lazy_gettext as _
 from marshmallow import Schema, fields, missing
 
 

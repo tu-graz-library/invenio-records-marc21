@@ -15,7 +15,7 @@ from contextlib import suppress
 from dataclasses import dataclass
 from typing import Dict, List
 
-from flask_babelex import gettext as _
+from invenio_i18n import gettext as _
 from marshmallow.fields import Field
 
 from .....records.fields.resourcetype import ResourceTypeEnum

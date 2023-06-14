@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -15,7 +15,7 @@ from datetime import timedelta
 
 import arrow
 import pytest
-from flask_babelex import lazy_gettext as _
+from invenio_i18n import lazy_gettext as _
 from invenio_rdm_records.services.schemas.access import AccessSchema
 from marshmallow import ValidationError
 from marshmallow.exceptions import ValidationError

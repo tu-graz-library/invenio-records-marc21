@@ -13,7 +13,7 @@
 import functools
 
 import click
-from flask_babelex import gettext as _
+from invenio_i18n import gettext as _
 
 ERROR_MESSAGE_WRAPPER = {
     "ProgrammingError": [

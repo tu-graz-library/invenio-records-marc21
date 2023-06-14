@@ -14,8 +14,8 @@ from __future__ import absolute_import, print_function
 
 import idutils
 from celery.schedules import crontab
-from flask_babelex import lazy_gettext as _
 from flask_principal import RoleNeed
+from invenio_i18n import lazy_gettext as _
 from invenio_rdm_records.services import facets as rdm_facets
 from invenio_rdm_records.services.pids import providers
 

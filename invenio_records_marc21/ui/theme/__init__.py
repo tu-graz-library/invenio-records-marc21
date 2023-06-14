@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -10,9 +10,9 @@
 
 """Marc21 Theme Package."""
 
-from flask_babelex import lazy_gettext as _
 from flask_login import current_user
 from flask_menu import current_menu
+from invenio_i18n import lazy_gettext as _
 
 from .views import deposit_create, deposit_edit, index, search, uploads_marc21
 
