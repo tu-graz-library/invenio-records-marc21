@@ -10,6 +10,8 @@
 
 """Marc21 record class."""
 
+from __future__ import annotations
+
 from xml.etree.ElementTree import Element, fromstring, tostring
 
 
@@ -43,8 +45,10 @@ class JsonToXmlVisitor:
 
     def __init__(self, leader_):
         """Constructor."""
-        self.record = Element("record", xmlns="http://www.loc.gov/MARC21/slim")
-        leader = Element("leader")
+        self.namespace = "http://www.loc.gov/MARC21/slim"
+        self.record = Element("record", xmlns=self.namespace)
+
+        leader = Element(f"{{{self.namespace}}}leader")
         leader.text = leader_
         self.record.append(leader)
 
@@ -64,7 +68,7 @@ class JsonToXmlVisitor:
 
     def visit_controlfield(self, category, value):
         """Visit controlfield."""
-        controlfield = Element("controlfield", {"tag": category})
+        controlfield = Element(f"{{{self.namespace}}}controlfield", {"tag": category})
         controlfield.text = value
         self.record.append(controlfield)
 
@@ -74,7 +78,7 @@ class JsonToXmlVisitor:
             ind1 = item["ind1"].replace("_", " ")
             ind2 = item["ind2"].replace("_", " ")
             datafield = Element(
-                "datafield",
+                f"{{{self.namespace}}}datafield",
                 {
                     "tag": category,
                     "ind1": ind1,
@@ -85,7 +89,7 @@ class JsonToXmlVisitor:
                 item["subfields"].items(),
                 key=lambda x: f"zz{x}" if x[0].isnumeric() else x[0],
             ):
-                subfield = Element("subfield", {"code": subfn})
+                subfield = Element(f"{{{self.namespace}}}subfield", {"code": subfn})
                 subfield.text = " ".join(subfv)
                 datafield.append(subfield)
 
@@ -184,6 +188,7 @@ class Marc21Metadata:
 
     def __init__(self, *, metadata=None, json=None):
         """Default constructor of the class."""
+        self.namespace = "http://www.loc.gov/MARC21/slim"
         self.set_default()
 
         if metadata:
@@ -196,9 +201,10 @@ class Marc21Metadata:
         """Set default marc21 structure."""
         self._json = {}
 
-        leader = Element("leader")
+        leader = Element(f"{{{self.namespace}}}leader")
         leader.text = "00000nam a2200000zca4500"
-        self._etree = Element("record", xmlns="http://www.loc.gov/MARC21/slim")
+
+        self._etree = Element(f"{{{self.namespace}}}record", xmlns=self.namespace)
         self._etree.append(leader)
 
     @property
@@ -238,13 +244,22 @@ class Marc21Metadata:
 
         self._etree = fromstring(xml)
 
+    def _findall(self, pattern: str, element: Element = None) -> list[Element]:
+        """Find all elements."""
+        if element is None:
+            element = self._etree
+
+        pattern = f"./{{{self.namespace}}}{pattern}"
+
+        return element.findall(pattern)
+
     def exists(self, to_check_category: Element, art_of_category):
         """Check if a category is already in the tree.
 
         Only completely equal tags will be dismissed.
         """
         to_check_category_str = tostring(to_check_category, method="xml").strip()
-        for category in self._etree.findall(art_of_category):
+        for category in self._findall(art_of_category):
             category_str = tostring(category, method="xml").strip()
             if to_check_category_str == category_str:
                 return True
@@ -271,8 +286,8 @@ class Marc21Metadata:
         if ind2:
             ind_options += f"[@ind2='{ind2}']"
 
-        controlfields = self._etree.findall(f"./controlfield[@tag='{category}']")
-        datafields = self._etree.findall(f"./datafield[@tag='{category}']{ind_options}")
+        controlfields = self._findall(f"controlfield[@tag='{category}']")
+        datafields = self._findall(f"datafield[@tag='{category}']{ind_options}")
 
         return (controlfields, datafields)
 
@@ -293,7 +308,9 @@ class Marc21Metadata:
 
         if len(datafields) > 0:
             # per definition every datafield has at least one subfield
-            return datafields[0].findall(f"subfield{subfield_options}")[0].text
+            result = self._findall(f"subfield{subfield_options}", datafields[0])
+            if len(result) > 0:
+                return result[0].text
 
         return ""
 
@@ -314,7 +331,9 @@ class Marc21Metadata:
             values.append(controlfield.text)
 
         for datafield in datafields:
-            for subfield in datafield.findall(f"subfield{subfield_options}"):
+            pattern = f"subfield{subfield_options}"
+            subfields = self._findall(pattern, datafield)
+            for subfield in subfields:
                 values.append(subfield.text)
 
         return values
@@ -333,12 +352,12 @@ class Marc21Metadata:
 
     def emplace_leader(self, value=""):
         """Change leader string in record."""
-        for leader in self._etree.iter("leader"):
+        for leader in self._etree.iter(f"{{{self.namespace}}}leader"):
             leader.text = value
 
     def emplace_controlfield(self, tag="", value=""):
         """Add value to record for given datafield and subfield."""
-        controlfield = Element("controlfield", tag=tag)
+        controlfield = Element(f"{{{self.namespace}}}controlfield", tag=tag)
         controlfield.text = value
 
         if self.exists(controlfield, "controlfield"):
@@ -362,9 +381,10 @@ class Marc21Metadata:
         if not code:
             code = "a"
 
-        datafield = Element("datafield", tag=tag, ind1=ind1, ind2=ind2)
+        node_name = f"{{{self.namespace}}}datafield"
+        datafield = Element(node_name, tag=tag, ind1=ind1, ind2=ind2)
         if value:
-            subfield = Element("subfield", code=code)
+            subfield = Element(f"{{{self.namespace}}}subfield", code=code)
             subfield.text = value
             datafield.append(subfield)
 
@@ -373,7 +393,7 @@ class Marc21Metadata:
                 subfs.items(),
                 key=lambda x: f"zz{x}" if x[0].isnumeric() else x[0],
             ):
-                subfield = Element("subfield", code=key)
+                subfield = Element(f"{{{self.namespace}}}subfield", code=key)
                 subfield.text = " ".join(val) if isinstance(val, list) else val
                 datafield.append(subfield)
 

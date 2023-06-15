@@ -20,12 +20,13 @@ def test_create_metadata():
     """Test constructor and emplace_datafield method."""
     metadata = Marc21Metadata()
 
-    assert '<record xmlns="http://www.loc.gov/MARC21/slim">' in metadata.xml
+    assert "<ns0:record" in metadata.xml
+    assert 'xmlns="http://www.loc.gov/MARC21/slim"' in metadata.xml
 
     metadata.emplace_datafield(selector="245.1.0.a", value="laborum sunt ut nulla")
 
-    assert '<datafield tag="245" ind1="1" ind2="0">' in metadata.xml
-    assert '<subfield code="a">laborum sunt ut nulla</subfield>' in metadata.xml
+    assert '<ns0:datafield tag="245" ind1="1" ind2="0">' in metadata.xml
+    assert '<ns0:subfield code="a">laborum sunt ut nulla</ns0:subfield>' in metadata.xml
 
 
 def test_validate_metadata():
@@ -81,30 +82,31 @@ def test_validate_metadata():
 def test_subfield_metadata():
     """Test the construction and emplace_datafield method."""
     metadata = Marc21Metadata()
+    namespaces = {"ns0": "http://www.loc.gov/MARC21/slim"}
 
-    leader = metadata.etree.find(".//leader")
+    leader = metadata.etree.find(".//ns0:leader", namespaces)
     assert leader.text == "00000nam a2200000zca4500"
 
-    assert not metadata.etree.find(".//datafield")
+    assert not metadata.etree.find(".//ns0:datafield", namespaces)
 
     metadata.emplace_datafield(selector="245.1.0.a", value="laborum sunt ut nulla")
 
-    datafield = metadata.etree.find(".//datafield")
+    datafield = metadata.etree.find(".//ns0:datafield", namespaces)
     assert datafield
     assert not datafield.text
-    assert len(metadata.etree.findall(".//datafield")) == 1
+    assert len(metadata.etree.findall(".//ns0:datafield", namespaces)) == 1
     assert datafield.attrib == {"tag": "245", "ind1": "1", "ind2": "0"}
 
-    subfield = metadata.etree.find(".//subfield")
+    subfield = metadata.etree.find(".//ns0:subfield", namespaces)
     assert subfield is not None
-    assert len(datafield.findall(".//subfield")) == 1
+    assert len(datafield.findall(".//ns0:subfield", namespaces)) == 1
     assert subfield.attrib == {"code": "a"}
     assert subfield.text == "laborum sunt ut nulla"
 
     metadata.emplace_datafield(selector="245.1.0.b", value="laborum sunt ut nulla")
 
-    assert len(metadata.etree.findall(".//datafield")) == 2
-    assert len(metadata.etree.findall(".//subfield")) == 2
+    assert len(metadata.etree.findall(".//ns0:datafield", namespaces)) == 2
+    assert len(metadata.etree.findall(".//ns0:subfield", namespaces)) == 2
 
     expected_json = {
         "metadata": {
@@ -132,19 +134,20 @@ def test_subfield_metadata():
 def test_controlfields_metadata():
     """Test controlfield."""
     metadata = Marc21Metadata()
+    namespaces = {"ns0": "http://www.loc.gov/MARC21/slim"}
 
-    assert "<controlfield" not in metadata.xml
-    assert not metadata.etree.find(".//controlfield")
+    assert "<ns0:controlfield" not in metadata.xml
+    assert not metadata.etree.find(".//ns0:controlfield", namespaces)
 
     metadata.emplace_controlfield(tag="123", value="laborum sunt ut nulla")
 
-    controlfield = metadata.etree.find(".//controlfield")
+    controlfield = metadata.etree.find(".//ns0:controlfield", namespaces)
     assert controlfield is not None
     assert controlfield.text == "laborum sunt ut nulla"
     assert controlfield.attrib == {"tag": "123"}
-    assert len(metadata.etree.findall(".//controlfield")) == 1
+    assert len(metadata.etree.findall(".//ns0:controlfield", namespaces)) == 1
 
-    assert '<controlfield tag="123">laborum sunt ut nulla' in metadata.xml
+    assert '<ns0:controlfield tag="123">laborum sunt ut nulla' in metadata.xml
 
 
 def test_load_metadata():
@@ -196,30 +199,48 @@ def test_json_type():
         metadata.json = test
 
 
-def test_get_field(marc21_record):
-    marc21_record = Marc21Metadata(json=marc21_record["metadata"])
+def test_get_field(marc21_record, full_metadata):
+    """Test get field."""
+    namespaces = {"ns0": "http://www.loc.gov/MARC21/slim"}
+    marc21_records = [
+        Marc21Metadata(json=marc21_record["metadata"]),
+        full_metadata,
+    ]
 
-    assert marc21_record.get_value(category="001") == "990004519310204517"
-    assert marc21_record.get_value(category="264", subf_code="b") == "TU Graz"
-    assert (
-        marc21_record.get_value(category="264", ind1=" ", ind2="1", subf_code="c")
-        == "2012"
-    )
-    assert marc21_record.get_values(category="264") == ["TU Graz", "2012"]
-
-    _, datafields = marc21_record.get_fields(category="971", ind1="7", ind2=" ")
-
-    assert datafields[0].findall("subfield[@code='a']")[0].text == "gesperrt"
-
-    assert (
-        marc21_record.exists_field(
-            category="971", ind1="7", ind2=" ", subf_code="a", subf_value="gesperrt"
+    for record in marc21_records:
+        print("1")
+        assert record.get_value(category="001") == "990004519310204517"
+        assert record.get_value(category="264", subf_code="b") == "TU Graz"
+        assert record.get_value(category="264", subf_code="x") == ""
+        assert (
+            record.get_value(category="264", ind1=" ", ind2="1", subf_code="c")
+            == "2012"
         )
-        is True
-    )
-    assert (
-        marc21_record.exists_field(
-            category="971", ind1="7", ind2=" ", subf_code="a", subf_value="world"
+        assert record.get_values(category="264") == ["TU Graz", "2012"]
+
+        _, datafields = record.get_fields(category="971", ind1="7", ind2=" ")
+
+        assert (
+            datafields[0]
+            .findall("{http://www.loc.gov/MARC21/slim}subfield[@code='a']")[0]
+            .text
+            == "gesperrt"
         )
-        is False
-    )
+
+        assert (
+            datafields[0].findall("ns0:subfield[@code='a']", namespaces)[0].text
+            == "gesperrt"
+        )
+
+        assert (
+            record.exists_field(
+                category="971", ind1="7", ind2=" ", subf_code="a", subf_value="gesperrt"
+            )
+            is True
+        )
+        assert (
+            record.exists_field(
+                category="971", ind1="7", ind2=" ", subf_code="a", subf_value="world"
+            )
+            is False
+        )

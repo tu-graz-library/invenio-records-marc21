@@ -52,7 +52,7 @@ def identity_simple():
 def xml_metadata():
     """Input data (as coming from the view layer)."""
     metadata = Marc21Metadata()
-    metadata.xml = "<record><leader>00000nam a2200000zca4500</leader><datafield tag='245' ind1='1' ind2='0'><subfield code='a'>laborum sunt ut nulla</subfield></datafield></record>"
+    metadata.xml = """<record xmlns="http://www.loc.gov/MARC21/slim"><leader>00000nam a2200000zca4500</leader><datafield tag='245' ind1='1' ind2='0'><subfield code='a'>laborum sunt ut nulla</subfield></datafield></record>"""
     return metadata
 
 
@@ -60,7 +60,7 @@ def xml_metadata():
 def xml_metadata2():
     """Input data (as coming from the view layer)."""
     metadata = Marc21Metadata()
-    metadata.xml = "<record><leader>00000nam a2200000zca4500</leader><datafield tag='245' ind1='1' ind2='0'><subfield code='a'>nulla sunt laborum</subfield></datafield></record>"
+    metadata.xml = """<record xmlns="http://www.loc.gov/MARC21/slim"><leader>00000nam a2200000zca4500</leader><datafield tag='245' ind1='1' ind2='0'><subfield code='a'>nulla sunt laborum</subfield></datafield></record>"""
     return metadata
 
 
@@ -138,5 +138,5 @@ def full_metadata_expected():
 def min_metadata():
     """Metadata empty record marc21 xml."""
     metadata = Marc21Metadata()
-    metadata.xml = "<record></record>"
+    metadata.xml = """<record xmlns="http://www.loc.gov/MARC21/slim"></record>"""
     return metadata
