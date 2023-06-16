@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.14.2 (release 2023-06-16)
+
+- fix: namespace handling was wrong
+
+
 Version v0.14.1 (release 2023-06-07)
 
 - fix: remove whitespace and close div tag
