@@ -10,9 +10,9 @@
 
 """Marc21 Theme Package."""
 
-from flask_babelex import lazy_gettext as _
 from flask_login import current_user
 from flask_menu import current_menu
+from invenio_i18n import lazy_gettext as _
 
 from .config import search_app_context
 from .views import deposit_create, deposit_edit, index, search, uploads_marc21

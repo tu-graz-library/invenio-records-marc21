@@ -11,8 +11,8 @@
 """Marc21 record schemas."""
 
 from flask import current_app
-from flask_babelex import lazy_gettext as _
 from invenio_drafts_resources.services.records.schema import ParentSchema
+from invenio_i18n import lazy_gettext as _
 from invenio_rdm_records.services.schemas.access import AccessSchema
 from invenio_rdm_records.services.schemas.files import FilesSchema
 from invenio_rdm_records.services.schemas.parent.access import ParentAccessSchema

@@ -15,7 +15,7 @@ from datetime import timedelta
 
 import arrow
 import pytest
-from flask_babelex import lazy_gettext as _
+from invenio_i18n import lazy_gettext as _
 from invenio_rdm_records.services.schemas.access import AccessSchema
 from marshmallow import ValidationError
 from marshmallow.exceptions import ValidationError

@@ -12,7 +12,7 @@
 
 from functools import partial
 
-from flask_babelex import get_locale
+from invenio_i18n import get_locale
 from invenio_rdm_records.resources.serializers.ui.fields import AccessStatusField
 from marshmallow_utils.fields import FormatDate as BaseFormatDatetime
 from marshmallow_utils.fields import Function, SanitizedUnicode

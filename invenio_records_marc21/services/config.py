@@ -11,7 +11,6 @@
 """Marc21 Record Service config."""
 
 
-from flask_babelex import gettext as _
 from invenio_drafts_resources.services.records.components import DraftFilesComponent
 from invenio_drafts_resources.services.records.config import (
     RecordServiceConfig,
@@ -20,6 +19,7 @@ from invenio_drafts_resources.services.records.config import (
     is_draft,
     is_record,
 )
+from invenio_i18n import gettext as _
 from invenio_rdm_records.records.systemfields.access.field.record import (
     AccessStatusEnum,
 )

@@ -12,7 +12,7 @@
 
 from copy import deepcopy
 
-from flask_babelex import lazy_gettext as _
+from invenio_i18n import lazy_gettext as _
 from invenio_rdm_records.services.pids.providers import (
     DataCitePIDProvider as BaseDataCitePIDProvider,
 )
