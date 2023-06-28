@@ -44,19 +44,29 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_curate = can_manage + [Marc21RecordCurators()]
     can_view = can_curate
 
+    #  Records
+    # Allow to create a record (create a draft)
     can_create = can_manage
+    # Allow to put a record in edit mode (create a draft from record)
     can_edit = can_curate
+    # Allow publishing a new record or changes to an existing record.
     can_publish = can_curate
+    # Allow lifting a record or draft.
     can_lift_embargo = can_curate
+    # Allow creating a new version of an existing published record.
     can_new_version = can_manage
 
-    #  Records
     can_search = can_all
+
     # Allow reading metadata of a record
     can_read = [
         IfRestricted("record", then_=can_view, else_=can_all),
     ]
-    # Files permissions
+
+    # Record files permissions
+    # Allow enabling/disabling files
+    can_manage_files = can_curate
+
     can_read_files = [
         IfRestricted("files", then_=can_view, else_=can_all),
     ]
@@ -64,14 +74,23 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
         IfFileIsLocal(then_=can_read_files, else_=[SystemProcess()])
     ]
 
+    # Allow managing record access
+    can_manage_record_access = can_manage
+
     # Draft
     can_read_draft = can_curate
+    # Allow deleting/discarding a draft and all associated files
     can_delete_draft = can_curate
+    # Allow updating metadata of a draft
     can_update_draft = can_curate
+    # Allow ability to search drafts
     can_search_drafts = can_curate
 
     # Draft files permissions
+    # Allow reading files of a draft
     can_draft_read_files = can_curate
+    # Allow uploading, updating and deleting files in drafts
+    # Same permissions for files needed as draft
     can_draft_create_files = can_curate
     can_draft_update_files = can_curate
     can_draft_delete_files = can_curate
@@ -89,6 +108,11 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_pid_update = can_curate
     can_pid_discard = can_curate
     can_pid_delete = can_curate
+
+    # TODO: Add permissions for community when we add the feature!
+
+    # Allow for querying of statistics
+    can_query_stats = [Disable()]
 
     # Disabled actions
     can_create_files = [Disable()]
