@@ -44,14 +44,17 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_curate = can_manage + [Marc21RecordCurators()]
     can_view = can_curate
 
-    #  Records
+    ############
+    #  Records #
+    ############
+
     # Allow to create a record (create a draft)
     can_create = can_manage
     # Allow to put a record in edit mode (create a draft from record)
     can_edit = can_curate
     # Allow publishing a new record or changes to an existing record.
     can_publish = can_curate
-    # Allow lifting a record or draft.
+    # Allow lifting the embargo of a record.
     can_lift_embargo = can_curate
     # Allow creating a new version of an existing published record.
     can_new_version = can_manage
@@ -77,7 +80,11 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     # Allow managing record access
     can_manage_record_access = can_manage
 
-    # Draft
+    ############
+    #  Draft   #
+    ############
+
+    # Allow read a draft
     can_read_draft = can_curate
     # Allow deleting/discarding a draft and all associated files
     can_delete_draft = can_curate
