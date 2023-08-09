@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2022 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -28,7 +28,7 @@ def _test_key_in_serialized_obj(obj, keys, exept_keys):
 
 def test_marcxml_serializer_init():
     marc = Marc21XMLSerializer()
-    assert marc.object_schema_cls == Marc21Schema
+    assert isinstance(marc.object_schema, Marc21Schema)
 
 
 def test_marcxml_serializer_serialize_object(full_record):
@@ -56,7 +56,7 @@ def test_marcxml_serializer_serialize_object_list(list_records):
 
 def test_json_serializer_init():
     marc = Marc21JSONSerializer()
-    assert marc.object_schema_cls == Marc21Schema
+    assert isinstance(marc.object_schema, Marc21Schema)
 
 
 def test_json_serializer_serialize_object(full_record):

@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2022 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -33,7 +33,7 @@ class Marc21UIBASESerializer(Marc21BASESerializer):
 
     def dump_obj(self, obj):
         """Dump the object into a JSON string."""
-        obj[self._object_key] = self.object_schema_cls().dump(deepcopy(obj))
+        obj[self._object_key] = self.object_schema.dump(deepcopy(obj))
         return obj
 
 
@@ -56,7 +56,7 @@ class Marc21UIXMLSerializer(Marc21UIBASESerializer, Marc21XMLMixin):
 
     def dump_obj(self, obj):
         """Dump the object into a JSON string."""
-        obj[self._object_key] = self.object_schema_cls().dump(deepcopy(obj))
+        obj[self._object_key] = self.object_schema.dump(deepcopy(obj))
 
         # For edit a marc21 record in the deposit react app we need
         # the metadata field also as a marcxml string

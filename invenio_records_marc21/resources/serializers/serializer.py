@@ -118,7 +118,7 @@ class Marc21BASESerializer(MarshmallowSerializer):
 
     def dump_obj(self, obj):
         """Dump the object into a JSON string."""
-        return self.object_schema_cls().dump(obj)
+        return self.object_schema.dump(obj)
 
     def dump_list(self, obj_list):
         """Serialize a list of records.
@@ -139,7 +139,7 @@ class Marc21JSONSerializer(Marc21BASESerializer):
         :param records: List of records instance.
         """
         obj_list = self.dump_list(obj_list)
-        return json.dumps(obj_list, cls=self.format_serializer_cls.encoder)
+        return json.dumps(obj_list, cls=self.format_serializer.encoder)
 
 
 class Marc21XMLSerializer(Marc21BASESerializer, Marc21XMLMixin):
@@ -161,8 +161,8 @@ class Marc21XMLSerializer(Marc21BASESerializer, Marc21XMLMixin):
 
     def serialize_object_list(self, obj_list):
         """Dump the object list into a JSON string."""
-        list = []
+        list_obj = []
         for obj in obj_list["hits"]["hits"]:
-            list.append(self.serialize_object(obj))
+            list_obj.append(self.serialize_object(obj))
 
-        return "\n".join(list)
+        return "\n".join(list_obj)
