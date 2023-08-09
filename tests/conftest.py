@@ -19,7 +19,10 @@ from datetime import timedelta
 
 import arrow
 import pytest
-from invenio_app.factory import create_api
+from invenio_access.models import ActionRoles
+from invenio_access.permissions import superuser_access
+from invenio_accounts.models import Role
+from invenio_app.factory import create_app as _create_app
 from invenio_rdm_records.services.pids import PIDManager, PIDsService, providers
 from invenio_records_resources.services import FileService
 
@@ -462,24 +465,110 @@ def service(app):
     )
 
 
-RunningApp = namedtuple("RunningApp", ["app", "db", "service", "location"])
+RunningApp = namedtuple(
+    "RunningApp",
+    [
+        "app",
+        "db",
+        "service",
+        "location",
+        "adminuser_identity",
+    ],
+)
+
+
+@pytest.fixture()
+def admin_role_need(app, db):
+    """Store 1 role with manager permission."""
+    admin_role = Role(name="Marc21Manager")
+    db.session.add(admin_role)
+    action_role = ActionRoles.create(action=superuser_access, role=admin_role)
+    db.session.add(action_role)
+    db.session.commit()
+    return admin_role
+
+
+@pytest.fixture()
+def adminuser_identity(adminuser, admin_role_need):
+    """Superuser identity fixture."""
+    identity = adminuser.identity
+    identity.provides.add(admin_role_need)
+
+    return identity
+
+
+@pytest.fixture()
+def adminuser(UserFixture, app, db, admin_role_need):
+    """Superuser."""
+    u = UserFixture(
+        email="admin@marc21.at",
+        password="superuser",
+    )
+    u.create(app, db)
+
+    datastore = app.extensions["security"].datastore
+    _, role = datastore._prepare_role_modify_args(u.user, "Marc21Manager")
+
+    datastore.add_role_to_user(u.user, role)
+    datastore.commit()
+    return u
+
+
+@pytest.fixture()
+def superuser_role_need(db):
+    """Store 1 role with 'superuser-access' ActionNeed."""
+    role = Role(name="superuser-access")
+    db.session.add(role)
+
+    action_role = ActionRoles.create(action=superuser_access, role=role)
+    db.session.add(action_role)
+
+    db.session.commit()
+
+    return action_role.need
+
+
+@pytest.fixture()
+def superuser(UserFixture, app, db, superuser_role_need):
+    """Superuser."""
+    u = UserFixture(
+        email="superuser@marc21.at",
+        password="superuser",
+    )
+    u.create(app, db)
+
+    datastore = app.extensions["security"].datastore
+    _, role = datastore._prepare_role_modify_args(u.user, "superuser-access")
+
+    datastore.add_role_to_user(u.user, role)
+    db.session.commit()
+    datastore.commit()
+    return u
+
+
+@pytest.fixture()
+def superuser_identity(superuser, superuser_role_need):
+    """Superuser identity fixture."""
+    identity = superuser.identity
+    identity.provides.add(superuser_role_need)
+    return identity
 
 
 @pytest.fixture
-def running_app(app, db, location):
+def running_app(app, db, location, adminuser_identity):
     """This fixture provides an app with the typically needed db data loaded.
 
     All of these fixtures are often needed together, so collecting them
     under a semantic umbrella makes sense.
     """
     service = app.extensions["invenio-records-marc21"].records_service
-    return RunningApp(app, db, service, location)
+    return RunningApp(app, db, service, location, adminuser_identity)
 
 
 @pytest.fixture(scope="module")
 def create_app(instance_path):
     """Application factory fixture."""
-    return create_api
+    return _create_app
 
 
 def _search_create_indexes(current_search, current_search_client):
@@ -516,3 +605,13 @@ def search_clear(search):
     yield search
     _search_delete_indexes(current_search)
     _search_create_indexes(current_search, current_search_client)
+
+
+@pytest.fixture(scope="module")
+def cli_runner(base_app):
+    """Create a CLI runner for testing a CLI command."""
+
+    def cli_invoke(command, *args, input=None):
+        return base_app.test_cli_runner().invoke(command, args, input=input)
+
+    return cli_invoke

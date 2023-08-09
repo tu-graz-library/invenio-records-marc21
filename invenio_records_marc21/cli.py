@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -18,23 +18,31 @@ from os.path import dirname, join
 import arrow
 import click
 from flask.cli import with_appcontext
-from flask_principal import Identity
-from invenio_access.permissions import any_user, authenticated_user, system_process
+from flask_principal import Identity, RoleNeed, UserNeed
+from invenio_access.permissions import (
+    any_user,
+    authenticated_user,
+    system_identity,
+    system_user_id,
+)
 from invenio_rdm_records.records.systemfields.access.field.record import (
     AccessStatusEnum,
 )
+from invenio_rdm_records.utils import get_or_create_user
 
 from .errors import log_exceptions
 from .proxies import current_records_marc21
 from .services.record import Marc21Metadata
 
 
-def system_identity():
-    """System identity."""
-    identity = Identity(1)
+def get_user_identity(user_id):
+    """Get user identity."""
+    identity = Identity(user_id)
+    # TODO: we need to get the user roles for specific user groups and add to the identity
     identity.provides.add(any_user)
+    identity.provides.add(UserNeed(user_id))
     identity.provides.add(authenticated_user)
-    identity.provides.add(system_process)
+    identity.provides.add(RoleNeed("Marc21Manager"))
     return identity
 
 
@@ -68,7 +76,7 @@ def _load_json(filename):
         return json.load(fp)
 
 
-def create_fake_metadata(filename):
+def create_fake_metadata(identity, filename):
     """Create records for demo purposes."""
     metadata = Marc21Metadata()
     metadata.xml = _load_file(filename)
@@ -91,16 +99,16 @@ def create_fake_metadata(filename):
     service = current_records_marc21.records_service
     draft = service.create(
         metadata=metadata,
-        identity=system_identity(),
+        identity=identity,
         access=data_access,
     )
 
-    record = service.publish(id_=draft.id, identity=system_identity())
+    record = service.publish(id_=draft.id, identity=identity)
 
     return record
 
 
-def create_fake_record(filename):
+def create_fake_record(identity, filename):
     """Create records for demo purposes."""
     data_to_use = _load_json(filename)
     metadata_access = fake_access_right()
@@ -126,12 +134,12 @@ def create_fake_record(filename):
     marc21_metadata.xml = data_to_use["metadata"]["xml"]
     draft = service.create(
         metadata=marc21_metadata,
-        identity=system_identity(),
+        identity=identity,
         access=data_access,
         files=False,
     )
 
-    record = service.publish(id_=draft.id, identity=system_identity())
+    record = service.publish(id_=draft.id, identity=identity)
 
     return record
 
@@ -157,6 +165,14 @@ def rebuild_index():
 @marc21.command("demo")
 @with_appcontext
 @click.option(
+    "-u",
+    "--user",
+    "user_email",
+    default="user@demo.org",
+    show_default=True,
+    help="User e-mail of an existing user.",
+)
+@click.option(
     "--number",
     "-n",
     default=10,
@@ -181,14 +197,21 @@ def rebuild_index():
 )
 @with_appcontext
 @log_exceptions
-def demo(number, file, metadata_only):
+def demo(user_email, number, file, metadata_only):
     """Create number of fake records for demo purposes."""
     click.secho("Creating demo records...", fg="blue")
+
+    user = get_or_create_user(user_email)
+    if user.id == system_user_id:
+        identity = system_identity
+    else:
+        identity = get_user_identity(user.id)
+
     for _ in range(number):
         if metadata_only:
-            create_fake_metadata(file)
+            create_fake_metadata(identity, file)
         else:
-            create_fake_record(file)
+            create_fake_record(identity, file)
 
     click.secho("Created records!", fg="green")
 

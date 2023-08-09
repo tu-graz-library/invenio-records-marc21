@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -34,7 +34,7 @@ def _test_metadata(test, expected, exept=[]):
 def test_full_metadata_xml_schema(running_app, full_metadata, full_metadata_expected):
     """Test metadata schema."""
     service = running_app.service
-    data = service.create(running_app.identity_simple, metadata=full_metadata)
+    data = service.create(running_app.adminuser_identity, metadata=full_metadata)
 
     # leader
     assert data["metadata"]["leader"] == full_metadata_expected["metadata"]["leader"]
@@ -51,7 +51,7 @@ def test_create_draft(running_app, xml_metadata):
     """Test draft creation of a non-existing record."""
 
     service = running_app.service
-    draft = service.create(running_app.identity_simple, metadata=xml_metadata)
+    draft = service.create(running_app.adminuser_identity, metadata=xml_metadata)
 
     assert draft.id
 
@@ -70,9 +70,11 @@ def test_create_empty_draft(running_app):
     """
     input_data = {"metadata": {"fields": {}, "leader": ""}}
     service = running_app.service
-    identity_simple = running_app.identity_simple
+    adminuser_identity = running_app.adminuser_identity
 
-    draft = service.create(identity_simple, input_data)
+    draft = service.create(adminuser_identity, input_data)
+    # TODO: Record not always synced with database leads to an detached object. Can be removed after uow implemented
+    draft._record.commit()
 
     assert draft["id"]
     assert draft._record.pid.status == PIDStatus.NEW
@@ -81,36 +83,36 @@ def test_create_empty_draft(running_app):
 def test_read_draft(running_app, xml_metadata):
     """Test read a draft can be created."""
     service = running_app.service
-    identity_simple = running_app.identity_simple
-    draft = service.create(identity=identity_simple, metadata=xml_metadata)
+    adminuser_identity = running_app.adminuser_identity
+    draft = service.create(identity=adminuser_identity, metadata=xml_metadata)
     assert draft.id
 
-    draft_2 = service.read_draft(identity=identity_simple, id_=draft.id)
+    draft_2 = service.read_draft(identity=adminuser_identity, id_=draft.id)
     assert draft.id == draft_2.id
 
 
 def test_delete_draft(running_app, xml_metadata):
     """Test a created  draft can be deleted."""
-    identity_simple = running_app.identity_simple
+    adminuser_identity = running_app.adminuser_identity
     service = running_app.service
 
-    draft = service.create(identity=identity_simple, metadata=xml_metadata)
+    draft = service.create(identity=adminuser_identity, metadata=xml_metadata)
     assert draft.id
 
-    success = service.delete_draft(identity=identity_simple, id_=draft.id)
+    success = service.delete_draft(identity=adminuser_identity, id_=draft.id)
     assert success
 
     # Check draft deleted
     with pytest.raises(PIDDoesNotExistError):
-        delete_draft = service.read_draft(identity=identity_simple, id_=draft.id)
+        delete_draft = service.read_draft(identity=adminuser_identity, id_=draft.id)
 
 
-def _create_and_publish(service, xml_metadata, identity_simple):
+def _create_and_publish(service, xml_metadata, adminuser_identity):
     """Creates a draft and publishes it."""
     # Cannot create with record service due to the lack of versioning
-    draft = service.create(identity=identity_simple, metadata=xml_metadata)
+    draft = service.create(identity=adminuser_identity, metadata=xml_metadata)
 
-    record = service.publish(identity=identity_simple, id_=draft.id)
+    record = service.publish(identity=adminuser_identity, id_=draft.id)
 
     assert record.id == draft.id
 
@@ -126,16 +128,16 @@ def test_publish_draft(running_app, xml_metadata):
     Note that the publish action requires a draft to be created first.
     """
     service = running_app.service
-    identity_simple = running_app.identity_simple
-    record = _create_and_publish(service, xml_metadata, identity_simple)
+    adminuser_identity = running_app.adminuser_identity
+    record = _create_and_publish(service, xml_metadata, adminuser_identity)
     assert record._record.pid.status == PIDStatus.REGISTERED
 
     # Check draft deleted
     with pytest.raises(NoResultFound):
-        draft = service.read_draft(id_=record.id, identity=identity_simple)
+        draft = service.read_draft(id_=record.id, identity=adminuser_identity)
 
     # Test record exists
-    record = service.read(id_=record.id, identity=identity_simple)
+    record = service.read(id_=record.id, identity=adminuser_identity)
 
     assert record.id
     assert record._record.pid.status == PIDStatus.REGISTERED
@@ -145,18 +147,18 @@ def test_update_draft(
     running_app, xml_metadata, xml_metadata2, json_metadata, json_metadata2
 ):
     service = running_app.service
-    identity_simple = running_app.identity_simple
+    adminuser_identity = running_app.adminuser_identity
 
-    draft = service.create(identity=identity_simple, metadata=xml_metadata)
+    draft = service.create(identity=adminuser_identity, metadata=xml_metadata)
     assert draft.id
 
     # Update draft content
     update_draft = service.update_draft(
-        id_=draft.id, identity=identity_simple, metadata=xml_metadata2
+        id_=draft.id, identity=adminuser_identity, metadata=xml_metadata2
     )
 
     # Check the updates where savedif "json" in data:
-    read_draft = service.read_draft(identity=identity_simple, id_=draft.id)
+    read_draft = service.read_draft(identity=adminuser_identity, id_=draft.id)
 
     assert draft.id == update_draft.id
     _test_metadata(
@@ -171,12 +173,12 @@ def test_create_publish_new_version(running_app, xml_metadata):
     This tests the `new_version` service method.
     """
     service = running_app.service
-    identity_simple = running_app.identity_simple
-    record = _create_and_publish(service, xml_metadata, identity_simple)
+    adminuser_identity = running_app.adminuser_identity
+    record = _create_and_publish(service, xml_metadata, adminuser_identity)
     marcid = record.id
 
     # Create new version
-    draft = service.new_version(identity=identity_simple, id_=marcid)
+    draft = service.new_version(identity=adminuser_identity, id_=marcid)
 
     # files attribute in record causes at create change the revision_id twice
     assert draft._record.revision_id == 3
@@ -184,7 +186,7 @@ def test_create_publish_new_version(running_app, xml_metadata):
     assert draft._record.pid.status == PIDStatus.NEW
 
     # Publish it
-    record_2 = service.publish(identity=identity_simple, id_=draft.id)
+    record_2 = service.publish(identity=adminuser_identity, id_=draft.id)
 
     assert record_2.id
     assert record_2._record.pid.status == PIDStatus.REGISTERED
@@ -197,8 +199,8 @@ def test_create_publish_new_version(running_app, xml_metadata):
 # Embargo lift
 #
 @mock.patch("arrow.utcnow")
-def test_embargo_lift_without_draft(mock_arrow, running_app, marc21_record):
-    identity_simple = running_app.identity_simple
+def test_embargo_lift_without_draft(mock_arrow, running_app, marc21_record, superuser):
+    adminuser_identity = running_app.adminuser_identity
     service = current_records_marc21.records_service
 
     # Add embargo to record
@@ -212,12 +214,12 @@ def test_embargo_lift_without_draft(mock_arrow, running_app, marc21_record):
 
     # We need to set the current date in the past to pass the validations
     mock_arrow.return_value = arrow.get(datetime(1954, 9, 29), tz.gettz("UTC"))
-    draft = service.create(identity=identity_simple, data=marc21_record)
-    record = service.publish(identity=identity_simple, id_=draft.id)
+    draft = service.create(identity=adminuser_identity, data=marc21_record)
+    record = service.publish(identity=adminuser_identity, id_=draft.id)
     # Recover current date
     mock_arrow.return_value = arrow.get(datetime.utcnow())
 
-    service.lift_embargo(identity=identity_simple, _id=draft.id)
+    service.lift_embargo(identity=superuser.identity, _id=draft.id)
     record_lifted = service.record_cls.pid.resolve(record["id"])
 
     assert not record_lifted.access.embargo.active
@@ -227,8 +229,8 @@ def test_embargo_lift_without_draft(mock_arrow, running_app, marc21_record):
 
 
 @mock.patch("arrow.utcnow")
-def test_embargo_lift_with_draft(mock_arrow, running_app, marc21_record):
-    identity_simple = running_app.identity_simple
+def test_embargo_lift_with_draft(mock_arrow, running_app, marc21_record, superuser):
+    adminuser_identity = running_app.adminuser_identity
     service = current_records_marc21.records_service
     # Add embargo to record
     marc21_record["access"]["files"] = "restricted"
@@ -240,14 +242,17 @@ def test_embargo_lift_with_draft(mock_arrow, running_app, marc21_record):
     }
 
     mock_arrow.return_value = arrow.get(datetime(1954, 9, 29), tz.gettz("UTC"))
-    draft = service.create(identity=identity_simple, data=marc21_record)
-    record = service.publish(identity=identity_simple, id_=draft.id)
+    draft = service.create(identity=adminuser_identity, data=marc21_record)
+    record = service.publish(identity=adminuser_identity, id_=draft.id)
     # This draft simulates an existing one while lifting the record
-    ongoing_draft = service.edit(identity=identity_simple, id_=draft.id)
+    ongoing_draft = service.edit(identity=adminuser_identity, id_=draft.id)
 
     mock_arrow.return_value = arrow.get(datetime.utcnow())
 
-    service.lift_embargo(identity=identity_simple, _id=record["id"])
+    # TODO: Record not always synced with database leads to an detached object. Can be removed after uow implemented
+    record._record.commit()
+
+    service.lift_embargo(identity=superuser.identity, _id=record["id"])
     record_lifted = service.record_cls.pid.resolve(record["id"])
     draft_lifted = service.draft_cls.pid.resolve(ongoing_draft["id"])
 
@@ -261,8 +266,10 @@ def test_embargo_lift_with_draft(mock_arrow, running_app, marc21_record):
 
 
 @mock.patch("arrow.utcnow")
-def test_embargo_lift_with_updated_draft(mock_arrow, running_app, marc21_record):
-    identity_simple = running_app.identity_simple
+def test_embargo_lift_with_updated_draft(
+    mock_arrow, running_app, marc21_record, superuser
+):
+    adminuser_identity = running_app.adminuser_identity
     service = current_records_marc21.records_service
     # Add embargo to record
     marc21_record["access"]["files"] = "restricted"
@@ -275,10 +282,10 @@ def test_embargo_lift_with_updated_draft(mock_arrow, running_app, marc21_record)
 
     # We need to set the current date in the past to pass the validations
     mock_arrow.return_value = arrow.get(datetime(1954, 9, 29), tz.gettz("UTC"))
-    draft = service.create(identity=identity_simple, data=marc21_record)
-    record = service.publish(identity=identity_simple, id_=draft.id)
+    draft = service.create(identity=adminuser_identity, data=marc21_record)
+    record = service.publish(identity=adminuser_identity, id_=draft.id)
     # This draft simulates an existing one while lifting the record
-    service.edit(identity=identity_simple, id_=draft.id)
+    service.edit(identity=adminuser_identity, id_=draft.id)
     # Recover current date
     mock_arrow.return_value = arrow.get(datetime.utcnow())
 
@@ -292,10 +299,13 @@ def test_embargo_lift_with_updated_draft(mock_arrow, running_app, marc21_record)
     }
     # Update the ongoing draft with the new data simulating the user's input
     ongoing_draft = service.update_draft(
-        identity=identity_simple, id_=draft.id, data=marc21_record
+        identity=adminuser_identity, id_=draft.id, data=marc21_record
     )
 
-    service.lift_embargo(_id=record["id"], identity=identity_simple)
+    # TODO: Record not always synced with database leads to an detached object. Can be removed after uow implemented
+    record._record.commit()
+
+    service.lift_embargo(_id=record["id"], identity=superuser.identity)
     record_lifted = service.record_cls.pid.resolve(record["id"])
     draft_lifted = service.draft_cls.pid.resolve(ongoing_draft["id"])
 
@@ -308,8 +318,8 @@ def test_embargo_lift_with_updated_draft(mock_arrow, running_app, marc21_record)
     assert draft_lifted.access.protection.record == "public"
 
 
-def test_embargo_lift_with_error(running_app, marc21_record):
-    identity_simple = running_app.identity_simple
+def test_embargo_lift_with_error(running_app, marc21_record, superuser):
+    adminuser_identity = running_app.adminuser_identity
     service = current_records_marc21.records_service
     # Add embargo to record
     marc21_record["access"]["files"] = "restricted"
@@ -320,9 +330,11 @@ def test_embargo_lift_with_error(running_app, marc21_record):
         "reason": None,
     }
 
-    draft = service.create(identity=identity_simple, data=marc21_record)
-    record = service.publish(identity=identity_simple, id_=draft.id)
+    draft = service.create(identity=adminuser_identity, data=marc21_record)
+    record = service.publish(identity=adminuser_identity, id_=draft.id)
+    # TODO: Record not always synced with database leads to an detached object. Can be removed after uow implemented
+    record._record.commit()
 
     # Record should not be lifted since it didn't expire (until 3220)
     with pytest.raises(EmbargoNotLiftedError):
-        service.lift_embargo(identity=identity_simple, _id=record["id"])
+        service.lift_embargo(identity=superuser.identity, _id=record["id"])

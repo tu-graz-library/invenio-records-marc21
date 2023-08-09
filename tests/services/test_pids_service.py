@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2022 Graz University of Technology.
+# Copyright (C) 2022-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -90,16 +90,16 @@ def test_datacite_provider_configuration(record, mocker):
 def test_resolve_pid(running_app, full_metadata, search_clear):
     """Resolve a PID."""
     service = current_records_marc21.records_service
-    identity_simple = running_app.identity_simple
+    adminuser_identity = running_app.adminuser_identity
     # create the draft
-    draft = service.create(identity=identity_simple, metadata=full_metadata)
+    draft = service.create(identity=adminuser_identity, metadata=full_metadata)
     # publish the record
-    record = service.publish(identity=identity_simple, id_=draft.id)
+    record = service.publish(identity=adminuser_identity, id_=draft.id)
     doi = record["pids"]["doi"]["identifier"]
 
     # test resolution
     resolved_record = service.pids.resolve(
-        identity=identity_simple, id_=doi, scheme="doi"
+        identity=adminuser_identity, id_=doi, scheme="doi"
     )
     assert resolved_record.id == record.id
     assert resolved_record["pids"]["doi"]["identifier"] == doi
@@ -108,24 +108,24 @@ def test_resolve_pid(running_app, full_metadata, search_clear):
 def test_resolve_non_existing_pid(running_app, full_metadata):
     """Resolve non existing a PID with error."""
     service = current_records_marc21.records_service
-    identity_simple = running_app.identity_simple
+    adminuser_identity = running_app.adminuser_identity
 
-    draft = service.create(identity=identity_simple, metadata=full_metadata)
+    draft = service.create(identity=adminuser_identity, metadata=full_metadata)
 
-    service.publish(identity=identity_simple, id_=draft.id)
+    service.publish(identity=adminuser_identity, id_=draft.id)
 
     fake_doi = "10.4321/client.12345-invalid"
     with pytest.raises(PIDDoesNotExistError):
-        service.pids.resolve(identity=identity_simple, id_=fake_doi, scheme="doi")
+        service.pids.resolve(identity=adminuser_identity, id_=fake_doi, scheme="doi")
 
 
 def test_reserve_pid(running_app, full_metadata):
     """Reserve a new PID."""
     service = current_records_marc21.records_service
-    identity_simple = running_app.identity_simple
+    adminuser_identity = running_app.adminuser_identity
 
-    draft = service.create(identity=identity_simple, metadata=full_metadata)
-    # draft = service.pids.create(identity=identity_simple, id_=draft.id, scheme="doi")
+    draft = service.create(identity=adminuser_identity, metadata=full_metadata)
+    # draft = service.pids.create(identity=adminuser_identity, id_=draft.id, scheme="doi")
 
     doi = draft["pids"]["doi"]["identifier"]
     provider = service.pids.pid_manager._get_provider("doi", "datacite")
@@ -136,17 +136,19 @@ def test_reserve_pid(running_app, full_metadata):
 def test_discard_existing_pid(running_app, full_metadata):
     """Discard a PID without error."""
     service = current_records_marc21.records_service
-    identity_simple = running_app.identity_simple
+    adminuser_identity = running_app.adminuser_identity
 
-    draft = service.create(identity=identity_simple, metadata=full_metadata)
+    draft = service.create(identity=adminuser_identity, metadata=full_metadata)
 
-    # draft = service.pids.create(identity=identity_simple, id_=draft.id, scheme="doi")
+    # draft = service.pids.create(identity=adminuser_identity, id_=draft.id, scheme="doi")
 
     doi = draft["pids"]["doi"]["identifier"]
     provider = service.pids.pid_manager._get_provider("doi", "datacite")
     pid = provider.get(pid_value=doi)
     assert pid.status == PIDStatus.NEW
-    draft = service.pids.discard(identity=identity_simple, id_=draft.id, scheme="doi")
+    draft = service.pids.discard(
+        identity=adminuser_identity, id_=draft.id, scheme="doi"
+    )
     assert not draft["pids"].get("doi")
     with pytest.raises(PIDDoesNotExistError):
         pid = provider.get(pid_value=doi)
@@ -156,8 +158,8 @@ def test_discard_existing_pid(running_app, full_metadata):
 def test_discard_non_exisisting_pid(running_app, full_metadata):
     """Discard a PID with error."""
     service = current_records_marc21.records_service
-    identity_simple = running_app.identity_simple
+    adminuser_identity = running_app.adminuser_identity
 
-    draft = service.create(identity=identity_simple, metadata=full_metadata)
+    draft = service.create(identity=adminuser_identity, metadata=full_metadata)
     with pytest.raises(PIDDoesNotExistError):
-        service.pids.discard(identity=identity_simple, id_=draft.id, scheme="doi")
+        service.pids.discard(identity=adminuser_identity, id_=draft.id, scheme="doi")

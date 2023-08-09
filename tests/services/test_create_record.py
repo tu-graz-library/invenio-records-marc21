@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -33,9 +33,9 @@ def marc21():
 
 
 def test_create_with_service(running_app, service, marc21):
-    identity_simple = running_app.identity_simple
+    adminuser_identity = running_app.adminuser_identity
 
-    draft = service.create(data=marc21, identity=identity_simple, access=None)
+    draft = service.create(data=marc21, identity=adminuser_identity, access=None)
 
     root_fields = [
         "id",
@@ -54,7 +54,7 @@ def test_create_with_service(running_app, service, marc21):
     # _assert_fields(["metadata"], draft.data, expected)
     assert not draft["is_published"]
 
-    record = service.publish(id_=draft.id, identity=identity_simple)
+    record = service.publish(id_=draft.id, identity=adminuser_identity)
 
     assert record
     _assert_fields_exists(root_fields, record.data)
@@ -134,12 +134,12 @@ def empty_data():
     ],
 )
 def test_create_with_access(running_app, service, empty_data, access):
-    identity_simple = running_app.identity_simple
+    adminuser_identity = running_app.adminuser_identity
 
     draft = service.create(
-        identity=identity_simple, data=empty_data, access=access["input"]
+        identity=adminuser_identity, data=empty_data, access=access["input"]
     )
-    record = service.publish(id_=draft.id, identity=identity_simple)
+    record = service.publish(id_=draft.id, identity=adminuser_identity)
     _assert_fields(
         ["access"],
         record.data,
