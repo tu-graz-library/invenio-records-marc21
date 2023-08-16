@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -15,6 +15,7 @@ from invenio_db import db
 from invenio_rdm_records.services import RDMRecordService
 from invenio_records_resources.services.files.service import FileService
 from invenio_records_resources.services.records.results import RecordItem
+from invenio_records_resources.services.uow import unit_of_work
 
 from .config import Marc21DraftFilesServiceConfig, Marc21RecordFilesServiceConfig
 from .errors import EmbargoNotLiftedError
@@ -57,6 +58,7 @@ class Marc21RecordService(RDMRecordService):
             data.update(default_access)
         return data
 
+    @unit_of_work()
     def create(
         self,
         identity,
@@ -83,6 +85,7 @@ class Marc21RecordService(RDMRecordService):
         data = self._create_data(identity, data, metadata, files, access)
         return super().create(identity=identity, data=data)
 
+    @unit_of_work()
     def update_draft(
         self,
         identity,
@@ -123,7 +126,8 @@ class Marc21RecordService(RDMRecordService):
         """Returns True if draft's access field was modified."""
         return draft.get("access") == record.get("access")
 
-    def lift_embargo(self, _id, identity):
+    @unit_of_work()
+    def lift_embargo(self, identity, _id, uow=None):
         """Lifts embargo from the record and updates draft."""
         # Get the record
         record = self.record_cls.pid.resolve(_id)
