@@ -14,38 +14,12 @@ See https://pytest-invenio.readthedocs.io/ for documentation on which test
 fixtures are available.
 """
 import json
-from collections import namedtuple
 from os.path import dirname, join
 
 import pytest
-from flask_principal import Identity
-from invenio_access.permissions import any_user, authenticated_user, system_process
 
 from invenio_records_marc21.proxies import current_records_marc21
 from invenio_records_marc21.services.record import Marc21Metadata
-
-RunningApp = namedtuple("RunningApp", ["app", "service", "identity_simple", "location"])
-
-
-@pytest.fixture
-def running_app(app, identity_simple, location):
-    """This fixture provides an app with the typically needed db data loaded.
-
-    All of these fixtures are often needed together, so collecting them
-    under a semantic umbrella makes sense.
-    """
-    service = app.extensions["invenio-records-marc21"].records_service
-    return RunningApp(app, service, identity_simple, location)
-
-
-@pytest.fixture(scope="module")
-def identity_simple():
-    """Simple identity fixture."""
-    identity = Identity(1)
-    identity.provides.add(any_user)
-    identity.provides.add(authenticated_user)
-    identity.provides.add(system_process)
-    return identity
 
 
 @pytest.fixture(scope="session")
@@ -105,12 +79,12 @@ def json_metadata2():
 
 
 @pytest.fixture()
-def embargoedrecord(embargoed_record):
+def embargoedrecord(embargoed_record, adminuser_identity):
     """Embargoed record."""
     service = current_records_marc21.records_service
 
-    draft = service.create(identity_simple, embargoed_record)
-    record = service.publish(id_=draft.id, identity=identity_simple)
+    draft = service.create(adminuser_identity, embargoed_record)
+    record = service.publish(id_=draft.id, identity=adminuser_identity)
     return record
 
 

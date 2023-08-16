@@ -52,6 +52,8 @@ Initialize Invenio-Records-Marc21 dependencies and Invenio-Records-Marc21 itself
 
 >>> from invenio_db import InvenioDB
 >>> ext_db = InvenioDB(app)
+>>> from invenio_i18n import InvenioI18N
+>>> ext_i18n = InvenioI18N(app)
 >>> from invenio_records import InvenioRecords
 >>> ext_records = InvenioRecords(app)
 >>> from invenio_access import InvenioAccess

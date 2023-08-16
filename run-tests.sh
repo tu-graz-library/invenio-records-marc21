@@ -26,5 +26,5 @@ trap cleanup EXIT
 
 python -m check_manifest
 python -m sphinx.cmd.build -qnNW docs docs/_build/html
-eval "$(docker-services-cli up --db ${DB:-postgresql} --search ${SEARCH:-opensearch} --env)"
+eval "$(docker-services-cli up --cache ${CACHE:-redis} --db ${DB:-postgresql} --search ${SEARCH:-opensearch} --env)"
 python -m pytest

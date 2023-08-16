@@ -410,9 +410,9 @@ def example_record(app, db):
 
 
 @pytest.fixture(scope="module")
-def app_config(app_config, db_uri):
+def app_config(app_config):
     """Application config fixture."""
-    app_config["SQLALCHEMY_DATABASE_URI"] = db_uri
+    app_config["DB_VERSIONING"] = False
 
     app_config["RATELIMIT_ENABLED"] = False
     app_config[
@@ -424,7 +424,7 @@ def app_config(app_config, db_uri):
 
     # Variable not used. We set it to silent warnings
     app_config["JSONSCHEMAS_HOST"] = "not-used"
-    app_config["RDM_PERMISSION_POLICY"] = Marc21RecordPermissionPolicy
+    app_config["MARC21_PERMISSION_POLICY"] = Marc21RecordPermissionPolicy
     # Enable DOI miting
     app_config["DATACITE_ENABLED"] = True
     app_config["DATACITE_USERNAME"] = "INVALID"
