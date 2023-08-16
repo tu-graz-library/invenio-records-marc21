@@ -12,6 +12,7 @@
 
 
 from invenio_drafts_resources.services.records.components import DraftFilesComponent
+from invenio_records_resources.services.base.config import FromConfig
 from invenio_drafts_resources.services.records.config import (
     RecordServiceConfig,
     SearchDraftsOptions,
@@ -81,9 +82,17 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     schema = Marc21RecordSchema
     schema_parent = Marc21ParentSchema
 
-    # TODO: ussing from invenio-permissions
-    permission_policy_cls = Marc21RecordPermissionPolicy
+    schema_secret_link = None
+    review = None
 
+    # Permission policy
+    default_files_enabled = FromConfig("RDM_DEFAULT_FILES_ENABLED", default=True)
+
+    permission_policy_cls = FromConfig(
+        "MARC21_PERMISSION_POLICY",
+        default=Marc21RecordPermissionPolicy,
+        import_string=True,
+    )
     # Search
     search = FromConfigSearchOptions(
         "MARC21_SEARCH",
