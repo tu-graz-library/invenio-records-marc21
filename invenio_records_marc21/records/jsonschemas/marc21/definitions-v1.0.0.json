@@ -1,129 +1,120 @@
 {
-    "identifier": {
-        "description": "An identifier.",
-        "type": "string"
-    },
-    "identifiers": {
-        "description": "Identifiers object (keys being scheme, value being the identifier).",
-        "type": "object",
-        "additionalProperties": {
-            "$ref": "#/identifier"
-        }
-    },
-    "internal-pid": {
-        "type": "object",
-        "description": "An internal persistent identifier object.",
-        "additionalProperties": false,
-        "required": [
-            "pk",
-            "status"
-        ],
-        "properties": {
-            "pk": {
-                "description": "Primary key of the PID object.",
-                "type": "integer"
-            },
-            "status": {
-                "description": "The status of the PID (from Invenio-PIDStore).",
-                "type": "string",
-                "enum": [
-                    "N",
-                    "K",
-                    "R",
-                    "M",
-                    "D"
-                ]
-            },
-            "pid_type": {
-                "description": "The type of the persistent identifier.",
-                "type": "string"
-            },
-            "obj_type": {
-                "description": "The type of the associated object.",
-                "type": "string"
-            }
-        }
-    },
-    "external-pid": {
-        "type": "object",
-        "description": "An external persistent identifier object.",
-        "additionalProperties": false,
-        "required": [
-            "identifier",
-            "provider"
-        ],
-        "properties": {
-            "identifier": {
-                "$ref": "#/identifier"
-            },
-            "provider": {
-                "description": "The provider of the persistent identifier.",
-                "type": "string"
-            },
-            "client": {
-                "description": "Client identifier for the specific PID.",
-                "type": "string"
-            }
-        }
-    },
-    "user": {
-        "type": "object",
-        "description": "..",
-        "additionalProperties": false,
-        "properties": {
-            "user": {
-                "type": "integer"
-            }
-        }
-    },
-    "agent": {
-        "description": "An agent (user, software process, community, ...).",
-        "oneOf": [
-            {
-                "$ref": "#/user"
-            }
-        ]
-    },
-    "file": {
-        "type": "object",
-        "additionalProperties": false,
-        "description": "A file object.",
-        "properties": {
-            "version_id": {
-                "description": "Object version ID.",
-                "type": "string"
-            },
-            "bucket_id": {
-                "description": "Object verison bucket ID.",
-                "type": "string"
-            },
-            "mimetype": {
-                "description": "File MIMEType.",
-                "type": "string"
-            },
-            "uri": {
-                "description": "File URI.",
-                "type": "string"
-            },
-            "storage_class": {
-                "description": "File storage class.",
-                "type": "string"
-            },
-            "checksum": {
-                "description": "Checksum of the file.",
-                "type": "string"
-            },
-            "size": {
-                "description": "Size of the file in bytes.",
-                "type": "number"
-            },
-            "key": {
-                "description": "Key (filename) of the file.",
-                "type": "string"
-            },
-            "file_id": {
-                "$ref": "#/identifier"
-            }
-        }
+  "identifier": {
+    "description": "An identifier.",
+    "type": "string"
+  },
+  "identifiers": {
+    "description": "Identifiers object (keys being scheme, value being the identifier).",
+    "type": "object",
+    "additionalProperties": {
+      "$ref": "#/identifier"
     }
+  },
+  "internal-pid": {
+    "type": "object",
+    "description": "An internal persistent identifier object.",
+    "additionalProperties": false,
+    "required": ["pk", "status"],
+    "properties": {
+      "pk": {
+        "description": "Primary key of the PID object.",
+        "type": "integer"
+      },
+      "status": {
+        "description": "The status of the PID (from Invenio-PIDStore).",
+        "type": "string",
+        "enum": ["N", "K", "R", "M", "D"]
+      },
+      "pid_type": {
+        "description": "The type of the persistent identifier.",
+        "type": "string"
+      },
+      "obj_type": {
+        "description": "The type of the associated object.",
+        "type": "string"
+      }
+    }
+  },
+  "external-pid": {
+    "type": "object",
+    "description": "An external persistent identifier object.",
+    "additionalProperties": false,
+    "required": ["identifier", "provider"],
+    "properties": {
+      "identifier": {
+        "$ref": "#/identifier"
+      },
+      "provider": {
+        "description": "The provider of the persistent identifier.",
+        "type": "string"
+      },
+      "client": {
+        "description": "Client identifier for the specific PID.",
+        "type": "string"
+      }
+    }
+  },
+  "user": {
+    "type": "object",
+    "description": "..",
+    "additionalProperties": false,
+    "properties": {
+      "user": {
+        "type": "integer"
+      }
+    }
+  },
+  "agent": {
+    "description": "An agent (user, software process, community, ...).",
+    "oneOf": [
+      {
+        "$ref": "#/user"
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  "file": {
+    "type": "object",
+    "additionalProperties": false,
+    "description": "A file object.",
+    "properties": {
+      "version_id": {
+        "description": "Object version ID.",
+        "type": "string"
+      },
+      "bucket_id": {
+        "description": "Object verison bucket ID.",
+        "type": "string"
+      },
+      "mimetype": {
+        "description": "File MIMEType.",
+        "type": "string"
+      },
+      "uri": {
+        "description": "File URI.",
+        "type": "string"
+      },
+      "storage_class": {
+        "description": "File storage class.",
+        "type": "string"
+      },
+      "checksum": {
+        "description": "Checksum of the file.",
+        "type": "string"
+      },
+      "size": {
+        "description": "Size of the file in bytes.",
+        "type": "number"
+      },
+      "key": {
+        "description": "Key (filename) of the file.",
+        "type": "string"
+      },
+      "file_id": {
+        "$ref": "#/identifier"
+      }
+    }
+  }
 }

@@ -23,11 +23,7 @@
       "properties": {
         "owned_by": {
           "description": "List of owners of the child records.",
-          "type": "array",
-          "uniqueItems": true,
-          "items": {
-            "$ref": "local://marc21/definitions-v1.0.0.json#/agent"
-          }
+          "$ref": "local://marc21/definitions-v1.0.0.json#/agent"
         },
         "grants": {
           "description": "Access grants for the child records.",
