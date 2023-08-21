@@ -98,7 +98,7 @@ def test_record_file_update(testapp, db, location):
     assert ObjectVersion.query.count() == 1
 
     # Delete the file
-    del record.files["test.pdf"]
+    record.files.delete("test.pdf", softdelete_obj=False, remove_rf=True)
     record.commit()
     db.session.commit()
 
@@ -109,7 +109,6 @@ def test_record_file_update(testapp, db, location):
     assert len(record.files) == 0
     assert "test.pdf" not in record.files
     assert record["files"]["entries"] == {}
-    assert record["files"]["meta"] == {}
 
 
 def test_record_files_delete(testapp, db, location):
@@ -143,7 +142,7 @@ def test_record_files_clear(testapp, db, location):
     assert len(record.files) == 3
 
     # Delete all files soft
-    record.files.clear()
+    record.files.delete_all(softdelete_obj=False, remove_rf=True)
     record.commit()
     db.session.commit()
 
@@ -156,7 +155,6 @@ def test_record_files_clear(testapp, db, location):
     assert "f2.pdf" not in record.files
     assert "f3.pdf" not in record.files
     assert record["files"]["entries"] == {}
-    assert record["files"]["meta"] == {}
 
 
 def test_record_files_store(testapp, db, location):
@@ -165,27 +163,23 @@ def test_record_files_store(testapp, db, location):
 
     record.files["f1.pdf"] = (BytesIO(b"testfilestream"), {"description": "Test file"})
     record.files["f2.pdf"] = BytesIO(b"testfilestream")
-    record.files["f3.pdf"] = {"description": "Test my self again"}
 
     rf1 = record.files["f1.pdf"]
     rf2 = record.files["f2.pdf"]
     record.commit()
-    assert record["files"]["meta"] == {
-        "f1.pdf": {"description": "Test file"},
-        "f2.pdf": None,
-        "f3.pdf": {"description": "Test my self again"},
-    }
+
     assert record["files"]["entries"] == {
         rf.key: {
-            "bucket_id": str(record.bucket_id),
             "checksum": rf.file.checksum,
+            "ext": rf.file.ext,
             "file_id": str(rf.file.file_id),
             "key": rf.key,
+            "metadata": rf.metadata or {},
             "mimetype": rf.file.mimetype,
+            "object_version_id": str(rf.object_version_id),
             "size": rf.file.size,
-            "storage_class": rf.file.storage_class,
-            "uri": rf.file.uri,
-            "version_id": str(rf.object_version_id),
+            "uuid": str(rf.id),
+            "version_id": rf.model.version_id,
         }
         for rf in (rf1, rf2)
     }
