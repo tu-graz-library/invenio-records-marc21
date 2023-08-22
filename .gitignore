@@ -9,7 +9,7 @@
 # details.
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
+__pycache__/**
 *.py[cod]
 
 # Idea software family
@@ -78,7 +78,6 @@ node_modules
 
 # vscode
 .vscode/
-
 
 # node modules
 **/*/node_modules
