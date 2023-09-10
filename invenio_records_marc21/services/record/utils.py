@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2022 Graz University of Technology.
+# Copyright (C) 2022-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -16,6 +16,7 @@ from os.path import basename
 
 from invenio_search import RecordsSearch
 from invenio_search.engine import dsl
+from marshmallow.exceptions import ValidationError
 
 from .types import DOI, ACNumber, DuplicateRecordError
 
@@ -42,20 +43,25 @@ def create_record(service, data, file_paths, identity, do_publish=True):
     """Create the record."""
     draft = service.create(data=data, identity=identity, files=True)
 
-    for file_path in file_paths:
-        add_file_to_record(
-            marcid=draft.id,
-            file_path=file_path,
-            file_service=service.draft_files,
-            identity=identity,
-        )
+    try:
+        for file_path in file_paths:
+            add_file_to_record(
+                marcid=draft.id,
+                file_path=file_path,
+                file_service=service.draft_files,
+                identity=identity,
+            )
 
-    if do_publish:
-        # to prevent the race condition bug.
-        # see https://github.com/inveniosoftware/invenio-rdm-records/issues/809
-        time.sleep(0.5)
+        if do_publish:
+            # to prevent the race condition bug.
+            # see https://github.com/inveniosoftware/invenio-rdm-records/issues/809
+            time.sleep(0.5)
 
-        return service.publish(id_=draft.id, identity=identity)
+            return service.publish(id_=draft.id, identity=identity)
+
+    except (FileNotFoundError, ValidationError) as error:
+        service.delete_draft(id_=draft.id, identity=identity)
+        raise error
 
     return draft
 
