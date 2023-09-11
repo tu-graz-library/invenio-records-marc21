@@ -7,28 +7,28 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: invenio-records-marc21 0.11.0\n"
+"Project-Id-Version: invenio-records-marc21 0.14.2\n"
 "Report-Msgid-Bugs-To: info@tugraz.at\n"
-"POT-Creation-Date: 2023-03-13 07:48+0100\n"
+"POT-Creation-Date: 2023-09-07 13:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
+"Generated-By: Babel 2.12.1\n"
 
-#: invenio_records_marc21/config.py:32
+#: invenio_records_marc21/config.py:35
 msgid "Best match"
 msgstr ""
 
-#: invenio_records_marc21/config.py:36
+#: invenio_records_marc21/config.py:39
 msgid "Newest"
 msgstr ""
 
-#: invenio_records_marc21/config.py:118 invenio_records_marc21/config.py:125
-#: invenio_records_marc21/config.py:140 invenio_records_marc21/config.py:148
-#: tests/conftest.py:141 tests/conftest.py:148
+#: invenio_records_marc21/config.py:121 invenio_records_marc21/config.py:128
+#: invenio_records_marc21/config.py:143 invenio_records_marc21/config.py:151
+#: tests/conftest.py:438 tests/conftest.py:445
 msgid "DOI"
 msgstr ""
 
@@ -52,7 +52,7 @@ msgid "User has not the permissions."
 msgstr ""
 
 #: invenio_records_marc21/services/config.py:50
-#: invenio_records_marc21/templates/invenio_records_marc21/record.html:46
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:46
 msgid "Access status"
 msgstr ""
 
@@ -84,41 +84,45 @@ msgstr ""
 msgid "Invalid persistent identifier scheme."
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/deposit.html:12
-msgid "New version"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/deposit.html:14
-#: invenio_records_marc21/templates/invenio_records_marc21/uploads.html:40
-msgid "New upload"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/deposit.html:16
-msgid "Edit upload"
-msgstr ""
-
 #: invenio_records_marc21/templates/invenio_records_marc21/index.html:25
-#: invenio_records_marc21/templates/invenio_records_marc21/uploads.html:31
+#: invenio_records_marc21/templates/invenio_records_marc21/user_dashboard/uploads.html:30
 msgid "Type and press enter to search"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/record.html:34
+#: invenio_records_marc21/templates/invenio_records_marc21/deposit/index.html:12
+msgid "New version"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/deposit/index.html:14
+#: invenio_records_marc21/templates/invenio_records_marc21/user_dashboard/uploads.html:40
+msgid "New upload"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/deposit/index.html:16
+msgid "Edit upload"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/export.html:29
+msgid "Back to details"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:34
 msgid "Creation date"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/record.html:43
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:42
 msgid "Resource type"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/tombstone.html:11
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/tombstone.html:11
 msgid "Tombstone"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/tombstone.html:14
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/tombstone.html:14
 msgid "Gone"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/tombstone.html:16
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/tombstone.html:16
 #, python-format
 msgid ""
 "\n"
@@ -128,99 +132,95 @@ msgid ""
 "  "
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/uploads.html:7
-msgid "Uploads"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/export.html:27
-msgid "Back to details"
-msgstr ""
-
-#: invenio_records_marc21/templates/invenio_records_marc21/records/details/subjects.html:12
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/subjects.html:12
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/details/subjects.html:12
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/subjects.html:12
 msgid "Subjects"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/authors.html:13
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/authors.html:13
 msgid "Rights Holder(s)"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/description.html:12
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:52
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/description.html:12
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:52
 msgid "Description"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/details.html:12
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/details.html:12
 msgid "Details"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/files.html:34
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:101
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/files.html:34
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/files.html:101
 msgid "Files"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/files.html:42
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:111
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/files.html:42
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/files.html:111
 msgid "Reason"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/footer.html:14
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/footer.html:14
 msgid "Upload infromation"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/footer.html:18
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/footer.html:18
 msgid "Created:"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/footer.html:18
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/footer.html:18
 msgid "Modified:"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/helpers/side_bar.html:24
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/side_bar.html:20
 msgid "Export"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:46
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:51
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:46
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/files.html:51
 msgid "Name"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:58
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:58
 msgid "Creation Date"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:64
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:64
 msgid "Language"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:70
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:70
 msgid "Thesis Information"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:76
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:76
 msgid "Title"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/detail.html:88
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:88
 msgid "Type/Extent/Format"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:52
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/files.html:52
 msgid "Size"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:71
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/files.html:71
 msgid ""
 "This is the file fingerprint (checksum), which can be used to verify the "
 "file integrity."
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:81
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/files.html:81
 msgid "Preview"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/records/macros/files.html:86
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/files.html:86
 msgid "Download"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/user_dashboard/uploads.html:7
+msgid "Uploads"
 msgstr ""
 
 #: invenio_records_marc21/ui/records/wrappers.py:16
