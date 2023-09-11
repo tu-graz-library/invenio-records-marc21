@@ -73,7 +73,7 @@ def record_detail(record=None, files=None, pid_value=None, is_preview=False):
     """Record detail page (aka landing page)."""
     files_dict = None if files is None else files.to_dict()
     return render_template(
-        "invenio_records_marc21/record.html",
+        "invenio_records_marc21/landing_page/record.html",
         record=Marc21UIJSONSerializer().dump_obj(record.to_dict()),
         pid=pid_value,
         files=files_dict,
@@ -111,7 +111,7 @@ def record_export(
     exported_record = serializer.serialize_object(record.to_dict())
 
     return render_template(
-        "invenio_records_marc21/records/export.html",
+        "invenio_records_marc21/landing_page/export.html",
         pid_value=pid_value,
         export_format=exporter.get("name", export_format),
         exported_record=exported_record,

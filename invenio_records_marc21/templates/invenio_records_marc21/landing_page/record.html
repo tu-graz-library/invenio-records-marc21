@@ -57,39 +57,39 @@ details.
 
         {%- block record_title -%}
         <div class="top-padded"></div>
-        {%- include "invenio_records_marc21/records/helpers/title.html" %}
+        {%- include "invenio_records_marc21/landing_page/helpers/title.html" %}
         {%- endblock record_title -%}
 
         {%- block record_content -%}
         <div class="top-padded"></div>
-        {%- include "invenio_records_marc21/records/helpers/authors.html" %}
+        {%- include "invenio_records_marc21/landing_page/helpers/authors.html" %}
         <div class="top-padded"></div>
-        {%- include "invenio_records_marc21/records/helpers/subjects.html" %}
+        {%- include "invenio_records_marc21/landing_page/helpers/subjects.html" %}
         <div class="top-padded"></div>
-        {%- include "invenio_records_marc21/records/helpers/description.html" %}
+        {%- include "invenio_records_marc21/landing_page/helpers/description.html" %}
         {%- endblock record_content -%}
 
         {%- block record_files -%}
         <div class="top-padded"></div>
         <hr class="thin-line">
-        {%- include "invenio_records_marc21/records/helpers/files.html" %}
+        {%- include "invenio_records_marc21/landing_page/helpers/files.html" %}
         {%- endblock record_files -%}
 
         {#
         {%- block record_details -%}
         <div class="top-padded"></div>
-        {%- include "invenio_records_marc21/records/helpers/details.html" %}
+        {%- include "invenio_records_marc21/landing_page/helpers/details.html" %}
         {%- endblock record_details -%}
         #}
 
         {%- block record_footer -%}
-        {%- include "invenio_records_marc21/records/helpers/footer.html" %}
+        {%- include "invenio_records_marc21/landing_page/helpers/footer.html" %}
         {%- endblock record_footer -%}
         {%- endblock record_body %}
       </article>
 
       {% block record_sidebar %}
-      {%- include "invenio_records_marc21/records/helpers/side_bar.html" %}
+      {%- include "invenio_records_marc21/landing_page/helpers/side_bar.html" %}
       {% endblock record_sidebar %}
     </div>
   </div>

@@ -27,7 +27,7 @@ def index():
 
 def search():
     """Search help guide."""
-    return render_template("invenio_records_marc21/search.html")
+    return render_template("invenio_records_marc21/search/search.html")
 
 
 @login_required
@@ -37,7 +37,7 @@ def uploads_marc21():
         identity=g.identity, obj=current_user
     )["avatar"]
     return render_template(
-        "invenio_records_marc21/uploads.html",
+        "invenio_records_marc21/user_dashboard/uploads.html",
         user_avatar=url,
     )
 
@@ -46,7 +46,7 @@ def uploads_marc21():
 def deposit_create():
     """Create a new deposit page."""
     return render_template(
-        "invenio_records_marc21/deposit.html",
+        "invenio_records_marc21/deposit/index.html",
         record=empty_record(),
         files=dict(default_preview=None, entries=[], links={}),
         templates=deposit_templates(),
@@ -63,7 +63,7 @@ def deposit_edit(draft=None, draft_files=None, pid_value=None):
     record = serializer.dump_obj(draft.to_dict())
 
     return render_template(
-        "invenio_records_marc21/deposit.html",
+        "invenio_records_marc21/deposit/index.html",
         forms_config=deposit_config(apiUrl=f"/api/marc21/{pid_value}/draft"),
         record=record,
         files=draft_files.to_dict(),

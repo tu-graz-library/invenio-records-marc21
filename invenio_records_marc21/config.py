@@ -88,7 +88,7 @@ MARC21_UI_THEME_ENDPOINTS = {
 }
 """Records UI for invenio-records-marc21."""
 
-SEARCH_UI_JSTEMPLATE_RESULTS = "templates/invenio_records_marc21/results.html"
+SEARCH_UI_JSTEMPLATE_RESULTS = "templates/invenio_records_marc21/search/results.html"
 """Result list template."""
 
 MARC21_ENDPOINTS_ENABLED = True
