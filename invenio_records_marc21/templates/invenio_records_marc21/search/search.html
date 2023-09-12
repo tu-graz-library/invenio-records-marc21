@@ -13,6 +13,10 @@ it under the terms of the MIT License; see LICENSE file for more details.
 
 {%- block page_body %}
 
-<div id="invenio-search-marc21-config" data-invenio-search-config='{{ search_app_marc21_config() | tojson }}'></div>
+<div class="ui container">
+    <div id="invenio-search-marc21-config"
+        data-invenio-search-config='{{ search_app_marc21_config() | tojson }}'>
+    </div>
+</div>
 
 {%- endblock page_body %}

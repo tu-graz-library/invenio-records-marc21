@@ -14,7 +14,6 @@ from flask_babelex import lazy_gettext as _
 from flask_login import current_user
 from flask_menu import current_menu
 
-from .config import search_app_context
 from .views import deposit_create, deposit_edit, index, search, uploads_marc21
 
 
@@ -43,7 +42,5 @@ def init_theme_views(blueprint, app):
             order=4,
             visible_when=current_user.is_authenticated,
         )
-
-    blueprint.app_context_processor(search_app_context)
 
     return blueprint

@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -15,32 +15,76 @@ from __future__ import absolute_import, print_function
 import idutils
 from celery.schedules import crontab
 from flask_principal import RoleNeed
+from invenio_rdm_records.services import facets as rdm_facets
 from invenio_rdm_records.services.pids import providers
 
 from .resources.serializers.datacite import Marc21DataCite43JSONSerializer
+from .services import facets
 from .services.pids import Marc21DataCitePIDProvider
 
 
+# TODO: use invenio-i18n gettext functionality
 def _(x):
     """Identity function for string extraction."""
     return x
 
 
-MARC21_FACETS = {}
-
-MARC21_SORT_OPTIONS = {
-    "bestmatch": {
-        "title": _("Best match"),
-        "fields": ["_score"],  # ES defaults to desc on `_score` field
+MARC21_FACETS = {
+    "access_status": {
+        "facet": rdm_facets.access_status,
+        "ui": {
+            "field": "access.status",
+        },
     },
-    "newest": {
-        "title": _("Newest"),
-        "fields": ["-created"],
+    "is_published": {
+        "facet": facets.is_published,
+        "ui": {
+            "field": "is_published",
+        },
+    },
+    "file_type": {
+        "facet": facets.filetype,
+        "ui": {
+            "field": "files.types",
+        },
     },
 }
 
+MARC21_SORT_OPTIONS = {
+    "bestmatch": dict(
+        title=_("Best match"),
+        fields=["_score"],  # search defaults to desc on `_score` field
+    ),
+    "newest": dict(
+        title=_("Newest"),
+        fields=["-created"],
+    ),
+    "oldest": dict(
+        title=_("Oldest"),
+        fields=["created"],
+    ),
+    "version": dict(
+        title=_("Version"),
+        fields=["-versions.index"],
+    ),
+    "updated-desc": dict(
+        title=_("Recently updated"),
+        fields=["-updated"],
+    ),
+    "updated-asc": dict(
+        title=_("Least recently updated"),
+        fields=["updated"],
+    ),
+}
+
 MARC21_SEARCH = {
-    "sort": ["bestmatch", "newest"],
+    "facets": ["access_status", "file_type"],
+    "sort": [
+        "bestmatch",
+        "newest",
+        "oldest",
+        "version",
+    ],
 }
 """Record search configuration."""
 

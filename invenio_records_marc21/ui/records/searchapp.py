@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2022 Graz University of Technology.
+# This file is part of Invenio.
 #
-# invenio-records-lom is free software; you can redistribute it and/or modify it
-# under the terms of the MIT License; see LICENSE file for more details.
-
+# Copyright (C) 2023 Graz University of Technology.
+#
+# Invenio-Records-Marc21 is free software; you can redistribute it and/or
+# modify it under the terms of the MIT License; see LICENSE file for more
+# details.
 
 """Configuration helper for React-SearchKit."""
 
@@ -15,7 +17,7 @@ from invenio_search_ui.searchconfig import search_app_config
 
 
 def search_app_context():
-    """Search app context processor."""
+    """Marc21 Search app context processor."""
     return {
         "search_app_marc21_config": partial(
             search_app_config,
@@ -24,5 +26,6 @@ def search_app_context():
             current_app.config["MARC21_SORT_OPTIONS"],
             "/api/marc21",
             {"Accept": "application/vnd.inveniomarc21.v1+json"},
-        )
+            app_id="Marc21Records.Search",  # unique id to distinguish amongst search-apps
+        ),
     }

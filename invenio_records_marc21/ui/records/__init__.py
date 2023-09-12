@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -25,6 +25,7 @@ from .records import (
     record_file_download,
     record_file_preview,
 )
+from .searchapp import search_app_context
 
 
 #
@@ -59,8 +60,13 @@ def init_records_views(blueprint, app):
         PermissionDeniedError, record_permission_denied_error
     )
 
+    # Register template filters
     blueprint.add_app_template_filter(pid_url)
     blueprint.add_app_template_filter(sanitize_title)
     blueprint.add_app_template_filter(personal_name)
     blueprint.add_app_template_filter(physical_description)
+
+    # Register context processor
+    blueprint.app_context_processor(search_app_context)
+
     return blueprint
