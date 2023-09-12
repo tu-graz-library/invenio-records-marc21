@@ -6,7 +6,8 @@
   under the terms of the MIT License; see LICENSE file for more details.
 #}
 
-{%- from "invenio_records_marc21/records/macros/detail.html" import show_personal_name, show_thesis_information, show_title, show_physical_description, show_description, show_creation_date, show_language %}
+{%- from "invenio_records_marc21/landing_page/macros/detail.html" import show_personal_name, show_thesis_information,
+show_title, show_physical_description, show_description, show_creation_date, show_language %}
 
 {% set details = marcrecord %}
 <h4 class="ui header">{{ _('Details')}}</h4>
