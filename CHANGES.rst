@@ -8,6 +8,16 @@
 Changes
 =======
 
+Version v0.15.0 (release 2023-09-12)
+
+- fix: create_record dangling draft
+- modification: gitignore
+- modification: translations update
+- modification: templates structured
+- modification: add comments
+- modifications: marc21 service permissions
+
+
 Version v0.14.2 (release 2023-06-16)
 
 - fix: namespace handling was wrong
