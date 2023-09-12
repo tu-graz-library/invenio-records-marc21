@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -17,12 +17,11 @@ from invenio_drafts_resources.services.records.config import (
     RecordServiceConfig,
     SearchDraftsOptions,
     SearchOptions,
+    SearchVersionsOptions,
     is_draft,
     is_record,
 )
-from invenio_rdm_records.records.systemfields.access.field.record import (
-    AccessStatusEnum,
-)
+from invenio_rdm_records.services import facets as rdm_facets
 from invenio_rdm_records.services.components import AccessComponent
 from invenio_rdm_records.services.config import has_doi, is_record_and_has_doi
 from invenio_records_resources.services import (
@@ -32,41 +31,26 @@ from invenio_records_resources.services import (
 )
 from invenio_records_resources.services.base.config import (
     ConfiguratorMixin,
+    FromConfigSearchOptions,
     SearchOptionsMixin,
 )
 from invenio_records_resources.services.base.links import Link
 from invenio_records_resources.services.files.links import FileLink
-from invenio_records_resources.services.records.facets import TermsFacet
 from invenio_records_resources.services.records.links import RecordLink
 
 from ..records import Marc21Draft, Marc21Parent, Marc21Record
+from . import facets
 from .components import MetadataComponent, PIDComponent, PIDsComponent
 from .customizations import FromConfigPIDsProviders, FromConfigRequiredPIDs
 from .permissions import Marc21RecordPermissionPolicy
 from .schemas import Marc21ParentSchema, Marc21RecordSchema
-
-access_right_facet = TermsFacet(
-    field="access.record",
-    label=_("Access status"),
-    value_labels={
-        AccessStatusEnum.OPEN.value: _("Public"),
-        AccessStatusEnum.EMBARGOED.value: _("Embargoed"),
-        AccessStatusEnum.RESTRICTED.value: _("Restricted"),
-    },
-)
-
-is_published_facet = TermsFacet(
-    field="is_published",
-    label=_("State"),
-    value_labels={"true": _("Published"), "false": _("Unpublished")},
-)
 
 
 class Marc21SearchOptions(SearchOptions, SearchOptionsMixin):
     """Search options for record search."""
 
     facets = {
-        "access_right": access_right_facet,
+        "access_status": rdm_facets.access_status,
     }
 
 
@@ -74,9 +58,13 @@ class Marc21SearchDraftsOptions(SearchDraftsOptions, SearchOptionsMixin):
     """Search options for drafts search."""
 
     facets = {
-        "access_right": access_right_facet,
-        "is_published": is_published_facet,
+        "access_status": rdm_facets.access_status,
+        "is_published": facets.is_published,
     }
+
+
+class Marc21SearchVersionsOptions(SearchVersionsOptions, SearchOptionsMixin):
+    """Search options for record versioning search."""
 
 
 class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
@@ -95,6 +83,26 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
 
     # TODO: ussing from invenio-permissions
     permission_policy_cls = Marc21RecordPermissionPolicy
+
+    # Search
+    search = FromConfigSearchOptions(
+        "MARC21_SEARCH",
+        "MARC21_SORT_OPTIONS",
+        "MARC21_FACETS",
+        search_option_cls=Marc21SearchOptions,
+    )
+    search_drafts = FromConfigSearchOptions(
+        "MARC21_SEARCH",
+        "MARC21_SORT_OPTIONS",
+        "MARC21_FACETS",
+        search_option_cls=Marc21SearchDraftsOptions,
+    )
+    search_versions = FromConfigSearchOptions(
+        "MARC21_SEARCH_VERSIONING",
+        "MARC21_SORT_OPTIONS",
+        "MARC21_FACETS",
+        search_option_cls=Marc21SearchVersionsOptions,
+    )
 
     links_search = pagination_links("{+api}/marc21{?args*}")
 
