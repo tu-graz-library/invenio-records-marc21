@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2022 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -72,8 +72,6 @@ class Marc21XMLMixin:
             rec.append(E.leader(leader))
 
         fields = data.get("fields", {})
-
-        # items = iteritems(fields)
 
         for key, value in fields.items():
             # Control fields
