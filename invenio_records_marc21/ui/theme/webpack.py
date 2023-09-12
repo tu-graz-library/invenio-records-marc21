@@ -21,8 +21,9 @@ theme = WebpackThemeBundle(
             entry={
                 "invenio-records-marc21-theme": "./less/invenio_records_marc21/theme.less",
                 "invenio-records-marc21-deposit": "./js/invenio_records_marc21/deposit/index.js",
-                "invenio-records-marc21-search": "./js/invenio_records_marc21/search/index.js",
                 "invenio-records-marc21-landing-page": "./js/invenio_records_marc21/landing_page/index.js",
+                "invenio-records-marc21-search": "./js/invenio_records_marc21/search/index.js",
+                "invenio-records-marc21-user-dashboard": "./js/invenio_records_marc21/user_dashboard/index.js",
             },
             dependencies={
                 "@babel/runtime": "^7.9.0",

@@ -8,8 +8,8 @@
 
 import React, { useState } from "react";
 import { truncate, get } from "lodash";
-import { Button, Card, Item, Label } from "semantic-ui-react";
-import { EditButton } from "../components/EditButton";
+import { Button, Item, Label } from "semantic-ui-react";
+import { EditButton } from "@js/invenio_records_marc21/components/EditButton";
 import { i18next } from "@translations/invenio_records_marc21/i18next";
 
 export const Marc21RecordResultsListItem = ({ result, index }) => {
@@ -24,8 +24,16 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
 
   const description = get(result, "ui.metadata.description", "No description");
   const subjects = get(result, "ui.metadata.subjects", []);
+
+  const resource_type = get(result, "ui.metadata.resource_type", "");
   const creators = get(result, "ui.metadata.authors", []);
   const titles = get(result, "ui.metadata.titles", ["No titles"]);
+
+  const copyright = get(result, "ui.metadata.copyright", []);
+  let published_at = null;
+  if (copyright.length > 0) {
+    published_at = get(copyright[0], "subfields.c", null);
+  }
 
   const viewLink = `/marc21/${result.id}`;
 
@@ -42,12 +50,18 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
         <Item.Extra>
           <div>
             <Label size="tiny" color="blue">
-              {publicationDate} {version ? `(${version})` : null}
+              {published_at ? `${published_at}` : publicationDate}
+              {version ? `(${version})` : null}
             </Label>
             <Label size="tiny" className={`access-status ${access_id}`}>
               {access_icon && <i className={`icon ${access_icon}`}></i>}
               {access_status}
             </Label>
+            {resource_type && (
+              <Label size="tiny" color="blue">
+                {resource_type}
+              </Label>
+            )}
             <EditButton recid={result.id} onError={handleError} />
             <Button
               basic
@@ -56,6 +70,7 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
               floated="right"
               icon="eye"
               content={i18next.t("View")}
+              href={viewLink}
             />
           </div>
         </Item.Extra>
@@ -91,24 +106,5 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
         </Item.Extra>
       </Item.Content>
     </Item>
-  );
-};
-
-export const Marc21RecordResultsGridItem = ({ result, index }) => {
-  const metadata = get(result, ["ui", "metadata", "json"], []);
-  const description = get(
-    metadata,
-    ["summary", "0", "summary"],
-    "No description"
-  );
-  return (
-    <Card fluid key={index} href={`/marc21/${result.pid}`}>
-      <Card.Content>
-        <Card.Header>{result.metadata.json.title_statement.title}</Card.Header>
-        <Card.Description>
-          {truncate(description, { length: 200 })}
-        </Card.Description>
-      </Card.Content>
-    </Card>
   );
 };
