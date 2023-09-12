@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: invenio-records-marc21 0.2.1\n"
 "Report-Msgid-Bugs-To: info@tugraz.at\n"
-"POT-Creation-Date: 2023-09-14 07:46+0000\n"
+"POT-Creation-Date: 2023-09-20 07:37+0000\n"
 "PO-Revision-Date: 2021-11-11 11:14+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -19,17 +19,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: invenio_records_marc21/config.py:33
+#: invenio_records_marc21/config.py:55
 msgid "Best match"
 msgstr ""
 
-#: invenio_records_marc21/config.py:37
+#: invenio_records_marc21/config.py:59
 msgid "Newest"
 msgstr ""
 
-#: invenio_records_marc21/config.py:121 invenio_records_marc21/config.py:128
-#: invenio_records_marc21/config.py:143 invenio_records_marc21/config.py:151
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:25
+#: invenio_records_marc21/config.py:63
+msgid "Oldest"
+msgstr ""
+
+#: invenio_records_marc21/config.py:67
+msgid "Version"
+msgstr ""
+
+#: invenio_records_marc21/config.py:71
+msgid "Recently updated"
+msgstr ""
+
+#: invenio_records_marc21/config.py:75
+msgid "Least recently updated"
+msgstr ""
+
+#: invenio_records_marc21/config.py:165 invenio_records_marc21/config.py:172
+#: invenio_records_marc21/config.py:187 invenio_records_marc21/config.py:195
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:24
 #: tests/conftest.py:438 tests/conftest.py:445
 msgid "DOI"
 msgstr ""
@@ -53,34 +69,21 @@ msgstr ""
 msgid "User has not the permissions."
 msgstr ""
 
-#: invenio_records_marc21/services/config.py:50
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:46
-msgid "Access status"
+#: invenio_records_marc21/services/facets.py:19
+msgid "Status"
 msgstr ""
 
-#: invenio_records_marc21/services/config.py:52
-msgid "Public"
-msgstr ""
-
-#: invenio_records_marc21/services/config.py:53
-msgid "Embargoed"
-msgstr ""
-
-#: invenio_records_marc21/services/config.py:54
-msgid "Restricted"
-msgstr ""
-
-#: invenio_records_marc21/services/config.py:60
-msgid "State"
-msgstr ""
-
-#: invenio_records_marc21/services/config.py:61
+#: invenio_records_marc21/services/facets.py:20
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:46
 msgid "Published"
 msgstr ""
 
-#: invenio_records_marc21/services/config.py:61
+#: invenio_records_marc21/services/facets.py:20
 msgid "Unpublished"
+msgstr ""
+
+#: invenio_records_marc21/services/facets.py:26
+msgid "File type"
 msgstr ""
 
 #: invenio_records_marc21/services/schemas/__init__.py:34
@@ -88,7 +91,6 @@ msgid "Invalid persistent identifier scheme."
 msgstr ""
 
 #: invenio_records_marc21/templates/invenio_records_marc21/index.html:25
-#: invenio_records_marc21/templates/invenio_records_marc21/user_dashboard/uploads.html:30
 msgid "Type and press enter to search"
 msgstr ""
 
@@ -97,7 +99,6 @@ msgid "New version"
 msgstr ""
 
 #: invenio_records_marc21/templates/invenio_records_marc21/deposit/index.html:14
-#: invenio_records_marc21/templates/invenio_records_marc21/user_dashboard/uploads.html:40
 msgid "New upload"
 msgstr ""
 
@@ -124,6 +125,10 @@ msgstr ""
 
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:42
 msgid "Resource type"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:46
+msgid "Access status"
 msgstr ""
 
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/tombstone.html:11
@@ -213,11 +218,11 @@ msgstr ""
 msgid "Type/Extent/Format"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:16
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:15
 msgid "Get the DOI badge!"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:22
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:21
 msgid "DOI Badge"
 msgstr ""
 
@@ -271,7 +276,7 @@ msgstr ""
 msgid "Curator"
 msgstr ""
 
-#: invenio_records_marc21/ui/theme/__init__.py:42
+#: invenio_records_marc21/ui/theme/__init__.py:41
 msgid "Marc21"
 msgstr ""
 
@@ -353,5 +358,17 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Most downloaded"
+#~ msgstr ""
+
+#~ msgid "Public"
+#~ msgstr ""
+
+#~ msgid "Embargoed"
+#~ msgstr ""
+
+#~ msgid "Restricted"
+#~ msgstr ""
+
+#~ msgid "State"
 #~ msgstr ""
 

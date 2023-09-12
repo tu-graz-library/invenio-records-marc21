@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2023-03-01T07:24:22.903Z\n"
-"PO-Revision-Date: 2023-03-01T07:24:22.903Z\n"
+"POT-Creation-Date: 2023-09-12T06:42:08.319Z\n"
+"PO-Revision-Date: 2023-09-12T06:42:08.319Z\n"
 "Language: en\n"
 
 msgid "Files"
@@ -32,3 +32,29 @@ msgstr "Templates"
 
 msgid "Only published versions are displayed."
 msgstr "Only published versions are displayed."
+
+msgid "Manage"
+msgstr "Manage"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Preview"
+msgstr "Preview"
+
+msgid "{{count}} results found"
+msgid_plural "{{count}} results found"
+msgstr[0] "{{count}} results found"
+msgstr[1] "{{count}} results found"
+
+msgid "Sort by"
+msgstr "Sort by"
+
+msgid "Filter results"
+msgstr "Filter results"
+
+msgid "Search in marc21..."
+msgstr "Search in marc21..."
+
+msgid "New upload"
+msgstr "New upload"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: invenio-records-marc21 0.2.1\n"
 "Report-Msgid-Bugs-To: info@tugraz.at\n"
-"POT-Creation-Date: 2023-09-14 07:46+0000\n"
+"POT-Creation-Date: 2023-09-20 07:37+0000\n"
 "PO-Revision-Date: 2023-09-14 09:03+0200\n"
 "Last-Translator: \n"
 "Language: de\n"
@@ -19,17 +19,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: invenio_records_marc21/config.py:33
+#: invenio_records_marc21/config.py:55
 msgid "Best match"
 msgstr "Höchste Übereinstimmung"
 
-#: invenio_records_marc21/config.py:37
+#: invenio_records_marc21/config.py:59
 msgid "Newest"
 msgstr "Neuester"
 
-#: invenio_records_marc21/config.py:121 invenio_records_marc21/config.py:128
-#: invenio_records_marc21/config.py:143 invenio_records_marc21/config.py:151
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:25
+#: invenio_records_marc21/config.py:63
+msgid "Oldest"
+msgstr ""
+
+#: invenio_records_marc21/config.py:67
+#, fuzzy
+msgid "Version"
+msgstr "Neue Version"
+
+#: invenio_records_marc21/config.py:71
+msgid "Recently updated"
+msgstr ""
+
+#: invenio_records_marc21/config.py:75
+msgid "Least recently updated"
+msgstr ""
+
+#: invenio_records_marc21/config.py:165 invenio_records_marc21/config.py:172
+#: invenio_records_marc21/config.py:187 invenio_records_marc21/config.py:195
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:24
 #: tests/conftest.py:438 tests/conftest.py:445
 msgid "DOI"
 msgstr "DOI"
@@ -53,42 +70,29 @@ msgstr ""
 msgid "User has not the permissions."
 msgstr "Benutzer hat nicht die erforderliche Berechtigung."
 
-#: invenio_records_marc21/services/config.py:50
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:46
-msgid "Access status"
-msgstr "Zugriffsstatus"
-
-#: invenio_records_marc21/services/config.py:52
-msgid "Public"
-msgstr "Öffentlich"
-
-#: invenio_records_marc21/services/config.py:53
-msgid "Embargoed"
-msgstr "Gesperrt"
-
-#: invenio_records_marc21/services/config.py:54
-msgid "Restricted"
-msgstr "Eingeschränkt"
-
-#: invenio_records_marc21/services/config.py:60
-msgid "State"
+#: invenio_records_marc21/services/facets.py:19
+#, fuzzy
+msgid "Status"
 msgstr "Status"
 
-#: invenio_records_marc21/services/config.py:61
+#: invenio_records_marc21/services/facets.py:20
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:46
 msgid "Published"
 msgstr "Veröffentlicht"
 
-#: invenio_records_marc21/services/config.py:61
+#: invenio_records_marc21/services/facets.py:20
 msgid "Unpublished"
 msgstr "Unveröffentlicht"
+
+#: invenio_records_marc21/services/facets.py:26
+msgid "File type"
+msgstr ""
 
 #: invenio_records_marc21/services/schemas/__init__.py:34
 msgid "Invalid persistent identifier scheme."
 msgstr "Ungültiges Schema für permanente Kennung."
 
 #: invenio_records_marc21/templates/invenio_records_marc21/index.html:25
-#: invenio_records_marc21/templates/invenio_records_marc21/user_dashboard/uploads.html:30
 msgid "Type and press enter to search"
 msgstr "Begriff eingeben und 'Enter' drücken"
 
@@ -97,7 +101,6 @@ msgid "New version"
 msgstr "Neue Version"
 
 #: invenio_records_marc21/templates/invenio_records_marc21/deposit/index.html:14
-#: invenio_records_marc21/templates/invenio_records_marc21/user_dashboard/uploads.html:40
 msgid "New upload"
 msgstr "Neuer upload"
 
@@ -125,6 +128,10 @@ msgstr "Veröffentlicht im"
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:42
 msgid "Resource type"
 msgstr "Ressource-Typ"
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:46
+msgid "Access status"
+msgstr "Zugriffsstatus"
 
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/tombstone.html:11
 msgid "Tombstone"
@@ -213,11 +220,11 @@ msgstr "Titel"
 msgid "Type/Extent/Format"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:16
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:15
 msgid "Get the DOI badge!"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:22
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:21
 msgid "DOI Badge"
 msgstr ""
 
@@ -273,7 +280,7 @@ msgstr "ErstellerInnen"
 msgid "Curator"
 msgstr "Kurator"
 
-#: invenio_records_marc21/ui/theme/__init__.py:42
+#: invenio_records_marc21/ui/theme/__init__.py:41
 msgid "Marc21"
 msgstr "Marc21"
 
@@ -305,4 +312,13 @@ msgstr "'Datei' muss entweder 'Öffentlich' oder 'Eingeschränkt' sein."
 
 #~ msgid "Most downloaded"
 #~ msgstr "Herunterladen"
+
+#~ msgid "Public"
+#~ msgstr "Öffentlich"
+
+#~ msgid "Embargoed"
+#~ msgstr "Gesperrt"
+
+#~ msgid "Restricted"
+#~ msgstr "Eingeschränkt"
 
