@@ -158,6 +158,7 @@ class MetadataField(Field):
             "description": self.get_description(fields),
             "notes": fields.get_values("500"),
             "resource_type": self.get_resource_type(fields),
+            "published": self.get_published_month(fields),
         }
 
     def get_authors(self, fields):
@@ -176,6 +177,11 @@ class MetadataField(Field):
         """Get title."""
         titles = fields.get_values("245", subfield_notation="a")
         return [re.sub(r"[<>]", "", title) for title in titles]
+
+    def get_published_month(self, fields):
+        """Get published month."""
+        values = fields.get_values("264", subfield_notation="c")
+        return "".join(values)
 
     def get_description(self, fields):
         """Get descriptions."""

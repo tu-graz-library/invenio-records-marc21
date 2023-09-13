@@ -31,7 +31,9 @@ details.
           <div class="two column row">
             <div class="left floated left aligned column">
               <div class="twelve wide column">
-                <span class="ui" title="{{_('Creation date')}}">{{ record.ui.created }}</span>
+                <span class="ui" title="{{_('Published date')}}">
+                  {{ _("Published in") }} {{ metadata.published }}
+                </span>
                 {%- if record.ui.version %}
                 <span class="label text-muted"> | Version {{ record.ui.version }}</span>
                 {% endif %}
