@@ -8,13 +8,13 @@
 
 <div class="top-bottom-padded" id="marc21-landing-page-record-title">
   <h1 class="wrap-overflowing-text">
-    {% for title in marcrecord.get('titles') %}
+    {% for title in metadata.get('titles') %}
     {{title}}
     {% endfor %}
   </h1>
 
   <div style="margin: 14px 0 21px 0;">
-  {% for author in marcrecord.get("authors") %}
+  {% for author in metadata.get("authors") %}
   <span>{{author.get("a") | join(", ")}}</span>
   {% endfor %}
   </div>

@@ -7,85 +7,79 @@
 #}
 
 {% macro show_sanitized_detail(title, value) %}
-<div class="ui relaxed grid">
-  <div class="two column row">
-    <div class="four wide column">
-      <p><b>{{ title | sanitize_html()| safe}}</b></p>
-    </div>
-    <div class="twelve wide column">
-      {{ value | sanitize_html()| safe }}
-    </div>
-  </div>
-</div>
+<dt class="ui tiny header">{{ title | sanitize_html()| safe}}</dt>
+<dd>{{ value | sanitize_html()| safe }}</dd>
 {%- endmacro %}
 
 {% macro show_detail(title, value, type="str") %}
-<div class="ui relaxed grid">
-  <div class="two column row">
-    <div class="four wide column">
-      <p><b>{{ _(title) if title }}</b></p>
-    </div>
-    <div class="twelve wide column">
-      {% if type == "authors" %}
-        {% for author in authors %}
-        <span>{author.get("a")}</span>
-        {% endfor %}
-      {% elif value is iterable and (value is not string and value is not mapping) %}
-        {%- set value = value|join(', ') %}
-      {% elif type == "link" %}
-        <a href={{value}}>{{ value }}</a>
-      {%else %}
-        {{ value }}
-      {% endif %}
-    </div>
-  </div>
+<div class="item">
+  <span style="font-weight: bolder;">{{ title }}:</span>
+  <span>
+    {% if type == "authors" %}
+      {% for author in value %}
+        <span>{{ author.get("a") | join(', ')}}</span>
+      {% endfor %}
+    {% elif value is iterable and (value is not string and value is not mapping) %}
+      <span>{{ value | join(', ') }}</span>
+    {% elif type == "link" %}
+      <a href={{value}}>{{ value }}</a>
+    {%else %}
+      <span>{{ value }}</span>
+    {% endif %}
+  </span>
 </div>
 {%- endmacro %}
 
-{% macro show_personal_name(details) %}
+{% macro show_personal_name(metadata) %}
   {% set key = _("Name") %}
-  {% set value = details.authors %}
-  {{ show_detail(key, value, authors) }}
+  {% set value = metadata.authors %}
+  {{ show_detail(key, value, "authors") }}
 {%- endmacro %}
 
-{% macro show_description(details) %}
+{% macro show_description(metadata) %}
   {% set key = _("Description") %}
-  {% set value = details.general_note.general_note %}
+  {% set value = metadata.general_note.general_note %}
   {{ show_detail(key, value) }}
 {%- endmacro %}
 
-{% macro show_creation_date(details) %}
-  {% set key = _("Creation Date") %}
-  {% set value = details.createdDate %}
+{% macro show_published(metadata) %}
+  {% set key = _("Published") %}
+  {% set value = metadata.published %}
   {{ show_detail(key, value) }}
 {%- endmacro %}
 
-{% macro show_language(details) %}
+{% macro show_language(metadata) %}
   {% set key = _("Language") %}
-  {% set value = details.language_codes %}
+  {% set value = metadata.languages %}
   {{ show_detail(key, value) }}
 {%- endmacro %}
 
-{% macro show_thesis_information(details) %}
+{% macro show_resource_type(metadata) %}
+  {% set key = _("Resource Type") %}
+  {% set value = metadata.resource_type %}
+  {{ show_detail(key, value) }}
+{%- endmacro %}
+
+{% macro show_thesis_information(metadata) %}
   {% set key = _("Thesis Information") %}
-  {% set value = details.notes %}
+  {% set value = metadata.notes %}
   {{ show_detail(key, value) }}
 {%- endmacro %}
 
-{% macro show_title(details) %}
+{% macro show_title(metadata) %}
   {% set key = _("Title") %}
-  {% set value = details.titles %}
+  {% set value = metadata.titles %}
   {{ show_detail(key, value) }}
 
   {#
   {% set key = _("Stmt. of Responsibility") %}
-  {% set value = details.title_statement.statement_of_responsibility %}
+  {% set value = metadata.title_statement.statement_of_responsibility %}
   {{ show_detail(key, value) }}
   #}
 {% endmacro %}
 
-{% macro show_physical_description(details) %}
+{% macro show_physical_description(metadata) %}
   {% set key = _("Type/Extent/Format") %}
-  {% set value = details.descriptions %}
+  {% set value = metadata.descriptions %}
   {{ show_detail(key, value) }}
 {% endmacro %}

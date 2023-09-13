@@ -124,7 +124,7 @@ def record_file_preview(
     pid_type="recid",
     file_metadata=None,
     is_preview=False,
-    **kwargs
+    **kwargs,
 ):
     """Render a preview of the specified file."""
     file_previewer = file_metadata.data.get("previewer")

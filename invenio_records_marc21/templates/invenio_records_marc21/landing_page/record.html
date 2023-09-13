@@ -13,9 +13,7 @@ details.
 
 {%- from "invenio_records_marc21/landing_page/macros/detail.html" import record_detail %}
 
-{%- set metadata = record.metadata %}
-
-{%- set marcrecord = record.ui.metadata %}
+{%- set metadata = record.ui.metadata %}
 
 {%- block page_body %}
 
@@ -40,8 +38,8 @@ details.
               </div>
             </div>
             <div class="right floated right aligned column">
-              {% if record.ui.metadata.resource_type %}
-              <span class="ui label small neutral" title="{{ _('Resource type') }}">{{ record.ui.metadata.resource_type
+              {% if metadata.resource_type %}
+              <span class="ui label small neutral" title="{{ _('Resource type') }}">{{ metadata.resource_type
                 }}</span>
               {% endif %}
               <span class="ui label small access-status {{ record.ui.access_status.id }}"
@@ -76,13 +74,6 @@ details.
         <hr class="thin-line">
         {%- include "invenio_records_marc21/landing_page/helpers/files.html" %}
         {%- endblock record_files -%}
-
-        {#
-        {%- block record_details -%}
-        <div class="top-padded"></div>
-        {%- include "invenio_records_marc21/landing_page/helpers/details.html" %}
-        {%- endblock record_details -%}
-        #}
 
         {%- block record_footer -%}
         {%- include "invenio_records_marc21/landing_page/helpers/footer.html" %}

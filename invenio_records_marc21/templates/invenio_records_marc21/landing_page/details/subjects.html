@@ -7,7 +7,7 @@
 #}
 
 
-{% set subjects = marcrecord.get('subject_added_entry_corporate_name') %}
+{% set subjects = metadata.get('subject_added_entry_corporate_name') %}
 {% if subjects %}
 <span class="label">{{_('Subjects')}}</span>
 <div class="top-bottom-padded">

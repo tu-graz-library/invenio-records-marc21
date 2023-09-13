@@ -1,31 +1,11 @@
 {# -*- coding: utf-8 -*-
 
-Copyright (C) 2021 Graz University of Technology.
+  Copyright (C) 2021-2023 Graz University of Technology.
 
-Invenio-Records-Marc21 is free software; you can redistribute it and/or modify
-it under the terms of the MIT License; see LICENSE file for more details.
+  Invenio-Records-Marc21 is free software; you can redistribute it and/or modify
+  it under the terms of the MIT License; see LICENSE file for more details.
 #}
-<div class="four wide column">
-  <div style="text-align: center">
-    {#
-    <div class="ui segment">
-      <dt><b>{{ _('Versions')}}</b></dt>
-      <hr class="thin-line" />
-      <dd class="versions">
-        <div id="recordVersions" data-record='{{ record | tojson }}' data-preview='{{ is_preview | tojson }}'></div>
-      </dd>
-    </div>
-    #}
-    <div class="ui segment">
-      <h4 class="ui header">{{ _('Export')}}</h4>
-      <hr class="thin-line" />
-      <div class="top-bottom-padded">
-        {%- for fmt, val in config.get("MARC21_RECORD_EXPORTERS",{}).items() -%}
-        {%- set name = val.get("name", fmt) -%}
-        {%- set export_url = url_for('invenio_records_marc21.record_export', pid_value=record.id, export_format=fmt) -%}
-        <a class="export-format" href="{{ export_url }}">{{ name }}</a><br />
-        {%- endfor -%}
-      </div>
-    </div>
-  </div>
-</div>
+<aside class="sixteen wide tablet five wide computer column sidebar">
+  {% include "invenio_records_marc21/landing_page/helpers/details.html" %}
+  {% include "invenio_records_marc21/landing_page/helpers/export.html" %}
+</aside>

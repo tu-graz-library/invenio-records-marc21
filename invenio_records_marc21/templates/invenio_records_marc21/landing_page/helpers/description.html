@@ -7,7 +7,7 @@
 #}
 
 
-{% set description = marcrecord.get('description') %}
+{% set description = metadata.get('description') %}
 {% if description %}
 <h2 class="ui header">{{_('Description')}}</h2>
 <div class="top-bottom-padded" style="margin-bottom: 30px;">
