@@ -99,27 +99,17 @@ def record_export(
     if exporter is None:
         abort(404)
 
-    options = current_app.config.get(
-        "MARC21_RECORD_EXPORTER_OPTIONS",
-        {
-            "indent": 2,
-            "sort_keys": True,
-        },
+    serializer = obj_or_import_string(exporter["serializer"])(
+        **exporter.get("params", {})
     )
-
-    serializer = obj_or_import_string(exporter["serializer"])(options=options)
     exported_record = serializer.serialize_object(record.to_dict())
-
-    return render_template(
-        "invenio_records_marc21/landing_page/export.html",
-        pid_value=pid_value,
-        export_format=exporter.get("name", export_format),
-        exported_record=exported_record,
-        record=Marc21UIJSONSerializer().dump_obj(record.to_dict()),
-        permissions=record.has_permissions_to(["update_draft"]),
-        is_preview=is_preview,
-        is_draft=record._record.is_draft,
-    )
+    contentType = exporter.get("content-type", export_format)
+    filename = exporter.get("filename", export_format).format(id=pid_value)
+    headers = {
+        "Content-Type": contentType,
+        "Content-Disposition": f"attachment; filename={filename}",
+    }
+    return (exported_record, 200, headers)
 
 
 # NOTE:

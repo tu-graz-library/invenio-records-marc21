@@ -55,12 +55,14 @@ MARC21_RECORD_EXPORTERS = {
         "serializer": (
             "invenio_records_marc21.resources.serializers:" "Marc21JSONSerializer"
         ),
+        "filename": "{id}.json",
     },
     "marcxml": {
         "name": "MARCXML",
         "serializer": (
             "invenio_records_marc21.resources.serializers:" "Marc21XMLSerializer"
         ),
+        "filename": "{id}.xml",
     },
 }
 """Marc21 Record export serializers."""

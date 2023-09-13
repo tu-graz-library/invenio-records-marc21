@@ -12,9 +12,11 @@ import ReactDOM from "react-dom";
 
 import { RecordManagement } from "./Marc21RecordManagement";
 import { RecordVersionsList } from "./Marc21RecordVersionsList";
+import { ExportDropdown } from "@js/invenio_app_rdm/landing_page/ExportDropdown";
 
 const recordManagementAppDiv = document.getElementById("recordManagement");
 const recordVersionsAppDiv = document.getElementById("recordVersions");
+const recordExportDownloadDiv = document.getElementById("recordExportDownload");
 
 if (recordManagementAppDiv) {
   ReactDOM.render(
@@ -33,6 +35,15 @@ if (recordVersionsAppDiv) {
       isPreview={JSON.parse(recordVersionsAppDiv.dataset.preview)}
     />,
     recordVersionsAppDiv
+  );
+}
+
+if (recordExportDownloadDiv) {
+  ReactDOM.render(
+    <ExportDropdown
+      formats={JSON.parse(recordExportDownloadDiv.dataset.formats)}
+    />,
+    recordExportDownloadDiv
   );
 }
 
