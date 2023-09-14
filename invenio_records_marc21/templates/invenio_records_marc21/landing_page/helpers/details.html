@@ -12,7 +12,10 @@
 <section class="ui segment rdm-sidebar">
   <h2 class="ui small header">{{ _('Details')}}</h2>
   <div class="ui list">
-    {{ show_doi(record.pids.get('doi', {}).get('identifier'), record) }}
+    {%- set doi = record.pids.get('doi', {}).get('identifier') %}
+    {% if doi %}
+      {{ show_doi(doi, record) }}
+    {% endif %}
     {{ show_personal_name(metadata) }}
     {{ show_title(metadata) }}
     {#
