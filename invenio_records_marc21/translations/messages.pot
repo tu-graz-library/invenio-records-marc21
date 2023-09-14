@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: invenio-records-marc21 0.15.0\n"
 "Report-Msgid-Bugs-To: info@tugraz.at\n"
-"POT-Creation-Date: 2023-09-14 08:59+0200\n"
+"POT-Creation-Date: 2023-09-14 07:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -108,6 +108,11 @@ msgstr ""
 msgid "Back to details"
 msgstr ""
 
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/export.html:53
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/footer.html:25
+msgid "Jump up"
+msgstr ""
+
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:32
 msgid "Published date"
 msgstr ""
@@ -171,7 +176,7 @@ msgid "Reason"
 msgstr ""
 
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/footer.html:14
-msgid "Upload infromation"
+msgid "Upload information"
 msgstr ""
 
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/footer.html:18
