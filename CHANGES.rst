@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.16.1 (release 2023-09-14)
+
+- fix: doi modal
+
+
 Version v0.16.0 (release 2023-09-14)
 
 - landing_page: conditional wrap show doi
