@@ -8,6 +8,18 @@
 Changes
 =======
 
+Version v0.16.0 (release 2023-09-14)
+
+- landing_page: conditional wrap show doi
+- modification: translations
+- translation: update
+- refactoring: variable naming
+- landing_page: increase space above title
+- landing-page: change created at to published
+- landing_page: use improved export
+- bugfix: import landing page
+
+
 Version v0.15.0 (release 2023-09-12)
 
 - fix: create_record dangling draft
