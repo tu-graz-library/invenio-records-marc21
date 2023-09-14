@@ -67,3 +67,7 @@ $("#jump-btn").on("click", function (event) {
 $(".panel-heading").click(function () {
   $("i", this).toggleClass("down right");
 });
+
+$("#record-doi-badge").on("click", function () {
+  $("#doi-modal").modal("show");
+});
