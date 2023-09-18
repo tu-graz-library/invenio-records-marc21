@@ -5,7 +5,7 @@
 # Copyright (C) 2020-2021 CERN.
 # Copyright (C) 2020 Northwestern University.
 # Copyright (C) 2021 TU Wien.
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -36,13 +36,13 @@ class Marc21RecordResource(RecordResource):
     config_name = "MARC21_RECORDS_RECORD_CONFIG"
     default_config = config.Marc21RecordResourceConfig
 
-    def p(self, route):
-        """Prefix a route with the URL prefix."""
-        return f"{self.config.url_prefix}{route}"
-
     def create_url_rules(self):
         """Create the URL rules for the record resource."""
         routes = self.config.routes
+        
+        def s(route):
+            """Suffix a route with the URL prefix."""
+            return f"{route}{self.config.url_prefix}"
 
         def p(route):
             """Prefix a route with the URL prefix."""
@@ -62,6 +62,8 @@ class Marc21RecordResource(RecordResource):
             route("PUT", p(routes["item-draft"]), self.update_draft),
             route("DELETE", p(routes["item-draft"]), self.delete_draft),
             route("POST", p(routes["item-publish"]), self.publish),
+            # User Dashboard routes
+            route("GET", s(routes["user-prefix"]), self.search_user_records),
         ]
 
         if self.service.draft_files:

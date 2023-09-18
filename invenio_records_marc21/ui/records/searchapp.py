@@ -28,4 +28,13 @@ def search_app_context():
             {"Accept": "application/vnd.inveniomarc21.v1+json"},
             app_id="Marc21Records.Search",  # unique id to distinguish amongst search-apps
         ),
+        "search_app_marc21_user_uploads_config":  partial(
+            search_app_config,
+            "MARC21_SEARCH_DRAFTS",
+            current_app.config["MARC21_FACETS"],
+            current_app.config["MARC21_SORT_OPTIONS"],
+            "/api/user/marc21",
+            {"Accept": "application/vnd.inveniomarc21.v1+json"},
+            app_id="Marc21Records.Search",  # unique id to distinguish amongst search-apps
+        ),
     }

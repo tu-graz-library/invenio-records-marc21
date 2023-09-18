@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2023 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -39,6 +39,7 @@ record_ui_routes = {
     "item-draft": "/<pid_value>/draft",
     "item-publish": "/<pid_value>/draft/actions/publish",
     "item-files-import": "/<pid_value>/draft/actions/files-import",
+    "user-prefix": "/user",
 }
 
 

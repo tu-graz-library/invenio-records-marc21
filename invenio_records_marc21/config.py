@@ -77,6 +77,17 @@ MARC21_SORT_OPTIONS = {
     ),
 }
 
+MARC21_SEARCH_DRAFTS = {
+    "facets": ["access_status", "is_published", "file_type"],
+    "sort": [
+        "bestmatch",
+        "newest",
+        "oldest",
+        "version",
+    ],
+}
+"""User records search configuration (i.e. list of uploads)."""
+
 MARC21_SEARCH = {
     "facets": ["access_status", "file_type"],
     "sort": [
