@@ -27,7 +27,10 @@ import {
   Marc21RecordResultsListItem,
 } from "@js/invenio_records_marc21/search/components";
 import { i18next } from "@translations/invenio_records_marc21/i18next";
-import { DashboardSearchLayoutHOC } from "@js/invenio_app_rdm/user_dashboard/base";
+import {
+  DashboardSearchLayoutHOC,
+  DashboardResultView,
+} from "@js/invenio_app_rdm/user_dashboard/base";
 
 const ContribSearchAppFacetsWithConfig = parametrize(ContribSearchAppFacets, {
   toogle: true,
@@ -55,6 +58,7 @@ const initSearchApp = createSearchAppInit({
   "SearchApp.facets": ContribSearchAppFacetsWithConfig,
   "SearchApp.searchbarContainer": RDMRecordSearchBarContainer,
   "SearchApp.layout": Marc21SearchLayout,
+  "SearchApp.results": DashboardResultView,
   "SearchFilters.ToggleComponent": RDMToggleComponent,
   "Error.element": RDMErrorComponent,
   "Count.element": RDMCountComponent,
