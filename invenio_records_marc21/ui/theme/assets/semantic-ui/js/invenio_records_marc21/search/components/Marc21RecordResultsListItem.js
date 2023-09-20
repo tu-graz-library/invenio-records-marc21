@@ -18,8 +18,8 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
   const createdDate = get(result, "ui.created", "No creation date found");
   const publicationDate = get(result, "ui.updated", "No update date found");
 
-  const access_id = get(result, "ui.access_status.id", "public");
-  const access_status = get(result, "ui.access_status.title", "Public");
+  const access_id = get(result, "ui.access_status.id", "open");
+  const access_status = get(result, "ui.access_status.title_l10n", "Open");
   const access_icon = get(result, "ui.access_status.icon", "unlock");
 
   const description = get(result, "ui.metadata.description", "No description");
@@ -99,7 +99,7 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
           {createdDate && (
             <div>
               <small>
-                Uploaded on <span>{createdDate}</span>
+                {i18next.t("Uploaded on")} <span>{createdDate}</span>
               </small>
             </div>
           )}
