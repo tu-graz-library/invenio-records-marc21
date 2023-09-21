@@ -39,7 +39,7 @@ class Marc21RecordResource(RecordResource):
     def create_url_rules(self):
         """Create the URL rules for the record resource."""
         routes = self.config.routes
-        
+
         def s(route):
             """Suffix a route with the URL prefix."""
             return f"{route}{self.config.url_prefix}"
