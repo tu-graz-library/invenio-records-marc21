@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2023-09-12T06:42:08.319Z\n"
-"PO-Revision-Date: 2023-09-12T06:42:08.319Z\n"
+"POT-Creation-Date: 2023-09-20T09:00:10.659Z\n"
+"PO-Revision-Date: 2023-09-20T09:00:10.659Z\n"
 "Language: en\n"
 
 msgid "Files"
@@ -42,19 +42,11 @@ msgstr "Version"
 msgid "Preview"
 msgstr "Preview"
 
-msgid "{{count}} results found"
-msgid_plural "{{count}} results found"
-msgstr[0] "{{count}} results found"
-msgstr[1] "{{count}} results found"
-
-msgid "Sort by"
-msgstr "Sort by"
-
-msgid "Filter results"
-msgstr "Filter results"
-
 msgid "Search in marc21..."
 msgstr "Search in marc21..."
 
 msgid "New upload"
 msgstr "New upload"
+
+msgid "Uploaded on"
+msgstr "Uploaded on"

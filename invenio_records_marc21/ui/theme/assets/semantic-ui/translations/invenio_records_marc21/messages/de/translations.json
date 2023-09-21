@@ -10,10 +10,7 @@
   "Manage": "Verwalten",
   "Version": "Version",
   "Preview": "Vorschau",
-  "{{count}} results found": "",
-  "{{count}} results found_plural": "",
-  "Sort by": "Sortieren nach",
-  "Filter results": "Ergebnisse filtern",
   "Search in marc21...": "Suche in Publikationen...",
-  "New upload": "Neuer Eintrag"
+  "New upload": "Neuer Eintrag",
+  "Uploaded on": "Hochgeladen am"
 }
