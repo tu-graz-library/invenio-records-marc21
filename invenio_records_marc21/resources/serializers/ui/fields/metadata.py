@@ -9,12 +9,16 @@
 # details.
 
 """Metadata field for marc21 records."""
+
 import re
 from contextlib import suppress
 from dataclasses import dataclass
 from typing import Dict, List
 
+from flask_babelex import gettext as _
 from marshmallow.fields import Field
+
+from .....records.fields.resourcetype import ResourceTypeEnum
 
 
 class Marc21Controlfield:
@@ -215,8 +219,14 @@ class MetadataField(Field):
     def get_resource_type(self, fields):
         """Get resource type."""
         resource_type = fields.get_values("970", "2", "_", subfield_notation="d")
+        resource_types = {
+            ResourceTypeEnum.HSMASTER.value: _("Masterthesis"),
+            ResourceTypeEnum.HSDISS.value: _("Dissertation"),
+        }
 
-        if resource_type:
-            return resource_type[0]
+        if not resource_type:
+            return ""
+        if resource_type[0] in resource_types.keys():
+            return resource_types.get(resource_type[0])
 
-        return ""
+        return resource_type[0]
