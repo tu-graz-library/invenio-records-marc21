@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: invenio-records-marc21 0.2.1\n"
 "Report-Msgid-Bugs-To: info@tugraz.at\n"
-"POT-Creation-Date: 2023-09-20 07:37+0000\n"
+"POT-Creation-Date: 2023-09-27 08:05+0200\n"
 "PO-Revision-Date: 2021-11-11 11:14+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -43,8 +43,8 @@ msgstr ""
 msgid "Least recently updated"
 msgstr ""
 
-#: invenio_records_marc21/config.py:165 invenio_records_marc21/config.py:172
-#: invenio_records_marc21/config.py:187 invenio_records_marc21/config.py:195
+#: invenio_records_marc21/config.py:176 invenio_records_marc21/config.py:183
+#: invenio_records_marc21/config.py:198 invenio_records_marc21/config.py:206
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:24
 #: tests/conftest.py:438 tests/conftest.py:445
 msgid "DOI"
@@ -67,6 +67,14 @@ msgstr ""
 
 #: invenio_records_marc21/errors.py:56
 msgid "User has not the permissions."
+msgstr ""
+
+#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:224
+msgid "Masterthesis"
+msgstr ""
+
+#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:225
+msgid "Dissertation"
 msgstr ""
 
 #: invenio_records_marc21/services/facets.py:19
@@ -287,88 +295,4 @@ msgstr ""
 #: tests/services/schemas/access/test_record.py:57
 msgid "'files' must be either 'public' or 'restricted'"
 msgstr ""
-
-#~ msgid "Desciption"
-#~ msgstr ""
-
-#~ msgid "Publisher"
-#~ msgstr ""
-
-#~ msgid "Publication date"
-#~ msgstr ""
-
-#~ msgid "Dissertation"
-#~ msgstr ""
-
-#~ msgid "Location and Access"
-#~ msgstr ""
-
-#~ msgid "Metadata"
-#~ msgstr ""
-
-#~ msgid "Place of publication"
-#~ msgstr ""
-
-#~ msgid "Publication Date"
-#~ msgstr ""
-
-#~ msgid "Function"
-#~ msgstr ""
-
-#~ msgid "Dissertation Type"
-#~ msgstr ""
-
-#~ msgid "Institution"
-#~ msgstr ""
-
-#~ msgid "Year of degree"
-#~ msgstr ""
-
-#~ msgid "Link"
-#~ msgstr ""
-
-#~ msgid "Note"
-#~ msgstr ""
-
-#~ msgid "Materials"
-#~ msgstr ""
-
-#~ msgid "Control number"
-#~ msgstr ""
-
-#~ msgid "Type"
-#~ msgstr ""
-
-#~ msgid "Sequence"
-#~ msgstr ""
-
-#~ msgid "Oldest"
-#~ msgstr ""
-
-#~ msgid "Version"
-#~ msgstr ""
-
-#~ msgid "Recently updated"
-#~ msgstr ""
-
-#~ msgid "Least recently updated"
-#~ msgstr ""
-
-#~ msgid "Most viewed"
-#~ msgstr ""
-
-#~ msgid "Most downloaded"
-#~ msgstr ""
-
-#~ msgid "Public"
-#~ msgstr ""
-
-#~ msgid "Embargoed"
-#~ msgstr ""
-
-#~ msgid "Restricted"
-#~ msgstr ""
-
-#~ msgid "State"
-#~ msgstr ""
 

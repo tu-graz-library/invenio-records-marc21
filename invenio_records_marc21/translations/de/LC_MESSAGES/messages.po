@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: invenio-records-marc21 0.2.1\n"
 "Report-Msgid-Bugs-To: info@tugraz.at\n"
-"POT-Creation-Date: 2023-09-20 07:37+0000\n"
+"POT-Creation-Date: 2023-09-27 08:05+0200\n"
 "PO-Revision-Date: 2023-09-14 09:03+0200\n"
 "Last-Translator: \n"
 "Language: de\n"
@@ -29,23 +29,23 @@ msgstr "Neuester"
 
 #: invenio_records_marc21/config.py:63
 msgid "Oldest"
-msgstr ""
+msgstr "Ältester"
 
 #: invenio_records_marc21/config.py:67
 #, fuzzy
 msgid "Version"
-msgstr "Neue Version"
+msgstr "Version"
 
 #: invenio_records_marc21/config.py:71
 msgid "Recently updated"
-msgstr ""
+msgstr "Kürzlich aktualisier"
 
 #: invenio_records_marc21/config.py:75
 msgid "Least recently updated"
-msgstr ""
+msgstr "Am wenigsten aktuell"
 
-#: invenio_records_marc21/config.py:165 invenio_records_marc21/config.py:172
-#: invenio_records_marc21/config.py:187 invenio_records_marc21/config.py:195
+#: invenio_records_marc21/config.py:176 invenio_records_marc21/config.py:183
+#: invenio_records_marc21/config.py:198 invenio_records_marc21/config.py:206
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:24
 #: tests/conftest.py:438 tests/conftest.py:445
 msgid "DOI"
@@ -70,6 +70,15 @@ msgstr ""
 msgid "User has not the permissions."
 msgstr "Benutzer hat nicht die erforderliche Berechtigung."
 
+#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:224
+msgid "Masterthesis"
+msgstr "Masterarbeit"
+
+#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:225
+#, fuzzy
+msgid "Dissertation"
+msgstr "Dissertation"
+
 #: invenio_records_marc21/services/facets.py:19
 #, fuzzy
 msgid "Status"
@@ -86,7 +95,7 @@ msgstr "Unveröffentlicht"
 
 #: invenio_records_marc21/services/facets.py:26
 msgid "File type"
-msgstr ""
+msgstr "Datei-Typ"
 
 #: invenio_records_marc21/services/schemas/__init__.py:34
 msgid "Invalid persistent identifier scheme."
@@ -292,33 +301,5 @@ msgstr "'Eintrag' muss entweder 'Öffentlich' oder 'Eingeschränkt' sein."
 msgid "'files' must be either 'public' or 'restricted'"
 msgstr "'Datei' muss entweder 'Öffentlich' oder 'Eingeschränkt' sein."
 
-#~ msgid "Creation date"
-#~ msgstr "Erstellungsdatum"
 
-#~ msgid "Creation Date"
-#~ msgstr "Erstellungsdatum"
-
-#~ msgid "Oldest"
-#~ msgstr "Ältester"
-
-#~ msgid "Version"
-#~ msgstr "Version"
-
-#~ msgid "Recently updated"
-#~ msgstr "Kürzlich aktualisier"
-
-#~ msgid "Least recently updated"
-#~ msgstr "Am wenigsten aktuell"
-
-#~ msgid "Most downloaded"
-#~ msgstr "Herunterladen"
-
-#~ msgid "Public"
-#~ msgstr "Öffentlich"
-
-#~ msgid "Embargoed"
-#~ msgstr "Gesperrt"
-
-#~ msgid "Restricted"
-#~ msgstr "Eingeschränkt"
 
