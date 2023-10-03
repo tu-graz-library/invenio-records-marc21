@@ -29,10 +29,14 @@ const ContribSearchAppFacetsWithConfig = parametrize(ContribSearchAppFacets, {
   toogle: true,
 });
 
+export const Marc21EmptyResults = parametrize(RDMEmptyResults, {
+  searchPath: "/marc21/search",
+});
+
 const initSearchApp = createSearchAppInit({
   "BucketAggregation.element": ContribBucketAggregationElement,
   "BucketAggregationValues.element": ContribBucketAggregationValuesElement,
-  "EmptyResults.element": RDMEmptyResults,
+  "EmptyResults.element": Marc21EmptyResults,
   "ResultsGrid.item": Marc21RecordResultsGridItem,
   "ResultsList.item": Marc21RecordResultsListItem,
   "SearchApp.facets": ContribSearchAppFacetsWithConfig,

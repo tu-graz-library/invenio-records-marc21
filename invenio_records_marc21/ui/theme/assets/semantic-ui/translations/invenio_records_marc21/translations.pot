@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2023-09-20T09:00:10.659Z\n"
-"PO-Revision-Date: 2023-09-20T09:00:10.659Z\n"
+"POT-Creation-Date: 2023-10-03T05:26:24.349Z\n"
+"PO-Revision-Date: 2023-10-03T05:26:24.349Z\n"
 "Language: en\n"
 
 msgid "Files"
@@ -50,3 +50,6 @@ msgstr "New upload"
 
 msgid "Uploaded on"
 msgstr "Uploaded on"
+
+msgid "Make your first upload!"
+msgstr "Make your first upload!"

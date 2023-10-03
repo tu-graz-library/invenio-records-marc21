@@ -9,13 +9,12 @@
 import React from "react";
 import { parametrize } from "react-overridable";
 import { createSearchAppInit } from "@js/invenio_search_ui";
-import { Button } from "semantic-ui-react";
+import { Button, Divider, Header, Segment } from "semantic-ui-react";
 import {
   RDMRecordSearchBarContainer,
   RDMToggleComponent,
   RDMCountComponent,
   RDMErrorComponent,
-  RDMEmptyResults,
 } from "@js/invenio_app_rdm/search/components";
 import {
   ContribSearchAppFacets,
@@ -49,10 +48,34 @@ export const Marc21SearchLayout = DashboardSearchLayoutHOC({
   ),
 });
 
+export const Marc21EmptyResults = (props) => {
+  return (
+    <Segment.Group>
+      <Segment placeholder textAlign="center" padded="very">
+        <Header as="h1" align="center">
+          <Header.Content>
+            <Header.Subheader>
+              {i18next.t("Make your first upload!")}
+            </Header.Subheader>
+          </Header.Content>
+        </Header>
+        <Divider hidden />
+        <Button
+          positive
+          icon="upload"
+          floated="right"
+          href="/marc21/uploads/new"
+          content={i18next.t("New upload")}
+        />
+      </Segment>
+    </Segment.Group>
+  );
+};
+
 const initSearchApp = createSearchAppInit({
   "BucketAggregation.element": ContribBucketAggregationElement,
   "BucketAggregationValues.element": ContribBucketAggregationValuesElement,
-  "EmptyResults.element": RDMEmptyResults,
+  "EmptyResults.element": Marc21EmptyResults,
   "ResultsGrid.item": Marc21RecordResultsGridItem,
   "ResultsList.item": Marc21RecordResultsListItem,
   "SearchApp.facets": ContribSearchAppFacetsWithConfig,
