@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: invenio-records-marc21 0.16.1\n"
 "Report-Msgid-Bugs-To: info@tugraz.at\n"
-"POT-Creation-Date: 2023-09-27 08:05+0200\n"
+"POT-Creation-Date: 2023-10-03 08:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,32 +18,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: invenio_records_marc21/config.py:55
+#: invenio_records_marc21/config.py:49
 msgid "Best match"
 msgstr ""
 
-#: invenio_records_marc21/config.py:59
+#: invenio_records_marc21/config.py:53
 msgid "Newest"
 msgstr ""
 
-#: invenio_records_marc21/config.py:63
+#: invenio_records_marc21/config.py:57
 msgid "Oldest"
 msgstr ""
 
-#: invenio_records_marc21/config.py:67
+#: invenio_records_marc21/config.py:61
 msgid "Version"
 msgstr ""
 
-#: invenio_records_marc21/config.py:71
+#: invenio_records_marc21/config.py:65
 msgid "Recently updated"
 msgstr ""
 
-#: invenio_records_marc21/config.py:75
+#: invenio_records_marc21/config.py:69
 msgid "Least recently updated"
 msgstr ""
 
-#: invenio_records_marc21/config.py:176 invenio_records_marc21/config.py:183
-#: invenio_records_marc21/config.py:198 invenio_records_marc21/config.py:206
+#: invenio_records_marc21/config.py:170 invenio_records_marc21/config.py:177
+#: invenio_records_marc21/config.py:192 invenio_records_marc21/config.py:200
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:24
 #: tests/conftest.py:438 tests/conftest.py:445
 msgid "DOI"
@@ -68,11 +68,11 @@ msgstr ""
 msgid "User has not the permissions."
 msgstr ""
 
-#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:224
+#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:223
 msgid "Masterthesis"
 msgstr ""
 
-#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:225
+#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:224
 msgid "Dissertation"
 msgstr ""
 

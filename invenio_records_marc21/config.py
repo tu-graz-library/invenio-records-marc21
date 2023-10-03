@@ -14,6 +14,7 @@ from __future__ import absolute_import, print_function
 
 import idutils
 from celery.schedules import crontab
+from flask_babelex import lazy_gettext as _
 from flask_principal import RoleNeed
 from invenio_rdm_records.services import facets as rdm_facets
 from invenio_rdm_records.services.pids import providers
@@ -21,13 +22,6 @@ from invenio_rdm_records.services.pids import providers
 from .resources.serializers.datacite import Marc21DataCite43JSONSerializer
 from .services import facets
 from .services.pids import Marc21DataCitePIDProvider
-
-
-# TODO: use invenio-i18n gettext functionality
-def _(x):
-    """Identity function for string extraction."""
-    return x
-
 
 MARC21_FACETS = {
     "access_status": {
