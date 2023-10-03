@@ -12,6 +12,7 @@ import { createSearchAppInit } from "@js/invenio_search_ui";
 import { Button, Divider, Header, Segment } from "semantic-ui-react";
 import {
   RDMRecordSearchBarContainer,
+  RDMRecordSearchBarElement,
   RDMToggleComponent,
   RDMCountComponent,
   RDMErrorComponent,
@@ -36,7 +37,7 @@ const ContribSearchAppFacetsWithConfig = parametrize(ContribSearchAppFacets, {
 });
 
 export const Marc21SearchLayout = DashboardSearchLayoutHOC({
-  searchBarPlaceholder: i18next.t("Search in marc21..."),
+  searchBarPlaceholder: i18next.t("Search in publications..."),
   newBtn: (
     <Button
       positive
@@ -80,6 +81,7 @@ const initSearchApp = createSearchAppInit({
   "ResultsList.item": Marc21RecordResultsListItem,
   "SearchApp.facets": ContribSearchAppFacetsWithConfig,
   "SearchApp.searchbarContainer": RDMRecordSearchBarContainer,
+  "SearchBar.element": RDMRecordSearchBarElement,
   "SearchApp.layout": Marc21SearchLayout,
   "SearchApp.results": DashboardResultView,
   "SearchFilters.ToggleComponent": RDMToggleComponent,

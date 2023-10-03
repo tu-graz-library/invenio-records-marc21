@@ -36,9 +36,9 @@ def init_theme_views(blueprint, app):
     def register_marc21_dashboard():
         """Register entry for marc21 in the `flask_menu`-submenu "dashboard"."""
         user_dashboard_menu = current_menu.submenu("dashboard")
-        user_dashboard_menu.submenu("Marc21").register(
+        user_dashboard_menu.submenu("Publications").register(
             "invenio_records_marc21.uploads_marc21",
-            text=_("Marc21"),
+            text=_("Publications"),
             order=4,
             visible_when=current_user.is_authenticated,
         )

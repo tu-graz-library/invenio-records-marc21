@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: invenio-records-marc21 0.16.1\n"
 "Report-Msgid-Bugs-To: info@tugraz.at\n"
-"POT-Creation-Date: 2023-10-03 08:34+0200\n"
+"POT-Creation-Date: 2023-10-03 14:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -284,7 +284,7 @@ msgid "Curator"
 msgstr ""
 
 #: invenio_records_marc21/ui/theme/__init__.py:41
-msgid "Marc21"
+msgid "Publications"
 msgstr ""
 
 #: tests/services/schemas/access/test_record.py:45

@@ -42,8 +42,8 @@ msgstr "Version"
 msgid "Preview"
 msgstr "Preview"
 
-msgid "Search in marc21..."
-msgstr "Search in marc21..."
+msgid "Search in publications..."
+msgstr "Search in publications..."
 
 msgid "New upload"
 msgstr "New upload"
