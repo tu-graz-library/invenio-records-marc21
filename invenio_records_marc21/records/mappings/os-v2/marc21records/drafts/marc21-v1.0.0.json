@@ -1,20 +1,253 @@
 {
   "mappings": {
-    "date_detection": false,
-    "numeric_detection": false,
     "dynamic_templates": [
       {
-        "#text": {
-          "match": "#text",
+        "pids": {
+          "path_match": "pids.*",
+          "match_mapping_type": "object",
           "mapping": {
-            "type": "text"
+            "properties": {
+              "identifier": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "ignore_above": 256,
+                    "type": "keyword"
+                  }
+                }
+              },
+              "provider": {
+                "type": "keyword"
+              },
+              "client": {
+                "type": "keyword"
+              }
+            },
+            "type": "object"
+          }
+        }
+      },
+      {
+        "metadata_field": {
+          "path_match": "metadata.fields.*",
+          "match_mapping_type": "object",
+          "mapping": {
+            "index": false,
+            "properties": {
+              "ind2": {
+                "index": false,
+                "type": "keyword",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "ind1": {
+                "index": false,
+                "type": "keyword",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "subfields": {
+                "type": "object",
+                "properties": {
+                  "_": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "0": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "1": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "2": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "3": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "4": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "5": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "6": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "7": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "8": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "9": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "a": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "b": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "c": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "d": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "e": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "f": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "g": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "h": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "i": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "j": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "k": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "l": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "m": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "n": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "o": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "p": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "q": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "r": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "s": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "t": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "u": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "v": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "w": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "x": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "y": {
+                    "type": "text",
+                    "index": false
+                  },
+                  "z": {
+                    "type": "text",
+                    "index": false
+                  }
+                }
+              }
+            },
+            "type": "object"
           }
         }
       }
     ],
+    "date_detection": false,
+    "numeric_detection": false,
     "properties": {
+      "$schema": {
+        "type": "keyword",
+        "index": false
+      },
+      "uuid": {
+        "type": "keyword",
+        "index": false
+      },
       "id": {
         "type": "keyword"
+      },
+      "pid": {
+        "properties": {
+          "obj_type": {
+            "type": "keyword",
+            "index": false
+          },
+          "pid_type": {
+            "type": "keyword",
+            "index": false
+          },
+          "pk": {
+            "type": "long",
+            "index": false
+          },
+          "status": {
+            "type": "keyword",
+            "index": false
+          }
+        }
+      },
+      "pids": {
+        "type": "object",
+        "dynamic": "true"
       },
       "access": {
         "properties": {
@@ -29,11 +262,11 @@
               "active": {
                 "type": "boolean"
               },
-              "until": {
-                "type": "date"
-              },
               "reason": {
                 "type": "text"
+              },
+              "until": {
+                "type": "date"
               }
             }
           },
@@ -44,8 +277,36 @@
       },
       "parent": {
         "properties": {
+          "$schema": {
+            "type": "keyword",
+            "index": false
+          },
+          "uuid": {
+            "type": "keyword",
+            "index": false
+          },
           "id": {
             "type": "keyword"
+          },
+          "pid": {
+            "properties": {
+              "obj_type": {
+                "type": "keyword",
+                "index": false
+              },
+              "pid_type": {
+                "type": "keyword",
+                "index": false
+              },
+              "pk": {
+                "type": "long",
+                "index": false
+              },
+              "status": {
+                "type": "keyword",
+                "index": false
+              }
+            }
           },
           "access": {
             "properties": {
@@ -56,22 +317,6 @@
                   }
                 }
               },
-              "grants": {
-                "properties": {
-                  "subject": {
-                    "type": "keyword"
-                  },
-                  "id": {
-                    "type": "keyword"
-                  },
-                  "level": {
-                    "type": "keyword"
-                  }
-                }
-              },
-              "grant_tokens": {
-                "type": "keyword"
-              },
               "links": {
                 "properties": {
                   "id": {
@@ -80,23 +325,359 @@
                 }
               }
             }
+          },
+          "is_verified": {
+            "type": "boolean"
+          },
+          "permission_flags": {
+            "type": "object",
+            "dynamic": "true"
+          },
+          "pids": {
+            "type": "object",
+            "dynamic": "true"
+          },
+          "created": {
+            "type": "date"
+          },
+          "updated": {
+            "type": "date"
+          },
+          "version_id": {
+            "type": "long"
           }
         }
       },
-      "pids": {
+      "metadata": {
         "properties": {
-          "identifier": {
-            "type": "keyword"
+          "fields": {
+            "properties": {
+              "001": {
+                "type": "keyword"
+              },
+              "005": {
+                "type": "text",
+                "index": false
+              },
+              "007": {
+                "type": "text",
+                "index": false
+              },
+              "008": {
+                "type": "text",
+                "index": false
+              },
+              "009": {
+                "type": "keyword"
+              },
+              "100": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "0": {
+                        "type": "text"
+                      },
+                      "4": {
+                        "type": "text"
+                      },
+                      "6": {
+                        "type": "text"
+                      },
+                      "8": {
+                        "type": "text"
+                      },
+                      "a": {
+                        "type": "text"
+                      },
+                      "b": {
+                        "type": "text"
+                      },
+                      "c": {
+                        "type": "text"
+                      },
+                      "d": {
+                        "type": "text"
+                      },
+                      "e": {
+                        "type": "text"
+                      },
+                      "f": {
+                        "type": "text"
+                      },
+                      "g": {
+                        "type": "text"
+                      },
+                      "j": {
+                        "type": "text"
+                      },
+                      "k": {
+                        "type": "text"
+                      },
+                      "l": {
+                        "type": "text"
+                      },
+                      "n": {
+                        "type": "text"
+                      },
+                      "p": {
+                        "type": "text"
+                      },
+                      "q": {
+                        "type": "text"
+                      },
+                      "t": {
+                        "type": "text"
+                      },
+                      "u": {
+                        "type": "text"
+                      }
+                    }
+                  }
+                }
+              },
+              "245": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "a": {
+                        "type": "text"
+                      },
+                      "b": {
+                        "type": "text"
+                      },
+                      "c": {
+                        "type": "text"
+                      }
+                    }
+                  }
+                }
+              },
+              "264": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "3": {
+                        "type": "text"
+                      },
+                      "6": {
+                        "type": "text"
+                      },
+                      "8": {
+                        "type": "text"
+                      },
+                      "a": {
+                        "type": "text"
+                      },
+                      "b": {
+                        "type": "text"
+                      },
+                      "c": {
+                        "type": "text"
+                      }
+                    }
+                  }
+                }
+              },
+              "700": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "0": {
+                        "type": "text"
+                      },
+                      "3": {
+                        "type": "text"
+                      },
+                      "4": {
+                        "type": "text"
+                      },
+                      "5": {
+                        "type": "text"
+                      },
+                      "6": {
+                        "type": "text"
+                      },
+                      "8": {
+                        "type": "text"
+                      },
+                      "a": {
+                        "type": "text"
+                      },
+                      "b": {
+                        "type": "text"
+                      },
+                      "c": {
+                        "type": "text"
+                      },
+                      "d": {
+                        "type": "text"
+                      },
+                      "e": {
+                        "type": "text"
+                      },
+                      "f": {
+                        "type": "text"
+                      },
+                      "g": {
+                        "type": "text"
+                      },
+                      "h": {
+                        "type": "text"
+                      },
+                      "i": {
+                        "type": "text"
+                      },
+                      "j": {
+                        "type": "text"
+                      },
+                      "k": {
+                        "type": "text"
+                      },
+                      "l": {
+                        "type": "text"
+                      },
+                      "m": {
+                        "type": "text"
+                      },
+                      "n": {
+                        "type": "text"
+                      },
+                      "o": {
+                        "type": "text"
+                      },
+                      "p": {
+                        "type": "text"
+                      },
+                      "q": {
+                        "type": "text"
+                      },
+                      "r": {
+                        "type": "text"
+                      },
+                      "s": {
+                        "type": "text"
+                      },
+                      "t": {
+                        "type": "text"
+                      },
+                      "u": {
+                        "type": "text"
+                      },
+                      "x": {
+                        "type": "text"
+                      }
+                    }
+                  }
+                }
+              },
+              "970": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "a": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "b": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "c": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "d": {
+                        "type": "keyword"
+                      },
+                      "e": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "f": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "g": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "h": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "i": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "j": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "k": {
+                        "type": "text",
+                        "index": false
+                      }
+                    }
+                  }
+                }
+              },
+              "995": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "9": {
+                        "type": "keyword"
+                      },
+                      "a": {
+                        "type": "keyword"
+                      },
+                      "i": {
+                        "type": "keyword"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
-          "scheme": {
-            "type": "keyword"
-          },
-          "client": {
-            "type": "keyword",
-            "index": false
-          },
-          "provider": {
-            "type": "keyword",
+          "leader": {
+            "type": "text",
             "index": false
           }
         }
@@ -112,6 +693,17 @@
       },
       "is_published": {
         "type": "boolean"
+      },
+      "files": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "default_preview": {
+            "type": "keyword"
+          }
+        }
       },
       "versions": {
         "properties": {
