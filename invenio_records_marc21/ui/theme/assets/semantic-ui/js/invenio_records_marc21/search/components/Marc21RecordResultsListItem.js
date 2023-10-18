@@ -12,7 +12,7 @@ import { Button, Item, Label } from "semantic-ui-react";
 import { EditButton } from "@js/invenio_records_marc21/components/EditButton";
 import { i18next } from "@translations/invenio_records_marc21/i18next";
 
-export const Marc21RecordResultsListItem = ({ result, index }) => {
+export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
   const version = get(result, "revision_id", null);
 
   const createdDate = get(result, "ui.created", "No creation date found");
@@ -62,16 +62,20 @@ export const Marc21RecordResultsListItem = ({ result, index }) => {
                 {resource_type}
               </Label>
             )}
-            <EditButton recid={result.id} onError={handleError} />
-            <Button
-              basic
-              compact
-              size="small"
-              floated="right"
-              icon="eye"
-              content={i18next.t("View")}
-              href={viewLink}
-            />
+            {dashboard && (
+              <>
+                <EditButton recid={result.id} onError={handleError} />
+                <Button
+                  basic
+                  compact
+                  size="small"
+                  floated="right"
+                  icon="eye"
+                  content={i18next.t("View")}
+                  href={viewLink}
+                />
+              </>
+            )}
           </div>
         </Item.Extra>
         <Item.Header href={viewLink}>

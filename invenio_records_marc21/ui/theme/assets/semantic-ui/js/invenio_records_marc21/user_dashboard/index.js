@@ -36,6 +36,12 @@ const ContribSearchAppFacetsWithConfig = parametrize(ContribSearchAppFacets, {
   toogle: true,
 });
 
+const Marc21RecordResultsListItemWithConfig = parametrize(
+  Marc21RecordResultsListItem,
+  {
+    dashboard: true, // show view and edit buttons in the result item
+  }
+);
 export const Marc21SearchLayout = DashboardSearchLayoutHOC({
   searchBarPlaceholder: i18next.t("Search in publications..."),
   newBtn: (
@@ -78,7 +84,7 @@ const initSearchApp = createSearchAppInit({
   "BucketAggregationValues.element": ContribBucketAggregationValuesElement,
   "EmptyResults.element": Marc21EmptyResults,
   "ResultsGrid.item": Marc21RecordResultsGridItem,
-  "ResultsList.item": Marc21RecordResultsListItem,
+  "ResultsList.item": Marc21RecordResultsListItemWithConfig,
   "SearchApp.facets": ContribSearchAppFacetsWithConfig,
   "SearchApp.searchbarContainer": RDMRecordSearchBarContainer,
   "SearchBar.element": RDMRecordSearchBarElement,
