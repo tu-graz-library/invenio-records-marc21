@@ -41,7 +41,7 @@ from invenio_records_resources.services.records.links import RecordLink
 
 from ..records import Marc21Draft, Marc21Parent, Marc21Record
 from . import facets
-from .components import MetadataComponent, PIDComponent, PIDsComponent
+from .components import DefaultRecordsComponents
 from .customizations import FromConfigPIDsProviders, FromConfigRequiredPIDs
 from .permissions import Marc21RecordPermissionPolicy
 from .schemas import Marc21ParentSchema, Marc21RecordSchema
@@ -119,13 +119,10 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
 
     links_search_versions = pagination_links("{+api}/marc21/{id}/versions{?args*}")
 
-    components = [
-        MetadataComponent,
-        AccessComponent,
-        DraftFilesComponent,
-        PIDComponent,
-        PIDsComponent,
-    ]
+    components = FromConfig(
+        "MARC21_RECORDS_SERVICE_COMPONENTS",
+        default=DefaultRecordsComponents,
+    )
 
     links_item = {
         "self": ConditionalLink(

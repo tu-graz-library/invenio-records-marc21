@@ -10,12 +10,19 @@
 
 """Marc21 record components."""
 
+from invenio_drafts_resources.services.records.components import DraftFilesComponent
+from invenio_rdm_records.services.components import AccessComponent
+
 from .metadata import MetadataComponent
 from .pid import PIDComponent
 from .pids import PIDsComponent
 
-__all__ = (
-    "PIDComponent",
-    "MetadataComponent",
-    "PIDsComponent",
-)
+DefaultRecordsComponents = [
+    MetadataComponent,
+    AccessComponent,
+    DraftFilesComponent,
+    PIDComponent,
+    PIDsComponent,
+]
+
+__all__ = ("DefaultRecordsComponents",)
