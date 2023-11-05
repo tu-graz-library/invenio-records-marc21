@@ -28,7 +28,7 @@ record_serializer = {
     ),
 }
 
-url_prefix = "/marc21"
+url_prefix = "/publications"
 
 record_ui_routes = {
     "search": "/search",

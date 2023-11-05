@@ -113,11 +113,13 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
         search_option_cls=Marc21SearchVersionsOptions,
     )
 
-    links_search = pagination_links("{+api}/marc21{?args*}")
+    links_search = pagination_links("{+api}/publications{?args*}")
 
-    links_search_drafts = pagination_links("{+api}/marc21/draft{?args*}")
+    links_search_drafts = pagination_links("{+api}/publications/draft{?args*}")
 
-    links_search_versions = pagination_links("{+api}/marc21/{id}/versions{?args*}")
+    links_search_versions = pagination_links(
+        "{+api}/publications/{id}/versions{?args*}"
+    )
 
     components = FromConfig(
         "MARC21_RECORDS_SERVICE_COMPONENTS",
@@ -127,16 +129,16 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     links_item = {
         "self": ConditionalLink(
             cond=is_record,
-            if_=RecordLink("{+api}/marc21/{id}"),
-            else_=RecordLink("{+api}/marc21/{id}/draft"),
+            if_=RecordLink("{+api}/publications/{id}"),
+            else_=RecordLink("{+api}/publications/{id}/draft"),
         ),
         "self_html": ConditionalLink(
             cond=is_record,
-            if_=RecordLink("{+ui}/marc21/{id}"),
-            else_=RecordLink("{+ui}/marc21/uploads/{id}"),
+            if_=RecordLink("{+ui}/publications/{id}"),
+            else_=RecordLink("{+ui}/publications/uploads/{id}"),
         ),
         "self_doi": Link(
-            "{+ui}/marc21/{+pid_doi}",
+            "{+ui}/publications/{+pid_doi}",
             when=is_record_and_has_doi,
             vars=lambda record, vars: vars.update(
                 {
@@ -157,16 +159,16 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
         ),
         "files": ConditionalLink(
             cond=is_record,
-            if_=RecordLink("{+api}/marc21/{id}/files"),
-            else_=RecordLink("{+api}/marc21/{id}/draft/files"),
+            if_=RecordLink("{+api}/publications/{id}/files"),
+            else_=RecordLink("{+api}/publications/{id}/draft/files"),
         ),
-        "latest": RecordLink("{+api}/marc21/{id}/versions/latest"),
-        "latest_html": RecordLink("{+ui}/marc21/{id}/latest"),
-        "draft": RecordLink("{+api}/marc21/{id}/draft", when=is_record),
+        "latest": RecordLink("{+api}/publications/{id}/versions/latest"),
+        "latest_html": RecordLink("{+ui}/publications/{id}/latest"),
+        "draft": RecordLink("{+api}/publications/{id}/draft", when=is_record),
         "publish": RecordLink(
-            "{+api}/marc21/{id}/draft/actions/publish", when=is_draft
+            "{+api}/publications/{id}/draft/actions/publish", when=is_draft
         ),
-        "versions": RecordLink("{+api}/marc21/{id}/versions"),
+        "versions": RecordLink("{+api}/publications/{id}/versions"),
     }
 
     # PIDs providers - set from config in customizations.
@@ -190,12 +192,12 @@ class Marc21RecordFilesServiceConfig(FileServiceConfig, ConfiguratorMixin):
     permission_action_prefix = ""
 
     file_links_list = {
-        "self": RecordLink("{+api}/marc21/{id}/files"),
+        "self": RecordLink("{+api}/publications/{id}/files"),
     }
 
     file_links_item = {
-        "self": FileLink("{+api}/marc21/{id}/files/{key}"),
-        "content": FileLink("{+api}/marc21/{id}/files/{key}/content"),
+        "self": FileLink("{+api}/publications/{id}/files/{key}"),
+        "content": FileLink("{+api}/publications/{id}/files/{key}/content"),
     }
 
 
@@ -210,11 +212,11 @@ class Marc21DraftFilesServiceConfig(FileServiceConfig, ConfiguratorMixin):
     permission_action_prefix = "draft_"
 
     file_links_list = {
-        "self": RecordLink("{+api}/marc21/draft/{id}/files"),
+        "self": RecordLink("{+api}/publications/draft/{id}/files"),
     }
 
     file_links_item = {
-        "self": FileLink("{+api}/marc21/{id}/draft/files/{key}"),
-        "content": FileLink("{+api}/marc21/{id}/draft/files/{key}/content"),
-        "commit": FileLink("{+api}/marc21/{id}/draft/files/{key}/commit"),
+        "self": FileLink("{+api}/publications/{id}/draft/files/{key}"),
+        "content": FileLink("{+api}/publications/{id}/draft/files/{key}/content"),
+        "commit": FileLink("{+api}/publications/{id}/draft/files/{key}/commit"),
     }

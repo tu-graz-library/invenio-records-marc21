@@ -38,7 +38,7 @@ const RecordVersionItem = ({ item, activeVersion }) => {
           <small className="text-muted" style={{ float: "right" }}>
             {item.publication_date}
           </small>
-          <a href={`/marc21/${item.id}`}>
+          <a href={`/publications/${item.id}`}>
             {i18next.t("Version")} {item.version}
           </a>
           {<br />}
@@ -133,7 +133,7 @@ export const RecordVersionsList = (props) => {
       )}
       <Grid.Row centered>
         <a
-          href={`/marc21/search?q=parent.id:${record.parent_id}&sort=version&f=allversions:true`}
+          href={`/publications/search?q=parent.id:${record.parent_id}&sort=version&f=allversions:true`}
           target="_blank"
           className="font-small"
         >

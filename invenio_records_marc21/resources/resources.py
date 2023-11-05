@@ -100,7 +100,7 @@ class Marc21RecordResource(RecordResource):
     def update_draft(self):
         """Update a draft.
 
-        PUT /marc21/:pid_value/draft
+        PUT /publications/:pid_value/draft
         """
         metadata = Marc21Metadata()
         data = resource_requestctx.data

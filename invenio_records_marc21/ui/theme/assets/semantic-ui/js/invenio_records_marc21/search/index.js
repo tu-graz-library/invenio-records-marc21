@@ -30,7 +30,7 @@ const ContribSearchAppFacetsWithConfig = parametrize(ContribSearchAppFacets, {
 });
 
 export const Marc21EmptyResults = parametrize(RDMEmptyResults, {
-  searchPath: "/marc21/search",
+  searchPath: "/publications/search",
 });
 
 const initSearchApp = createSearchAppInit({

@@ -56,7 +56,7 @@ def deposit_config(**kwargs):
         error="",
         schema=schema,
         quota=app_config.get("APP_RDM_DEPOSIT_FORM_QUOTA"),
-        createUrl="/api/marc21",
+        createUrl="/api/publications",
         apiHeaders=app_config.get("MARC21_API_HEADERS"),
         # UploadFilesToolbar  disable file upload
         canHaveMetadataOnlyRecords=True,

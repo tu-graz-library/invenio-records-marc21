@@ -62,7 +62,7 @@ export const Marc21EmptyResults = (props) => {
           positive
           icon="upload"
           floated="right"
-          href="/marc21/uploads/new"
+          href="/publications/uploads/new"
           content={i18next.t("New upload")}
         />
       </Segment>

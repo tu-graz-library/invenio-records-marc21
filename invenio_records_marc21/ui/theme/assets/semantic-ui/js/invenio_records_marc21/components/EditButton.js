@@ -22,8 +22,8 @@ export const EditButton = ({ recid, onError, className, size, fluid }) => {
   const handleClick = async () => {
     setLoading(true);
     try {
-      await http.post(`/api/marc21/${recid}/draft`);
-      window.location = `/marc21/uploads/${recid}`;
+      await http.post(`/api/publications/${recid}/draft`);
+      window.location = `/publications/uploads/${recid}`;
     } catch (error) {
       setLoading(false);
       onError(error.response.data.message);

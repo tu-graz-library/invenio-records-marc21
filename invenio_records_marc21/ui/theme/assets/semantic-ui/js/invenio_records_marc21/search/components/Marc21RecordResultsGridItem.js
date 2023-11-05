@@ -18,7 +18,7 @@ export const Marc21RecordResultsGridItem = ({ result, index }) => {
     "No description"
   );
   return (
-    <Card fluid key={index} href={`/marc21/${result.pid}`}>
+    <Card fluid key={index} href={`/publications/${result.pid}`}>
       <Card.Content>
         <Card.Header>{result.metadata.json.title_statement.title}</Card.Header>
         <Card.Description>

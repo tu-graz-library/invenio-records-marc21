@@ -25,7 +25,7 @@ def create_blueprint(app):
         "invenio_records_marc21",
         __name__,
         template_folder="../templates",
-        url_prefix="/marc21",
+        url_prefix="/publications",
     )
 
     blueprint = init_theme_views(blueprint, app)

@@ -35,7 +35,7 @@ export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
     published_at = get(copyright[0], "subfields.c", null);
   }
 
-  const viewLink = `/marc21/${result.id}`;
+  const viewLink = `/publications/${result.id}`;
 
   const [error, setError] = useState("");
 
