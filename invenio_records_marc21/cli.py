@@ -33,6 +33,8 @@ from invenio_rdm_records.utils import get_or_create_user
 from .errors import log_exceptions
 from .proxies import current_records_marc21
 from .services.record import Marc21Metadata
+from .tasks import create_marc21_record
+from .utils import create_fake_data
 
 
 def get_user_identity(user_id):
@@ -76,10 +78,31 @@ def _load_json(filename):
         return json.load(fp)
 
 
+def create_fake_celery():
+    """Create records for demo purposes in backend."""
+    data = create_fake_data()
+    metadata_access = fake_access_right()
+    data_access = {
+        "files": "public",
+        "record": metadata_access,
+    }
+    if metadata_access == AccessStatusEnum.EMBARGOED.value:
+        embargo = {
+            "embargo": {
+                "until": fake_feature_date(),
+                "active": True,
+                "reason": "Because I can!",
+            }
+        }
+        data_access.update(embargo)
+        data_access["record"] = AccessStatusEnum.RESTRICTED.value
+    data["access"] = data_access
+    create_marc21_record.delay(data, data_access)
+
+
 def create_fake_metadata(identity, filename):
     """Create records for demo purposes."""
-    metadata = Marc21Metadata()
-    metadata.xml = _load_file(filename)
+    data = create_fake_data()
     metadata_access = fake_access_right()
     data_access = {
         "files": "public",
@@ -96,9 +119,12 @@ def create_fake_metadata(identity, filename):
         data_access.update(embargo)
         data_access["record"] = AccessStatusEnum.RESTRICTED.value
 
+    data["access"] = data_access
+
     service = current_records_marc21.records_service
+
     draft = service.create(
-        metadata=metadata,
+        data=data,
         identity=identity,
         access=data_access,
     )
@@ -166,8 +192,7 @@ def rebuild_index():
 @with_appcontext
 @click.option(
     "-u",
-    "--user",
-    "user_email",
+    "--user-email",
     default="user@demo.org",
     show_default=True,
     help="User e-mail of an existing user.",
@@ -181,7 +206,7 @@ def rebuild_index():
     help="Number of records will be created.",
 )
 @click.option(
-    "--file",
+    "--fake-file",
     "-f",
     default="data/fake-metadata.xml",
     show_default=True,
@@ -191,13 +216,22 @@ def rebuild_index():
 @click.option(
     "--metadata-only",
     "-m",
-    default="True",
+    default=False,
     type=bool,
+    is_flag=True,
     help="Provided metadata only in file",
+)
+@click.option(
+    "--backend",
+    "-b",
+    default=False,
+    type=bool,
+    is_flag=True,
+    help="Create in backend for large datasets",
 )
 @with_appcontext
 @log_exceptions
-def demo(user_email, number, file, metadata_only):
+def demo(user_email, number, fake_file, metadata_only, backend):
     """Create number of fake records for demo purposes."""
     click.secho("Creating demo records...", fg="blue")
 
@@ -208,10 +242,12 @@ def demo(user_email, number, file, metadata_only):
         identity = get_user_identity(user.id)
 
     for _ in range(number):
-        if metadata_only:
-            create_fake_metadata(identity, file)
+        if backend:
+            create_fake_celery()
+        elif metadata_only:
+            create_fake_metadata(identity, fake_file)
         else:
-            create_fake_record(identity, file)
+            create_fake_record(identity, fake_file)
 
     click.secho("Created records!", fg="green")
 
