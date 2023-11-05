@@ -208,7 +208,6 @@ def test_get_field(marc21_record, full_metadata):
     ]
 
     for record in marc21_records:
-        print("1")
         assert record.get_value(category="001") == "990004519310204517"
         assert record.get_value(category="264", subf_code="b") == "TU Graz"
         assert record.get_value(category="264", subf_code="x") == ""
