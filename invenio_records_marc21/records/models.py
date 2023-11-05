@@ -19,9 +19,12 @@ from invenio_drafts_resources.records import (
     ParentRecordStateMixin,
 )
 from invenio_files_rest.models import Bucket
+from invenio_rdm_records.records.systemfields.deletion_status import (
+    RecordDeletionStatusEnum,
+)
 from invenio_records.models import RecordMetadataBase
 from invenio_records_resources.records.models import FileRecordModelMixin
-from sqlalchemy_utils.types import UUIDType
+from sqlalchemy_utils.types import ChoiceType, UUIDType
 
 
 class ParentMetadata(db.Model, RecordMetadataBase):
@@ -39,6 +42,13 @@ class RecordMetadata(db.Model, RecordMetadataBase, ParentRecordMixin):
 
     bucket_id = db.Column(UUIDType, db.ForeignKey(Bucket.id))
     bucket = db.relationship(Bucket)
+
+    # The deletion status is stored in the model so that we can use it in SQL queries
+    deletion_status = db.Column(
+        ChoiceType(RecordDeletionStatusEnum, impl=db.String(1)),
+        nullable=False,
+        default=RecordDeletionStatusEnum.PUBLISHED.value,
+    )
 
 
 class DraftMetadata(db.Model, DraftMetadataBase, ParentRecordMixin):

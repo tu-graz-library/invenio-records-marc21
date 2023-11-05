@@ -20,6 +20,7 @@ from invenio_rdm_records.records.systemfields import (
     HasDraftCheckField,
     ParentRecordAccessField,
     RecordAccessField,
+    RecordDeletionStatusField,
 )
 from invenio_records.systemfields import ConstantField, DictField, ModelField
 from invenio_records_resources.records.api import FileRecord as BaseFileRecord
@@ -154,6 +155,8 @@ class Marc21Record(Record):
     status = Marc21Status()
 
     pids = DictField("pids")
+
+    deletion_status = RecordDeletionStatusField()
 
 
 RecordFile.record_cls = Marc21Record
