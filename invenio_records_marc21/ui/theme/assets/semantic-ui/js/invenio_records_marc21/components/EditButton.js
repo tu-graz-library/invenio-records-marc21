@@ -13,8 +13,11 @@ import { http } from "react-invenio-forms";
 import PropTypes from "prop-types";
 import { i18next } from "@translations/invenio_records_marc21/i18next";
 
-export const EditButton = ({ recid, onError }) => {
+export const EditButton = ({ recid, onError, className, size, fluid }) => {
   const [loading, setLoading] = useState(false);
+
+  size = size || "small";
+  fluid = fluid || false;
 
   const handleClick = async () => {
     setLoading(true);
@@ -30,7 +33,9 @@ export const EditButton = ({ recid, onError }) => {
   return (
     <Button
       compact
-      size="small"
+      fluid={fluid}
+      className={className}
+      size={size}
       floated="right"
       onClick={() => handleClick()}
       icon="edit"

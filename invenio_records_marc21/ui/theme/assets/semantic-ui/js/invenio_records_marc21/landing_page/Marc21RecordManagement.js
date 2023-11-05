@@ -33,7 +33,13 @@ export const RecordManagement = (props) => {
           <span>{i18next.t("Manage")}</span>
         </Grid.Row>
         <Grid.Row className="record-management-row">
-          <EditButton recid={recid} onError={handleError} />
+          <EditButton
+            fluid
+            className="warning"
+            size="medium"
+            recid={recid}
+            onError={handleError}
+          />
           <NewVersionButton
             record={record}
             onError={handleError}

@@ -44,15 +44,6 @@ const Marc21RecordResultsListItemWithConfig = parametrize(
 );
 export const Marc21SearchLayout = DashboardSearchLayoutHOC({
   searchBarPlaceholder: i18next.t("Search in publications..."),
-  newBtn: (
-    <Button
-      positive
-      icon="upload"
-      href="/marc21/uploads/new/"
-      content={i18next.t("New upload")}
-      floated="right"
-    />
-  ),
 });
 
 export const Marc21EmptyResults = (props) => {
