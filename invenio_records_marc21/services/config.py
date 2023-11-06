@@ -113,6 +113,14 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
         search_option_cls=Marc21SearchVersionsOptions,
     )
 
+    # Permission policy
+    default_files_enabled = FromConfig("MARC21_DEFAULT_FILES_ENABLED", default=True)
+
+    permission_policy_cls = FromConfig(
+        "MARC21_PERMISSION_POLICY",
+        default=Marc21RecordPermissionPolicy,
+        import_string=True,
+    )
     links_search = pagination_links("{+api}/publications{?args*}")
 
     links_search_drafts = pagination_links("{+api}/publications/draft{?args*}")

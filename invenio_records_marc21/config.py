@@ -221,6 +221,9 @@ MARC21_API_HEADERS = {
 }
 """The api headers for the RDM deposit app."""
 
+MARC21_DEFAULT_FILES_ENABLED = True
+"""Marc21 deposit page files enabled value on new records."""
+
 # Configuration for the DataCiteClient used by the DataCitePIDProvider
 # Configuration may come from RDM records module
 DATACITE_ENABLED = False
