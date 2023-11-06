@@ -50,7 +50,7 @@ class Marc21Parent(BaseParentRecord):
     versions_model_cls = models.VersionsState
     model_cls = models.ParentMetadata
 
-    schema = ConstantField("$schema", "local://marc21/parent-v1.0.0.json")
+    schema = ConstantField("$schema", "local://marc21/parent-v2.0.0.json")
 
     pid = PIDField(
         key="id",
@@ -77,7 +77,7 @@ class Marc21Draft(Draft):
     parent_record_cls = Marc21Parent
 
     index = IndexField(
-        "marc21records-drafts-marc21-v1.0.0", search_alias="marc21records-marc21"
+        "marc21records-drafts-marc21-v2.0.0", search_alias="marc21records-marc21"
     )
 
     parent = ParentField(Marc21Parent, create=True, soft_delete=False, hard_delete=True)
@@ -124,7 +124,7 @@ class Marc21Record(Record):
     parent_record_cls = Marc21Parent
 
     index = IndexField(
-        "marc21records-marc21-marc21-v1.0.0", search_alias="marc21records-marc21"
+        "marc21records-marc21-marc21-v2.0.0", search_alias="marc21records-marc21"
     )
 
     parent = ParentField(Marc21Parent, create=True, soft_delete=False, hard_delete=True)

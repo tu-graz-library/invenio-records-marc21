@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "local://marc21/parent-v2.0.0.json",
+  "title": "Invenio Parent Record Marc21 v2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "JSONSchema declaration.",
+      "type": "string"
+    },
+
+    "id": {
+      "description": "Persistent record identifier (alphanumeric).",
+      "type": "string"
+    },
+    "pid": {
+      "$ref": "local://marc21/definitions-v1.0.0.json#/internal-pid"
+    },
+
+    "pids": {
+      "type": "object",
+      "description": "External persistent identifiers for the parent record including e.g. OAI-PMH identifier, minted DOIs and more. PIDs are registered in the PIDStore.",
+      "additionalProperties": {
+        "$ref": "local://records/definitions-v2.0.0.json#/external-pid"
+      },
+      "propertyNames": {
+        "pattern": "^[a-z_-][a-z0-9_-]*$"
+      },
+      "uniqueItems": true
+    },
+
+    "access": {
+      "type": "object",
+      "description": "Access control and ownership for all versions of a record.",
+      "additionalProperties": false,
+      "properties": {
+        "owned_by": {
+          "description": "Owner of the child records.",
+          "$ref": "local://marc21/definitions-v1.0.0.json#/agent"
+        },
+
+        "grants": {
+          "description": "Access grants for the child records.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["subject", "permission"],
+            "additionalProperties": false,
+            "properties": {
+              "subject": {
+                "type": "object",
+                "required": ["type", "id"],
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              },
+              "permission": {
+                "type": "string"
+              },
+              "origin": {
+                "type": ["string", "null"]
+              }
+            }
+          }
+        },
+        "links": {
+          "description": "Secret links for the child records.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "settings": {
+          "description": "Access settings for the record.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "allow_user_requests": {
+              "description": "Whether or not access requests are enabled for authenticated users.",
+              "type": "boolean"
+            },
+            "allow_guest_requests": {
+              "description": "Whether or not access requests are enabled for unauthenticated guests.",
+              "type": "boolean"
+            },
+            "accept_conditions_text": {
+              "description": "Custom description for access conditions to be displayed rather than the default text.",
+              "type": ["string", "null"]
+            },
+            "secret_link_expiration": {
+              "description": "The default amount of days before secret link expires.",
+              "type": ["number", "null"]
+            }
+          }
+        }
+      }
+    },
+    "permission_flags": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Storage of permission flag fields."
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "local://marc21/marc21-v1.0.0.json",
+  "additionalProperties": false,
+  "title": "Invenio Records Marc21 v1.0.0",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "description": "This record's jsonschema.",
+      "type": "string"
+    },
+    "id": {
+      "description": "Invenio record identifier (integer).",
+      "$ref": "local://marc21/definitions-v1.0.0.json#/identifier"
+    },
+    "pid": {
+      "$ref": "local://marc21/definitions-v1.0.0.json#/internal-pid"
+    },
+    "pids": {
+      "additionalProperties": {
+        "$ref": "local://marc21/definitions-v1.0.0.json#/external-pid"
+      },
+      "description": "Managed persistent identifiers for a record including e.g. OAI-PMH identifier, minted DOIs and more. Managed PIDs are registered in the PIDStore"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Resource metadata.",
+      "additionalProperties": true
+    },
+    "access": {
+      "type": "object",
+      "description": "Record access control and ownership.",
+      "additionalProperties": false,
+      "properties": {
+        "record": {
+          "description": "Record visibility (public or restricted)",
+          "type": "string",
+          "enum": ["public", "restricted"]
+        },
+        "files": {
+          "description": "Files visibility (public or restricted)",
+          "type": "string",
+          "enum": ["public", "restricted"]
+        },
+        "embargo": {
+          "description": "Description of the embargo on the record.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "active": {
+              "description": "Whether or not the embargo is (still) active.",
+              "type": ["boolean", "null"]
+            },
+            "until": {
+              "description": "Embargo date of record (ISO8601 formatted date time in UTC). At this time both metadata and files will be made public.",
+              "type": ["string", "null"],
+              "format": "date"
+            },
+            "reason": {
+              "description": "The reason why the record is under embargo.",
+              "type": ["string", "null"]
+            }
+          }
+        }
+      }
+    },
+    "files": {
+      "$ref": "local://definitions-v2.0.0.json#/files-simple"
+    },
+    "media_files": {
+      "$ref": "local://definitions-v2.0.0.json#/files-simple"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

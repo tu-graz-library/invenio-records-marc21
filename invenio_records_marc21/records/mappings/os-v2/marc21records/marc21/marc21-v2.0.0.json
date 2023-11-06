@@ -1,0 +1,737 @@
+{
+  "mappings": {
+    "dynamic_templates": [
+      {
+        "pids": {
+          "path_match": "pids.*",
+          "match_mapping_type": "object",
+          "mapping": {
+            "properties": {
+              "identifier": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "ignore_above": 256,
+                    "type": "keyword"
+                  }
+                }
+              },
+              "provider": {
+                "type": "keyword"
+              },
+              "client": {
+                "type": "keyword"
+              }
+            },
+            "type": "object"
+          }
+        }
+      },
+      {
+        "parent_pids": {
+          "path_match": "parent.pids.*",
+          "match_mapping_type": "object",
+          "mapping": {
+            "type": "object",
+            "properties": {
+              "identifier": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "provider": {
+                "type": "keyword"
+              },
+              "client": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      {
+        "metadata_field": {
+          "path_match": "metadata.fields.*",
+          "match_mapping_type": "object",
+          "mapping": {
+            "index": false,
+            "type": "object"
+          }
+        }
+      }
+    ],
+    "date_detection": false,
+    "numeric_detection": false,
+    "properties": {
+      "$schema": {
+        "type": "keyword",
+        "index": false
+      },
+      "uuid": {
+        "type": "keyword",
+        "index": false
+      },
+      "id": {
+        "type": "keyword"
+      },
+      "pid": {
+        "properties": {
+          "obj_type": {
+            "type": "keyword",
+            "index": false
+          },
+          "pid_type": {
+            "type": "keyword",
+            "index": false
+          },
+          "pk": {
+            "type": "long",
+            "index": false
+          },
+          "status": {
+            "type": "keyword",
+            "index": false
+          }
+        }
+      },
+      "access": {
+        "properties": {
+          "record": {
+            "type": "keyword"
+          },
+          "files": {
+            "type": "keyword"
+          },
+          "embargo": {
+            "properties": {
+              "active": {
+                "type": "boolean"
+              },
+              "until": {
+                "type": "date"
+              },
+              "reason": {
+                "type": "text"
+              }
+            }
+          },
+          "status": {
+            "type": "keyword"
+          }
+        }
+      },
+      "parent": {
+        "properties": {
+          "$schema": {
+            "type": "keyword",
+            "index": false
+          },
+          "uuid": {
+            "type": "keyword",
+            "index": false
+          },
+          "id": {
+            "type": "keyword"
+          },
+          "pid": {
+            "properties": {
+              "obj_type": {
+                "type": "keyword",
+                "index": false
+              },
+              "pid_type": {
+                "type": "keyword",
+                "index": false
+              },
+              "pk": {
+                "type": "long",
+                "index": false
+              },
+              "status": {
+                "type": "keyword",
+                "index": false
+              }
+            }
+          },
+          "pids": {
+            "type": "object",
+            "dynamic": true
+          },
+          "access": {
+            "properties": {
+              "owned_by": {
+                "properties": {
+                  "user": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "grants": {
+                "properties": {
+                  "subject": {
+                    "properties": {
+                      "type": {
+                        "type": "keyword"
+                      },
+                      "id": {
+                        "type": "keyword"
+                      }
+                    }
+                  },
+                  "permission": {
+                    "type": "keyword"
+                  },
+                  "origin": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "grant_tokens": {
+                "type": "keyword"
+              },
+              "links": {
+                "properties": {
+                  "id": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "settings": {
+                "properties": {
+                  "allow_user_requests": {
+                    "type": "boolean"
+                  },
+                  "allow_guest_requests": {
+                    "type": "boolean"
+                  },
+                  "accept_conditions_text": {
+                    "type": "text"
+                  },
+                  "secret_link_expiration": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "is_verified": {
+            "type": "boolean"
+          },
+          "permission_flags": {
+            "type": "object",
+            "dynamic": true
+          },
+          "created": {
+            "type": "date"
+          },
+          "updated": {
+            "type": "date"
+          },
+          "version_id": {
+            "type": "long"
+          }
+        }
+      },
+      "pids": {
+        "type": "object",
+        "dynamic": true
+      },
+      "has_draft": {
+        "type": "boolean"
+      },
+      "metadata": {
+        "properties": {
+          "fields": {
+            "properties": {
+              "001": {
+                "type": "keyword"
+              },
+              "005": {
+                "type": "text",
+                "index": false
+              },
+              "007": {
+                "type": "text",
+                "index": false
+              },
+              "008": {
+                "type": "text",
+                "index": false
+              },
+              "009": {
+                "type": "keyword"
+              },
+              "100": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "0": {
+                        "type": "text"
+                      },
+                      "4": {
+                        "type": "text"
+                      },
+                      "6": {
+                        "type": "text"
+                      },
+                      "8": {
+                        "type": "text"
+                      },
+                      "a": {
+                        "type": "text"
+                      },
+                      "b": {
+                        "type": "text"
+                      },
+                      "c": {
+                        "type": "text"
+                      },
+                      "d": {
+                        "type": "text"
+                      },
+                      "e": {
+                        "type": "text"
+                      },
+                      "f": {
+                        "type": "text"
+                      },
+                      "g": {
+                        "type": "text"
+                      },
+                      "j": {
+                        "type": "text"
+                      },
+                      "k": {
+                        "type": "text"
+                      },
+                      "l": {
+                        "type": "text"
+                      },
+                      "n": {
+                        "type": "text"
+                      },
+                      "p": {
+                        "type": "text"
+                      },
+                      "q": {
+                        "type": "text"
+                      },
+                      "t": {
+                        "type": "text"
+                      },
+                      "u": {
+                        "type": "text"
+                      }
+                    }
+                  }
+                }
+              },
+              "245": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "a": {
+                        "type": "text"
+                      },
+                      "b": {
+                        "type": "text"
+                      },
+                      "c": {
+                        "type": "text"
+                      }
+                    }
+                  }
+                }
+              },
+              "264": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "3": {
+                        "type": "text"
+                      },
+                      "6": {
+                        "type": "text"
+                      },
+                      "8": {
+                        "type": "text"
+                      },
+                      "a": {
+                        "type": "text"
+                      },
+                      "b": {
+                        "type": "text"
+                      },
+                      "c": {
+                        "type": "text"
+                      }
+                    }
+                  }
+                }
+              },
+              "700": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "0": {
+                        "type": "text"
+                      },
+                      "3": {
+                        "type": "text"
+                      },
+                      "4": {
+                        "type": "text"
+                      },
+                      "5": {
+                        "type": "text"
+                      },
+                      "6": {
+                        "type": "text"
+                      },
+                      "8": {
+                        "type": "text"
+                      },
+                      "a": {
+                        "type": "text"
+                      },
+                      "b": {
+                        "type": "text"
+                      },
+                      "c": {
+                        "type": "text"
+                      },
+                      "d": {
+                        "type": "text"
+                      },
+                      "e": {
+                        "type": "text"
+                      },
+                      "f": {
+                        "type": "text"
+                      },
+                      "g": {
+                        "type": "text"
+                      },
+                      "h": {
+                        "type": "text"
+                      },
+                      "i": {
+                        "type": "text"
+                      },
+                      "j": {
+                        "type": "text"
+                      },
+                      "k": {
+                        "type": "text"
+                      },
+                      "l": {
+                        "type": "text"
+                      },
+                      "m": {
+                        "type": "text"
+                      },
+                      "n": {
+                        "type": "text"
+                      },
+                      "o": {
+                        "type": "text"
+                      },
+                      "p": {
+                        "type": "text"
+                      },
+                      "q": {
+                        "type": "text"
+                      },
+                      "r": {
+                        "type": "text"
+                      },
+                      "s": {
+                        "type": "text"
+                      },
+                      "t": {
+                        "type": "text"
+                      },
+                      "u": {
+                        "type": "text"
+                      },
+                      "x": {
+                        "type": "text"
+                      }
+                    }
+                  }
+                }
+              },
+              "970": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "a": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "b": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "c": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "d": {
+                        "type": "keyword"
+                      },
+                      "e": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "f": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "g": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "h": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "i": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "j": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "k": {
+                        "type": "text",
+                        "index": false
+                      }
+                    }
+                  }
+                }
+              },
+              "995": {
+                "properties": {
+                  "ind1": {
+                    "type": "keyword"
+                  },
+                  "ind2": {
+                    "type": "keyword"
+                  },
+                  "subfields": {
+                    "properties": {
+                      "9": {
+                        "type": "keyword"
+                      },
+                      "a": {
+                        "type": "keyword"
+                      },
+                      "i": {
+                        "type": "keyword"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "leader": {
+            "type": "text",
+            "index": false
+          }
+        }
+      },
+      "created": {
+        "type": "date"
+      },
+      "updated": {
+        "type": "date"
+      },
+      "is_published": {
+        "type": "boolean"
+      },
+      "is_deleted": {
+        "type": "boolean"
+      },
+      "deletion_status": {
+        "type": "keyword"
+      },
+      "files": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "default_preview": {
+            "type": "keyword"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "totalbytes": {
+            "type": "long"
+          },
+          "mimetypes": {
+            "type": "keyword"
+          },
+          "types": {
+            "type": "keyword"
+          },
+          "entries": {
+            "type": "object",
+            "properties": {
+              "uuid": {
+                "enabled": false
+              },
+              "version_id": {
+                "enabled": false
+              },
+              "metadata": {
+                "type": "object",
+                "dynamic": true
+              },
+              "checksum": {
+                "type": "keyword"
+              },
+              "key": {
+                "type": "keyword"
+              },
+              "mimetype": {
+                "type": "keyword"
+              },
+              "size": {
+                "type": "long"
+              },
+              "ext": {
+                "type": "keyword"
+              },
+              "object_version_id": {
+                "enabled": false
+              },
+              "file_id": {
+                "enabled": false
+              }
+            }
+          }
+        }
+      },
+      "media_files": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "default_preview": {
+            "type": "keyword"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "totalbytes": {
+            "type": "long"
+          },
+          "mimetypes": {
+            "type": "keyword"
+          },
+          "types": {
+            "type": "keyword"
+          },
+          "entries": {
+            "type": "object",
+            "properties": {
+              "uuid": {
+                "enabled": false
+              },
+              "version_id": {
+                "enabled": false
+              },
+              "metadata": {
+                "type": "object",
+                "dynamic": true
+              },
+              "checksum": {
+                "type": "keyword"
+              },
+              "key": {
+                "type": "keyword"
+              },
+              "mimetype": {
+                "type": "keyword"
+              },
+              "size": {
+                "type": "long"
+              },
+              "ext": {
+                "type": "keyword"
+              },
+              "object_version_id": {
+                "enabled": false
+              },
+              "file_id": {
+                "enabled": false
+              }
+            }
+          }
+        }
+      },
+      "versions": {
+        "properties": {
+          "index": {
+            "type": "integer"
+          },
+          "is_latest": {
+            "type": "boolean"
+          },
+          "is_latest_draft": {
+            "type": "boolean"
+          },
+          "latest_id": {
+            "type": "keyword"
+          },
+          "latest_index": {
+            "type": "integer"
+          },
+          "next_draft_id": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  }
+}
