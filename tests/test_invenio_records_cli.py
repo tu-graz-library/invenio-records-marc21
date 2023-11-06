@@ -68,8 +68,6 @@ def test_cli_create_demo_record(running_app, cli_runner, adminuser, search_clear
         adminuser.email,
         "-f",
         "../tests/test-record.json",
-        "-m",
-        "False",
         "-n",
         "1",
     ]
@@ -87,7 +85,6 @@ def test_cli_create_demo_metadata(running_app, cli_runner, adminuser, search_cle
         "-f",
         "../tests/test-metadata.xml",
         "-m",
-        "True",
         "-n",
         "1",
     ]

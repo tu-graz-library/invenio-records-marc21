@@ -8,6 +8,8 @@
 # modify it under the terms of the MIT License; see LICENSE file for more
 # details.
 
+"""Marc21 utils module."""
+
 import random
 from random import randint
 

@@ -30,7 +30,6 @@ def system_identity():
 @shared_task(ignore_result=True)
 def create_marc21_record(data, access):
     """Create records for demo purposes."""
-
     service = current_records_marc21.records_service
     draft = service.create(
         data=data,
