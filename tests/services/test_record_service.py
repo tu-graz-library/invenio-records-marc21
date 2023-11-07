@@ -18,7 +18,6 @@ import pytest
 from dateutil import tz
 from invenio_pidstore.errors import PIDDoesNotExistError
 from invenio_pidstore.models import PIDStatus
-from sqlalchemy.orm.exc import NoResultFound
 
 from invenio_records_marc21.proxies import current_records_marc21
 from invenio_records_marc21.services.errors import EmbargoNotLiftedError
@@ -133,7 +132,7 @@ def test_publish_draft(running_app, xml_metadata):
     assert record._record.pid.status == PIDStatus.REGISTERED
 
     # Check draft deleted
-    with pytest.raises(NoResultFound):
+    with pytest.raises(PIDDoesNotExistError):
         draft = service.read_draft(id_=record.id, identity=adminuser_identity)
 
     # Test record exists
