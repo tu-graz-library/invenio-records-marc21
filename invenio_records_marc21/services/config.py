@@ -220,7 +220,7 @@ class Marc21DraftFilesServiceConfig(FileServiceConfig, ConfiguratorMixin):
     permission_action_prefix = "draft_"
 
     file_links_list = {
-        "self": RecordLink("{+api}/publications/draft/{id}/files"),
+        "self": RecordLink("{+api}/publications/{id}/draft/files"),
     }
 
     file_links_item = {
