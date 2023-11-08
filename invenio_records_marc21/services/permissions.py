@@ -65,6 +65,12 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_read = [
         IfRestricted("record", then_=can_view, else_=can_all),
     ]
+    # Used for search filtering of deleted records
+    # cannot be implemented inside can_read - otherwise permission will
+    # kick in before tombstone renders
+    can_read_deleted = can_curate
+    can_read_deleted_files = can_read_deleted
+    can_media_read_deleted_files = can_read_deleted_files
 
     # Record files permissions
     # Allow enabling/disabling files
@@ -107,6 +113,42 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_draft_get_content_files = [
         IfFileIsLocal(then_=can_read_files, else_=[SystemProcess()])
     ]
+
+    #######################
+    # Media files - draft #
+    #######################
+    can_draft_media_create_files = can_curate
+    can_draft_media_read_files = can_curate
+    can_draft_media_set_content_files = [
+        IfFileIsLocal(then_=can_curate, else_=[SystemProcess()])
+    ]
+    can_draft_media_get_content_files = [
+        # preview is same as read_files
+        IfFileIsLocal(then_=can_curate, else_=[SystemProcess()])
+    ]
+    can_draft_media_commit_files = [
+        # review is the same as create_files
+        IfFileIsLocal(then_=can_curate, else_=[SystemProcess()])
+    ]
+    can_draft_media_update_files = can_curate
+    can_draft_media_delete_files = can_curate
+
+    #
+    # Media files - record
+    #
+    can_media_read_files = [
+        IfRestricted("record", then_=can_view, else_=can_all),
+    ]
+    can_media_get_content_files = [
+        # note: even though this is closer to business logic than permissions,
+        # it was simpler and less coupling to implement this as permission check
+        IfFileIsLocal(then_=can_read, else_=[SystemProcess()])
+    ]
+    can_media_create_files = [Disable()]
+    can_media_set_content_files = [Disable()]
+    can_media_commit_files = [Disable()]
+    can_media_update_files = [Disable()]
+    can_media_delete_files = [Disable()]
 
     #
     # PIDs
