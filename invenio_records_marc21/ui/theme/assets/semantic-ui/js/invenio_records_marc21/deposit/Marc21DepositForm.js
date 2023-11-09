@@ -26,7 +26,7 @@ import {
   FormFeedback,
   DeleteButton,
   DepositStatusBox,
-} from "react-invenio-deposit";
+} from "@js/invenio_rdm_records";
 import PropTypes from "prop-types";
 
 export class Marc21DepositForm extends Component {
