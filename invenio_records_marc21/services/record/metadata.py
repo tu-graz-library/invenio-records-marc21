@@ -59,7 +59,7 @@ class JsonToXmlVisitor:
     def visit(self, fields):
         """Default visit method."""
         for category, items in fields.items():
-            if category == "AVA":
+            if category == "AVA" or category == "AVE":
                 self.visit_datafield(category, items)
             elif int(category) < 10:
                 self.visit_controlfield(category, items)
