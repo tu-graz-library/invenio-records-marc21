@@ -141,9 +141,9 @@ export class Marc21MetadataFields extends Field {
           field["subfield"]
         );
       }
-      let ind1 = field["ind1"].replace(" ", "_");
-      let ind2 = field["ind2"].replace(" ", "_");
-      let internal = [field["id"], ind1 + ind2].concat(subfields);
+      const ind1 = field.ind1?.replace(" ", "_");
+      const ind2 = field.ind2?.replace(" ", "_");
+      const internal = [field["id"], ind1 + ind2].concat(subfields);
 
       marc_record.append(internal);
     }
