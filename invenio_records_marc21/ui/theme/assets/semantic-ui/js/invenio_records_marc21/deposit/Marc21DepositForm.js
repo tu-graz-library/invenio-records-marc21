@@ -13,7 +13,7 @@ import {
   Marc21RecordSerializer,
   MetadataFields,
   TemplateField,
-} from "react-records-marc21";
+} from "@js/invenio_records_marc21/components";
 import { AccordionField } from "react-invenio-forms";
 import { Card, Container, Grid, Ref, Sticky } from "semantic-ui-react";
 import {
