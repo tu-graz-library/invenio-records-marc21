@@ -135,15 +135,18 @@ export class Marc21MetadataFields extends Field {
   _serialize_fields(marc_record, fields) {
     let metadata = [];
     for (const field of Object.values(fields)) {
-      let subfields = field["subfield"];
-      if (!this.controlfields.includes(field["id"])) {
-        subfields = Marc21MetadataFields._serialize_subfields(
+      let internal;
+
+      if (this.controlfields.includes(field["id"])) {
+        internal = [field["id"], field["subfield"]];
+      } else {
+        const subfields = Marc21MetadataFields._serialize_subfields(
           field["subfield"]
         );
+        const ind1 = field.ind1?.replace(" ", "_");
+        const ind2 = field.ind2?.replace(" ", "_");
+        internal = [field["id"], ind1 + ind2].concat(subfields);
       }
-      const ind1 = field.ind1?.replace(" ", "_");
-      const ind2 = field.ind2?.replace(" ", "_");
-      const internal = [field["id"], ind1 + ind2].concat(subfields);
 
       marc_record.append(internal);
     }
