@@ -76,6 +76,8 @@ class Marc21Draft(Draft):
     versions_model_cls = models.VersionsState
     parent_record_cls = Marc21Parent
 
+    schema = ConstantField("$schema", "local://marc21/marc21-v2.0.0.json")
+
     index = IndexField(
         "marc21records-drafts-marc21-v2.0.0", search_alias="marc21records-marc21"
     )
@@ -122,6 +124,8 @@ class Marc21Record(Record):
     model_cls = models.RecordMetadata
     versions_model_cls = models.VersionsState
     parent_record_cls = Marc21Parent
+
+    schema = ConstantField("$schema", "local://marc21/marc21-v2.0.0.json")
 
     index = IndexField(
         "marc21records-marc21-marc21-v2.0.0", search_alias="marc21records-marc21"
