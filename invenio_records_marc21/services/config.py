@@ -10,7 +10,6 @@
 
 """Marc21 Record Service config."""
 
-
 from invenio_drafts_resources.services.records.components import DraftFilesComponent
 from invenio_drafts_resources.services.records.config import (
     RecordServiceConfig,
@@ -21,6 +20,7 @@ from invenio_drafts_resources.services.records.config import (
     is_record,
 )
 from invenio_i18n import gettext as _
+from invenio_indexer.api import RecordIndexer
 from invenio_rdm_records.services import facets as rdm_facets
 from invenio_rdm_records.services.components import AccessComponent
 from invenio_rdm_records.services.config import has_doi, is_record_and_has_doi
@@ -77,6 +77,11 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     draft_cls = Marc21Draft
     # Parent class
     parent_record_cls = Marc21Parent
+
+    indexer_cls = RecordIndexer
+    indexer_queue_name = "marc21-records"
+    draft_indexer_cls = RecordIndexer
+    draft_indexer_queue_name = "marc21-records-drafts"
 
     # Schemas
     schema = Marc21RecordSchema
