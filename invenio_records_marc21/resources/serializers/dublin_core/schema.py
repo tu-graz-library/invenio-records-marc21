@@ -120,7 +120,7 @@ class DublinCoreSchema(BaseSerializerSchema):
         # leader06, leader07, 655
         selectors = ["655"]
         types = self._extract(selectors, marc21)
-        types += marc21.get_values("LDR")[6:8]
+        types += [marc21.get_values("LDR")[6:8]]
         return types
 
     def get_sources(self, marc21: Marc21Metadata) -> list:
