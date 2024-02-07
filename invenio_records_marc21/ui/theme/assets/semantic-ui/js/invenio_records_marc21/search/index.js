@@ -1,6 +1,6 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021-2023 Graz University of Technology.
+// Copyright (C) 2021-2024 Graz University of Technology.
 //
 // Invenio-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
@@ -10,6 +10,7 @@ import { parametrize } from "react-overridable";
 import { createSearchAppInit } from "@js/invenio_search_ui";
 import {
   RDMRecordSearchBarContainer,
+  RDMRecordMultipleSearchBarElement,
   RDMToggleComponent,
   RDMCountComponent,
   RDMErrorComponent,
@@ -41,6 +42,7 @@ const initSearchApp = createSearchAppInit({
   "ResultsList.item": Marc21RecordResultsListItem,
   "SearchApp.facets": ContribSearchAppFacetsWithConfig,
   "SearchApp.searchbarContainer": RDMRecordSearchBarContainer,
+  "SearchBar.element": RDMRecordMultipleSearchBarElement,
   "SearchFilters.ToggleComponent": RDMToggleComponent,
   "Error.element": RDMErrorComponent,
   "Count.element": RDMCountComponent,
