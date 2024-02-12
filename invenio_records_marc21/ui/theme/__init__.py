@@ -10,16 +10,23 @@
 
 """Marc21 Theme Package."""
 
-from flask_login import current_user
+from flask import g
 from flask_menu import current_menu
 from invenio_i18n import lazy_gettext as _
 
+from ...proxies import current_records_marc21
 from .views import deposit_create, deposit_edit, index, search, uploads_marc21
 
 
 #
 # Registration
 #
+def current_identity_can_view() -> bool:
+    """Checks whether current identity has viewing rights."""
+    service = current_records_marc21.records_service
+    return service.check_permission(g.identity, "view")
+
+
 def init_theme_views(blueprint, app):
     """Blueprint for the routes and resources provided by Invenio-Records-Marc21."""
     routes = app.config.get("MARC21_UI_THEME_ENDPOINTS")
@@ -40,7 +47,7 @@ def init_theme_views(blueprint, app):
             "invenio_records_marc21.uploads_marc21",
             text=_("Publications"),
             order=4,
-            visible_when=current_user.is_authenticated,
+            visible_when=current_identity_can_view,
         )
 
     return blueprint
