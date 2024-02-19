@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -12,12 +12,27 @@
 
 
 from copy import deepcopy
+from datetime import datetime
 
 from lxml import etree
 
 from ..schema import Marc21Schema
 from ..serializer import Marc21BASESerializer, Marc21XMLMixin
 from .schema import Marc21UISchema
+
+
+def embargo_date(fields):
+    """Embargo date."""
+    if "971" not in fields:
+        return None
+
+    embargo_date = None
+    for field in fields["971"]:
+        if "a" in field["subfields"] and field["subfields"]["a"][0] == "gesperrt":
+            marc_time = field["subfields"]["c"][0]
+            embargo_date = datetime.strptime(marc_time, "%d.%m.%Y").strftime("%Y-%m-%d")
+
+    return embargo_date
 
 
 class Marc21UIBASESerializer(Marc21BASESerializer):
@@ -33,7 +48,13 @@ class Marc21UIBASESerializer(Marc21BASESerializer):
 
     def dump_obj(self, obj):
         """Dump the object into a JSON string."""
-        obj[self._object_key] = self.object_schema.dump(deepcopy(obj))
+        to_dump_obj = deepcopy(obj)
+        if obj["access"]["embargo"]["active"]:
+            embargo_until = embargo_date(obj["metadata"]["fields"])
+
+            if embargo_until:
+                to_dump_obj["access"]["embargo"]["until"] = embargo_until
+        obj[self._object_key] = self.object_schema.dump(to_dump_obj)
         return obj
 
 
