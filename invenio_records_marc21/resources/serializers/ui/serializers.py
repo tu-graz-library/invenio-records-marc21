@@ -29,8 +29,13 @@ def embargo_date(fields):
     embargo_date = None
     for field in fields["971"]:
         if "a" in field["subfields"] and field["subfields"]["a"][0] == "gesperrt":
-            marc_time = field["subfields"]["c"][0]
-            embargo_date = datetime.strptime(marc_time, "%d.%m.%Y").strftime("%Y-%m-%d")
+            marc_time = field["subfields"]["c"][0].split(" ")
+            try:
+                embargo_date = datetime.strptime(marc_time[0], "%d.%m.%Y").strftime(
+                    "%Y-%m-%d"
+                )
+            except ValueError:
+                embargo_date = None
 
     return embargo_date
 
