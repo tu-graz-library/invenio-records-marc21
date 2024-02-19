@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.19.1 (release 2024-02-19)
+
+- fix: embargo date could contain strings
+
+
 Version v0.19.0 (release 2024-02-19)
 
 - landingpage: embargo date from marc21 metadata
