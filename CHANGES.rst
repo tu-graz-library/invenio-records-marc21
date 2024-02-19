@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.19.0 (release 2024-02-19)
+
+- landingpage: embargo date from marc21 metadata
+
+
 Version v0.18.0 (release 2024-02-14)
 
 - fix: dashboard-visibility not working
