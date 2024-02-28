@@ -104,6 +104,7 @@ MARC21_RECORD_EXPORTERS = {
         "serializer": (
             "invenio_records_marc21.resources.serializers:" "Marc21JSONSerializer"
         ),
+        "params": {"options": {"indent": 4, "sort_keys": True}},
         "filename": "{id}.json",
     },
     "marcxml": {
@@ -111,16 +112,11 @@ MARC21_RECORD_EXPORTERS = {
         "serializer": (
             "invenio_records_marc21.resources.serializers:" "Marc21XMLSerializer"
         ),
+        "params": {},
         "filename": "{id}.xml",
     },
 }
 """Marc21 Record export serializers."""
-
-MARC21_RECORD_EXPORTER_OPTIONS = {
-    "indent": 4,
-    "sort_keys": True,
-}
-"""Marc21 Record export options."""
 
 MARC21_UI_ENDPOINTS = {
     "record-detail": "/<pid_value>",
