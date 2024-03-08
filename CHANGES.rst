@@ -8,6 +8,13 @@
 Changes
 =======
 
+Version v0.20.0 (release 2024-03-08)
+
+- deps: remove upper limit of rdm-records
+- modification: pretty export records
+- fix(deposit): react remove deprecated dependency
+
+
 Version v0.19.1 (release 2024-02-19)
 
 - fix: embargo date could contain strings
