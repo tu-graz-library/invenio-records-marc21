@@ -16,6 +16,7 @@ from flask import abort, current_app, render_template, request, url_for
 from invenio_base.utils import obj_or_import_string
 from invenio_previewer.extensions import default
 from invenio_previewer.proxies import current_previewer
+from invenio_stats.proxies import current_stats
 
 from ...resources.serializers.ui import Marc21UIJSONSerializer
 from .decorators import (
@@ -72,6 +73,11 @@ class PreviewFile:
 def record_detail(record=None, files=None, pid_value=None, is_preview=False):
     """Record detail page (aka landing page)."""
     files_dict = None if files is None else files.to_dict()
+
+    # emit a record view stats event
+    emitter = current_stats.get_event_emitter("marc21-record-view")
+    if record is not None and emitter is not None:
+        emitter(current_app, record=record._record, via_api=False)
     return render_template(
         "invenio_records_marc21/landing_page/record.html",
         record=Marc21UIJSONSerializer().dump_obj(record.to_dict()),
@@ -154,4 +160,11 @@ def record_file_preview(
 def record_file_download(file_item=None, pid_value=None, is_preview=False, **kwargs):
     """Download a file from a record."""
     download = bool(request.args.get("download"))
+
+    # emit a file download stats event
+    emitter = current_stats.get_event_emitter("marc21-file-download")
+    if file_item is not None and emitter is not None:
+        obj = file_item._file.object_version
+        emitter(current_app, record=file_item._record, obj=obj, via_api=False)
+
     return file_item.send_file(as_attachment=download)

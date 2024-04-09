@@ -14,6 +14,7 @@
 from .context import MarcPIDFieldContext
 from .providers import MarcDraftProvider, MarcRecordProvider
 from .resolver import MarcResolver
+from .statistics import Marc21RecordStatisticsField
 from .status import Marc21Status
 
 __all__ = (
@@ -21,5 +22,6 @@ __all__ = (
     "MarcDraftProvider",
     "MarcRecordProvider",
     "MarcResolver",
+    "Marc21RecordStatisticsField",
     "Marc21Status",
 )

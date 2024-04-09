@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -26,6 +26,7 @@ from marshmallow_utils.permissions import FieldPermissionsMixin
 
 from .metadata import MetadataSchema
 from .pids import PIDSchema
+from .statistics import Marc21StatisticSchema
 
 
 def validate_scheme(scheme):
@@ -71,6 +72,8 @@ class Marc21RecordSchema(BaseRecordSchema, FieldPermissionsMixin):
 
     is_published = Boolean(dump_only=True)
     status = Str(dump_only=True)
+
+    stats = NestedAttribute(Marc21StatisticSchema, dump_only=True)
 
     # Add version to record schema
     # versions = NestedAttribute(VersionsSchema, dump_only=True)

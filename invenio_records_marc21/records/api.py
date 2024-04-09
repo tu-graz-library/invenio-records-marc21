@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -16,12 +16,14 @@ from invenio_drafts_resources.records import Draft, Record
 from invenio_drafts_resources.records.api import ParentRecord as BaseParentRecord
 from invenio_drafts_resources.records.systemfields import ParentField
 from invenio_pidstore.models import PIDStatus
+from invenio_rdm_records.records.dumpers import StatisticsDumperExt
 from invenio_rdm_records.records.systemfields import (
     HasDraftCheckField,
     ParentRecordAccessField,
     RecordAccessField,
     RecordDeletionStatusField,
 )
+from invenio_records.dumpers import SearchDumper
 from invenio_records.systemfields import ConstantField, DictField, ModelField
 from invenio_records_resources.records.api import FileRecord as BaseFileRecord
 from invenio_records_resources.records.systemfields import (
@@ -32,7 +34,9 @@ from invenio_records_resources.records.systemfields import (
 )
 
 from . import models
+from .dumpers import Marc21StatisticsDumperExt
 from .systemfields import (
+    Marc21RecordStatisticsField,
     Marc21Status,
     MarcDraftProvider,
     MarcPIDFieldContext,
@@ -69,7 +73,17 @@ class DraftFile(BaseFileRecord):
     record_cls = None  # defined below
 
 
-class Marc21Draft(Draft):
+class CommonFieldsMixin:
+    """Common fields for Marc21 records."""
+
+    dumper = SearchDumper(
+        extensions=[
+            Marc21StatisticsDumperExt("stats"),
+        ]
+    )
+
+
+class Marc21Draft(Draft, CommonFieldsMixin):
     """Marc21 draft API."""
 
     model_cls = models.DraftMetadata
@@ -118,7 +132,7 @@ class RecordFile(BaseFileRecord):
     record_cls = None  # defined below
 
 
-class Marc21Record(Record):
+class Marc21Record(Record, CommonFieldsMixin):
     """Define API for Marc21 create and manipulate."""
 
     model_cls = models.RecordMetadata
@@ -161,6 +175,8 @@ class Marc21Record(Record):
     pids = DictField("pids")
 
     deletion_status = RecordDeletionStatusField()
+
+    stats = Marc21RecordStatisticsField()
 
 
 RecordFile.record_cls = Marc21Record

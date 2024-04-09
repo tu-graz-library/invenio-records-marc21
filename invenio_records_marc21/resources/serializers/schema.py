@@ -29,4 +29,5 @@ class Marc21Schema(Schema):
             "links",
             "files",
             "versions",
+            "stats",
         )

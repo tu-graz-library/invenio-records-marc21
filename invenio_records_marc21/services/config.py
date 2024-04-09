@@ -106,7 +106,7 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
         search_option_cls=Marc21SearchOptions,
     )
     search_drafts = FromConfigSearchOptions(
-        "MARC21_SEARCH",
+        "MARC21_SEARCH_DRAFTS",
         "MARC21_SORT_OPTIONS",
         "MARC21_FACETS",
         search_option_cls=Marc21SearchDraftsOptions,

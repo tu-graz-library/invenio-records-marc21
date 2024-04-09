@@ -1,0 +1,32 @@
+{# -*- coding: utf-8 -*-
+  Copyright (C) 2024 Graz University of Technology.
+
+  invenio-records-marc21 is free software; you can redistribute it and/or modify
+  it under the terms of the MIT License; see LICENSE file for more details.
+#}
+  <section id="record-statistics" class="ui segment rdm-sidebar">
+    <div class="ui tiny two statistics rel-mt-1">
+      {% set all_versions = record.stats.all_versions %} {% set this_version =
+      record.stats.this_version %}
+
+      <div class="ui statistic">
+        <div class="value">
+          {{ all_versions.unique_views|compact_number(max_value=1_000_000) }}
+        </div>
+        <div class="label">
+          <i aria-hidden="true" class="eye icon"></i>
+          {{ _("Views") }}
+        </div>
+      </div>
+
+      <div class="ui statistic">
+        <div class="value">
+          {{ all_versions.unique_downloads|compact_number(max_value=1_000_000) }}
+        </div>
+        <div class="label">
+          <i aria-hidden="true" class="download icon"></i>
+          {{ _("Downloads") }}
+        </div>
+      </div>
+    </div>
+  </section>

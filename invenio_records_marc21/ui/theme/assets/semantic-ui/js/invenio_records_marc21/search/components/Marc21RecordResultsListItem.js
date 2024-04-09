@@ -1,6 +1,6 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021-2023 Graz University of Technology.
+// Copyright (C) 2021-2024 Graz University of Technology.
 //
 // Invenio-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
@@ -11,6 +11,7 @@ import { truncate, get } from "lodash";
 import { Button, Item, Label } from "semantic-ui-react";
 import { EditButton } from "@js/invenio_records_marc21/components/EditButton";
 import { i18next } from "@translations/invenio_records_marc21/i18next";
+import { Marc21Stats } from "./Marc21Stats";
 
 export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
   const version = get(result, "revision_id", null);
@@ -28,6 +29,9 @@ export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
   const resource_type = get(result, "ui.metadata.resource_type", "");
   const creators = get(result, "ui.metadata.authors", []);
   const titles = get(result, "ui.metadata.titles", ["No titles"]);
+
+  const uniqueViews = get(result, "stats.all_versions.unique_views", 0);
+  const uniqueDownloads = get(result, "stats.all_versions.unique_downloads", 0);
 
   const copyright = get(result, "ui.metadata.copyright", []);
   let published_at = null;
@@ -100,13 +104,20 @@ export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
               {subject.miscellaneous_information}
             </Label>
           ))}
-          {createdDate && (
-            <div>
+
+          <div className="flex justify-space-between align-items-end">
+            {createdDate && (
               <small>
                 {i18next.t("Uploaded on")} <span>{createdDate}</span>
               </small>
-            </div>
-          )}
+            )}
+            <small>
+              <Marc21Stats
+                uniqueViews={uniqueViews}
+                uniqueDownloads={uniqueDownloads}
+              />
+            </small>
+          </div>
         </Item.Extra>
       </Item.Content>
     </Item>
