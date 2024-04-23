@@ -1,7 +1,7 @@
 {#
 This file is part of Invenio.
 
-Copyright (C) 2021 Graz University of Technology.
+Copyright (C) 2021-2024 Graz University of Technology.
 
 Invenio-Records-Marc21 is free software; you can redistribute it and/or
 modify it under the terms of the MIT License; see LICENSE file for more
@@ -15,6 +15,13 @@ details.
 
 {%- set metadata = record.ui.metadata %}
 
+{% block head_title %}
+<title>
+  {% for title in metadata.get('titles') %}
+    {{title}}
+  {% endfor %}
+</title>
+{% endblock head_title %}
 {%- block page_body %}
 
 <div class="ui container" id="marc21-landing-page">
