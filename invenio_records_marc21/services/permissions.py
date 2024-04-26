@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -84,7 +84,7 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     ]
 
     # Allow managing record access
-    can_manage_record_access = can_manage
+    can_manage_record_access = can_curate
 
     ############
     #  Draft   #
@@ -158,13 +158,19 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_pid_discard = can_curate
     can_pid_delete = can_curate
 
-    # TODO: Add permissions for community when we add the feature!
-
-    # Allow for querying of statistics
-    can_query_stats = [Disable()]
-
     # Disabled actions
+    # - Files update and delete actions via drafts is not support
     can_create_files = [Disable()]
+    can_set_content_files = [Disable()]
     can_update_files = [Disable()]
     can_delete_files = [Disable()]
     can_commit_files = [Disable()]
+
+    # TODO: Add permissions for community when we add the feature!
+
+    # Record and user quota (not needed for now)
+    # can_manage_quota
+
+    #
+    # Miscellaneous
+    can_query_stats = [Disable()]
