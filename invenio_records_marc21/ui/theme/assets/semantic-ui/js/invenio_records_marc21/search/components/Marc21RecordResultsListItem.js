@@ -29,6 +29,7 @@ export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
   const resource_type = get(result, "ui.metadata.resource_type", "");
   const creators = get(result, "ui.metadata.authors", []);
   const titles = get(result, "ui.metadata.titles", ["No titles"]);
+  const is_published = get(result, "is_published", true);
 
   const uniqueViews = get(result, "stats.all_versions.unique_views", 0);
   const uniqueDownloads = get(result, "stats.all_versions.unique_downloads", 0);
@@ -38,8 +39,11 @@ export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
   if (copyright.length > 0) {
     published_at = get(copyright[0], "subfields.c", null);
   }
+  let viewLink = `/publications/${result.id}`;
+  if (!is_published) {
+    viewLink = `/publications/uploads/${result.id}`;
+  }
 
-  const viewLink = `/publications/${result.id}`;
 
   const [error, setError] = useState("");
 

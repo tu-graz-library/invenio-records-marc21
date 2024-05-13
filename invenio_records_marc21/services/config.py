@@ -128,7 +128,7 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     )
     links_search = pagination_links("{+api}/publications{?args*}")
 
-    links_search_drafts = pagination_links("{+api}/publications/draft{?args*}")
+    links_search_drafts = pagination_links("{+api}/user/publications{?args*}")
 
     links_search_versions = pagination_links(
         "{+api}/publications/{id}/versions{?args*}"

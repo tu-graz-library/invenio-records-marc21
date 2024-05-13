@@ -93,7 +93,7 @@ class Marc21Draft(Draft, CommonFieldsMixin):
     schema = ConstantField("$schema", "local://marc21/marc21-v2.0.0.json")
 
     index = IndexField(
-        "marc21records-drafts-marc21-v2.0.0", search_alias="marc21records-marc21"
+        "marc21records-drafts-marc21-v2.0.0", search_alias="marc21records"
     )
 
     parent = ParentField(Marc21Parent, create=True, soft_delete=False, hard_delete=True)
@@ -113,6 +113,8 @@ class Marc21Draft(Draft, CommonFieldsMixin):
     )
     access = RecordAccessField()
     has_draft = HasDraftCheckField()
+
+    is_published = PIDStatusCheckField(status=PIDStatus.REGISTERED, dump=True)
     status = Marc21Status()
 
     bucket_id = ModelField(dump=False)

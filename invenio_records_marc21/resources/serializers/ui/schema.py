@@ -44,6 +44,7 @@ class Marc21UISchema(Marc21Schema):
             "parent",
             "links",
             "files",
+            "is_published",
         )
 
     access_status = AccessStatusField(attribute="access", dump_only=True)

@@ -32,6 +32,8 @@ import {
   DashboardResultView,
 } from "@js/invenio_app_rdm/user_dashboard/base";
 
+export const appName = "Marc21Records.DashboardSearch";
+
 const ContribSearchAppFacetsWithConfig = parametrize(ContribSearchAppFacets, {
   toogle: true,
 });
@@ -44,6 +46,7 @@ const Marc21RecordResultsListItemWithConfig = parametrize(
 );
 export const Marc21SearchLayout = DashboardSearchLayoutHOC({
   searchBarPlaceholder: i18next.t("Search in publications..."),
+  appName: appName,
 });
 
 export const Marc21EmptyResults = (props) => {
@@ -71,18 +74,22 @@ export const Marc21EmptyResults = (props) => {
 };
 
 const initSearchApp = createSearchAppInit({
-  "BucketAggregation.element": ContribBucketAggregationElement,
-  "BucketAggregationValues.element": ContribBucketAggregationValuesElement,
-  "EmptyResults.element": Marc21EmptyResults,
-  "ResultsGrid.item": Marc21RecordResultsGridItem,
-  "ResultsList.item": Marc21RecordResultsListItemWithConfig,
-  "SearchApp.facets": ContribSearchAppFacetsWithConfig,
-  "SearchApp.searchbarContainer": RDMRecordSearchBarContainer,
-  "SearchBar.element": RDMRecordSearchBarElement,
-  "SearchApp.layout": Marc21SearchLayout,
-  "SearchApp.results": DashboardResultView,
-  "SearchFilters.ToggleComponent": RDMToggleComponent,
-  "Error.element": RDMErrorComponent,
-  "Count.element": RDMCountComponent,
-  "SearchFilters.Toggle.element": RDMToggleComponent,
-});
+  [`${appName}.BucketAggregation.element`]: ContribBucketAggregationElement,
+  [`${appName}.BucketAggregationValues.element`]: ContribBucketAggregationValuesElement,
+  [`${appName}.EmptyResults.element`]: Marc21EmptyResults,
+  [`${appName}.ResultsGrid.item`]: Marc21RecordResultsGridItem,
+  [`${appName}.ResultsList.item`]: Marc21RecordResultsListItemWithConfig,
+  [`${appName}.SearchApp.facets`]: ContribSearchAppFacetsWithConfig,
+  [`${appName}.SearchApp.searchbarContainer`]: RDMRecordSearchBarContainer,
+  [`${appName}.SearchBar.element`]: RDMRecordSearchBarElement,
+  [`${appName}.SearchApp.layout`]: Marc21SearchLayout,
+  [`${appName}.SearchApp.results`]: DashboardResultView,
+  [`${appName}.SearchFilters.ToggleComponent`]: RDMToggleComponent,
+  [`${appName}.Error.element`]: RDMErrorComponent,
+  [`${appName}.Count.element`]: RDMCountComponent,
+  [`${appName}.SearchFilters.Toggle.element`]: RDMToggleComponent,
+},
+  true,
+  "invenio-search-config",
+  true
+);

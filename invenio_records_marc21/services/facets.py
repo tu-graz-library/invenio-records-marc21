@@ -17,7 +17,7 @@ from invenio_records_resources.services.records.facets import TermsFacet
 is_published = TermsFacet(
     field="is_published",
     label=_("Status"),
-    value_labels={"true": _("Published"), "false": _("Unpublished")},
+    value_labels={"true": _("Published"), "false": _("Not published")},
 )
 
 

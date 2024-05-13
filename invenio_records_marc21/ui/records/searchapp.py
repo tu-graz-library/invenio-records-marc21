@@ -35,6 +35,7 @@ def search_app_context():
             current_app.config["MARC21_SORT_OPTIONS"],
             "/api/user/publications",
             {"Accept": "application/vnd.inveniomarc21.v1+json"},
-            app_id="Marc21Records.Search",  # unique id to distinguish amongst search-apps
+            # initial_filters=[["is_published", "false"]],
+            app_id="Marc21Records.DashboardSearch",  # unique id to distinguish amongst search-apps
         ),
     }
