@@ -57,7 +57,7 @@ def test_record_file_update(testapp, db, location):
     """Test record files bucket update."""
 
     record = Record.create({})
-    record.files["test.pdf"] = {"description": "A test file."}
+    record.files["test.pdf"] = {"metadata": {"description": "A test file."}}
     rf = record.files["test.pdf"]
     assert rf.key == "test.pdf"
     assert rf.object_version is None
@@ -72,7 +72,9 @@ def test_record_file_update(testapp, db, location):
     assert ObjectVersion.query.count() == 0
 
     # Update
-    record.files["test.pdf"] = {"description": "Update the file description"}
+    record.files["test.pdf"] = {
+        "metadata": {"description": "Update the file description"}
+    }
     rf = record.files["test.pdf"]
     assert rf.key == "test.pdf"
     assert rf.object_version is None
@@ -129,7 +131,10 @@ def test_record_files_clear(testapp, db, location):
     """Test clearing record files."""
     record = Record.create({})
 
-    record.files["f1.pdf"] = (BytesIO(b"testfilestream"), {"description": "Test file"})
+    record.files["f1.pdf"] = (
+        BytesIO(b"testfilestream"),
+        {"metadata": {"description": "Test file"}},
+    )
     record.files["f2.pdf"] = BytesIO(b"testfilestream")
     record.files["f3.pdf"] = {"description": "Metadata only"}
     record.commit()
@@ -161,7 +166,10 @@ def test_record_files_store(testapp, db, location):
     """Test JSON stored for files."""
     record = Record.create({})
 
-    record.files["f1.pdf"] = (BytesIO(b"testfilestream"), {"description": "Test file"})
+    record.files["f1.pdf"] = (
+        BytesIO(b"testfilestream"),
+        {"metadata": {"description": "Test file"}},
+    )
     record.files["f2.pdf"] = BytesIO(b"testfilestream")
 
     rf1 = record.files["f1.pdf"]
