@@ -8,46 +8,63 @@ msgid ""
 msgstr ""
 "Project-Id-Version: invenio-records-marc21 0.2.1\n"
 "Report-Msgid-Bugs-To: info@tugraz.at\n"
-"POT-Creation-Date: 2023-10-03 14:25+0200\n"
-"PO-Revision-Date: 2021-11-11 11:14+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: en\n"
+"POT-Creation-Date: 2024-05-19 10:39+0200\n"
+"PO-Revision-Date: 2024-05-19 10:40+0200\n"
+"Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.12.1\n"
+"X-Generator: Poedit 2.3.1\n"
 
-#: invenio_records_marc21/config.py:49
+#: invenio_records_marc21/config.py:179 invenio_records_marc21/config.py:186
+#: invenio_records_marc21/config.py:201 invenio_records_marc21/config.py:209
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:24
+#: tests/conftest.py:441 tests/conftest.py:448
+msgid "DOI"
+msgstr ""
+
+#: tests/services/schemas/access/test_record.py:45
+msgid "'record' must be either 'public' or 'restricted'"
+msgstr ""
+
+#: tests/services/schemas/access/test_record.py:57
+msgid "'files' must be either 'public' or 'restricted'"
+msgstr ""
+
+#: invenio_records_marc21/config.py:54
 msgid "Best match"
 msgstr ""
 
-#: invenio_records_marc21/config.py:53
+#: invenio_records_marc21/config.py:58
 msgid "Newest"
 msgstr ""
 
-#: invenio_records_marc21/config.py:57
+#: invenio_records_marc21/config.py:62
 msgid "Oldest"
 msgstr ""
 
-#: invenio_records_marc21/config.py:61
+#: invenio_records_marc21/config.py:66
 msgid "Version"
 msgstr ""
 
-#: invenio_records_marc21/config.py:65
+#: invenio_records_marc21/config.py:70
 msgid "Recently updated"
 msgstr ""
 
-#: invenio_records_marc21/config.py:69
+#: invenio_records_marc21/config.py:74
 msgid "Least recently updated"
 msgstr ""
 
-#: invenio_records_marc21/config.py:170 invenio_records_marc21/config.py:177
-#: invenio_records_marc21/config.py:192 invenio_records_marc21/config.py:200
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:24
-#: tests/conftest.py:438 tests/conftest.py:445
-msgid "DOI"
+#: invenio_records_marc21/config.py:78
+msgid "Most viewed"
+msgstr ""
+
+#: invenio_records_marc21/config.py:81
+msgid "Most downloaded"
 msgstr ""
 
 #: invenio_records_marc21/errors.py:46
@@ -69,11 +86,11 @@ msgstr ""
 msgid "User has not the permissions."
 msgstr ""
 
-#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:223
+#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:225
 msgid "Masterthesis"
 msgstr ""
 
-#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:224
+#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:226
 msgid "Dissertation"
 msgstr ""
 
@@ -87,14 +104,14 @@ msgid "Published"
 msgstr ""
 
 #: invenio_records_marc21/services/facets.py:20
-msgid "Unpublished"
+msgid "Not published"
 msgstr ""
 
 #: invenio_records_marc21/services/facets.py:26
 msgid "File type"
 msgstr ""
 
-#: invenio_records_marc21/services/schemas/__init__.py:34
+#: invenio_records_marc21/services/schemas/__init__.py:35
 msgid "Invalid persistent identifier scheme."
 msgstr ""
 
@@ -123,19 +140,19 @@ msgstr ""
 msgid "Jump up"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:32
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:39
 msgid "Published date"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:33
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:40
 msgid "Published in"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:42
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:49
 msgid "Resource type"
 msgstr ""
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:46
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:53
 msgid "Access status"
 msgstr ""
 
@@ -201,6 +218,14 @@ msgstr ""
 msgid "Modified:"
 msgstr ""
 
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/statistics.html:18
+msgid "Views"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/statistics.html:28
+msgid "Downloads"
+msgstr ""
+
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:34
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/files.html:51
 msgid "Name"
@@ -253,7 +278,7 @@ msgid "Download"
 msgstr ""
 
 #: invenio_records_marc21/templates/invenio_records_marc21/user_dashboard/uploads.html:7
-msgid "Uploads"
+msgid "Publication Uploads"
 msgstr ""
 
 #: invenio_records_marc21/ui/records/wrappers.py:16
@@ -284,15 +309,6 @@ msgstr ""
 msgid "Curator"
 msgstr ""
 
-#: invenio_records_marc21/ui/theme/__init__.py:41
+#: invenio_records_marc21/ui/theme/__init__.py:48
 msgid "Publications"
 msgstr ""
-
-#: tests/services/schemas/access/test_record.py:45
-msgid "'record' must be either 'public' or 'restricted'"
-msgstr ""
-
-#: tests/services/schemas/access/test_record.py:57
-msgid "'files' must be either 'public' or 'restricted'"
-msgstr ""
-
