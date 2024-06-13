@@ -11,7 +11,6 @@
 """Marc21 Celery tasks."""
 
 from datetime import datetime, timedelta
-from functools import partial
 
 import arrow
 from celery import shared_task
@@ -75,7 +74,7 @@ def marc21_reindex_stats(stats_indices):
         end = len(list(all_parents))
         for i in range(0, end, step):
             records_q = dsl.Q("terms", parent__id=all_parents_list[i : i + step])
-            current_records_marc21.record_service.reindex(
+            current_records_marc21.records_service.reindex(
                 params={"allversions": True},
                 identity=system_identity,
                 search_query=records_q,
