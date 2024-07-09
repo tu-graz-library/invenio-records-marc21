@@ -52,16 +52,6 @@
             }
           }
         }
-      },
-      {
-        "metadata_field": {
-          "path_match": "metadata.fields.*",
-          "match_mapping_type": "object",
-          "mapping": {
-            "index": false,
-            "type": "object"
-          }
-        }
       }
     ],
     "date_detection": false,
@@ -244,6 +234,7 @@
         "type": "boolean"
       },
       "metadata": {
+        "dynamic": false,
         "properties": {
           "fields": {
             "properties": {
