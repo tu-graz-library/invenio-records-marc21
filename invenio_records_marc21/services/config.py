@@ -52,6 +52,7 @@ class Marc21SearchOptions(SearchOptions, SearchOptionsMixin):
 
     facets = {
         "access_status": rdm_facets.access_status,
+        "resource_type": facets.resource_type,
     }
 
 
@@ -61,6 +62,7 @@ class Marc21SearchDraftsOptions(SearchDraftsOptions, SearchOptionsMixin):
     facets = {
         "access_status": rdm_facets.access_status,
         "is_published": facets.is_published,
+        "resource_type": facets.resource_type,
     }
 
 

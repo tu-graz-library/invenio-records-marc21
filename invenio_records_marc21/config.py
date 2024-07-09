@@ -41,6 +41,12 @@ MARC21_FACETS = {
             "field": "is_published",
         },
     },
+    "resource_type": {
+        "facet": facets.resource_type,
+        "ui": {
+            "field": "metadata.resource_type",
+        },
+    },
     "file_type": {
         "facet": facets.filetype,
         "ui": {
@@ -83,7 +89,11 @@ MARC21_SORT_OPTIONS = {
 }
 
 MARC21_SEARCH_DRAFTS = {
-    "facets": ["access_status", "is_published", "file_type"],
+    "facets": [
+        "resource_type",
+        "access_status",
+        "is_published",
+    ],
     "sort": [
         "bestmatch",
         "newest",
@@ -94,7 +104,10 @@ MARC21_SEARCH_DRAFTS = {
 """User records search configuration (i.e. list of uploads)."""
 
 MARC21_SEARCH = {
-    "facets": ["access_status", "file_type"],
+    "facets": [
+        "resource_type",
+        "access_status",
+    ],
     "sort": [
         "bestmatch",
         "newest",
