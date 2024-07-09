@@ -92,9 +92,6 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     schema_secret_link = None
     review = None
 
-    # Permission policy
-    default_files_enabled = FromConfig("RDM_DEFAULT_FILES_ENABLED", default=True)
-
     permission_policy_cls = FromConfig(
         "MARC21_PERMISSION_POLICY",
         default=Marc21RecordPermissionPolicy,

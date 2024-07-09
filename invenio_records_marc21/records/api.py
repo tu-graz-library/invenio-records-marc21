@@ -16,7 +16,6 @@ from invenio_drafts_resources.records import Draft, Record
 from invenio_drafts_resources.records.api import ParentRecord as BaseParentRecord
 from invenio_drafts_resources.records.systemfields import ParentField
 from invenio_pidstore.models import PIDStatus
-from invenio_rdm_records.records.dumpers import StatisticsDumperExt
 from invenio_rdm_records.records.systemfields import (
     HasDraftCheckField,
     ParentRecordAccessField,
