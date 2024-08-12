@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -10,22 +10,15 @@
 
 """Marc21 Record Service config."""
 
-from invenio_drafts_resources.services.records.components import DraftFilesComponent
 from invenio_drafts_resources.services.records.config import (
     RecordServiceConfig,
     SearchDraftsOptions,
     SearchOptions,
     SearchVersionsOptions,
-    is_draft,
-    is_record,
 )
-from invenio_i18n import gettext as _
 from invenio_indexer.api import RecordIndexer
 from invenio_rdm_records.services import facets as rdm_facets
-from invenio_rdm_records.services.components import AccessComponent
-from invenio_rdm_records.services.config import has_doi, is_record_and_has_doi
 from invenio_records_resources.services import (
-    ConditionalLink,
     FileServiceConfig,
     pagination_links,
 )
@@ -35,7 +28,6 @@ from invenio_records_resources.services.base.config import (
     FromConfigSearchOptions,
     SearchOptionsMixin,
 )
-from invenio_records_resources.services.base.links import Link
 from invenio_records_resources.services.files.links import FileLink
 from invenio_records_resources.services.records.links import RecordLink
 
@@ -43,6 +35,7 @@ from ..records import Marc21Draft, Marc21Parent, Marc21Record
 from . import facets
 from .components import DefaultRecordsComponents
 from .customizations import FromConfigPIDsProviders, FromConfigRequiredPIDs
+from .links import DefaultServiceLinks
 from .permissions import Marc21RecordPermissionPolicy
 from .schemas import Marc21ParentSchema, Marc21RecordSchema
 
@@ -138,50 +131,14 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
         default=DefaultRecordsComponents,
     )
 
-    links_item = {
-        "self": ConditionalLink(
-            cond=is_record,
-            if_=RecordLink("{+api}/publications/{id}"),
-            else_=RecordLink("{+api}/publications/{id}/draft"),
-        ),
-        "self_html": ConditionalLink(
-            cond=is_record,
-            if_=RecordLink("{+ui}/publications/{id}"),
-            else_=RecordLink("{+ui}/publications/uploads/{id}"),
-        ),
-        "self_doi": Link(
-            "{+ui}/publications/{+pid_doi}",
-            when=is_record_and_has_doi,
-            vars=lambda record, vars: vars.update(
-                {
-                    f"pid_{scheme}": pid["identifier"].split("/")[1]
-                    for (scheme, pid) in record.pids.items()
-                }
-            ),
-        ),
-        "doi": Link(
-            "https://doi.org/{+pid_doi}",
-            when=has_doi,
-            vars=lambda record, vars: vars.update(
-                {
-                    f"pid_{scheme}": pid["identifier"]
-                    for (scheme, pid) in record.pids.items()
-                }
-            ),
-        ),
-        "files": ConditionalLink(
-            cond=is_record,
-            if_=RecordLink("{+api}/publications/{id}/files"),
-            else_=RecordLink("{+api}/publications/{id}/draft/files"),
-        ),
-        "latest": RecordLink("{+api}/publications/{id}/versions/latest"),
-        "latest_html": RecordLink("{+ui}/publications/{id}/latest"),
-        "draft": RecordLink("{+api}/publications/{id}/draft", when=is_record),
-        "publish": RecordLink(
-            "{+api}/publications/{id}/draft/actions/publish", when=is_draft
-        ),
-        "versions": RecordLink("{+api}/publications/{id}/versions"),
-    }
+    # The `links_item` attribute in the `Marc21RecordServiceConfig` class is using the `FromConfig` helper
+    # to dynamically load the configuration for service links from a specified configuration key
+    # (`MARC21_RECORDS_SERVICE_LINKS`). If the configuration key is not found, it will default to using
+    # `DefaultServiceLinks`.
+    links_item = FromConfig(
+        "MARC21_RECORDS_SERVICE_LINKS",
+        default=DefaultServiceLinks,
+    )
 
     # PIDs providers - set from config in customizations.
     pids_providers = FromConfigPIDsProviders(
