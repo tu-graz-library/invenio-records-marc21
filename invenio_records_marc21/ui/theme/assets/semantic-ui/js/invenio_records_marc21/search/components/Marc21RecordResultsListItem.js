@@ -39,11 +39,8 @@ export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
   if (copyright.length > 0) {
     published_at = get(copyright[0], "subfields.c", null);
   }
-  let viewLink = `/publications/${result.id}`;
-  if (!is_published) {
-    viewLink = `/publications/uploads/${result.id}`;
-  }
-
+  const links = get(result, "links", []);
+  let viewLink = links["self_html"];
 
   const [error, setError] = useState("");
 
