@@ -19,7 +19,7 @@ from invenio_records_resources.resources.records.args import SearchRequestArgsSc
 from .serializers import Marc21JSONSerializer, Marc21XMLSerializer
 from .serializers.ui import Marc21UIJSONSerializer, Marc21UIXMLSerializer
 
-record_serializer = {
+record_serializers = {
     "application/json": ResponseHandler(Marc21JSONSerializer()),
     "application/marcxml": ResponseHandler(Marc21XMLSerializer()),
     "application/vnd.inveniomarc21.v1+json": ResponseHandler(Marc21UIJSONSerializer()),
@@ -51,7 +51,7 @@ class Marc21RecordResourceConfig(RecordResourceConfig):
 
     default_accept_mimetype = "application/json"
 
-    response_handlers = record_serializer
+    response_handlers = record_serializers
 
     request_view_args = {
         "pid_value": ma.fields.Str(),
@@ -92,6 +92,12 @@ class Marc21DraftFilesResourceConfig(FileResourceConfig):
 
     blueprint_name = "marc21_draft_files"
     url_prefix = f"{url_prefix}/<pid_value>/draft"
+    response_handlers = {  # noqa: RUF012
+        "application/vnd.inveniomarc21.v1+marcxml": FileResourceConfig.response_handlers[
+            "application/json"
+        ],
+        **FileResourceConfig.response_handlers,
+    }
 
 
 class Marc21ParentRecordLinksResourceConfig(RecordResourceConfig):
@@ -111,4 +117,5 @@ class Marc21ParentRecordLinksResourceConfig(RecordResourceConfig):
 
     request_view_args = {"pid_value": ma.fields.Str(), "link_id": ma.fields.Str()}
 
-    response_handlers = {"application/json": ResponseHandler(Marc21JSONSerializer())}
+    # response_handlers = {"application/json": ResponseHandler(Marc21JSONSerializer())}
+    response_handlers = record_serializers

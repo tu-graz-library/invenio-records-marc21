@@ -240,6 +240,7 @@ MARC21_API_HEADERS = {
         "Content-Type": "application/json",
         "Accept": "application/vnd.inveniomarc21.v1+marcxml",
     },
+    "octet-stream": {"Content-Type": "application/octet-stream"},
 }
 """The api headers for the RDM deposit app."""
 
