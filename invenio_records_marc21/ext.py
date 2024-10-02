@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -12,6 +12,8 @@
 
 from __future__ import absolute_import, print_function
 
+from flask_menu import current_menu
+from invenio_i18n import lazy_gettext as _
 from invenio_rdm_records.services.pids import PIDManager, PIDsService
 from invenio_records_resources.resources import FileResource
 from invenio_records_resources.services import FileService
@@ -32,6 +34,7 @@ from .services import (
     Marc21RecordServiceConfig,
 )
 from .system import Marc21TemplateConfig, Marc21TemplateService
+from .ui.theme import current_identity_can_view
 
 
 class InvenioRecordsMARC21(object):
@@ -117,3 +120,43 @@ class InvenioRecordsMARC21(object):
         self.parent_record_links_resource = Marc21ParentRecordLinksResource(
             service=self.records_service, config=Marc21ParentRecordLinksResourceConfig
         )
+
+
+def finalize_app(app) -> None:
+    """Finalize app."""
+    init(app)
+    register_marc21_dashboard_tab()
+
+
+def api_finalize_app(app) -> None:
+    """Finalize app for api."""
+    init(app)
+
+
+def init(app):
+    """Init app."""
+    # Register services - cannot be done in extension because
+    # Invenio-Records-Resources might not have been initialized.
+
+    ext = app.extensions["invenio-records-marc21"]
+    sregistry = app.extensions["invenio-records-resources"].registry
+    sregistry.register(ext.records_service, service_id="marc21-records")
+    sregistry.register(ext.records_service.files, service_id="marc21-files")
+    sregistry.register(ext.records_service.draft_files, service_id="marc21-draft-files")
+
+    iregistry = app.extensions["invenio-indexer"].registry
+    iregistry.register(ext.records_service.indexer, indexer_id="marc21-records")
+    iregistry.register(
+        ext.records_service.draft_indexer, indexer_id="marc21-records-drafts"
+    )
+
+
+def register_marc21_dashboard_tab():
+    """Register entry for marc21 in the `flask_menu`-submenu "dashboard"."""
+    user_dashboard_menu = current_menu.submenu("dashboard")
+    user_dashboard_menu.submenu("Publications").register(
+        "invenio_records_marc21.uploads_marc21",
+        text=_("Publications"),
+        order=4,
+        visible_when=current_identity_can_view,
+    )

@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -13,26 +13,6 @@
 from flask import Blueprint
 
 blueprint = Blueprint("invenio_records_marc21_ext", __name__)
-
-
-@blueprint.record_once
-def init(state):
-    """Init app."""
-    app = state.app
-    # Register services - cannot be done in extension because
-    # Invenio-Records-Resources might not have been initialized.
-
-    ext = app.extensions["invenio-records-marc21"]
-    sregistry = app.extensions["invenio-records-resources"].registry
-    sregistry.register(ext.records_service, service_id="marc21-records")
-    sregistry.register(ext.records_service.files, service_id="marc21-files")
-    sregistry.register(ext.records_service.draft_files, service_id="marc21-draft-files")
-
-    iregistry = app.extensions["invenio-indexer"].registry
-    iregistry.register(ext.records_service.indexer, indexer_id="marc21-records")
-    iregistry.register(
-        ext.records_service.draft_indexer, indexer_id="marc21-records-drafts"
-    )
 
 
 def create_record_bp(app):
