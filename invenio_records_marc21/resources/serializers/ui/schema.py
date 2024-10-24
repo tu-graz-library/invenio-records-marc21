@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -18,7 +18,7 @@ from marshmallow_utils.fields import FormatDate as BaseFormatDatetime
 from marshmallow_utils.fields import Function, SanitizedUnicode
 
 from ..schema import Marc21Schema
-from .fields import MetadataField
+from .fields import CreatorsField, MetadataField
 
 FormatDatetime = partial(BaseFormatDatetime, locale=get_locale)
 
@@ -48,6 +48,8 @@ class Marc21UISchema(Marc21Schema):
         )
 
     access_status = AccessStatusField(attribute="access", dump_only=True)
+
+    creators = CreatorsField(attribute="metadata.fields")
 
     metadata = MetadataField(attribute="metadata")
 

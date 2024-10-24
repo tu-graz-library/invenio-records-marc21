@@ -39,7 +39,7 @@ class Marc21Datafield:
 
     def get(self, subfield_notation: str) -> List[str]:
         """Get subfield value by subfield notation."""
-        return self.subfields[subfield_notation]
+        return self.subfields.get(subfield_notation, [])
 
     def __contains__(self, subfield_notation):
         """Contains subfield_notation."""
