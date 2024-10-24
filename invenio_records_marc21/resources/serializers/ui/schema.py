@@ -18,7 +18,8 @@ from marshmallow_utils.fields import FormatDate as BaseFormatDatetime
 from marshmallow_utils.fields import Function, SanitizedUnicode
 
 from ..schema import Marc21Schema
-from .fields import CreatorsField, MetadataField
+from .creators import CreatorsField
+from .metadata import MetadataField
 
 FormatDatetime = partial(BaseFormatDatetime, locale=get_locale)
 

@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -11,20 +11,23 @@
 """Resources configuration."""
 
 import marshmallow as ma
-from flask_resources import JSONDeserializer, RequestBodyParser, ResponseHandler
+from flask_resources import RequestBodyParser, ResponseHandler
 from invenio_drafts_resources.resources import RecordResourceConfig
 from invenio_records_resources.resources.files import FileResourceConfig
 from invenio_records_resources.resources.records.args import SearchRequestArgsSchema
 
-from .serializers import Marc21JSONSerializer, Marc21XMLSerializer
-from .serializers.ui import Marc21UIJSONSerializer, Marc21UIXMLSerializer
+from .deserializers import Marc21JSONDeserializer
+from .serializers import (
+    Marc21DepositSerializer,
+    Marc21JSONSerializer,
+    Marc21UIJSONSerializer,
+)
 
 record_serializers = {
     "application/json": ResponseHandler(Marc21JSONSerializer()),
-    "application/marcxml": ResponseHandler(Marc21XMLSerializer()),
-    "application/vnd.inveniomarc21.v1+json": ResponseHandler(Marc21UIJSONSerializer()),
-    "application/vnd.inveniomarc21.v1+marcxml": ResponseHandler(
-        Marc21UIXMLSerializer()
+    "application/vnd.inveniomarc21.v1+json": ResponseHandler(Marc21DepositSerializer()),
+    "application/vnd.inveniomarc21.ui.v1+json": ResponseHandler(
+        Marc21UIJSONSerializer()
     ),
 }
 
@@ -66,8 +69,7 @@ class Marc21RecordResourceConfig(RecordResourceConfig):
     request_view_args = {"pid_value": ma.fields.Str()}
     request_headers = {"if_match": ma.fields.Int()}
     request_body_parsers = {
-        "application/json": RequestBodyParser(JSONDeserializer()),
-        "application/marcxml": RequestBodyParser(JSONDeserializer()),
+        "application/json": RequestBodyParser(Marc21JSONDeserializer()),
     }
 
     request_view_args = {
@@ -93,7 +95,7 @@ class Marc21DraftFilesResourceConfig(FileResourceConfig):
     blueprint_name = "marc21_draft_files"
     url_prefix = f"{url_prefix}/<pid_value>/draft"
     response_handlers = {  # noqa: RUF012
-        "application/vnd.inveniomarc21.v1+marcxml": FileResourceConfig.response_handlers[
+        "application/vnd.inveniomarc21.v1+json": FileResourceConfig.response_handlers[
             "application/json"
         ],
         **FileResourceConfig.response_handlers,
@@ -117,5 +119,4 @@ class Marc21ParentRecordLinksResourceConfig(RecordResourceConfig):
 
     request_view_args = {"pid_value": ma.fields.Str(), "link_id": ma.fields.Str()}
 
-    # response_handlers = {"application/json": ResponseHandler(Marc21JSONSerializer())}
     response_handlers = record_serializers

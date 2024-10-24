@@ -10,7 +10,6 @@
 
 import React, { useState } from "react";
 import { Grid, Icon } from "semantic-ui-react";
-
 import { EditButton } from "../components/EditButton";
 import { NewVersionButton } from "@js/invenio_rdm_records";
 import { i18next } from "@translations/invenio_records_marc21/i18next";

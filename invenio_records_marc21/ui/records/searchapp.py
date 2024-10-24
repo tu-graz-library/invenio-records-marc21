@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2023 Graz University of Technology.
+# Copyright (C) 2023-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -25,7 +25,7 @@ def search_app_context():
             current_app.config["MARC21_FACETS"],
             current_app.config["MARC21_SORT_OPTIONS"],
             "/api/publications",
-            {"Accept": "application/vnd.inveniomarc21.v1+json"},
+            {"Accept": "application/vnd.inveniomarc21.ui.v1+json"},
             app_id="Marc21Records.Search",  # unique id to distinguish amongst search-apps
         ),
         "search_app_marc21_user_uploads_config": partial(
@@ -34,7 +34,7 @@ def search_app_context():
             current_app.config["MARC21_FACETS"],
             current_app.config["MARC21_SORT_OPTIONS"],
             "/api/user/publications",
-            {"Accept": "application/vnd.inveniomarc21.v1+json"},
+            {"Accept": "application/vnd.inveniomarc21.ui.v1+json"},
             # initial_filters=[["is_published", "false"]],
             app_id="Marc21Records.DashboardSearch",  # unique id to distinguish amongst search-apps
         ),

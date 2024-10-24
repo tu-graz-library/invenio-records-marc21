@@ -5,7 +5,7 @@
 # Copyright (C) 2020-2021 CERN.
 # Copyright (C) 2020 Northwestern University.
 # Copyright (C) 2021 TU Wien.
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -23,7 +23,6 @@ from invenio_records_resources.resources.records.resource import (
     request_view_args,
 )
 
-from ..services.record.metadata import Marc21Metadata
 from . import config
 
 
@@ -82,11 +81,7 @@ class Marc21RecordResource(RecordResource):
     @response_handler()
     def create(self):
         """Create an item."""
-        metadata = Marc21Metadata()
         data = resource_requestctx.data
-        metadata.xml = data.get("metadata", "")
-        data["metadata"] = metadata.json.get("metadata", {})
-
         item = self.service.create(
             g.identity,
             data=data,
@@ -102,10 +97,7 @@ class Marc21RecordResource(RecordResource):
 
         PUT /publications/:pid_value/draft
         """
-        metadata = Marc21Metadata()
         data = resource_requestctx.data
-        metadata.xml = data.get("metadata", "")
-        data["metadata"] = metadata.json.get("metadata", {})
         item = self.service.update_draft(
             g.identity,
             resource_requestctx.view_args["pid_value"],

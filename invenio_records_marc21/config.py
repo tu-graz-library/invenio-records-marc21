@@ -238,7 +238,7 @@ MARC21_PERSISTENT_IDENTIFIERS = {
 MARC21_API_HEADERS = {
     "vnd+json": {
         "Content-Type": "application/json",
-        "Accept": "application/vnd.inveniomarc21.v1+marcxml",
+        "Accept": "application/vnd.inveniomarc21.v1+json",
     },
     "octet-stream": {"Content-Type": "application/octet-stream"},
 }

@@ -127,7 +127,7 @@ export class Marc21DepositForm extends Component {
                           </Grid.Column>
 
                           <Grid.Column width={16} className="pt-10">
-                            <PublishButton fluid type="submit" />
+                            <PublishButton fluid type="submit" record={record} />
                           </Grid.Column>
                         </Grid>
                       </Card.Content>
@@ -147,6 +147,9 @@ export class Marc21DepositForm extends Component {
                     label={i18next.t("Visibility")}
                     labelIcon="shield"
                     fieldPath="access"
+                    record={record}
+                    recordRestrictionGracePeriod={100}
+                    allowRecordRestriction={false}
                   />
                   {permissions?.can_delete_draft && (
                     <Card>

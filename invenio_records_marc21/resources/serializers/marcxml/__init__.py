@@ -2,14 +2,14 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
 # details.
 
-"""Pytest configuration.
+"""Marc21 record response xml serializer."""
 
-See https://pytest-invenio.readthedocs.io/ for documentation on which test
-fixtures are available.
-"""
+from .serializer import Marc21XMLSerializer
+
+__all__ = ("Marc21XMLSerializer",)

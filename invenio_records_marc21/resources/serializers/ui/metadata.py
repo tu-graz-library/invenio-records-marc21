@@ -18,7 +18,7 @@ from typing import Dict, List
 from invenio_i18n import gettext as _
 from marshmallow.fields import Field
 
-from .....records.fields.resourcetype import ResourceTypeEnum
+from ....records.fields.resourcetype import ResourceTypeEnum
 
 
 class Marc21Controlfield:
@@ -213,7 +213,7 @@ class MetadataField(Field):
 
         out = []
         for desc in descriptions:
-            for _, val in desc.items():
+            for val in desc.values():
                 out.append(", ".join(val))
 
         return ", ".join(out)

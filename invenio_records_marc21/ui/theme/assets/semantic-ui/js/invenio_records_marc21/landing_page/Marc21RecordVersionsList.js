@@ -2,14 +2,14 @@
 //
 // Copyright (C) 2020-2021 CERN.
 // Copyright (C) 2020-2021 Northwestern University.
-// Copyright (C) 2021-2023 Graz University of Technology.
+// Copyright (C) 2021-2024 Graz University of Technology.
 //
 // Invenio-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
 // details.
 
 import axios from "axios";
-import _get from "lodash/get";
+import { get } from "lodash";
 import React, { useEffect, useState } from "react";
 import { Divider, Grid, Icon, Message, Placeholder } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_records_marc21/i18next";
@@ -26,7 +26,7 @@ const deserializeRecord = (record) => ({
 const NUMBER_OF_VERSIONS = 5;
 
 const RecordVersionItem = ({ item, activeVersion }) => {
-  const doi = _get(item.pids, "pk", "");
+  const doi = get(item.pids, "pk", "");
   return (
     <>
       <Grid.Row

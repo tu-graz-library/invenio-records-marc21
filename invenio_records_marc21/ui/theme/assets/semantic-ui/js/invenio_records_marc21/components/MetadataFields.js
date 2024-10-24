@@ -57,7 +57,6 @@ export class MetadataFields extends Component {
 }
 
 MetadataFields.propTypes = {
-  form: PropTypes.object.isRequired,
   fieldPath: PropTypes.string,
 };
 

@@ -1,6 +1,6 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021-2023 Graz University of Technology.
+// Copyright (C) 2021-2024 Graz University of Technology.
 //
 // React-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
@@ -18,11 +18,10 @@ export class Marc21RecordSchema {
     this.schema = {};
     this.link = link;
     this.leader_field = "LDR";
-    if (schema !== {}) {
+    this.loaded = schema !== {};
+
+    if (this.loaded) {
       this.setSchema(schema);
-      this.loaded = true;
-    } else {
-      this.loaded = false;
     }
   }
 

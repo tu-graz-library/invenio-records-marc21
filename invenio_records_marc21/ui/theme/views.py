@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -14,7 +14,7 @@ from flask import g, render_template
 from flask_login import current_user, login_required
 from invenio_users_resources.proxies import current_user_resources
 
-from invenio_records_marc21.resources.serializers.ui import Marc21UIXMLSerializer
+from invenio_records_marc21.resources.serializers.deposit import Marc21DepositSerializer
 
 from .decorators import pass_draft, pass_draft_files
 from .deposit import deposit_config, deposit_templates, empty_record
@@ -59,7 +59,7 @@ def deposit_create():
 @pass_draft_files
 def deposit_edit(draft=None, draft_files=None, pid_value=None):
     """Edit an existing deposit."""
-    serializer = Marc21UIXMLSerializer()
+    serializer = Marc21DepositSerializer()
     record = serializer.dump_obj(draft.to_dict())
 
     return render_template(

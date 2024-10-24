@@ -8,8 +8,8 @@
 # modify it under the terms of the MIT License; see LICENSE file for more
 # details.
 
-"""Record response serializers."""
+"""Record deserializers."""
 
-from .serializers import Marc21UIJSONSerializer
+from .deserializer import Marc21JSONDeserializer
 
-__all__ = ("Marc21UIJSONSerializer",)
+__all__ = ("Marc21JSONDeserializer",)
