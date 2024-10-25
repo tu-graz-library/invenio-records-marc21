@@ -12,22 +12,24 @@
 {%- endmacro %}
 
 {% macro show_detail(title, value, type="str") %}
-<div class="item">
-  <span style="font-weight: bolder;">{{ title }}:</span>
-  <span>
-    {% if type == "authors" %}
-      {% for author in value %}
-        <span>{{ author.get("a") | join(', ')}}</span>
-      {% endfor %}
-    {% elif value is iterable and (value is not string and value is not mapping) %}
-      <span>{{ value | join(', ') }}</span>
-    {% elif type == "link" %}
-      <a href={{value}}>{{ value }}</a>
-    {%else %}
-      <span>{{ value }}</span>
-    {% endif %}
-  </span>
-</div>
+  {% if value %}
+    <div class="item">
+      <span style="font-weight: bolder;">{{ title }}:</span>
+      <span>
+        {% if type == "authors" %}
+          {% for author in value %}
+            <span>{{ author.get("a") | join(', ')}}</span>
+          {% endfor %}
+        {% elif value is iterable and (value is not string and value is not mapping) %}
+          <span>{{ value | join(', ') }}</span>
+        {% elif type == "link" %}
+          <a href={{value}}>{{ value }}</a>
+        {%else %}
+          <span>{{ value }}</span>
+        {% endif %}
+      </span>
+    </div>
+  {% endif %}
 {%- endmacro %}
 
 {% macro show_personal_name(metadata) %}
