@@ -19,7 +19,7 @@ from invenio_records_permissions.generators import (
 )
 from invenio_records_permissions.policies.records import RecordPermissionPolicy
 
-from .generators import Marc21RecordCurators, Marc21RecordManagers
+from .generators import Marc21RecordCreators, Marc21RecordCurators, Marc21RecordManagers
 
 
 class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
@@ -42,16 +42,16 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_authenticated = [AuthenticatedUser(), SystemProcess()]
     can_manage = [Marc21RecordManagers(), SystemProcess()]
     can_curate = can_manage + [Marc21RecordCurators()]
-    can_view = can_curate
+    can_view = can_curate + [Marc21RecordCreators()]
 
     ############
     #  Records #
     ############
 
     # Allow to create a record (create a draft)
-    can_create = can_manage
+    can_create = can_manage + [Marc21RecordCreators()]
     # Allow to put a record in edit mode (create a draft from record)
-    can_edit = can_curate
+    can_edit = can_curate + [Marc21RecordCreators()]
     # Allow publishing a new record or changes to an existing record.
     can_publish = can_curate
     # Allow lifting the embargo of a record.
@@ -91,24 +91,24 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     ############
 
     # Allow read a draft
-    can_read_draft = can_curate
+    can_read_draft = can_curate + [Marc21RecordCreators()]
     # Allow deleting/discarding a draft and all associated files
     can_delete_draft = can_curate
     # Allow updating metadata of a draft
-    can_update_draft = can_curate
+    can_update_draft = can_curate + [Marc21RecordCreators()]
     # Allow ability to search drafts
-    can_search_drafts = can_curate
+    can_search_drafts = can_curate + [Marc21RecordCreators()]
 
     # Draft files permissions
     # Allow reading files of a draft
-    can_draft_read_files = can_curate
+    can_draft_read_files = can_curate + [Marc21RecordCreators()]
     # Allow uploading, updating and deleting files in drafts
     # Same permissions for files needed as draft
-    can_draft_create_files = can_curate
-    can_draft_update_files = can_curate
-    can_draft_delete_files = can_curate
-    can_draft_set_content_files = can_curate
-    can_draft_commit_files = can_curate
+    can_draft_create_files = can_curate + [Marc21RecordCreators()]
+    can_draft_update_files = can_curate + [Marc21RecordCreators()]
+    can_draft_delete_files = can_curate + [Marc21RecordCreators()]
+    can_draft_set_content_files = can_curate + [Marc21RecordCreators()]
+    can_draft_commit_files = can_curate + [Marc21RecordCreators()]
 
     can_draft_get_content_files = [
         IfFileIsLocal(then_=can_read_files, else_=[SystemProcess()])

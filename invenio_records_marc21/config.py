@@ -290,6 +290,9 @@ MARC21_RECORD_MANAGER_NEEDS = [RoleNeed("Marc21Manager")]
 MARC21_RECORD_CURATOR_NEEDS = [RoleNeed("Marc21Curator")]
 """This Role is to modify records only, no creation, no deletion possible."""
 
+MARC21_RECORD_CREATOR_NEEDS = [RoleNeed("Marc21Creator")]
+"""This Role is here to create and modify records, no publish allowed."""
+
 
 # Statistics configuration
 
