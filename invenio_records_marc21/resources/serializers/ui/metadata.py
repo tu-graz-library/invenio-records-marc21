@@ -204,8 +204,13 @@ class MetadataField(Field):
 
     def get_published_month(self, fields):
         """Get published month."""
+        values = fields.get_values("260", subfield_notation="c")
+        if len(values) > 0:
+            return "".join(values)
         values = fields.get_values("264", subfield_notation="c")
-        return "".join(values)
+        if len(values) > 0:
+            return "".join(values)
+        return ""
 
     def get_description(self, fields):
         """Get descriptions."""
