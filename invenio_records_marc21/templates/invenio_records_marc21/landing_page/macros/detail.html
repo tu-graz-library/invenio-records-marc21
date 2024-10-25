@@ -18,7 +18,10 @@
       <span>
         {% if type == "authors" %}
           {% for author in value %}
-            <span>{{ author.get("a") | join(', ')}}</span>
+            <span>{{ author.get("a")[0]}}</span>
+            {% if not loop.last %}
+              <span>;</span>
+            {% endif %}
           {% endfor %}
         {% elif value is iterable and (value is not string and value is not mapping) %}
           <span>{{ value | join(', ') }}</span>
