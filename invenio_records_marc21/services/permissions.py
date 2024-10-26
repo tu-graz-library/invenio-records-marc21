@@ -63,7 +63,7 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
 
     # Allow reading metadata of a record
     can_read = [
-        IfRestricted("record", then_=can_view, else_=can_all),
+        IfRestricted("record", then_=can_curate, else_=can_all),
     ]
     # Used for search filtering of deleted records
     # cannot be implemented inside can_read - otherwise permission will
@@ -77,7 +77,7 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_manage_files = can_curate
 
     can_read_files = [
-        IfRestricted("files", then_=can_view, else_=can_all),
+        IfRestricted("files", then_=can_curate, else_=can_all),
     ]
     can_get_content_files = [
         IfFileIsLocal(then_=can_read_files, else_=[SystemProcess()])
