@@ -20,7 +20,7 @@ from ...proxies import current_records_marc21
 def empty_record():
     """Create an empty record."""
     record = dump_empty(Marc21RecordSchema)
-    record["metadata"] = "<record><leader>00000nam a2200000zca4500</leader></record>"
+    record["metadata"] = {"leader": "00000nam a2200000zca4500", "fields": []}
     record["access"] = {"record": "public", "files": "public"}
     record["files"] = {"enabled": True}
     record["status"] = "draft"
