@@ -167,6 +167,9 @@ class MetadataField(Field):
             "notes": fields.get_values("500"),
             "resource_type": self.get_resource_type(fields),
             "published": self.get_published_month(fields),
+            "publisher": self.get_publisher(fields),
+            "license": self.get_license(fields),
+            "youtube": self.get_youtube(fields),
         }
 
     def get_authors(self, fields):
@@ -210,6 +213,36 @@ class MetadataField(Field):
         values = fields.get_values("264", subfield_notation="c")
         if len(values) > 0:
             return "".join(values)
+        return ""
+
+    def get_publisher(self, fields):
+        """Get publisher."""
+        values = fields.get_values("260", subfield_notation="b")
+        if len(values) > 0:
+            return "".join(values)
+        values = fields.get_values("264", subfield_notation="b")
+        if len(values) > 0:
+            return "".join(values)
+        return ""
+
+    def get_license(self, fields):
+        """Get license."""
+        values = fields.get_values("540", subfield_notation="f")
+        if len(values) > 0:
+            return values[0]
+        return ""
+
+    def get_youtube(self, fields):
+        """Get youtube."""
+        fields = fields.get_fields("856")
+
+        if len(fields) == 0:
+            return ""
+
+        for field in fields:
+            if field.get("a") == ["youtube"]:
+                return field.get("u")[0]
+
         return ""
 
     def get_description(self, fields):
