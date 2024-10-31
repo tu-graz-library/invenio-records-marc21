@@ -31,14 +31,8 @@ class Marc21Schema(Schema):
     def load_metadata(self, value):
         """Load metadata."""
         fields = {}
-        metadata = {
-            "leader": value["leader"],
-        }
 
-        if "fields" not in value:
-            return metadata
-
-        for field in value["fields"]:
+        for field in value.get("fields", []):
             if int(field["id"]) < 10:
                 fields[field["id"]] = field["subfield"]
             else:
@@ -56,8 +50,11 @@ class Marc21Schema(Schema):
                         "subfields": subfields,
                     }
                 )
-        metadata["fields"] = fields
-        return metadata
+
+        return {
+            "leader": value["leader"],
+            "fields": fields,
+        }
 
     @pre_load
     def remove(self, data, **kwargs):

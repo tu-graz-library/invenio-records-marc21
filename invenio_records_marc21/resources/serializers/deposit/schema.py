@@ -20,15 +20,9 @@ class MetadataDepositField(Field):
 
     def _serialize(self, value, attr, obj, **kwargs):
         """Serialize metadata field."""
-        record = {
-            "fields": [],
-            "leader": value.get("leader"),
-        }
-        if "fields" not in value:
-            return record
-
         fields_ui = []
-        for category, fields in value["fields"].items():
+
+        for category, fields in value.get("fields", {}).items():
             if isinstance(fields, str):
                 obj = {
                     "id": category,
@@ -51,8 +45,11 @@ class MetadataDepositField(Field):
                     }
 
                     fields_ui.append(obj)
-        record["fields"] = fields_ui
-        return record
+
+        return {
+            "fields": fields_ui,
+            "leader": value.get("leader"),
+        }
 
 
 class Marc21DepositSchema(Marc21Schema):
