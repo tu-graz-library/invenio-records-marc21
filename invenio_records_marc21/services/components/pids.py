@@ -3,7 +3,7 @@
 # Copyright (C) 2020-2021 CERN.
 # Copyright (C) 2020 Northwestern University.
 # Copyright (C) 2021 TU Wien.
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2024 Graz University of Technology.
 #
 # Invenio-RDM-Records is free software; you can redistribute it and/or modify
 # it under the terms of the MIT License; see LICENSE file for more details.
@@ -56,6 +56,9 @@ class PIDsComponent(BasePIDsComponent):
 
         self._add_other_standard_identifier(doi.get("identifier"), fields)
         self._add_electronic_location_and_access(doi.get("identifier"), fields)
+
+        # Only required in cases where fields might be missing from the metadata
+        metadata["fields"] = fields
 
     def create(self, identity, data=None, record=None, errors=None):
         """This method is called on draft creation.
