@@ -11,6 +11,8 @@
 """Marc21 record schemas."""
 
 from flask import current_app
+
+# from invenio_catalogue_marc21.services.schemas import CatalogueSchema
 from invenio_drafts_resources.services.records.schema import ParentSchema
 from invenio_i18n import lazy_gettext as _
 from invenio_rdm_records.services.schemas.access import AccessSchema
