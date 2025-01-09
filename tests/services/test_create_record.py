@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -48,9 +48,10 @@ def test_create_with_service(running_app, service, marc21):
         "updated",
         "metadata",
     ]
-    expected = {"metadata": {"fields": {}, "leader": ""}}
+
     _assert_fields_exists(root_fields, draft.data)
     # TODO: the doi 024 field exists
+    # expected = {"metadata": {"fields": {}, "leader": ""}}
     # _assert_fields(["metadata"], draft.data, expected)
     assert not draft["is_published"]
 
@@ -59,6 +60,7 @@ def test_create_with_service(running_app, service, marc21):
     assert record
     _assert_fields_exists(root_fields, record.data)
     # TODO: the doi 024 field exists
+    # expected = {"metadata": {"fields": {}, "leader": ""}}
     # _assert_fields(["metadata"], record.data, expected)
     assert record["is_published"]
 

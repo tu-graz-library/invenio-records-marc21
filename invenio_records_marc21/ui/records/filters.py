@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -15,7 +15,6 @@ import re
 import idutils
 from flask import current_app
 
-from ...services.record.metadata import convert_marc21xml_to_json
 from .wrappers import get_personal_code
 
 
@@ -35,11 +34,6 @@ def pid_url(identifier, scheme=None, url_scheme="https"):
             exc_info=True,
         )
     return ""
-
-
-def marc21_to_json(marcxml):
-    """Convert record into json."""
-    return convert_marc21xml_to_json(marcxml)
 
 
 def sanitize_title(title):
