@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -50,33 +50,11 @@ def fails_meta(data):
 #
 # Fixtures
 #
-@pytest.fixture()
-def marc21():
-    """marc21 record."""
-    return {
-        "xml": "<record><controlfield tag='001'>990079940640203331</controlfield> \
-       <controlfield tag='003'>AT-OBV</controlfield> \
-       <controlfield tag='005'>20170703041800.0</controlfield>\
-       <controlfield tag='007'>cr</controlfield>\
-       <controlfield tag='008'>100504|1932</controlfield>\
-       <controlfield tag='009'>AC08088803</controlfield>\
-       <datafield tag='035' ind1=' ' ind2=' '>\
-       <subfield code='a'>AC08088803</subfield>\
-       </datafield></record>"
-    }
 
 
 def _load_json(filename):
     with open(join(dirname(__file__), filename), "rb") as fp:
         return json.load(fp)
-
-
-#
-# Test a full record
-#
-def test_full_record(appctx):
-    """Test validation of a full record example."""
-    assert validates(_load_json("test-record.json"))
 
 
 #
@@ -158,13 +136,3 @@ def test_pids(appctx):
 def test_metadata(appctx):
     """Test empty metadata."""
     assert validates({"metadata": {"fields": [], "leader": ""}})
-
-
-def test_metadata_record(appctx):
-    """Test title property."""
-    assert validates_meta({"xml": "<record></record>"})
-
-
-def test_marc21(appctx, marc21):
-    """Test additional titles property."""
-    assert validates_meta(marc21)

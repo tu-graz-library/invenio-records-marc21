@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -226,7 +226,6 @@ from .services import (
     add_file_to_record,
     check_about_duplicate,
     convert_json_to_marc21xml,
-    convert_marc21xml_to_json,
     create_record,
 )
 
@@ -243,6 +242,5 @@ __all__ = (
     "DuplicateRecordError",
     "check_about_duplicate",
     "convert_json_to_marc21xml",
-    "convert_marc21xml_to_json",
     "Marc21RecordService",
 )

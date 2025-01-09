@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2024 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -431,6 +431,8 @@ def app_config(app_config):
     app_config["DATACITE_PASSWORD"] = "INVALID"
     app_config["DATACITE_PREFIX"] = "10.123"
     app_config["OAISERVER_ID_PREFIX"] = "oai:repo"
+    app_config["RDM_FILES_DEFAULT_QUOTA_SIZE"] = 10 * (10**9)
+    app_config["RDM_FILES_DEFAULT_MAX_FILE_SIZE"] = 10 * (10**9)
     app_config["MARC21_PERSISTENT_IDENTIFIER_PROVIDERS"] = [
         # DataCite DOI provider with fake client
         Marc21DataCitePIDProvider(

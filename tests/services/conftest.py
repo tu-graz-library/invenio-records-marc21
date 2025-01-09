@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -14,7 +14,9 @@ See https://pytest-invenio.readthedocs.io/ for documentation on which test
 fixtures are available.
 """
 import json
-from os.path import dirname, join
+
+# from os.path import dirname, join
+from pathlib import Path
 
 import pytest
 
@@ -23,59 +25,41 @@ from invenio_records_marc21.services.record import Marc21Metadata
 
 
 @pytest.fixture(scope="session")
-def xml_metadata():
-    """Input data (as coming from the view layer)."""
-    metadata = Marc21Metadata()
-    metadata.xml = """<record xmlns="http://www.loc.gov/MARC21/slim"><leader>00000nam a2200000zca4500</leader><datafield tag='245' ind1='1' ind2='0'><subfield code='a'>laborum sunt ut nulla</subfield></datafield></record>"""
-    return metadata
-
-
-@pytest.fixture(scope="session")
-def xml_metadata2():
-    """Input data (as coming from the view layer)."""
-    metadata = Marc21Metadata()
-    metadata.xml = """<record xmlns="http://www.loc.gov/MARC21/slim"><leader>00000nam a2200000zca4500</leader><datafield tag='245' ind1='1' ind2='0'><subfield code='a'>nulla sunt laborum</subfield></datafield></record>"""
-    return metadata
-
-
-@pytest.fixture(scope="session")
 def json_metadata():
     """Input data (as coming from the view layer)."""
-    metadata = {
+    return {
         "metadata": {
             "leader": "00000nam a2200000zca4500",
             "fields": {
                 "245": [
                     {
-                        "subfields": {"a": ["laborum sunt ut nulla"]},
                         "ind1": "1",
                         "ind2": "0",
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
                     }
                 ]
             },
         }
     }
-    return metadata
 
 
 @pytest.fixture(scope="session")
 def json_metadata2():
     """Input data (as coming from the view layer)."""
-    metadata = {
+    return {
         "metadata": {
             "leader": "00000nam a2200000zca4500",
             "fields": {
                 "245": [
                     {
-                        "subfields": {"a": ["nulla sunt laborum"]},
                         "ind1": "1",
                         "ind2": "0",
+                        "subfields": {"a": ["nulla sunt laborum"]},
                     }
                 ]
             },
         }
     }
-    return metadata
 
 
 @pytest.fixture()
@@ -88,29 +72,18 @@ def embargoedrecord(embargoed_record, adminuser_identity):
     return record
 
 
-def _load_file(filename):
-    with open(join(dirname(__file__), filename), "rb") as fp:
-        return fp.read()
-
-
 @pytest.fixture()
 def full_metadata():
-    """Metadata full record marc21 xml."""
+    """Metadata full record marc21 json."""
+    # json_string = _load_file()
     metadata = Marc21Metadata()
-    metadata.xml = _load_file("test-metadata.xml").decode("UTF-8")
+    with Path(Path(__file__).parent / "test-metadata.json").open("r") as fp:
+        metadata.json = json.load(fp)["metadata"]
     return metadata
 
 
 @pytest.fixture()
 def full_metadata_expected():
-    """Metadata full record marc21 json expected."""
-    json_string = _load_file("test-metadata.json")
-    return json.loads(json_string.decode("UTF-8"))
-
-
-@pytest.fixture()
-def min_metadata():
-    """Metadata empty record marc21 xml."""
-    metadata = Marc21Metadata()
-    metadata.xml = """<record xmlns="http://www.loc.gov/MARC21/slim"></record>"""
-    return metadata
+    """Metadata full record expected."""
+    with Path(Path(__file__).parent / "test-metadata.json").open("r") as fp:
+        return json.load(fp)

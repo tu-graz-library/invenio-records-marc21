@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -12,7 +12,8 @@
 
 from __future__ import annotations
 
-from xml.etree.ElementTree import Element, fromstring, tostring
+from contextlib import suppress
+from xml.etree.ElementTree import Element
 
 
 class QName:
@@ -96,175 +97,43 @@ class JsonToXmlVisitor:
             self.record.append(datafield)
 
 
-def convert_marc21xml_to_json(record):
-    """MARC21 Record class convert to json."""
-    visitor = XmlToJsonVisitor()
-    visitor.visit(record)
-    return visitor.get_json_record()
-
-
-class XmlToJsonVisitor:
-    """XmlToJsonVisitor class."""
-
-    def __init__(self):
-        """Constructor."""
-        self.record = {"leader": "", "fields": {}}
-
-    def process(self, node):
-        """Execute the corresponding method to the tag name."""
-
-        def func_not_found(*args, **kwargs):
-            localname = QName(node).localname
-            namespace = QName(node).namespace
-            raise ValueError(f"NO visitor node: '{localname}' ns: '{namespace}'")
-
-        tag_name = QName(node).localname
-        visit_func = getattr(self, f"visit_{tag_name}", func_not_found)
-        result = visit_func(node)
-        return result
-
-    def visit(self, node):
-        """Visit default method and entry point for the class."""
-        for child in node:
-            self.process(child)
-
-    def append_string(self, tag: str, value: str):
-        """Append to the field dict a single string."""
-        self.record["fields"][tag] = value
-
-    def append(self, tag: str, field: dict):
-        """Append to the field tag list."""
-        if tag not in self.record["fields"]:
-            self.record["fields"][tag] = []
-
-        self.record["fields"][tag].append(field)
-
-    def get_json_record(self):
-        """Get the mij representation of the marc21 xml record."""
-        return self.record
-
-    def visit_record(self, node):
-        """Visit the record."""
-        self.record = {"leader": "", "fields": {}}
-        self.visit(node)
-
-    def visit_leader(self, node):
-        """Visit the controlfield field."""
-        self.record["leader"] = node.text
-
-    def visit_controlfield(self, node):
-        """Visit the controlfield field."""
-        field = node.text
-        self.append_string(node.get("tag"), field)
-
-    def visit_datafield(self, node):
-        """Visit the datafield field."""
-        self.subfields = {}
-        self.visit(node)
-
-        tag = node.get("tag")
-        ind1 = node.get("ind1", "_").replace(" ", "_")
-        ind2 = node.get("ind2", "_").replace(" ", "_")
-
-        field = {
-            "ind1": ind1,
-            "ind2": ind2,
-            "subfields": self.subfields,
-        }
-        self.append(tag, field)
-
-    def visit_subfield(self, node):
-        """Visit the subfield field."""
-        subf_code = node.get("code")
-
-        if subf_code not in self.subfields:
-            self.subfields[subf_code] = []
-
-        self.subfields[subf_code].append(node.text)
-
-
 class Marc21Metadata:
     """MARC21 Record class to facilitate storage of records in MARC21 format."""
 
-    def __init__(self, *, metadata=None, json=None):
+    def __init__(self, *, json=None):
         """Default constructor of the class."""
-        self.namespace = "http://www.loc.gov/MARC21/slim"
         self.set_default()
-
-        if metadata:
-            self.etree = metadata
 
         if json:
             self.json = json
 
     def set_default(self):
         """Set default marc21 structure."""
-        self._json = {}
-
-        leader = Element(f"{{{self.namespace}}}leader")
-        leader.text = "00000nam a2200000zca4500"
-
-        self._etree = Element(f"{{{self.namespace}}}record", xmlns=self.namespace)
-        self._etree.append(leader)
-
-    @property
-    def etree(self):
-        """Metadata etree getter method."""
-        return self._etree
-
-    @etree.setter
-    def etree(self, _etree):
-        """Etree setter."""
-        self._etree = _etree
+        self._json = {
+            "leader": "00000nam a2200000zca4500",
+            "fields": {},
+        }
 
     @property
     def json(self):
         """Metadata json getter method."""
-        self._json = {"metadata": convert_marc21xml_to_json(self._etree)}
-        return self._json
+        return {"metadata": self._json}
 
     @json.setter
-    def json(self, json):
+    def json(self, json_):
         """Metadata json setter method."""
-        if not isinstance(json, dict):
-            raise TypeError("json must be from type dict")
-        self._json = json
-        self._etree = convert_json_to_marc21xml(self._json)
+        if not (
+            isinstance(json_, dict)
+            and "leader" in json_
+            and "fields" in json_
+            and isinstance(json_["fields"], dict)
+        ):
+            msg = (
+                "Marc21Metadata should get a dictionary with at least leader and fields"
+            )
+            raise TypeError(msg)
 
-    @property
-    def xml(self):
-        """Metadata xml getter method."""
-        return tostring(self._etree).decode("UTF-8")
-
-    @xml.setter
-    def xml(self, xml):
-        """Metadata xml setter method."""
-        if not isinstance(xml, str):
-            raise TypeError("xml must be from type str")
-
-        self._etree = fromstring(xml)
-
-    def _findall(self, pattern: str, element: Element = None) -> list[Element]:
-        """Find all elements."""
-        if element is None:
-            element = self._etree
-
-        pattern = f"./{{{self.namespace}}}{pattern}"
-
-        return element.findall(pattern)
-
-    def exists(self, to_check_category: Element, art_of_category):
-        """Check if a category is already in the tree.
-
-        Only completely equal tags will be dismissed.
-        """
-        to_check_category_str = tostring(to_check_category, method="xml").strip()
-        for category in self._findall(art_of_category):
-            category_str = tostring(category, method="xml").strip()
-            if to_check_category_str == category_str:
-                return True
-
-        return False
+        self._json = json_["metadata"] if "metadata" in json_ else json_
 
     def get_fields(
         self,
@@ -278,16 +147,31 @@ class Marc21Metadata:
         The return value could be found more precisely by defining ind1, ind2
         and subf_code.
         """
-        ind_options = ""
+        if not category.isnumeric():
+            return ([], [])
 
-        if ind1:
-            ind_options += f"[@ind1='{ind1}']"
+        try:
+            if int(category) < 10:
+                controlfields = [self._json["fields"][category]]
+            else:
+                controlfields = []
+        except KeyError:
+            controlfields = []
 
-        if ind2:
-            ind_options += f"[@ind2='{ind2}']"
+        def fix_underline(ind):
+            # the problem is that the codebase introduced "_" as a replacement
+            # for " " and this has to be fixed somewhere in the future
+            return [ind, " " if ind == "_" else None, "_" if ind == " " else None]
 
-        controlfields = self._findall(f"controlfield[@tag='{category}']")
-        datafields = self._findall(f"datafield[@tag='{category}']{ind_options}")
+        def ind_condition(d):
+            ind1_ = d["ind1"] in fix_underline(ind1) if ind1 else True
+            ind2_ = d["ind2"] in fix_underline(ind2) if ind2 else True
+            return ind1_ and ind2_
+
+        try:
+            datafields = [d for d in self._json["fields"][category] if ind_condition(d)]
+        except KeyError:
+            datafields = []
 
         return (controlfields, datafields)
 
@@ -299,18 +183,16 @@ class Marc21Metadata:
         subf_code: str = None,
     ) -> str:
         """Get the value of the found field."""
-        subfield_options = f"[@code='{subf_code}']" if subf_code else ""
-
         controlfields, datafields = self.get_fields(category, ind1, ind2)
 
         if len(controlfields) > 0:
-            return controlfields[0].text
+            return controlfields[0]
 
         if len(datafields) > 0:
-            # per definition every datafield has at least one subfield
-            result = self._findall(f"subfield{subfield_options}", datafields[0])
-            if len(result) > 0:
-                return result[0].text
+            try:
+                return " ".join(datafields[0]["subfields"][subf_code])
+            except KeyError:
+                return ""
 
         return ""
 
@@ -322,19 +204,20 @@ class Marc21Metadata:
         subf_code: str = None,
     ) -> list[str]:
         """Get values of the found field."""
-        subfield_options = f"[@code='{subf_code}']" if subf_code else ""
-
         controlfields, datafields = self.get_fields(category, ind1, ind2)
+
         values = []
 
         for controlfield in controlfields:
-            values.append(controlfield.text)
+            values.append(controlfield)
 
         for datafield in datafields:
-            pattern = f"subfield{subfield_options}"
-            subfields = self._findall(pattern, datafield)
-            for subfield in subfields:
-                values.append(subfield.text)
+            if subf_code is None:
+                for value in datafield["subfields"].values():
+                    values.extend(value)
+
+            with suppress(KeyError):
+                values.extend(datafield["subfields"][subf_code])
 
         return values
 
@@ -352,18 +235,15 @@ class Marc21Metadata:
 
     def emplace_leader(self, value=""):
         """Change leader string in record."""
-        for leader in self._etree.iter(f"{{{self.namespace}}}leader"):
-            leader.text = value
+        self._json["leader"] = value
 
     def emplace_controlfield(self, tag="", value=""):
         """Add value to record for given datafield and subfield."""
-        controlfield = Element(f"{{{self.namespace}}}controlfield", tag=tag)
-        controlfield.text = value
+        if int(tag) > 9:
+            raise RuntimeError("ERROR: controlfields are < 10")
 
-        if self.exists(controlfield, "controlfield"):
-            return
-
-        self._etree.append(controlfield)
+        controlfield = {tag: value}
+        self._json["fields"].update(controlfield)
 
     def emplace_datafield(self, selector, *, value=None, subfs=None) -> None:
         """Add value to record for given datafield and subfield.
@@ -381,27 +261,40 @@ class Marc21Metadata:
         if not code:
             code = "a"
 
-        node_name = f"{{{self.namespace}}}datafield"
-        datafield = Element(node_name, tag=tag, ind1=ind1, ind2=ind2)
-        if value:
-            subfield = Element(f"{{{self.namespace}}}subfield", code=code)
-            subfield.text = value
-            datafield.append(subfield)
+        datafield = {
+            tag: [
+                {
+                    "ind1": ind1,
+                    "ind2": ind2,
+                    "subfields": {},
+                }
+            ],
+        }
 
+        if value:
+            datafield[tag][0]["subfields"][code] = [value]
         elif subfs:
             for key, val in sorted(
                 subfs.items(),
                 key=lambda x: f"zz{x}" if x[0].isnumeric() else x[0],
             ):
-                subfield = Element(f"{{{self.namespace}}}subfield", code=key)
-                subfield.text = " ".join(val) if isinstance(val, list) else val
-                datafield.append(subfield)
-
+                datafield[tag][0]["subfields"][key] = (
+                    val if isinstance(val, list) else [val]
+                )
         else:
             raise RuntimeError("Neither of value or subfs is set.")
 
-        # double check
-        if self.exists(datafield, "datafield"):
-            return
-
-        self._etree.append(datafield)
+        if tag not in self._json["fields"]:
+            self._json["fields"].update(datafield)
+        else:
+            # if the tag already exists it has to be found the correct ind1/ind2
+            # combination to update subfields. dict does not deep update as
+            # intended
+            datafields = self._json["fields"][tag]
+            for d in datafields:
+                if d["ind1"] == ind1 and d["ind2"] == ind2:
+                    for code, value in datafield[tag][0]["subfields"].items():
+                        if code in d["subfields"]:
+                            d["subfields"][code].extend(value)
+                        else:
+                            d["subfields"][code] = value
