@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2021 CERN.
 # Copyright (C) 2021 Northwestern University.
-# Copyright (C) 2022-2023 Graz University of Technology.
+# Copyright (C) 2022-2025 Graz University of Technology.
 #
 # Invenio-RDM-Records is free software; you can redistribute it and/or modify
 # it under the terms of the MIT License; see LICENSE file for more details.
@@ -11,7 +11,6 @@
 """DataCite based Schema for Invenio RDM Records."""
 
 from flask import current_app
-from invenio_i18n import lazy_gettext as _
 from marshmallow import Schema, fields, missing
 
 
@@ -75,17 +74,27 @@ class Marc21DataCite43Schema(Schema):
 
     def get_publisher(self, obj):
         """Get publisher."""
-        publisher_field = self._get_subfields(obj, "260")
-        return publisher_field.get(
-            "b",
-            [current_app.config.get("MARC21_DATACITE_DEFAULT_PUBLISHER")],
-        )[0]
+        for field_number in ["260", "264"]:
+            publisher_field = self._get_subfields(obj, field_number)
+            publisher = publisher_field.get("b")
+            if publisher:
+                return publisher[0]
+
+        return current_app.config.get("MARC21_DATACITE_DEFAULT_PUBLISHER")
 
     def get_publication_year(self, obj):
         """Get publication year from edtf date."""
-        publication_dates = self._get_field(obj, "008")
-        publication_date = publication_dates[7:11]
-        return publication_date
+        publication_dates = self._get_field(obj, "008", None)
+        if publication_dates:
+            publication_date = publication_dates[7:11]
+            return publication_date
+
+        # Production, Publication, Distribution, Manufacture, and Copyright Notice
+        ppdmcn = self._get_subfields(obj, "264")
+        if ppdmcn:
+            return ppdmcn.get("c")[0]
+
+        return None
 
     def get_identifiers(self, obj):
         """Get (main and alternate) identifiers list."""
