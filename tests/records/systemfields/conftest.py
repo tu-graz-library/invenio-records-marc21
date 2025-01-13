@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -14,14 +14,13 @@ See https://pytest-invenio.readthedocs.io/ for documentation on which test
 fixtures are available.
 """
 
-import tempfile
 
 import pytest
 from flask import Flask
+from flask_principal import ActionNeed
 from invenio_access.models import ActionRoles
 from invenio_access.permissions import superuser_access
 from invenio_accounts.models import Role
-from invenio_admin.permissions import action_admin_access
 from invenio_db import InvenioDB
 from invenio_files_rest import InvenioFilesREST
 from invenio_jsonschemas import InvenioJSONSchemas
@@ -99,7 +98,7 @@ def superuser_identity(admin, superuser_role_need):
 
 
 @pytest.fixture(scope="function")
-def admin_role_need(db):
+def administration_need(db):
     """Store 1 role with 'superuser-access' ActionNeed.
 
     WHY: This is needed because expansion of ActionNeed is
@@ -107,10 +106,10 @@ def admin_role_need(db):
          If no User/Role is associated with that Need (in the DB), the
          permission is expanded to an empty list.
     """
-    role = Role(name="admin-access")
+    role = Role(name="administration")
     db.session.add(role)
 
-    action_role = ActionRoles.create(action=action_admin_access, role=role)
+    action_role = ActionRoles.create(action=ActionNeed("administration"), role=role)
     db.session.add(action_role)
 
     db.session.commit()
@@ -119,7 +118,7 @@ def admin_role_need(db):
 
 
 @pytest.fixture()
-def admin(UserFixture, app, db, admin_role_need):
+def admin(UserFixture, app, db, administration_need):
     """Admin user for requests."""
     u = UserFixture(
         email="admin@inveniosoftware.org",
@@ -128,7 +127,7 @@ def admin(UserFixture, app, db, admin_role_need):
     u.create(app, db)
 
     datastore = app.extensions["security"].datastore
-    _, role = datastore._prepare_role_modify_args(u.user, "admin-access")
+    _, role = datastore._prepare_role_modify_args(u.user, "administration")
 
     datastore.add_role_to_user(u.user, role)
     db.session.commit()
