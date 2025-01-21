@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -119,7 +119,7 @@ def test_record_files_delete(testapp, db, location):
     bucket_id = record.bucket_id
     db.session.commit()
     assert Bucket.query.count() == 1
-    assert Bucket.query.get(bucket_id)
+    assert db.session.get(Bucket, bucket_id)
 
     record.delete()
     db.session.commit()
