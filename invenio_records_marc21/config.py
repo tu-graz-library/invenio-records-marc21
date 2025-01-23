@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2024 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -13,7 +13,7 @@
 from __future__ import absolute_import, print_function
 
 import idutils
-from celery.schedules import crontab, timedelta
+from celery.schedules import crontab
 from flask_principal import RoleNeed
 from invenio_i18n import lazy_gettext as _
 from invenio_rdm_records.services import facets as rdm_facets
@@ -292,6 +292,9 @@ MARC21_RECORD_CURATOR_NEEDS = [RoleNeed("Marc21Curator")]
 
 MARC21_RECORD_CREATOR_NEEDS = [RoleNeed("Marc21Creator")]
 """This Role is here to create and modify records, no publish allowed."""
+
+MARC21_ALLOW_METADATA_ONLY_RECORDS = True
+"""Allow marc21 records with only metadata."""
 
 
 # Statistics configuration
