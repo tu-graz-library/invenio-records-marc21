@@ -120,20 +120,20 @@ class Marc21Metadata:
         return {"metadata": self._json}
 
     @json.setter
-    def json(self, json_):
+    def json(self, _json):
         """Metadata json setter method."""
         if not (
-            isinstance(json_, dict)
-            and "leader" in json_
-            and "fields" in json_
-            and isinstance(json_["fields"], dict)
+            isinstance(_json, dict)
+            and "leader" in _json
+            and "fields" in _json
+            and isinstance(_json["fields"], dict)
         ):
             msg = (
                 "Marc21Metadata should get a dictionary with at least leader and fields"
             )
             raise TypeError(msg)
 
-        self._json = json_["metadata"] if "metadata" in json_ else json_
+        self._json = _json["metadata"] if "metadata" in _json else _json
 
     def get_fields(
         self,

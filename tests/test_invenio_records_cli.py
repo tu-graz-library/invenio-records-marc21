@@ -16,12 +16,11 @@ from datetime import timedelta
 import arrow
 import pytest
 
-from invenio_records_marc21.cli import (
-    create_fake_metadata,
+from invenio_records_marc21.cli import marc21
+from invenio_records_marc21.fixtures.demo import (
     create_fake_record,
     fake_access_right,
     fake_feature_date,
-    marc21,
 )
 
 
@@ -42,25 +41,13 @@ def test_fake_feature_date():
     assert date_arrow < arrow.get(start_date.date() + timedelta(days=30))
 
 
-@pytest.mark.skip("will be fixed later")
 def test_fake_demo_record_creation(running_app, adminuser_identity, search_clear):
     """Test create fake full record with marc21 service."""
     app = running_app.app
 
     with app.app_context():
-        record = create_fake_record(adminuser_identity, "../tests/test-record.json")
-        assert record
-        assert record.id
-
-
-@pytest.mark.skip("will be fixed later")
-def test_fake_demo_metadata_creation(running_app, adminuser_identity, search_clear):
-    """Test create fake metadata record with marc21 service."""
-    app = running_app.app
-    with app.app_context():
-        record = create_fake_metadata(adminuser_identity, "../tests/test-metadata.xml")
-        assert record
-        assert record.id
+        record = create_fake_record()
+        assert isinstance(record, dict)
 
 
 def test_cli_create_demo_record(running_app, cli_runner, adminuser, search_clear):
@@ -83,7 +70,6 @@ def test_cli_create_demo_metadata(running_app, cli_runner, adminuser, search_cle
         "demo",
         "-u",
         adminuser.email,
-        "-m",
         "-n",
         "1",
     ]
