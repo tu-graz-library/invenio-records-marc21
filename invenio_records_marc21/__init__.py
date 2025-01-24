@@ -80,9 +80,9 @@ in this example we use an in-memory SQLite database by default):
 
 >>> from invenio_db import db
 >>> from sqlalchemy_utils.functions import create_database, database_exists, drop_database
->>> if database_exists(str(db.engine.url)):
-...     drop_database(str(db.engine.url))
->>> create_database(str(db.engine.url))
+>>> if database_exists(str(db.engine.url.render_as_string(hide_password=False))):
+...     drop_database(str(db.engine.url.render_as_string(hide_password=False)))
+>>> create_database(str(db.engine.url.render_as_string(hide_password=False)))
 >>> db.create_all()
 
 
