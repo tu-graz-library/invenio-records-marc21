@@ -8,6 +8,17 @@
 Changes
 =======
 
+Version v0.23.0 (release 2025-01-24)
+
+- cli: password is per default hided
+- setup: only for dev tags, will be removed
+- refactor: cli demo,templates -> fixtures
+- fix: LegacyAPIWarning
+- tests: remove invenio-admin usage
+- fix: datacite serialization
+- refactor: change internal representation to json
+
+
 Version v0.22.2 (release 2024-10-31)
 
 - fix: fields could be missing
