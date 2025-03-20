@@ -10,8 +10,6 @@
 
 """Marc21 record class."""
 
-from __future__ import annotations
-
 from contextlib import suppress
 from xml.etree.ElementTree import Element
 
@@ -246,10 +244,53 @@ class Marc21Metadata:
         self._json["fields"].update(controlfield)
 
     def emplace_datafield(self, selector, *, value=None, subfs=None) -> None:
-        """Add value to record for given datafield and subfield.
+        """Emplace value to record for given datafield and subfield.
 
         :params selector e.g. "100...a", "100"
+
+        This method should only be used if a field with the same indicators
+        should be merged together. If a field like 500 should be added twice,
+        use add_datafield.
+
+        It could be problematic to mix emplace_datafield and add_datafield.
+
+        On the first addition emplace_datafield and add_datafield work the same,
+        the difference only becomes apparent when an identical field is added.
         """
+        tag, ind1, ind2, code = selector.split(".")
+        datafield = self._datafield(selector, value=value, subfs=subfs)
+
+        if tag not in self._json["fields"]:
+            self._json["fields"].update(datafield)
+        else:
+            # if the tag already exists it has to be found the correct ind1/ind2
+            # combination to update subfields. dict does not deep update as
+            # intended
+            datafields = self._json["fields"][tag]
+            for d in datafields:
+                if d["ind1"] == ind1 and d["ind2"] == ind2:
+                    for code, value in datafield[tag][0]["subfields"].items():
+                        if code in d["subfields"]:
+                            d["subfields"][code].extend(value)
+                        else:
+                            d["subfields"][code] = value
+
+    def add_datafield(self, selector, *, value=None, subfs=None) -> None:
+        """Add value to record for given datafield and subfield.
+
+        This method can be used if two independent fields with the same
+        indicator should be added to the fields list.
+        """
+        tag, _, _, _ = selector.split(".")
+        datafield = self._datafield(selector, value=value, subfs=subfs)
+
+        if tag not in self._json["fields"]:
+            self._json["fields"].update(datafield)
+        else:
+            self._json["fields"][tag].extend(datafield[tag])
+
+    def _datafield(self, selector, *, value=None, subfs=None) -> dict:
+        """Construct datafield."""
         tag, ind1, ind2, code = selector.split(".")
 
         if not ind1:
@@ -284,17 +325,4 @@ class Marc21Metadata:
         else:
             raise RuntimeError("Neither of value or subfs is set.")
 
-        if tag not in self._json["fields"]:
-            self._json["fields"].update(datafield)
-        else:
-            # if the tag already exists it has to be found the correct ind1/ind2
-            # combination to update subfields. dict does not deep update as
-            # intended
-            datafields = self._json["fields"][tag]
-            for d in datafields:
-                if d["ind1"] == ind1 and d["ind2"] == ind2:
-                    for code, value in datafield[tag][0]["subfields"].items():
-                        if code in d["subfields"]:
-                            d["subfields"][code].extend(value)
-                        else:
-                            d["subfields"][code] = value
+        return datafield
