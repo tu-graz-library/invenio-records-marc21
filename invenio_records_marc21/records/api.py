@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2024 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -11,6 +11,8 @@
 """Marc21 Api."""
 
 from __future__ import absolute_import, print_function
+
+import enum
 
 from invenio_drafts_resources.records import Draft, Record
 from invenio_drafts_resources.records.api import ParentRecord as BaseParentRecord
@@ -42,6 +44,14 @@ from .systemfields import (
     MarcRecordProvider,
     MarcResolver,
 )
+
+
+class RecordDeletionStatusEnum(enum.Enum):
+    """Enumeration of a record's possible deletion states."""
+
+    PUBLISHED = "P"
+    DELETED = "D"
+    MARKED = "X"
 
 
 #
@@ -178,6 +188,22 @@ class Marc21Record(Record, CommonFieldsMixin):
     deletion_status = RecordDeletionStatusField()
 
     stats = Marc21RecordStatisticsField()
+
+    @classmethod
+    def get_latest_published_by_parent(cls, parent):
+        """Get the latest published record for the specified parent record.
+
+        It might return None if there is no latest published version i.e not
+        published yet or all versions are deleted.
+        """
+        latest_record = cls.get_latest_by_parent(parent)
+        if (
+            latest_record
+            and latest_record.deletion_status
+            != RecordDeletionStatusEnum.PUBLISHED.value
+        ):
+            return None
+        return latest_record
 
 
 RecordFile.record_cls = Marc21Record
