@@ -30,10 +30,11 @@ DefaultServiceLinks = {
     "self_doi": Link(
         "{+ui}/publications/{+pid_doi}",
         when=is_record_and_has_doi,
-        vars=lambda record, vars: vars.update(
+        vars=lambda record, var_s: var_s.update(
             {
                 f"pid_{scheme}": pid["identifier"].split("/")[1]
                 for (scheme, pid) in record.pids.items()
+                if scheme == "doi"
             }
         ),
     ),
@@ -44,6 +45,7 @@ DefaultServiceLinks = {
             {
                 f"pid_{scheme}": pid["identifier"]
                 for (scheme, pid) in record.pids.items()
+                if scheme == "doi"
             }
         ),
     ),
