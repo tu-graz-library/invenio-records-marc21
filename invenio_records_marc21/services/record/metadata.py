@@ -95,6 +95,93 @@ class JsonToXmlVisitor:
             self.record.append(datafield)
 
 
+def convert_marc21xml_to_json(record):
+    """MARC21 Record class convert to json."""
+    visitor = XmlToJsonVisitor()
+    visitor.visit(record)
+    return visitor.get_json_record()
+
+
+class XmlToJsonVisitor:
+    """XmlToJsonVisitor class."""
+
+    def __init__(self):
+        """Constructor."""
+        self.record = {"leader": "", "fields": {}}
+
+    def process(self, node):
+        """Execute the corresponding method to the tag name."""
+
+        def func_not_found(*args, **kwargs):
+            localname = QName(node).localname
+            namespace = QName(node).namespace
+            raise ValueError(f"NO visitor node: '{localname}' ns: '{namespace}'")
+
+        tag_name = QName(node).localname
+        visit_func = getattr(self, f"visit_{tag_name}", func_not_found)
+        result = visit_func(node)
+        return result
+
+    def visit(self, node):
+        """Visit default method and entry point for the class."""
+        for child in node:
+            self.process(child)
+
+    def append_string(self, tag: str, value: str):
+        """Append to the field dict a single string."""
+        self.record["fields"][tag] = value
+
+    def append(self, tag: str, field: dict):
+        """Append to the field tag list."""
+        if tag not in self.record["fields"]:
+            self.record["fields"][tag] = []
+
+        self.record["fields"][tag].append(field)
+
+    def get_json_record(self):
+        """Get the mij representation of the marc21 xml record."""
+        return self.record
+
+    def visit_record(self, node):
+        """Visit the record."""
+        self.record = {"leader": "", "fields": {}}
+        self.visit(node)
+
+    def visit_leader(self, node):
+        """Visit the controlfield field."""
+        self.record["leader"] = node.text
+
+    def visit_controlfield(self, node):
+        """Visit the controlfield field."""
+        field = node.text
+        self.append_string(node.get("tag"), field)
+
+    def visit_datafield(self, node):
+        """Visit the datafield field."""
+        self.subfields = {}
+        self.visit(node)
+
+        tag = node.get("tag")
+        ind1 = node.get("ind1", "_").replace(" ", "_")
+        ind2 = node.get("ind2", "_").replace(" ", "_")
+
+        field = {
+            "ind1": ind1,
+            "ind2": ind2,
+            "subfields": self.subfields,
+        }
+        self.append(tag, field)
+
+    def visit_subfield(self, node):
+        """Visit the subfield field."""
+        subf_code = node.get("code")
+
+        if subf_code not in self.subfields:
+            self.subfields[subf_code] = []
+
+        self.subfields[subf_code].append(node.text)
+
+
 class Marc21Metadata:
     """MARC21 Record class to facilitate storage of records in MARC21 format."""
 
