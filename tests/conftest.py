@@ -450,6 +450,7 @@ def app_config(app_config):
             label=_("DOI"),
         ),
     ]
+    app_config["THEME_FRONTPAGE"] = False
 
     return app_config
 
