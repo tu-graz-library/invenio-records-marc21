@@ -8,6 +8,17 @@
 Changes
 =======
 
+Version v0.24.0 (release 2025-04-29)
+
+- fix(tests): add configuration
+- setup: add python3.13 support
+- revert: remove of convert_marc21xml_to_json
+- fix(links): for doi only doi
+- rdm: compatibility
+- metadata: add new method
+- feat: make links configurable
+
+
 Version v0.23.0 (release 2025-01-24)
 
 - cli: password is per default hided
