@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.24.1 (release 2025-04-30)
+
+- fix: jsonschema user
+
+
 Version v0.24.0 (release 2025-04-29)
 
 - fix(tests): add configuration
