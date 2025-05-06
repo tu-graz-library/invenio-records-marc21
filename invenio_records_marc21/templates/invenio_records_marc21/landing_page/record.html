@@ -68,10 +68,42 @@ details.
         {%- endblock record_title -%}
 
         {%- block record_files -%}
-        <div class="top-padded"></div>
-        <hr class="thin-line">
-        {%- include "invenio_records_marc21/landing_page/helpers/files.html" %}
-        {%- endblock record_files -%}
+              <div class="ui segment" style="display: none;">
+                Debug info:
+                files.enabled: {{ record.files.enabled }}
+                access.files: {{ record.access.files }}
+                permissions.can_read_files: {{ permissions.can_read_files }}
+                is_authenticated: {{ current_user.is_authenticated }}
+              </div>
+
+              <div class="top-padded"></div>
+              <hr class="thin-line">
+
+              {% if record.access.files == 'restricted' %}
+                {% if permissions.can_read_files %}
+                  {%- include "invenio_records_marc21/landing_page/helpers/files.html" %}
+                {% elif not current_user.is_authenticated %}
+                  <div class="ui negative message">
+                    <div class="header">{{ _("Restricted Files") }}</div>
+                    <p>{{ _("The files for this record are restricted. Please ") }}<a href="{{ url_for('security.login', next=request.path) }}">{{ _("log in") }}</a>{{ _(" to view them.") }}</p>
+                  </div>
+                {% else %}
+                  <div class="ui negative message">
+                    <div class="header">{{ _("Access Denied to Files") }}</div>
+                    <p>{{ _("You do not have the necessary permissions to view these restricted files.") }}</p>
+                  </div>
+                {% endif %}
+              {% else %}
+                {% if permissions.can_read_files %}
+                  {%- include "invenio_records_marc21/landing_page/helpers/files.html" %}
+                {% else %}
+                  <div class="ui warning message">
+                      <div class="header">{{ _("Files Information") }}</div>
+                      <p>{{ _("File access status could not be fully determined.") }}</p>
+                  </div>
+                {% endif %}
+              {% endif %}
+              {%- endblock record_files -%}
 
         {%- block record_footer -%}
         {%- include "invenio_records_marc21/landing_page/helpers/footer.html" %}
