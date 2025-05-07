@@ -174,3 +174,29 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     #
     # Miscellaneous
     can_query_stats = [Disable()]
+
+
+class LenientMarc21PermissionPolicy(Marc21RecordPermissionPolicy):
+    """A more lenient policy for record and file access."""
+
+    can_read = [AnyUser(), SystemProcess()]
+
+    can_read_files = [
+        IfRestricted(
+            "files",
+            then_=[SystemProcess()],
+            else_=[AnyUser(), SystemProcess()],
+        )
+    ]
+
+    can_media_read_files = [
+        IfRestricted(
+            "record",
+            then_=[AuthenticatedUser(), SystemProcess()],
+            else_=[AnyUser(), SystemProcess()],
+        )
+    ]
+
+    can_media_get_content_files = [
+        IfFileIsLocal(then_=can_media_read_files, else_=[SystemProcess()])
+    ]

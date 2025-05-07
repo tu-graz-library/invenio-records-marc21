@@ -16,7 +16,7 @@ from .config import (
     Marc21RecordFilesServiceConfig,
     Marc21RecordServiceConfig,
 )
-from .permissions import Marc21RecordPermissionPolicy
+from .permissions import LenientMarc21PermissionPolicy, Marc21RecordPermissionPolicy
 from .record import (
     DuplicateRecordError,
     Marc21Metadata,
@@ -44,6 +44,7 @@ __all__ = (
     "Marc21DraftFilesServiceConfig",
     "Marc21RecordFilesServiceConfig",
     "Marc21RecordPermissionPolicy",
+    "LenientMarc21PermissionPolicy",
     "RecordItem",
     "DuplicateRecordError",
     "check_about_duplicate",
