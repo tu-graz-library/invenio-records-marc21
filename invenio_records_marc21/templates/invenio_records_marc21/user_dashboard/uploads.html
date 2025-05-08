@@ -10,19 +10,17 @@ it under the terms of the MIT License; see LICENSE file for more details.
 {% set active_dashboard_menu_item = 'Publications' %}
 
 {%- block javascript %}
-{{ super() }}
-{{ webpack['invenio-records-marc21-user-dashboard.js'] }}
+  {{ super() }}
+  {{ webpack['invenio-records-marc21-user-dashboard.js'] }}
 {%- endblock %}
 
 {%- block page_body %}
+  {%- block user_dashboard_header %}
+    {% include "invenio_app_rdm/users/header.html" %}
+  {%- endblock user_dashboard_header %}
 
-{%- block user_dashboard_header %}
-{% include "invenio_app_rdm/users/header.html" %}
-{%- endblock user_dashboard_header %}
-
-<div class="ui container rel-mt-2">
-  <div id="invenio-search-marc21-config" data-invenio-search-config='{{ search_app_marc21_user_uploads_config() | tojson }}'>
+  <div class="ui container rel-mt-2">
+    <div id="invenio-search-marc21-config" data-invenio-search-config='{{ search_app_marc21_user_uploads_config() | tojson }}'>
+    </div>
   </div>
-</div>
-
 {%- endblock page_body %}
