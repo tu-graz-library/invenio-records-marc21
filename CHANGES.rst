@@ -8,6 +8,13 @@
 Changes
 =======
 
+Version v0.25.0 (release 2025-05-14)
+
+- wip: move documentation to README
+- ui: add new upload button
+- chore: fix indentation
+
+
 Version v0.24.1 (release 2025-04-30)
 
 - fix: jsonschema user
