@@ -11,7 +11,10 @@
 """Records user interface."""
 
 from invenio_pidstore.errors import PIDDeletedError, PIDDoesNotExistError
-from invenio_records_resources.services.errors import PermissionDeniedError
+from invenio_records_resources.services.errors import (
+    PermissionDeniedError,
+    RecordPermissionDeniedError,
+)
 
 from .errors import (
     not_found_error,
@@ -56,8 +59,12 @@ def init_records_views(blueprint, app):
     blueprint.register_error_handler(PIDDeletedError, record_tombstone_error)
     blueprint.register_error_handler(PIDDoesNotExistError, not_found_error)
     blueprint.register_error_handler(KeyError, not_found_error)
+
     blueprint.register_error_handler(
         PermissionDeniedError, record_permission_denied_error
+    )
+    blueprint.register_error_handler(
+        RecordPermissionDeniedError, record_permission_denied_error
     )
 
     # Register template filters
