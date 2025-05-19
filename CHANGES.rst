@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.25.1 (release 2025-05-19)
+
+- feat: imp file access permissions for MARC21 records
+
+
 Version v0.25.0 (release 2025-05-14)
 
 - wip: move documentation to README
