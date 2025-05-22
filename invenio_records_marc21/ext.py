@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2024 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -11,6 +11,8 @@
 """Flask extension for Invenio-Records-Marc21."""
 
 from __future__ import absolute_import, print_function
+
+import re
 
 from flask_menu import current_menu
 from invenio_i18n import lazy_gettext as _
@@ -57,25 +59,30 @@ class InvenioRecordsMARC21(object):
 
         Override configuration variables with the values in this package.
         """
-        with_endpoints = app.config.get("MARC21_ENDPOINTS_ENABLED", True)
-        for k in dir(config):
-            if k.startswith("MARC21_") or k.startswith("DATACITE_"):
-                app.config.setdefault(k, getattr(config, k))
-            elif k == "SEARCH_UI_JSTEMPLATE_RESULTS":
-                app.config["SEARCH_UI_JSTEMPLATE_RESULTS"] = getattr(config, k)
-            elif k == "CELERY_BEAT_SCHEDULE":
-                if "CELERY_BEAT_SCHEDULE" in app.config:
-                    app.config["CELERY_BEAT_SCHEDULE"].update(getattr(config, k))
-                else:
-                    app.config.setdefault(k, getattr(config, k))
-            else:
-                for n in [
-                    "MARC21_REST_ENDPOINTS",
-                    "MARC21_UI_ENDPOINTS",
-                ]:
-                    if k == n and with_endpoints:
-                        app.config.setdefault(n, {})
-                        app.config[n].update(getattr(config, k))
+        pattern = re.compile(r"^[A-Z0-9]+(?:_[A-Z0-9]+)+$")
+
+        for configuration_variable in dir(config):
+            attr = getattr(config, configuration_variable)
+
+            if configuration_variable in app.config:
+                match app.config[configuration_variable]:
+                    case list() as container:
+                        container.extend(attr)
+                    case dict() as container:
+                        container.update(attr)
+                    case _:
+                        app.config[configuration_variable] = attr
+
+            elif bool(pattern.match(configuration_variable)):
+                match attr:
+                    case list():
+                        app.config.setdefault(configuration_variable, [])
+                        app.config[configuration_variable].extend(attr)
+                    case dict():
+                        app.config.setdefault(configuration_variable, {})
+                        app.config[configuration_variable].update(attr)
+                    case _:
+                        app.config[configuration_variable] = attr
 
     def service_configs(self, app):
         """Customized service configs."""
