@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.25.2 (release 2025-05-22)
+
+- refactor(config): config variables init
+- fix(deserializer): AVE is allowed
+
+
 Version v0.25.1 (release 2025-05-19)
 
 - feat: imp file access permissions for MARC21 records
