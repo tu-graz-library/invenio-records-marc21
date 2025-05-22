@@ -164,9 +164,6 @@ MARC21_UI_THEME_ENDPOINTS = {
 SEARCH_UI_JSTEMPLATE_RESULTS = "templates/invenio_records_marc21/search/results.html"
 """Result list template."""
 
-MARC21_ENDPOINTS_ENABLED = True
-"""Enable/disable automatic endpoint registration."""
-
 CELERY_BEAT_SCHEDULE = {
     "marc21_service_embargo_lift": {
         "task": "invenio_records_marc21.services.tasks.update_expired_embargos",
@@ -246,43 +243,6 @@ MARC21_API_HEADERS = {
 
 MARC21_DEFAULT_FILES_ENABLED = True
 """Marc21 deposit page files enabled value on new records."""
-
-# Configuration for the DataCiteClient used by the DataCitePIDProvider
-# Configuration may come from RDM records module
-DATACITE_ENABLED = False
-"""Flag to enable/disable DOI registration."""
-
-
-DATACITE_USERNAME = ""
-"""DataCite username."""
-
-
-DATACITE_PASSWORD = ""
-"""DataCite password."""
-
-
-DATACITE_PREFIX = ""
-"""DataCite DOI prefix."""
-
-
-DATACITE_TEST_MODE = True
-"""DataCite test mode enabled."""
-
-
-DATACITE_FORMAT = "{prefix}/{id}"
-"""A string used for formatting the DOI or a callable.
-
-If set to a string, you can used ``{prefix}`` and ``{id}`` inside the string.
-
-You can also provide a callable instead:
-
-.. code-block:: python
-
-    def make_doi(prefix, record):
-        return f"{prefix}/{record.pid.pid_value}"
-
-    DATACITE_FORMAT = make_doi
-"""
 
 MARC21_RECORD_MANAGER_NEEDS = [RoleNeed("Marc21Manager")]
 """This Role has the most powerfull below of the admin. It will have create/modify/delete permissions."""
