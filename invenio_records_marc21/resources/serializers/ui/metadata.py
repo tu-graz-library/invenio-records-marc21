@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2024 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -241,6 +241,19 @@ class MetadataField(Field):
 
         for field in fields:
             if field.get("a") == ["youtube"]:
+                return field.get("u")[0]
+
+        return ""
+
+    def get_publisher_doi(self, fields):
+        """Get youtube."""
+        fields = fields.get_fields("856")
+
+        if len(fields) == 0:
+            return ""
+
+        for field in fields:
+            if field.get("a") == ["publisher"]:
                 return field.get("u")[0]
 
         return ""
