@@ -71,6 +71,11 @@
   {{ show_detail(key, value, "link") }}
 {%- endmacro %}
 
+{% macro show_publisher_doi(metadata) %}
+  {% set key = _("Publisher") %}
+  {% set value = metadata.publisher_doi %}
+  {{ show_detail(key, value, "link") }}
+{%- endmacro %}
 
 {% macro show_language(metadata) %}
   {% set key = _("Language") %}

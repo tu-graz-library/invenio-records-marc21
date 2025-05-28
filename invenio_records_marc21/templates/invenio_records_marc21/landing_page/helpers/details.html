@@ -1,12 +1,12 @@
 {# -*- coding: utf-8 -*-
 
-  Copyright (C) 2021-2024 Graz University of Technology.
+  Copyright (C) 2021-2025 Graz University of Technology.
 
   Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
   under the terms of the MIT License; see LICENSE file for more details.
 #}
 
-{%- from "invenio_records_marc21/landing_page/macros/detail.html" import show_personal_name, show_thesis_information, show_title, show_physical_description, show_description, show_published, show_publisher, show_language, show_resource_type, show_license, show_youtube %}
+{%- from "invenio_records_marc21/landing_page/macros/detail.html" import show_personal_name, show_thesis_information, show_title, show_physical_description, show_description, show_published, show_publisher, show_language, show_resource_type, show_license, show_youtube, show_publisher_doi %}
 {%- from "invenio_records_marc21/landing_page/macros/doi.html" import show_doi %}
 
 <section class="ui segment rdm-sidebar">
@@ -14,18 +14,17 @@
   <div class="ui list">
     {%- set doi = record.pids.get('doi', {}).get('identifier') %}
     {% if doi %}
-      {{ show_doi(doi, record) }}
+    {{ show_doi(doi, record) }}
     {% endif %}
     {{ show_personal_name(metadata) }}
     {{ show_title(metadata) }}
-    {#
     {{ show_physical_description(metadata) }}
     {{ show_thesis_information(metadata) }}
     {{ show_description(metadata) }}
-    #}
     {{ show_resource_type(metadata) }}
     {{ show_publisher(metadata) }}
     {{ show_published(metadata) }}
+    {{ show_publisher_doi(metadata) }}
     {{ show_language(metadata) }}
     {{ show_license(metadata) }}
     {{ show_youtube(metadata) }}
