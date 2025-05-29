@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2023-2024 Graz University of Technology.
+# Copyright (C) 2023-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -64,6 +64,10 @@ class Marc21RecordManagers(Generator):
     def needs(self, **kwargs):
         """Enabling Needs."""
         return current_app.config.get("MARC21_RECORD_MANAGER_NEEDS", [])
+
+    def query_filter(self, identity=None, **kwargs):
+        """Allow to see any record."""
+        return dsl.Q("match_all")
 
 
 class Marc21RecordCurators(Generator):
