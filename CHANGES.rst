@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.25.3 (release 2025-06-02)
+
+- feat(ui): show doi to publisher
+- fix: manager should see results
+
+
 Version v0.25.2 (release 2025-05-22)
 
 - refactor(config): config variables init
