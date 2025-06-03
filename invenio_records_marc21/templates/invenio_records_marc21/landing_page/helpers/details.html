@@ -14,13 +14,15 @@
   <div class="ui list">
     {%- set doi = record.pids.get('doi', {}).get('identifier') %}
     {% if doi %}
-    {{ show_doi(doi, record) }}
+      {{ show_doi(doi, record) }}
     {% endif %}
     {{ show_personal_name(metadata) }}
     {{ show_title(metadata) }}
+    {#
     {{ show_physical_description(metadata) }}
     {{ show_thesis_information(metadata) }}
     {{ show_description(metadata) }}
+    #}
     {{ show_resource_type(metadata) }}
     {{ show_publisher(metadata) }}
     {{ show_published(metadata) }}
