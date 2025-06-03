@@ -26,7 +26,7 @@ from .services import (
     create_record,
 )
 
-__version__ = "0.25.3"
+__version__ = "0.25.4"
 
 __all__ = (
     "__version__",

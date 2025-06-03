@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.25.4 (release 2025-06-03)
+
+- revert: some details are wrong
+
+
 Version v0.25.3 (release 2025-06-02)
 
 - feat(ui): show doi to publisher
