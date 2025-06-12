@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2024 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -10,7 +10,7 @@
 
 """Permissions for Invenio Marc21 Records."""
 
-from invenio_rdm_records.services.generators import IfFileIsLocal, IfRestricted
+from invenio_rdm_records.services.generators import IfRestricted
 from invenio_records_permissions.generators import (
     AnyUser,
     AuthenticatedUser,
@@ -18,6 +18,10 @@ from invenio_records_permissions.generators import (
     SystemProcess,
 )
 from invenio_records_permissions.policies.records import RecordPermissionPolicy
+from invenio_records_resources.services.files.generators import IfTransferType
+from invenio_records_resources.services.files.transfer import (
+    LOCAL_TRANSFER_TYPE,
+)
 
 from .generators import Marc21RecordCreators, Marc21RecordCurators, Marc21RecordManagers
 
@@ -80,7 +84,8 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
         IfRestricted("files", then_=can_curate, else_=can_all),
     ]
     can_get_content_files = [
-        IfFileIsLocal(then_=can_read_files, else_=[SystemProcess()])
+        IfTransferType(LOCAL_TRANSFER_TYPE, can_read_files),
+        SystemProcess(),
     ]
 
     # Allow managing record access
@@ -111,7 +116,8 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_draft_commit_files = can_curate + [Marc21RecordCreators()]
 
     can_draft_get_content_files = [
-        IfFileIsLocal(then_=can_read_files, else_=[SystemProcess()])
+        IfTransferType(LOCAL_TRANSFER_TYPE, can_draft_read_files),
+        SystemProcess(),
     ]
 
     #######################
@@ -120,15 +126,18 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_draft_media_create_files = can_curate
     can_draft_media_read_files = can_curate
     can_draft_media_set_content_files = [
-        IfFileIsLocal(then_=can_curate, else_=[SystemProcess()])
+        IfTransferType(LOCAL_TRANSFER_TYPE, can_curate),
+        SystemProcess(),
     ]
     can_draft_media_get_content_files = [
         # preview is same as read_files
-        IfFileIsLocal(then_=can_curate, else_=[SystemProcess()])
+        IfTransferType(LOCAL_TRANSFER_TYPE, can_curate),
+        SystemProcess(),
     ]
     can_draft_media_commit_files = [
         # review is the same as create_files
-        IfFileIsLocal(then_=can_curate, else_=[SystemProcess()])
+        IfTransferType(LOCAL_TRANSFER_TYPE, can_curate),
+        SystemProcess(),
     ]
     can_draft_media_update_files = can_curate
     can_draft_media_delete_files = can_curate
@@ -142,7 +151,8 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_media_get_content_files = [
         # note: even though this is closer to business logic than permissions,
         # it was simpler and less coupling to implement this as permission check
-        IfFileIsLocal(then_=can_read, else_=[SystemProcess()])
+        IfTransferType(LOCAL_TRANSFER_TYPE, can_read),
+        SystemProcess(),
     ]
     can_media_create_files = [Disable()]
     can_media_set_content_files = [Disable()]
