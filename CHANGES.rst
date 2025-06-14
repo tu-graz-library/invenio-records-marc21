@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.26.0 (release 2025-06-14)
+
+- fix(tests): remove redundant files
+- setup: upgrade invenio-rdm-records
+
+
 Version v0.25.4 (release 2025-06-03)
 
 - revert: some details are wrong
