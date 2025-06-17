@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.26.1 (release 2025-06-17)
+
+- fix: record vs record_ui
+
+
 Version v0.26.0 (release 2025-06-14)
 
 - fix(tests): remove redundant files
