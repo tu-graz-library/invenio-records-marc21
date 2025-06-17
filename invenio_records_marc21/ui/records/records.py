@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2024 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -79,11 +79,12 @@ def record_detail(record=None, files=None, pid_value=None, is_preview=False):
     if record is not None and emitter is not None:
         emitter(current_app, record=record._record, via_api=False)
 
-    ui_record = Marc21UIJSONSerializer().dump_obj(record.to_dict())
+    record_ui = Marc21UIJSONSerializer().dump_obj(record.to_dict())
 
     return render_template(
         "invenio_records_marc21/landing_page/record.html",
-        record=ui_record,
+        record=record,
+        record_ui=record_ui,
         pid=pid_value,
         files=files_dict,
         permissions=record.has_permissions_to(
