@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2024 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -37,3 +37,9 @@ def create_parent_record_links_bp(app):
     """Create parent record links blueprint."""
     ext = app.extensions["invenio-records-marc21"]
     return ext.parent_record_links_resource.as_blueprint()
+
+
+def create_iiif_bp(app):
+    """Create IIIF blueprint."""
+    ext = app.extensions["invenio-records-marc21"]
+    return ext.iiif_resource.as_blueprint()

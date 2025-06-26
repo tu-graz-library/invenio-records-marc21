@@ -16,6 +16,7 @@ import re
 
 from flask_menu import current_menu
 from invenio_i18n import lazy_gettext as _
+from invenio_rdm_records.services.iiif import IIIFService
 from invenio_rdm_records.services.pids import PIDManager, PIDsService
 from invenio_records_resources.resources import FileResource
 from invenio_records_resources.services import FileService
@@ -29,6 +30,7 @@ from .resources import (
     Marc21RecordResource,
     Marc21RecordResourceConfig,
 )
+from .resources.iiif import IIIFResource, IIIFResourceConfig
 from .services import (
     Marc21DraftFilesServiceConfig,
     Marc21RecordFilesServiceConfig,
@@ -108,6 +110,10 @@ class InvenioRecordsMARC21(object):
             config=Marc21TemplateConfig,
         )
 
+        self.iiif_service = IIIFService(
+            records_service=self.records_service, config=None
+        )
+
     def init_resources(self, app):
         """Initialize resources."""
         self.record_resource = Marc21RecordResource(
@@ -126,6 +132,12 @@ class InvenioRecordsMARC21(object):
 
         self.parent_record_links_resource = Marc21ParentRecordLinksResource(
             service=self.records_service, config=Marc21ParentRecordLinksResourceConfig
+        )
+
+        # IIIF
+        self.iiif_resource = IIIFResource(
+            service=self.iiif_service,
+            config=IIIFResourceConfig.build(app),
         )
 
 

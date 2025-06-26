@@ -10,24 +10,26 @@
 
 """Marc21 Record Service config."""
 
+from os.path import splitext
+
+from flask import current_app
 from invenio_drafts_resources.services.records.config import (
     RecordServiceConfig,
     SearchDraftsOptions,
     SearchOptions,
     SearchVersionsOptions,
+    is_record,
 )
 from invenio_indexer.api import RecordIndexer
 from invenio_rdm_records.services import facets as rdm_facets
-from invenio_records_resources.services import (
-    FileServiceConfig,
-    pagination_links,
-)
+from invenio_records_resources.services import FileServiceConfig, pagination_links
 from invenio_records_resources.services.base.config import (
     ConfiguratorMixin,
     FromConfig,
     FromConfigSearchOptions,
     SearchOptionsMixin,
 )
+from invenio_records_resources.services.base.links import EndpointLink
 from invenio_records_resources.services.files.links import FileLink
 from invenio_records_resources.services.records.links import RecordLink
 
@@ -38,6 +40,37 @@ from .customizations import FromConfigPIDsProviders, FromConfigRequiredPIDs
 from .links import DefaultServiceLinks
 from .permissions import Marc21RecordPermissionPolicy
 from .schemas import Marc21ParentSchema, Marc21RecordSchema
+
+
+##### copy pasted from rdm-records start -----
+def is_iiif_compatible(file_, ctx):
+    """Determine if a file is IIIF compatible."""
+    file_ext = splitext(file_.key)[1].replace(".", "").lower()
+    return file_ext in current_app.config["IIIF_FORMATS"]
+
+
+def is_record_or_draft(drafcord):
+    """Return if input is a draft or a record."""
+    return "record" if is_record(drafcord, {}) else "draft"
+
+
+def get_iiif_uuid_of_drafcord_from_file_drafcord(file_drafcord, vars):
+    """Return IIIF uuid of draft or record associated with RDMFile{Record,Draft}."""
+    # Rely on being called with a context (vars) containing pid_value
+    # which was a pre-existing assumption at time of writing
+    r_or_d = is_record_or_draft(file_drafcord.record)
+    return f"{r_or_d}:{vars['pid_value']}"
+
+
+def get_iiif_uuid_of_file_drafcord(file_drafcord, vars):
+    """Return IIIF uuid of a RDMFileRecord or RDMFileDraft."""
+    # Rely on being called with a context (vars) containing pid_value
+    # which was a pre-existing assumption at time of writing
+    prefix = get_iiif_uuid_of_drafcord_from_file_drafcord(file_drafcord, vars)
+    return f"{prefix}:{file_drafcord.key}"
+
+
+##### copy pasted from rdm-records end -----
 
 
 class Marc21SearchOptions(SearchOptions, SearchOptionsMixin):
@@ -167,6 +200,14 @@ class Marc21RecordFilesServiceConfig(FileServiceConfig, ConfiguratorMixin):
     file_links_item = {
         "self": FileLink("{+api}/publications/{id}/files/{key}"),
         "content": FileLink("{+api}/publications/{id}/files/{key}/content"),
+        "iiif_base": EndpointLink(
+            "marc21iiif.base",
+            params=["uuid"],
+            when=is_iiif_compatible,
+            vars=lambda file_drafcord, vars: vars.update(
+                {"uuid": get_iiif_uuid_of_file_drafcord(file_drafcord, vars)}
+            ),
+        ),
     }
 
 
