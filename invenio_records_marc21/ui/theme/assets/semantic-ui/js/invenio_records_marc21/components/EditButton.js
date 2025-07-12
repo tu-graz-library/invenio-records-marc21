@@ -13,7 +13,7 @@ import { http } from "react-invenio-forms";
 import PropTypes from "prop-types";
 import { i18next } from "@translations/invenio_records_marc21/i18next";
 
-export const EditButton = ({ recid, onError, className, size, fluid }) => {
+export const EditButton = ({ recid, onError, link, className, size, fluid }) => {
   const [loading, setLoading] = useState(false);
 
   size = size || "small";
@@ -31,7 +31,7 @@ export const EditButton = ({ recid, onError, className, size, fluid }) => {
             "Accept": "application/vnd.inveniomarc21.v1+json",
           },
         });
-      window.location = `/publications/uploads/${recid}`;
+      window.location = link;
     } catch (error) {
       setLoading(false);
       onError(error.response.data.message);

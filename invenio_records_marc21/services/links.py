@@ -56,7 +56,7 @@ DefaultServiceLinks = {
     ),
     "latest": RecordLink("{+api}/publications/{id}/versions/latest"),
     "latest_html": RecordLink("{+ui}/publications/{id}/latest"),
-    "draft": RecordLink("{+api}/publications/{id}/draft", when=is_record),
+    "draft": RecordLink("{+ui}/publications/{id}", when=is_record),
     "publish": RecordLink(
         "{+api}/publications/{id}/draft/actions/publish", when=is_draft
     ),
