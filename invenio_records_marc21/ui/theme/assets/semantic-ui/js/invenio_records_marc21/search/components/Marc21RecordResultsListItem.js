@@ -41,6 +41,7 @@ export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
   }
   const links = get(result, "links", []);
   let viewLink = links["self_html"];
+  const draft = links["draft"];
 
   const [error, setError] = useState("");
 
@@ -69,7 +70,7 @@ export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
             )}
             {dashboard && (
               <>
-                <EditButton recid={result.id} onError={handleError} />
+                <EditButton recid={result.id} onError={handleError} link={draft} />
                 <Button
                   basic
                   compact
