@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.27.0 (release 2025-07-21)
+
+- ui: make edit link configurable
+- wip: iiif
+
+
 Version v0.26.1 (release 2025-06-17)
 
 - fix: record vs record_ui
