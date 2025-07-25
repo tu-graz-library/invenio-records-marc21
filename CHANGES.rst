@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.27.1 (release 2025-07-25)
+
+- fix(ui): display license with link
+
+
 Version v0.27.0 (release 2025-07-21)
 
 - ui: make edit link configurable
