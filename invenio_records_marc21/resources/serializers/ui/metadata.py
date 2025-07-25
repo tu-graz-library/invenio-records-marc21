@@ -227,10 +227,12 @@ class MetadataField(Field):
 
     def get_license(self, fields):
         """Get license."""
-        values = fields.get_values("540", subfield_notation="f")
-        if len(values) > 0:
-            return values[0]
-        return ""
+        shorts = fields.get_values("540", subfield_notation="f")
+        urls = fields.get_values("540", subfield_notation="u")
+
+        short = shorts[0] if shorts else ""
+        url = urls[0] if urls else ""
+        return {"url": url, "short": short}
 
     def get_youtube(self, fields):
         """Get youtube."""

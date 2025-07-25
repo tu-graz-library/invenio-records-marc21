@@ -11,7 +11,7 @@
 <dd>{{ value | sanitize_html()| safe }}</dd>
 {%- endmacro %}
 
-{% macro show_detail(title, value, type="str") %}
+{% macro show_detail(title, value, type="str", url="") %}
   {% if value %}
     <div class="item">
       <span style="font-weight: bolder;">{{ title }}:</span>
@@ -26,7 +26,16 @@
         {% elif value is iterable and (value is not string and value is not mapping) %}
           <span>{{ value | join(', ') }}</span>
         {% elif type == "link" %}
-          <a href={{value}}>{{ value }}</a>
+          {% if url %}
+            {% set link = url %}
+          {% else %}
+            {% set link = value %}
+          {% endif %}
+
+          <a href={{link}} title="license" target="_blank">
+            {{ value }}
+            <i class="external alternate icon"></i>
+          </a>
         {%else %}
           <span>{{ value }}</span>
         {% endif %}
@@ -61,8 +70,9 @@
 
 {% macro show_license(metadata) %}
   {% set key = _("License") %}
-  {% set value = metadata.license %}
-  {{ show_detail(key, value) }}
+  {% set value = metadata.license.short %}
+  {% set url = metadata.license.url %}
+  {{ show_detail(key, value, "link", url) }}
 {%- endmacro %}
 
 {% macro show_youtube(metadata) %}
