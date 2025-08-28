@@ -1,6 +1,6 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021-2024 Graz University of Technology.
+// Copyright (C) 2021-2025 Graz University of Technology.
 //
 // Invenio-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
@@ -42,6 +42,7 @@ export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
   const links = get(result, "links", []);
   let viewLink = links["self_html"];
   const draft = links["draft"];
+  const edit = links["edit"];
 
   const [error, setError] = useState("");
 
@@ -70,7 +71,12 @@ export const Marc21RecordResultsListItem = ({ dashboard, result, index }) => {
             )}
             {dashboard && (
               <>
-                <EditButton recid={result.id} onError={handleError} link={draft} />
+                <EditButton
+                  recid={result.id}
+                  onError={handleError}
+                  linkLocation={draft}
+                  linkEdit={edit}
+                />
                 <Button
                   basic
                   compact

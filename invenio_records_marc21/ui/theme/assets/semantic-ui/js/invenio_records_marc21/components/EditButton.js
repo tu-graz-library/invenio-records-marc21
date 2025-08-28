@@ -1,7 +1,7 @@
 // This file is part of Invenio.
 //
 // Copyright (C) 2021 Northwestern University.
-// Copyright (C) 2021-2024 Graz University of Technology.
+// Copyright (C) 2021-2025 Graz University of Technology.
 //
 // Invenio-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
@@ -13,7 +13,15 @@ import { http } from "react-invenio-forms";
 import PropTypes from "prop-types";
 import { i18next } from "@translations/invenio_records_marc21/i18next";
 
-export const EditButton = ({ recid, onError, link, className, size, fluid }) => {
+export const EditButton = ({
+  recid,
+  onError,
+  linkLocation,
+  linkEdit,
+  className,
+  size,
+  fluid,
+}) => {
   const [loading, setLoading] = useState(false);
 
   size = size || "small";
@@ -23,15 +31,16 @@ export const EditButton = ({ recid, onError, link, className, size, fluid }) => 
     setLoading(true);
     try {
       await http.post(
-        `/api/publications/${recid}/draft`,
+        linkEdit,
         {},
         {
           headers: {
             "Content-Type": "application/json",
-            "Accept": "application/vnd.inveniomarc21.v1+json",
+            Accept: "application/vnd.inveniomarc21.v1+json",
           },
-        });
-      window.location = link;
+        },
+      );
+      window.location = linkLocation;
     } catch (error) {
       setLoading(false);
       onError(error.response.data.message);
