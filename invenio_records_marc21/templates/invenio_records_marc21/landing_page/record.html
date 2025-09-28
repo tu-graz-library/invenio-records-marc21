@@ -13,7 +13,7 @@ details.
 
 {%- from "invenio_records_marc21/landing_page/macros/detail.html" import record_detail %}
 
-{%- set metadata = record.ui.metadata %}
+{%- set metadata = record_ui["ui"]["metadata"] %}
 
 {% block head_title %}
 <title>
