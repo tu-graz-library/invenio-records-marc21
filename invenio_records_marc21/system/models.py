@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -11,14 +11,13 @@
 from copy import deepcopy
 
 from invenio_db import db
-from invenio_records.models import Timestamp
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy_utils.types import JSONType
 
 
-class Marc21Templates(db.Model, Timestamp):
+class Marc21Templates(db.Model, db.Timestamp):
     """Represent a base class for record metadata.
 
     The RecordMetadata object contains a ``created`` and  a ``updated``

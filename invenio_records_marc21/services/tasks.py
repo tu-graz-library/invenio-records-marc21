@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2024 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -10,9 +10,8 @@
 
 """Marc21 Celery tasks."""
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
-import arrow
 from celery import shared_task
 from flask import current_app
 from invenio_access.permissions import system_identity
@@ -31,7 +30,7 @@ def update_expired_embargos():
     service = current_records_marc21.records_service
     embargoed_q = (
         "access.embargo.active:true AND access.embargo.until:"
-        f"{{* TO {arrow.utcnow().datetime.strftime('%Y-%m-%d')}}}"
+        f"{{* TO {datetime.now(timezone.utc).datetime.strftime('%Y-%m-%d')}}}"
     )
 
     restricted_records = service.scan(identity=system_identity, q=embargoed_q)
@@ -54,8 +53,8 @@ def marc21_reindex_stats(stats_indices):
     last_run = bm.get_bookmark()
     if not last_run:
         # If this is the first time that we run, let's do it for the documents of the last week
-        last_run = (datetime.utcnow() - timedelta(days=7)).isoformat()
-    reindex_start_time = datetime.utcnow().isoformat()
+        last_run = (datetime.now(tz=timezone.utc) - timedelta(days=7)).isoformat()
+    reindex_start_time = datetime.now(tz=timezone.utc).isoformat()
     indices = ",".join(map(lambda x: prefix_index(x) + "*", stats_indices))
 
     all_parents = set()

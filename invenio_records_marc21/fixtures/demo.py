@@ -35,7 +35,7 @@ def fake_access_right():
 
 def fake_feature_date(days=365):
     """Generates a fake feature_date."""
-    start_date = datetime.now(timezone.utc).replace(tzinfo=None)
+    start_date = datetime.now(timezone.utc)
     random_number_of_days = random.randrange(1, days)
     _date = start_date + timedelta(days=random_number_of_days)
     return _date.strftime("%Y-%m-%d")

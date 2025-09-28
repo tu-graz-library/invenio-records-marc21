@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -17,7 +17,7 @@ from invenio_records_marc21.services.schemas import Marc21RecordSchema
 from ...proxies import current_records_marc21
 
 
-def empty_record():
+def empty_record() -> dict:
     """Create an empty record."""
     record = dump_empty(Marc21RecordSchema)
     record["metadata"] = {"leader": "00000nam a2200000zca4500", "fields": []}
