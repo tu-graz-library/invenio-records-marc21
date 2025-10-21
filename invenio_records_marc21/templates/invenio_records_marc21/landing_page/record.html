@@ -40,7 +40,9 @@ details.
                       {%- if record.ui.version %}
                         <span class="label text-muted"> | Version {{ record.ui.version }}</span>
                       {% endif %}
-                      
+                      {%- if record.ui.isbn %}
+                        <span class="label text-muted"> | ISBN {{ record.ui.isbn }}</span>
+                      {% endif %}
                     </div>
                   </div>
                   <div class="right floated right aligned column">

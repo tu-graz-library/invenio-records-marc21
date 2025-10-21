@@ -170,6 +170,7 @@ class MetadataField(Field):
             "publisher": self.get_publisher(fields),
             "license": self.get_license(fields),
             "youtube": self.get_youtube(fields),
+            "isbn": self.get_isbn(fields),
         }
 
     def get_authors(self, fields):
@@ -285,3 +286,7 @@ class MetadataField(Field):
             return resource_types.get(resource_type[0])
 
         return resource_type[0]
+
+    def get_isbn(self, fields):
+        """Get isbn."""
+        # print(f"MetadataField.get_isbn fields: {fields}")
