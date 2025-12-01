@@ -299,7 +299,15 @@ def upgrade():
         table_name="records_metadata_version",
     )
     op.drop_table("records_metadata_version")
-    op.drop_index("ix_uq_partial_files_object_is_head", table_name="files_object")
+
+    # the following index is dropped in multiple upgrade-scripts, guard in case this drop isn't the first
+    metadata = sa.MetaData()
+    files_object_table = sa.Table("files_object", metadata, autoload_with=op.get_bind())
+    if "ix_uq_partial_files_object_is_head" in [
+        index.name for index in files_object_table.indexes
+    ]:
+        op.drop_index("ix_uq_partial_files_object_is_head", table_name="files_object")
+
     # ### end Alembic commands ###
 
 
