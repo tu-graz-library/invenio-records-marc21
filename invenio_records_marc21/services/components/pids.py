@@ -23,7 +23,7 @@ from ..pids.tasks import register_or_update_pid
 class PIDsComponent(BasePIDsComponent):
     """Service component for PIDs."""
 
-    def _add_other_standard_identifier(self, doi: dict, fields: dict) -> None:
+    def _add_other_standard_identifier(self, doi: dict, fields: dict) -> dict:
         """Add the other standard identifier to fields."""
         matadata_doi = {
             "ind1": "7",
@@ -32,11 +32,15 @@ class PIDsComponent(BasePIDsComponent):
         }
 
         field = fields.get("024", [])
-        field.append(matadata_doi)
 
-        fields.update({"024": field})
+        if len(field) == 0:
+            field.append(matadata_doi)
 
-    def _add_electronic_location_and_access(self, doi: dict, fields: dict) -> None:
+            fields.update({"024": field})
+
+        return fields
+
+    def _add_electronic_location_and_access(self, doi: dict, fields: dict) -> dict:
         """Add electronic location and access field to fields."""
         metadata_doi = {
             "ind1": "4",
@@ -52,15 +56,18 @@ class PIDsComponent(BasePIDsComponent):
 
         fields.update({"856": field})
 
-    def _doi_identifier_to_metadata(self, doi: dict, data: dict) -> None:
+        return fields
+
+    def _doi_identifier_to_metadata(self, doi: dict, data: dict) -> dict:
         metadata = data.get("metadata", {})
         fields = metadata.get("fields", {})
 
-        self._add_other_standard_identifier(doi.get("identifier"), fields)
-        self._add_electronic_location_and_access(doi.get("identifier"), fields)
+        fields = self._add_other_standard_identifier(doi.get("identifier"), fields)
+        fields = self._add_electronic_location_and_access(doi.get("identifier"), fields)
 
         # Only required in cases where fields might be missing from the metadata
         metadata["fields"] = fields
+        return metadata
 
     def create(  # type: ignore[override]
         self,
@@ -77,14 +84,6 @@ class PIDsComponent(BasePIDsComponent):
         pids = data.get("pids", {})
         self.service.pids.pid_manager.validate(pids, record, errors)
 
-        record.pids = pids
-        pids = self.service.pids.pid_manager.create_all(
-            record,
-            pids=pids,
-            schemes=set(self.service.config.pids_required),
-        )
-        if "doi" in pids and data:
-            self._doi_identifier_to_metadata(pids["doi"], data)
         record.pids = pids
 
     def publish(  # type: ignore[override]
@@ -123,6 +122,10 @@ class PIDsComponent(BasePIDsComponent):
         self.service.pids.pid_manager.reserve_all(draft, pids)
 
         record.pids = pids
+
+        if "doi" in pids:
+            data = copy(draft.model.data)
+            record.metadata = self._doi_identifier_to_metadata(pids["doi"], data)
 
         for scheme in pids:
             self.uow.register(TaskOp(register_or_update_pid, record["id"], scheme))

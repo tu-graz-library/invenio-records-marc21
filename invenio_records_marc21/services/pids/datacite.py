@@ -21,6 +21,20 @@ from ...records.api import Marc21Record
 class Marc21DataCitePIDProvider(BaseDataCitePIDProvider):
     """Marc21 DataCite pid provider."""
 
+    def generate_id(self, record: Marc21Record, **kwargs: dict) -> str:
+        """Generate unique DOI or use provided DOI from metadata."""
+        if "fields" not in record.metadata:
+            return super().generate_id(record, **kwargs)
+
+        fields = record.metadata["fields"]
+        if f_024s := fields.get("024", None):
+            for f_024 in f_024s:
+                for key, value in f_024["subfields"].items():
+                    if key == "q" and value[0] == "tugraz-publisher":
+                        return f_024["subfields"]["a"][0]
+
+        return super().generate_id(record, **kwargs)
+
     def validate(
         self,
         record: Marc21Record,

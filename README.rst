@@ -1,5 +1,5 @@
 ..
-    Copyright (C) 2021-2024 Graz University of Technology.
+    Copyright (C) 2021-2025 Graz University of Technology.
 
     Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
     under the terms of the MIT License; see LICENSE file for more details.
@@ -75,6 +75,15 @@ Merge MARC21 statistics configurations with the global statistics settings:
     STATS_EVENTS.update(MARC21_STATS_EVENTS)
     STATS_AGGREGATIONS.update(MARC21_STATS_AGGREGATIONS)
     STATS_QUERIES.update(MARC21_STATS_QUERIES)
+
+Features
+========
+
+### custom doi over 024 field in metadata
+
+add the field 024 like `024.7.. $$2 doi $$a 10.0356/894-849-056 $$q tugraz-publisher`. the important part is the `$$q tugraz-publisher` which indicates that there is a special doi which overrides the normal DOI.
+
+the doi will be created on the publish, so the 856 field will show up after publishing the record.
 
 
 Tests
