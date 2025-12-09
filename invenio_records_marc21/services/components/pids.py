@@ -3,7 +3,7 @@
 # Copyright (C) 2020-2021 CERN.
 # Copyright (C) 2020 Northwestern University.
 # Copyright (C) 2021 TU Wien.
-# Copyright (C) 2021-2024 Graz University of Technology.
+# Copyright (C) 2021-2025 Graz University of Technology.
 #
 # Invenio-RDM-Records is free software; you can redistribute it and/or modify
 # it under the terms of the MIT License; see LICENSE file for more details.
@@ -12,16 +12,18 @@
 
 from copy import copy
 
+from flask_principal import Identity
 from invenio_rdm_records.services.components import PIDsComponent as BasePIDsComponent
 from invenio_records_resources.services.uow import TaskOp
 
+from ...records.api import Marc21Draft, Marc21Record
 from ..pids.tasks import register_or_update_pid
 
 
 class PIDsComponent(BasePIDsComponent):
     """Service component for PIDs."""
 
-    def _add_other_standard_identifier(self, doi, fields):
+    def _add_other_standard_identifier(self, doi: dict, fields: dict) -> None:
         """Add the other standard identifier to fields."""
         matadata_doi = {
             "ind1": "7",
@@ -34,7 +36,7 @@ class PIDsComponent(BasePIDsComponent):
 
         fields.update({"024": field})
 
-    def _add_electronic_location_and_access(self, doi, fields):
+    def _add_electronic_location_and_access(self, doi: dict, fields: dict) -> None:
         """Add electronic location and access field to fields."""
         metadata_doi = {
             "ind1": "4",
@@ -50,7 +52,7 @@ class PIDsComponent(BasePIDsComponent):
 
         fields.update({"856": field})
 
-    def _doi_identifier_to_metadata(self, doi, data):
+    def _doi_identifier_to_metadata(self, doi: dict, data: dict) -> None:
         metadata = data.get("metadata", {})
         fields = metadata.get("fields", {})
 
@@ -60,9 +62,16 @@ class PIDsComponent(BasePIDsComponent):
         # Only required in cases where fields might be missing from the metadata
         metadata["fields"] = fields
 
-    def create(self, identity, data=None, record=None, errors=None):
-        """This method is called on draft creation.
+    def create(  # type: ignore[override]
+        self,
+        identity: Identity,  # noqa: ARG002
+        data: dict,
+        record: Marc21Record,
+        errors: dict | None = None,
+    ) -> None:
+        """Create pids.
 
+        This method is called on draft creation.
         It validates and add the pids to the draft.
         """
         pids = data.get("pids", {})
@@ -78,7 +87,12 @@ class PIDsComponent(BasePIDsComponent):
             self._doi_identifier_to_metadata(pids["doi"], data)
         record.pids = pids
 
-    def publish(self, identity, draft=None, record=None):
+    def publish(  # type: ignore[override]
+        self,
+        identity: Identity,  # noqa: ARG002
+        draft: Marc21Draft,
+        record: Marc21Record,
+    ) -> None:
         """Publish handler."""
         draft_pids = draft.get("pids", {})
         record_pids = copy(record.get("pids", {}))
@@ -107,13 +121,22 @@ class PIDsComponent(BasePIDsComponent):
         )
 
         self.service.pids.pid_manager.reserve_all(draft, pids)
+
         record.pids = pids
 
-        for scheme in pids.keys():
+        for scheme in pids:
             self.uow.register(TaskOp(register_or_update_pid, record["id"], scheme))
 
-    def new_version(self, identity, draft=None, record=None):
-        """A new draft should not have any pids from the previous record."""
+    def new_version(  # type: ignore[override]
+        self,
+        identity: Identity,  # noqa: ARG002
+        draft: Marc21Draft,
+        record: Marc21Record,
+    ) -> None:
+        """Handle the case of a new version.
+
+        A new version shouldn't have the pids from previos version.
+        """
         if record.pids.get("doi", {}).get("provider") == "external":
             draft.pids = {"doi": {"provider": "external", "identifier": ""}}
         else:

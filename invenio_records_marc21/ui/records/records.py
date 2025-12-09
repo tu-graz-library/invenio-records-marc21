@@ -80,7 +80,7 @@ def record_detail(record=None, files=None, pid_value=None, is_preview=False):
         emitter(current_app, record=record._record, via_api=False)
 
     record_ui = Marc21UIJSONSerializer().dump_obj(record.to_dict())
-    print(f"record_detail record_ui: {record_ui}")
+
     return render_template(
         "invenio_records_marc21/landing_page/record.html",
         record=record,
