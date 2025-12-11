@@ -2,12 +2,15 @@
 #
 # Copyright (C) 2021 CERN.
 # Copyright (C) 2022 Northwestern University.
-# Copyright (C) 2022 Graz University of Technology.
+# Copyright (C) 2022-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """Helpers for customizing the configuration in a controlled manner."""
+
+
+from invenio_drafts_resources.services.records.config import RecordServiceConfig
 
 
 # TODO:
@@ -16,15 +19,23 @@
 class FromConfigPIDsProviders:
     """Data descriptor for pid providers configuration."""
 
-    def __init__(self, persistent_identifiers, persistent_identifier_providers):
-        """Constructor for FromConfigPIDsProviders."""
+    def __init__(
+        self,
+        persistent_identifiers: str,
+        persistent_identifier_providers: str,
+    ) -> None:
+        """Construct for FromConfigPIDsProviders."""
         self.persistent_identifiers = persistent_identifiers
         self.persistent_identifier_providers = persistent_identifier_providers
 
-    def __get__(self, obj, objtype=None):
+    def __get__(
+        self,
+        obj: RecordServiceConfig,
+        objtype: RecordServiceConfig | None = None,
+    ) -> dict:
         """Return value that was grafted on obj (descriptor protocol)."""
 
-        def get_provider_dict(pid_config, pid_providers):
+        def get_provider_dict(pid_config: dict, pid_providers: dict) -> dict:
             """Return pid provider dict in shape expected by config users.
 
             (This transformation would be unnecesary if the pid_providers were
@@ -60,11 +71,15 @@ class FromConfigPIDsProviders:
 class FromConfigRequiredPIDs:
     """Data descriptor for required pids configuration."""
 
-    def __init__(self, persistent_identifiers):
-        """Constructor for FomConfigRequiredPIDS."""
+    def __init__(self, persistent_identifiers: str) -> None:
+        """Construct for FomConfigRequiredPIDS."""
         self.persistent_identifiers = persistent_identifiers
 
-    def __get__(self, obj, objtype=None):
+    def __get__(
+        self,
+        obj: RecordServiceConfig,
+        objtype: RecordServiceConfig | None = None,
+    ) -> list:
         """Return required pids (descriptor protocol)."""
         pids = obj._app.config.get(self.persistent_identifiers, {})
         doi_enabled = obj._app.config.get("DATACITE_ENABLED", False)

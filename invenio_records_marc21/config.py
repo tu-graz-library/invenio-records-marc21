@@ -10,8 +10,6 @@
 
 """Default configuration."""
 
-from __future__ import absolute_import, print_function
-
 import idutils
 from celery.schedules import crontab
 from flask_principal import RoleNeed
@@ -56,36 +54,38 @@ MARC21_FACETS = {
 }
 
 MARC21_SORT_OPTIONS = {
-    "bestmatch": dict(
-        title=_("Best match"),
-        fields=["_score"],  # search defaults to desc on `_score` field
-    ),
-    "newest": dict(
-        title=_("Newest"),
-        fields=["-created"],
-    ),
-    "oldest": dict(
-        title=_("Oldest"),
-        fields=["created"],
-    ),
-    "version": dict(
-        title=_("Version"),
-        fields=["-versions.index"],
-    ),
-    "updated-desc": dict(
-        title=_("Recently updated"),
-        fields=["-updated"],
-    ),
-    "updated-asc": dict(
-        title=_("Least recently updated"),
-        fields=["updated"],
-    ),
-    "mostviewed": dict(
-        title=_("Most viewed"), fields=["-stats.all_versions.unique_views"]
-    ),
-    "mostdownloaded": dict(
-        title=_("Most downloaded"), fields=["-stats.all_versions.unique_downloads"]
-    ),
+    "bestmatch": {
+        "title": _("Best match"),
+        "fields": ["_score"],  # search defaults to desc on `_score` field
+    },
+    "newest": {
+        "title": _("Newest"),
+        "fields": ["-created"],
+    },
+    "oldest": {
+        "title": _("Oldest"),
+        "fields": ["created"],
+    },
+    "version": {
+        "title": _("Version"),
+        "fields": ["-versions.index"],
+    },
+    "updated-desc": {
+        "title": _("Recently updated"),
+        "fields": ["-updated"],
+    },
+    "updated-asc": {
+        "title": _("Least recently updated"),
+        "fields": ["updated"],
+    },
+    "mostviewed": {
+        "title": _("Most viewed"),
+        "fields": ["-stats.all_versions.unique_views"],
+    },
+    "mostdownloaded": {
+        "title": _("Most downloaded"),
+        "fields": ["-stats.all_versions.unique_downloads"],
+    },
 }
 
 MARC21_SEARCH_DRAFTS = {
@@ -128,7 +128,7 @@ MARC21_RECORD_EXPORTERS = {
     "json": {
         "name": "JSON",
         "serializer": (
-            "invenio_records_marc21.resources.serializers:" "Marc21JSONSerializer"
+            "invenio_records_marc21.resources.serializers:Marc21JSONSerializer"
         ),
         "params": {"options": {"indent": 4, "sort_keys": True}},
         "filename": "{id}.json",
@@ -136,7 +136,7 @@ MARC21_RECORD_EXPORTERS = {
     "marcxml": {
         "name": "MARCXML",
         "serializer": (
-            "invenio_records_marc21.resources.serializers:" "Marc21XMLSerializer"
+            "invenio_records_marc21.resources.serializers:Marc21XMLSerializer"
         ),
         "params": {},
         "filename": "{id}.xml",
@@ -274,7 +274,7 @@ MARC21_STATS_CELERY_TASKS = {
             (
                 "marc21-record-view-agg",
                 "marc21-file-download-agg",
-            )
+            ),
         ],
         "schedule": crontab(minute="5"),  # Every hour at minute 5
     },
@@ -284,7 +284,7 @@ MARC21_STATS_CELERY_TASKS = {
             (
                 "stats-marc21-record-view",
                 "stats-marc21-file-download",
-            )
+            ),
         ],
         "schedule": crontab(minute="10"),
     },
@@ -303,7 +303,7 @@ MARC21_STATS_EVENTS = {
         ],
         "cls": EventsIndexer,
         "params": {
-            "preprocessors": [flag_robots, anonymize_user, build_file_unique_id]
+            "preprocessors": [flag_robots, anonymize_user, build_file_unique_id],
         },
     },
     "marc21-record-view": {

@@ -14,9 +14,10 @@
 from collections.abc import Callable
 from functools import wraps
 
-import click
+from click import group, option, secho
 from flask.cli import with_appcontext
 from invenio_access.permissions import system_identity
+from invenio_accounts.models import User
 from invenio_accounts.proxies import current_datastore
 from invenio_db import db
 
@@ -27,7 +28,7 @@ from .fixtures.templates import create_templates, delete_templates
 from .proxies import current_records_marc21
 
 
-def get_user(user_email):
+def get_user(user_email: str) -> User:
     """Get user."""
     with db.session.no_autoflush:
         user = current_datastore.get_user_by_email(user_email)
@@ -45,22 +46,22 @@ def wrap_messages(before: str, after: str) -> Callable:
     def decorator[T](func: Callable[..., T]) -> Callable:
         @wraps(func)
         def wrapper(**kwargs: dict) -> None:
-            """Wrapper."""
-            click.secho(before, fg="blue")
+            """Wrapp."""
+            secho(before, fg="blue")
             try:
                 func(**kwargs)
             except RuntimeError as error:
-                click.secho(str(error), fg="red")
+                secho(str(error), fg="red")
             else:
-                click.secho(after, fg="green")
+                secho(after, fg="green")
 
         return wrapper
 
     return decorator
 
 
-@click.group()
-def marc21():
+@group()
+def marc21() -> None:
     """InvenioMarc21 records commands."""
 
 
@@ -70,7 +71,7 @@ def marc21():
     before="Reindexing records and drafts...",
     after="Reindexed records!",
 )
-def rebuild_index():
+def rebuild_index() -> None:
     """Reindex all drafts, records."""
     rec_service = current_records_marc21.records_service
     rec_service.rebuild_index(identity=system_identity)
@@ -78,14 +79,14 @@ def rebuild_index():
 
 @marc21.command("demo")
 @with_appcontext
-@click.option(
+@option(
     "-u",
     "--user-email",
     default="user@demo.org",
     show_default=True,
     help="User e-mail of an existing user.",
 )
-@click.option(
+@option(
     "--number",
     "-n",
     "n_records",
@@ -100,7 +101,7 @@ def rebuild_index():
     before="Creating demo records...",
     after="Created records!",
 )
-def demo(user_email, n_records):
+def demo(user_email: str, n_records: int) -> None:
     """Create number of fake records for demo purposes."""
     user = get_user(user_email)
 
@@ -108,17 +109,20 @@ def demo(user_email, n_records):
         fake_data = create_fake_record()
         create_file = True  # TODO: make that random
         create_demo_record.delay(
-            user.id, fake_data, publish=True, create_file=create_file
+            user.id,
+            fake_data,
+            publish=True,
+            create_file=create_file,
         )
 
 
 @marc21.group()
-def templates():
+def templates() -> None:
     """InvenioMarc21 templates commands."""
 
 
 @templates.command("create")
-@click.option(
+@option(
     "--input-file",
     "-f",
     required=True,
@@ -132,20 +136,20 @@ def templates():
     before="Creating template/s..",
     after="Successfully created Template/s!",
 )
-def create(input_file):
+def create(input_file: str) -> None:
     """Create Templates for Marc21 Deposit app."""
     create_templates(input_file)
 
 
 @templates.command("delete")
-@click.option(
+@option(
     "--all",
     default=False,
     show_default=True,
     is_flag=True,
     help="Delete all Templates",
 )
-@click.option(
+@option(
     "--force",
     "-f",
     default=False,
@@ -153,7 +157,7 @@ def create(input_file):
     is_flag=True,
     help="Hard/Soft delete of templates.",
 )
-@click.option(
+@option(
     "--name",
     "-n",
     required=False,
@@ -166,6 +170,6 @@ def create(input_file):
     before="Deleting template/s...",
     after="Successfully deleted Template!",
 )
-def delete(name, all, force):
+def delete(name: str, *, all: bool, force: bool) -> None:
     """Delete Templates for Marc21 Deposit app."""
     delete_templates(name, all, force)

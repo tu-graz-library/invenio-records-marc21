@@ -1,9 +1,11 @@
 [build-system]
 requires = ["setuptools", "wheel", "babel>2.8"]
 build-backend = "setuptools.build_meta"
+
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
+  "BLE001",
   "D203", "D211", "D212", "D213",
   "E501",
   "FA100", "FA102",
