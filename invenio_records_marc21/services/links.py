@@ -14,7 +14,11 @@ from invenio_drafts_resources.services.records.config import is_draft, is_record
 from invenio_rdm_records.services.config import has_doi, is_record_and_has_doi
 from invenio_records_resources.services import ConditionalLink
 from invenio_records_resources.services.base.links import Link
-from invenio_records_resources.services.records.links import RecordLink
+from invenio_records_resources.services.records.links import (
+    RecordEndpointLink,
+    RecordLink,
+    pagination_endpoint_links,
+)
 
 DefaultServiceLinks = {
     "self": ConditionalLink(

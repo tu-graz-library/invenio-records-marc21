@@ -22,64 +22,56 @@ from invenio_rdm_records.records.systemfields.access.field.record import (
 from ..records.fields.resourcetype import ResourceTypeEnum
 
 
-def fake_access_right():
-    """Generates a fake access_right."""
-    _type = random.choice(list(AccessStatusEnum)).value
-    if (
-        _type == AccessStatusEnum.METADATA_ONLY.value
-        or _type == AccessStatusEnum.OPEN.value
-    ):
+def fake_access_right() -> str:
+    """Generate a fake access_right."""
+    _type = random.choice(list(AccessStatusEnum)).value  # noqa: S311
+    if _type in [AccessStatusEnum.METADATA_ONLY.value, AccessStatusEnum.OPEN.value]:
         return "public"
     return _type
 
 
-def fake_feature_date(days=365):
-    """Generates a fake feature_date."""
+def fake_feature_date(days: int = 365) -> str:
+    """Generate a fake feature_date."""
     start_date = datetime.now(timezone.utc)
-    random_number_of_days = random.randrange(1, days)
+    random_number_of_days = random.randrange(1, days)  # noqa: S311
     _date = start_date + timedelta(days=random_number_of_days)
     return _date.strftime("%Y-%m-%d")
 
 
-def create_fake_record():
+def create_fake_record() -> dict:
     """Create records for demo purposes."""
     data = create_fake_data()
     metadata_access = fake_access_right()
-    data_access = {
+    data_access: dict = {
         "files": "public",
         "record": metadata_access,
     }
     if metadata_access == AccessStatusEnum.EMBARGOED.value:
-        embargo = {
-            "embargo": {
-                "until": fake_feature_date(),
-                "active": True,
-                "reason": "Because I can!",
-            }
+        data_access["embargo"] = {
+            "until": fake_feature_date(),
+            "active": True,
+            "reason": "Because I can!",
         }
-        data_access.update(embargo)
         data_access["record"] = AccessStatusEnum.RESTRICTED.value
 
     data["access"] = data_access
     return data
 
 
-def fake_resource_type():
+def fake_resource_type() -> str:
     """Create fake record resource type."""
-    samples = []
-    for resource in ResourceTypeEnum:
-        samples.append(resource.value)
-    random_resource = random.choice(samples)
+    samples = [r.value for r in ResourceTypeEnum]
+    random_resource = random.choice(samples)  # noqa: S311
     return random_resource
 
 
-def create_fake_data():
+def create_fake_data() -> dict:
     """Create records for demo purposes."""
     fake = Faker()
 
-    mmsid = randint(9000000000000, 9999999999999)
-    ac_number = randint(13000000, 19999999)
-    local_id = randint(70000, 99999)
+    mmsid = randint(9000000000000, 9999999999999)  # noqa: S311
+    ac_number = randint(13000000, 19999999)  # noqa: S311
+    local_id = randint(70000, 99999)  # noqa: S311
     ac_id = f"AC{ac_number}"
     last_name = fake.last_name()
     first_name = fake.first_name()
@@ -122,7 +114,7 @@ def create_fake_data():
                             "d": [f"{country_code}-UB"],
                             "e": ["rda"],
                         },
-                    }
+                    },
                 ],
                 "041": [{"ind1": "_", "ind2": "_", "subfields": {"a": ["eng"]}}],
                 "100": [
@@ -133,7 +125,7 @@ def create_fake_data():
                             "4": [country_code],
                             "a": [f"{first_name}, {last_name}"],
                         },
-                    }
+                    },
                 ],
                 "245": [
                     {
@@ -143,7 +135,7 @@ def create_fake_data():
                             "a": [f"{fake.company()}"],
                             "c": [f"{person_title} {first_name}, {last_name}"],
                         },
-                    }
+                    },
                 ],
                 "246": [
                     {
@@ -153,7 +145,7 @@ def create_fake_data():
                             "a": [f"{fake.catch_phrase()}"],
                             "i": [country_code],
                         },
-                    }
+                    },
                 ],
                 "264": [
                     {
@@ -164,7 +156,7 @@ def create_fake_data():
                             "b": [f"{fake.company()}"],
                             "c": [f"{create_date.strftime('%B %Y')}"],
                         },
-                    }
+                    },
                 ],
                 "300": [
                     {
@@ -174,7 +166,7 @@ def create_fake_data():
                             "a": [fake.text(max_nb_chars=2000)],
                             "b": [fake.text(max_nb_chars=100)],
                         },
-                    }
+                    },
                 ],
                 "336": [{"ind1": "_", "ind2": "_", "subfields": {"b": ["txt"]}}],
                 "337": [{"ind1": "_", "ind2": "_", "subfields": {"b": ["c"]}}],
@@ -184,7 +176,7 @@ def create_fake_data():
                         "ind1": "_",
                         "ind2": "_",
                         "subfields": {"a": ["Textdatei"]},
-                    }
+                    },
                 ],
                 "502": [
                     {
@@ -204,7 +196,7 @@ def create_fake_data():
                             "2": ["star"],
                             "f": ["Unrestricted online access"],
                         },
-                    }
+                    },
                 ],
                 "520": [
                     {
@@ -227,14 +219,14 @@ def create_fake_data():
                             "2": ["gnd-content"],
                             "a": ["Hochschulschrift"],
                         },
-                    }
+                    },
                 ],
                 "970": [
                     {
                         "ind1": "2",
                         "ind2": "_",
                         "subfields": {"d": [f"{fake_resource_type()}"]},
-                    }
+                    },
                 ],
                 "995": [
                     {
@@ -245,7 +237,7 @@ def create_fake_data():
                             "a": [f"{local_id}"],
                             "i": ["FAKEInstitution"],
                         },
-                    }
+                    },
                 ],
             },
         },

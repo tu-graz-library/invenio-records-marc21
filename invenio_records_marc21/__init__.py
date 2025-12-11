@@ -10,8 +10,6 @@
 
 """Invenio-Records-Marc21 datamodel."""
 
-from __future__ import absolute_import, print_function
-
 from .ext import InvenioRecordsMARC21
 from .proxies import current_records_marc21
 from .records import MarcDraftProvider
@@ -29,16 +27,16 @@ from .services import (
 __version__ = "0.27.1"
 
 __all__ = (
-    "__version__",
-    "InvenioRecordsMARC21",
-    "current_records_marc21",
-    "Marc21Metadata",
-    "add_file_to_record",
-    "create_record",
-    "MarcDraftProvider",
     "DuplicateRecordError",
+    "InvenioRecordsMARC21",
+    "Marc21Metadata",
+    "Marc21RecordService",
+    "MarcDraftProvider",
+    "__version__",
+    "add_file_to_record",
     "check_about_duplicate",
     "convert_json_to_marc21xml",
     "convert_marc21xml_to_json",
-    "Marc21RecordService",
+    "create_record",
+    "current_records_marc21",
 )

@@ -24,7 +24,7 @@ from invenio_access.permissions import (
 from ..proxies import current_records_marc21
 
 
-def get_user_identity(user_id):
+def get_user_identity(user_id: int) -> Identity:
     """Get user identity."""
     identity = Identity(user_id)
     identity.provides.add(any_user)
@@ -34,18 +34,14 @@ def get_user_identity(user_id):
     return identity
 
 
-def _add_file_to_draft(draft_file_service, draft_id, file_id, identity):
-    """Add a file to the record."""
-    draft_file_service.init_files(identity, draft_id, data=[{"key": file_id}])
-    draft_file_service.set_file_content(
-        identity, draft_id, file_id, BytesIO(b"test file content")
-    )
-    result = draft_file_service.commit_file(identity, draft_id, file_id)
-    return result
-
-
 @shared_task
-def create_demo_record(user_id, data, publish=True, create_file=False):
+def create_demo_record(
+    user_id: int,
+    data: dict,
+    *,
+    publish: bool = True,
+    create_file: bool = False,
+) -> None:
     """Create demo record."""
     if user_id == system_user_id:
         identity = system_identity
@@ -57,7 +53,18 @@ def create_demo_record(user_id, data, publish=True, create_file=False):
         data=data,
         identity=identity,
     )
+
     if create_file:
-        _add_file_to_draft(service.draft_files, draft.id, "file.txt", identity)
+        file_id = "file.txt"
+        draft_file_service = service.draft_files
+        draft_file_service.init_files(identity, draft.id, data=[{"key": file_id}])
+        draft_file_service.set_file_content(
+            identity,
+            draft.id,
+            file_id,
+            BytesIO(b"test file content"),
+        )
+        draft_file_service.commit_file(identity, draft.id, file_id)
+
     if publish:
         service.publish(id_=draft.id, identity=identity)

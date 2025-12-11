@@ -10,11 +10,11 @@
 
 """Flask extension for Invenio-Records-Marc21."""
 
-from __future__ import absolute_import, print_function
-
 import re
 
+from flask import Flask
 from flask_menu import current_menu
+from flask_resources import Resource
 from invenio_i18n import lazy_gettext as _
 from invenio_rdm_records.services.iiif import IIIFService
 from invenio_rdm_records.services.pids import PIDManager, PIDsService
@@ -41,22 +41,22 @@ from .system import Marc21TemplateConfig, Marc21TemplateService
 from .ui.theme import current_identity_can_view
 
 
-class InvenioRecordsMARC21(object):
+class InvenioRecordsMARC21:
     """Invenio-Records-Marc21 extension."""
 
-    def __init__(self, app=None):
+    def __init__(self, app: Flask | None = None) -> None:
         """Extension initialization."""
         if app:
             self.init_app(app)
 
-    def init_app(self, app):
+    def init_app(self, app: Flask) -> None:
         """Flask application initialization."""
         self.init_config(app)
         self.init_services(app)
         self.init_resources(app)
         app.extensions["invenio-records-marc21"] = self
 
-    def init_config(self, app):
+    def init_config(self, app: Flask) -> None:
         """Initialize configuration.
 
         Override configuration variables with the values in this package.
@@ -86,73 +86,68 @@ class InvenioRecordsMARC21(object):
                     case _:
                         app.config[configuration_variable] = attr
 
-    def service_configs(self, app):
-        """Customized service configs."""
-
-        class ServiceConfigs:
-            record = Marc21RecordServiceConfig.build(app)
-            file = Marc21RecordFilesServiceConfig.build(app)
-            file_draft = Marc21DraftFilesServiceConfig.build(app)
-
-        return ServiceConfigs
-
-    def init_services(self, app):
+    def init_services(self, app: Flask) -> None:
         """Initialize services."""
-        service_config = self.service_configs(app)
+        record_service_config = Marc21RecordServiceConfig.build(app)
+        file_service_config = Marc21RecordFilesServiceConfig.build(app)
+        file_draft_service_config = Marc21DraftFilesServiceConfig.build(app)
 
         self.records_service = Marc21RecordService(
-            config=service_config.record,
-            files_service=FileService(service_config.file),
-            draft_files_service=FileService(service_config.file_draft),
-            pids_service=PIDsService(service_config.record, PIDManager),
+            config=record_service_config,
+            files_service=FileService(file_service_config),
+            draft_files_service=FileService(file_draft_service_config),
+            pids_service=PIDsService(record_service_config, PIDManager),
         )
         self.templates_service = Marc21TemplateService(
             config=Marc21TemplateConfig,
         )
 
         self.iiif_service = IIIFService(
-            records_service=self.records_service, config=None
+            records_service=self.records_service,
+            config=None,
         )
 
-    def init_resources(self, app):
+    def init_resources(self, app: Flask) -> None:
         """Initialize resources."""
-        self.record_resource = Marc21RecordResource(
+        self.record_resource: Resource = Marc21RecordResource(
             service=self.records_service,
             config=Marc21RecordResourceConfig,
         )
 
-        self.record_files_resource = FileResource(
-            service=self.records_service.files, config=Marc21RecordFilesResourceConfig
+        self.record_files_resource: Resource = FileResource(
+            service=self.records_service.files,
+            config=Marc21RecordFilesResourceConfig,
         )
 
-        self.draft_files_resource = FileResource(
+        self.draft_files_resource: Resource = FileResource(
             service=self.records_service.draft_files,
             config=Marc21DraftFilesResourceConfig,
         )
 
-        self.parent_record_links_resource = Marc21ParentRecordLinksResource(
-            service=self.records_service, config=Marc21ParentRecordLinksResourceConfig
+        self.parent_record_links_resource: Resource = Marc21ParentRecordLinksResource(
+            service=self.records_service,
+            config=Marc21ParentRecordLinksResourceConfig,
         )
 
         # IIIF
-        self.iiif_resource = IIIFResource(
+        self.iiif_resource: Resource = IIIFResource(
             service=self.iiif_service,
             config=IIIFResourceConfig.build(app),
         )
 
 
-def finalize_app(app) -> None:
+def finalize_app(app: Flask) -> None:
     """Finalize app."""
     init(app)
     register_marc21_dashboard_tab()
 
 
-def api_finalize_app(app) -> None:
+def api_finalize_app(app: Flask) -> None:
     """Finalize app for api."""
     init(app)
 
 
-def init(app):
+def init(app: Flask) -> None:
     """Init app."""
     # Register services - cannot be done in extension because
     # Invenio-Records-Resources might not have been initialized.
@@ -166,11 +161,12 @@ def init(app):
     iregistry = app.extensions["invenio-indexer"].registry
     iregistry.register(ext.records_service.indexer, indexer_id="marc21-records")
     iregistry.register(
-        ext.records_service.draft_indexer, indexer_id="marc21-records-drafts"
+        ext.records_service.draft_indexer,
+        indexer_id="marc21-records-drafts",
     )
 
 
-def register_marc21_dashboard_tab():
+def register_marc21_dashboard_tab() -> None:
     """Register entry for marc21 in the `flask_menu`-submenu "dashboard"."""
     user_dashboard_menu = current_menu.submenu("dashboard")
     user_dashboard_menu.submenu("Publications").register(

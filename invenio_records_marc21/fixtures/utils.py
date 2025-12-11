@@ -9,12 +9,3 @@
 # details.
 
 """Marc21 fixtures utils."""
-
-import json
-from os.path import dirname, join
-
-
-def load_json(filename):
-    """Helper function to load json."""
-    with open(join(dirname(__file__), filename), "rb") as fp:
-        return json.load(fp)

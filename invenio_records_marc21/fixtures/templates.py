@@ -10,13 +10,16 @@
 
 """Marc21 fixtures templates."""
 
+from json import load
+from pathlib import Path
+
 from ..proxies import current_records_marc21
-from .utils import load_json
 
 
-def create_templates(filename):
+def create_templates(filename: Path) -> list[dict]:
     """Create templates with the service."""
-    data_to_use = load_json(filename)
+    with Path(Path(__file__).parent / filename).open("rb") as fp:
+        data_to_use = load(fp)
 
     service = current_records_marc21.templates_service
     templates = []
@@ -26,7 +29,7 @@ def create_templates(filename):
     return templates
 
 
-def delete_templates(name, all, force):
+def delete_templates(name: str, all: bool, force: bool):
     """Delete templates with the service."""
     service = current_records_marc21.templates_service
     result = service.delete(name=name, all=all, force=force)
