@@ -37,7 +37,7 @@ from .services import (
     Marc21RecordService,
     Marc21RecordServiceConfig,
 )
-from .system import Marc21TemplateConfig, Marc21TemplateService
+from .system import Marc21TemplateService, Marc21TemplateServiceConfig
 from .ui.theme import current_identity_can_view
 
 
@@ -91,6 +91,7 @@ class InvenioRecordsMARC21:
         record_service_config = Marc21RecordServiceConfig.build(app)
         file_service_config = Marc21RecordFilesServiceConfig.build(app)
         file_draft_service_config = Marc21DraftFilesServiceConfig.build(app)
+        template_service_config = Marc21TemplateServiceConfig.build(app)
 
         self.records_service = Marc21RecordService(
             config=record_service_config,
@@ -99,7 +100,7 @@ class InvenioRecordsMARC21:
             pids_service=PIDsService(record_service_config, PIDManager),
         )
         self.templates_service = Marc21TemplateService(
-            config=Marc21TemplateConfig,
+            config=template_service_config,
         )
 
         self.iiif_service = IIIFService(

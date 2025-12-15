@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 select = ["ALL"]
 ignore = [
   "BLE001",
-  "D203", "D211", "D212", "D213",
+  "D203", "D211", "D212", "D213", "D301",
   "E501",
   "FA100", "FA102",
   "FIX002",
@@ -38,4 +38,3 @@ strict_equality = true
 follow_untyped_imports = true
 disallow_any_generics = false
 python_executable = ".venv/bin/python"
-

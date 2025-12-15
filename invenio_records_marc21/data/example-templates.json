@@ -1,70 +1,66 @@
 [
-    {
-        "name": "Test",
-        "values": {
-            "metadata": {
-                "leader": "00000nam a2200000zca4501",
-                "fields": [
-                    {
-                        "id": "020",
-                        "ind1": " ",
-                        "ind2": " ",
-                        "subfield": "$$a"
-                    },
-                    {
-                        "id": "100",
-                        "ind1": "1",
-                        "ind2": " ",
-                        "subfield": "$$u"
-                    },
-                    {
-                        "id": "245",
-                        "ind1": "0",
-                        "ind2": "0",
-                        "subfield": "$$a  $$b $$c "
-                    },
-                    {
-                        "id": "264",
-                        "ind1": " ",
-                        "ind2": " ",
-                        "subfield": "$$a $$b  $$b $$b"
-                    }
-                ]
-            }
+  {
+    "name": "Test",
+    "metadata": {
+      "leader": "00000nam a2200000zca4501",
+      "fields": [
+        {
+          "id": "020",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": "$$a"
+        },
+        {
+          "id": "100",
+          "ind1": "1",
+          "ind2": " ",
+          "subfield": "$$u"
+        },
+        {
+          "id": "245",
+          "ind1": "0",
+          "ind2": "0",
+          "subfield": "$$a  $$b $$c "
+        },
+        {
+          "id": "264",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": "$$a $$b  $$b $$b"
         }
-    },
-    {
-        "name": "Test 2",
-        "values": {
-            "metadata": {
-                "leader": "00000nam a2200000zca4509",
-                "fields": [
-                    {
-                        "id": "020",
-                        "ind1": " ",
-                        "ind2": " ",
-                        "subfield": "$$a"
-                    },
-                    {
-                        "id": "100",
-                        "ind1": "1",
-                        "ind2": " ",
-                        "subfield": "$$u"
-                    },
-                    {
-                        "id": "245",
-                        "ind1": "0",
-                        "ind2": "0",
-                        "subfield": "$$a  $$b $$c "
-                    },
-                    {
-                        "id": "264",
-                        "ind1": " ",
-                        "ind2": " ",
-                        "subfield": "$$a $$b  $$b $$c"
-                    }
-                ]
-            }
-        }
+      ]
     }
+  },
+  {
+    "name": "Test 2",
+    "metadata": {
+      "leader": "00000nam a2200000zca4509",
+      "fields": [
+        {
+          "id": "020",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": "$$a"
+        },
+        {
+          "id": "100",
+          "ind1": "1",
+          "ind2": " ",
+          "subfield": "$$u"
+        },
+        {
+          "id": "245",
+          "ind1": "0",
+          "ind2": "0",
+          "subfield": "$$a  $$b $$c "
+        },
+        {
+          "id": "264",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": "$$a $$b  $$b $$c"
+        }
+      ]
+    }
+  }
 ]
