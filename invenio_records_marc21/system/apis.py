@@ -9,11 +9,12 @@
 """Marc21 Templates models."""
 
 
-from invenio_db import db
-from invenio_records.models import RecordMetadataBase
+from invenio_records.api import Record
+
+from .models import Marc21TemplateMetadata
 
 
-class Marc21TemplateMetadata(db.Model, RecordMetadataBase):
-    """Templates metadata model."""
+class Marc21Template(Record):
+    """Marc21 Templates api."""
 
-    __tablename__ = "marc21_templates"
+    model_cls = Marc21TemplateMetadata

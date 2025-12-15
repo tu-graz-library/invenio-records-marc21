@@ -24,8 +24,8 @@ from invenio_db import db
 from .errors import log_exceptions
 from .fixtures.demo import create_fake_record
 from .fixtures.tasks import create_demo_record
-from .fixtures.templates import create_templates, delete_templates
 from .proxies import current_records_marc21
+from .utils import JSON
 
 
 def get_user(user_email: str) -> User:
@@ -123,12 +123,11 @@ def templates() -> None:
 
 @templates.command("create")
 @option(
-    "--input-file",
-    "-f",
+    "--input-data",
     required=True,
     show_default=True,
-    type=str,
-    help="Relative path to file",
+    type=JSON(),
+    help="Relative path to json file",
 )
 @with_appcontext
 @log_exceptions
@@ -136,40 +135,48 @@ def templates() -> None:
     before="Creating template/s..",
     after="Successfully created Template/s!",
 )
-def create(input_file: str) -> None:
-    """Create Templates for Marc21 Deposit app."""
-    create_templates(input_file)
+def create(input_data: dict) -> None:
+    """Create Templates for Marc21 Deposit app.
+
+    \b
+    json should look like:
+    \b
+    {
+      "NAME": {
+        "fields": {
+          041": [
+            {
+              "ind1": "_",
+              "ind2": "_",
+              "subfields": {
+                "a": ["eng"]
+              }
+            }
+          ]
+        }
+      }
+    }
+    """
+    service = current_records_marc21.templates_service
+
+    for data in input_data:
+        service.create(identity=system_identity, data=data)
 
 
 @templates.command("delete")
 @option(
-    "--all",
-    default=False,
-    show_default=True,
-    is_flag=True,
-    help="Delete all Templates",
-)
-@option(
-    "--force",
-    "-f",
-    default=False,
-    show_default=True,
-    is_flag=True,
-    help="Hard/Soft delete of templates.",
-)
-@option(
-    "--name",
-    "-n",
+    "--pid",
     required=False,
     type=str,
-    help="Template name.",
+    help="Template pid.",
 )
 @with_appcontext
 @log_exceptions
 @wrap_messages(
-    before="Deleting template/s...",
+    before="Deleting template...",
     after="Successfully deleted Template!",
 )
-def delete(name: str, *, all: bool, force: bool) -> None:
+def delete(pid: str) -> None:
     """Delete Templates for Marc21 Deposit app."""
-    delete_templates(name, all, force)
+    service = current_records_marc21.templates_service
+    return service.delete(identity=system_identity, id_=pid)
