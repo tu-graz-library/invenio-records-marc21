@@ -200,7 +200,7 @@ class Marc21RecordFilesServiceConfig(FileServiceConfig, ConfiguratorMixin):
             params=["uuid"],
             when=is_iiif_compatible,
             vars=lambda file_drafcord, vars: vars.update(
-                {"uuid": get_iiif_uuid_of_file_drafcord(file_drafcord, vars)}
+                {"uuid": get_iiif_uuid_of_file_drafcord(file_drafcord, vars)},
             ),
         ),
     }

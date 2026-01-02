@@ -88,7 +88,7 @@ class CommonFieldsMixin:
     dumper = SearchDumper(
         extensions=[
             Marc21StatisticsDumperExt("stats"),
-        ]
+        ],
     )
 
 
@@ -190,7 +190,7 @@ class Marc21Record(Record, CommonFieldsMixin):
     stats = Marc21RecordStatisticsField()
 
     @classmethod
-    def get_latest_published_by_parent(cls, parent):
+    def get_latest_published_by_parent(cls, parent: Marc21Parent) -> Marc21Record:
         """Get the latest published record for the specified parent record.
 
         It might return None if there is no latest published version i.e not
