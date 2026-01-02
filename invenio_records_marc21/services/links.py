@@ -11,58 +11,28 @@
 """Marc21 Record Service links."""
 
 from invenio_drafts_resources.services.records.config import is_draft, is_record
-from invenio_rdm_records.services.config import has_doi, is_record_and_has_doi
+from invenio_rdm_records.services.config import record_doi_link
 from invenio_records_resources.services import ConditionalLink
-from invenio_records_resources.services.base.links import Link
-from invenio_records_resources.services.records.links import (
-    RecordEndpointLink,
-    RecordLink,
-    pagination_endpoint_links,
-)
+from invenio_records_resources.services.records.links import RecordEndpointLink
 
 DefaultServiceLinks = {
     "self": ConditionalLink(
         cond=is_record,
-        if_=RecordLink("{+api}/publications/{id}"),
-        else_=RecordLink("{+api}/publications/{id}/draft"),
+        if_=RecordEndpointLink("marc21_records.read"),
+        else_=RecordEndpointLink("marc21_records.read_draft"),
     ),
     "self_html": ConditionalLink(
         cond=is_record,
-        if_=RecordLink("{+ui}/publications/{id}"),
-        else_=RecordLink("{+ui}/publications/uploads/{id}"),
+        if_=RecordEndpointLink("invenio_records_marc21.record_detail"),
+        else_=RecordEndpointLink("invenio_records_marc21.deposit_edit"),
     ),
-    "self_doi": Link(
-        "{+ui}/publications/{+pid_doi}",
-        when=is_record_and_has_doi,
-        vars=lambda record, var_s: var_s.update(
-            {
-                f"pid_{scheme}": pid["identifier"].split("/")[1]
-                for (scheme, pid) in record.pids.items()
-                if scheme == "doi"
-            }
-        ),
-    ),
-    "doi": Link(
-        "https://doi.org/{+pid_doi}",
-        when=has_doi,
-        vars=lambda record, vars: vars.update(
-            {
-                f"pid_{scheme}": pid["identifier"]
-                for (scheme, pid) in record.pids.items()
-                if scheme == "doi"
-            }
-        ),
-    ),
+    "self_doi": record_doi_link,
+    "doi": record_doi_link,
     "files": ConditionalLink(
         cond=is_record,
-        if_=RecordLink("{+api}/publications/{id}/files"),
-        else_=RecordLink("{+api}/publications/{id}/draft/files"),
+        if_=RecordEndpointLink("marc21_files.search"),
+        else_=RecordEndpointLink("marc21_draft_files.search"),
     ),
-    "latest": RecordLink("{+api}/publications/{id}/versions/latest"),
-    "latest_html": RecordLink("{+ui}/publications/{id}/latest"),
-    "draft": RecordLink("{+ui}/publications/{id}", when=is_record),
-    "publish": RecordLink(
-        "{+api}/publications/{id}/draft/actions/publish", when=is_draft
-    ),
-    "versions": RecordLink("{+api}/publications/{id}/versions"),
+    "draft": RecordEndpointLink("marc21_records.read_draft", when=is_record),
+    "publish": RecordEndpointLink("marc21_records.publish", when=is_draft),
 }
