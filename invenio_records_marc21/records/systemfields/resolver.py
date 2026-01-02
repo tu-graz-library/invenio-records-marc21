@@ -2,13 +2,15 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2020 Graz University of Technology.
+# Copyright (C) 2020-2025 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
 # details.
 
 """Marc PID resolver."""
+
+from collections.abc import Callable
 
 from invenio_pidstore.resolver import Resolver
 
@@ -21,8 +23,13 @@ class MarcResolver(Resolver):
     """
 
     def __init__(
-        self, pid_type="marcid", object_type="rec", getter=None, registered_only=False
-    ):
+        self,
+        pid_type: str = "marcid",
+        object_type: str = "rec",
+        getter: Callable | None = None,
+        *,
+        registered_only: bool = False,
+    ) -> None:
         """Initialize resolver.
 
         :param pid_type: Persistent identifier type.

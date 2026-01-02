@@ -14,6 +14,9 @@
 """Marc21 Record Resource."""
 
 
+from collections.abc import Callable
+from typing import TypedDict, override
+
 from flask import g
 from flask_resources import resource_requestctx, response_handler, route
 from invenio_drafts_resources.resources import RecordResource
@@ -26,6 +29,15 @@ from invenio_records_resources.resources.records.resource import (
 from . import config
 
 
+class RouteDict(TypedDict):
+    """Route dict."""
+
+    rule: str
+    methods: list[str]
+    view_func: Callable
+    endpoint: str
+
+
 #
 # Records
 #
@@ -35,15 +47,16 @@ class Marc21RecordResource(RecordResource):
     config_name = "MARC21_RECORDS_RECORD_CONFIG"
     default_config = config.Marc21RecordResourceConfig
 
-    def create_url_rules(self):
+    @override
+    def create_url_rules(self) -> list[RouteDict]:  # type: ignore[override]
         """Create the URL rules for the record resource."""
         routes = self.config.routes
 
-        def s(route):
+        def s(route: str) -> str:
             """Suffix a route with the URL prefix."""
             return f"{route}{self.config.url_prefix}"
 
-        def p(route):
+        def p(route: str) -> str:
             """Prefix a route with the URL prefix."""
             return f"{self.config.url_prefix}{route}"
 
@@ -72,14 +85,14 @@ class Marc21RecordResource(RecordResource):
                     p(routes["item-files-import"]),
                     self.import_files,
                     apply_decorators=False,
-                )
+                ),
             )
 
         return rules
 
     @request_data
     @response_handler()
-    def create(self):
+    def create(self) -> tuple[dict, int]:
         """Create an item."""
         data = resource_requestctx.data
         item = self.service.create(
@@ -92,7 +105,7 @@ class Marc21RecordResource(RecordResource):
     @request_view_args
     @request_data
     @response_handler()
-    def update_draft(self):
+    def update_draft(self) -> tuple[dict, int]:
         """Update a draft.
 
         PUT /publications/:pid_value/draft
@@ -110,10 +123,10 @@ class Marc21RecordResource(RecordResource):
 class Marc21ParentRecordLinksResource(RecordResource):
     """Secret links resource."""
 
-    def create_url_rules(self):
+    def create_url_rules(self) -> list[RouteDict]:  # type: ignore[override]
         """Create the URL rules for the record resource."""
 
-        def p(route):
+        def p(route: str) -> str:
             """Prefix a route with the URL prefix."""
             return f"{self.config.url_prefix}{route}"
 
