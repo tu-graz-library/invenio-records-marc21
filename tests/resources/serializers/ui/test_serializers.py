@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2024 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -15,34 +15,36 @@ from invenio_records_marc21.resources.serializers.ui import Marc21UIJSONSerializ
 from invenio_records_marc21.resources.serializers.ui.schema import Marc21UISchema
 
 
-def test_ui_json_serializer_init():
+def test_ui_json_serializer_init() -> None:
     marc = Marc21UIJSONSerializer()
-    assert marc._object_key == "ui"
     assert isinstance(marc.object_schema, Marc21UISchema)
 
 
-def test_ui_json_serializer_dump_obj(full_record):
+def test_ui_json_serializer_dump_obj(full_record: dict) -> None:
     marc = Marc21UIJSONSerializer()
     obj = marc.dump_obj(full_record)
 
+    expected = {
+        "languages": [],
+        "authors": [{"a": ["Philipp"], "8": []}],
+        "titles": ["The development of high strain actuator materials"],
+        "copyright": [],
+        "description": "",
+        "notes": [],
+        "resource_type": "",
+        "published": "",
+        "publisher": "TU Graz",
+        "license": {"url": "", "short": ""},
+        "youtube": "",
+        "isbn": None,
+    }
     assert isinstance(obj["metadata"], dict)
-    assert full_record["metadata"] == obj["metadata"]
-
-    assert marc._object_key in obj
-    obj_ui = obj[marc._object_key]
-    assert "metadata" in obj_ui
-    assert isinstance(obj_ui["metadata"], dict)
+    assert expected == obj["metadata"]
 
 
-def test_ui_json_serializer_dump_list(list_records):
+def test_ui_json_serializer_dump_list(list_records: list) -> None:
     marc = Marc21UIJSONSerializer()
     obj_list = marc.dump_list(list_records)
     for record, obj in zip(obj_list["hits"]["hits"], list_records["hits"]["hits"]):
-        assert marc._object_key in obj
-
         assert "metadata" in obj
         assert record["metadata"] == obj["metadata"]
-
-        obj_ui = obj[marc._object_key]
-        assert "metadata" in obj_ui
-        assert isinstance(obj_ui["metadata"], dict)
