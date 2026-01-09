@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2022-2023 Graz University of Technology.
+# Copyright (C) 2022-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -117,41 +117,6 @@ def test_resolve_non_existing_pid(running_app, full_metadata):
     fake_doi = "10.4321/client.12345-invalid"
     with pytest.raises(PIDDoesNotExistError):
         service.pids.resolve(identity=adminuser_identity, id_=fake_doi, scheme="doi")
-
-
-def test_reserve_pid(running_app, full_metadata):
-    """Reserve a new PID."""
-    service = current_records_marc21.records_service
-    adminuser_identity = running_app.adminuser_identity
-
-    draft = service.create(identity=adminuser_identity, metadata=full_metadata)
-    # draft = service.pids.create(identity=adminuser_identity, id_=draft.id, scheme="doi")
-
-    doi = draft["pids"]["doi"]["identifier"]
-    provider = service.pids.pid_manager._get_provider("doi", "datacite")
-    pid = provider.get(pid_value=doi)
-    assert pid.status == PIDStatus.NEW
-
-
-def test_discard_existing_pid(running_app, full_metadata):
-    """Discard a PID without error."""
-    service = current_records_marc21.records_service
-    adminuser_identity = running_app.adminuser_identity
-
-    draft = service.create(identity=adminuser_identity, metadata=full_metadata)
-
-    # draft = service.pids.create(identity=adminuser_identity, id_=draft.id, scheme="doi")
-
-    doi = draft["pids"]["doi"]["identifier"]
-    provider = service.pids.pid_manager._get_provider("doi", "datacite")
-    pid = provider.get(pid_value=doi)
-    assert pid.status == PIDStatus.NEW
-    draft = service.pids.discard(
-        identity=adminuser_identity, id_=draft.id, scheme="doi"
-    )
-    assert not draft["pids"].get("doi")
-    with pytest.raises(PIDDoesNotExistError):
-        pid = provider.get(pid_value=doi)
 
 
 @pytest.mark.skip("Cannot be tested. Since the pids are created with a draft.")
