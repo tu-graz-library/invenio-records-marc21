@@ -3,7 +3,7 @@
 # Copyright (C) 2020-2021 CERN.
 # Copyright (C) 2020 Northwestern University.
 # Copyright (C) 2021 TU Wien.
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-RDM-Records is free software; you can redistribute it and/or modify
 # it under the terms of the MIT License; see LICENSE file for more details.
@@ -13,6 +13,7 @@
 from copy import copy
 
 from flask_principal import Identity
+from invenio_drafts_resources.services.records.components import ServiceComponent
 from invenio_rdm_records.services.components import PIDsComponent as BasePIDsComponent
 from invenio_records_resources.services.uow import TaskOp
 
@@ -144,3 +145,17 @@ class PIDsComponent(BasePIDsComponent):
             draft.pids = {"doi": {"provider": "external", "identifier": ""}}
         else:
             draft.pids = {}
+
+
+class ParentPIDsComponent(ServiceComponent):
+    """Service component for record parent PIDs."""
+
+    def create(
+        self,
+        identity: Identity,
+        data: dict = None,
+        record: Marc21Record = None,
+        errors: dict = None,
+    ) -> None:
+        """This method is called on draft creation."""
+        record.parent.pids = {}
