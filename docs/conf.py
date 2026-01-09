@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -8,7 +8,6 @@
 
 """Sphinx configuration."""
 
-import os
 from datetime import datetime, timezone
 
 from invenio_records_marc21 import __version__
@@ -342,3 +341,7 @@ intersphinx_mapping = {
 
 # Autodoc configuraton.
 autoclass_content = "both"
+
+nitpick_ignore = [
+    ("py:class", "flask.blueprints.Blueprint"),
+]
