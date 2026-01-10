@@ -39,7 +39,7 @@ def test_ui_json_serializer_dump_obj(full_record: dict) -> None:
         "isbn": None,
     }
     assert isinstance(obj["metadata"], dict)
-    assert expected == obj["metadata"]
+    assert expected == obj["ui"]["metadata"]
 
 
 def test_ui_json_serializer_dump_list(list_records: list) -> None:
