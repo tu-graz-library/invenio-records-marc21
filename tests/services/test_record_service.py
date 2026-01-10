@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -201,8 +201,7 @@ def test_create_publish_new_version(running_app, full_metadata):
 
 # Embargo lift
 #
-@mock.patch("arrow.utcnow")
-def test_embargo_lift_without_draft(mock_arrow, running_app, marc21_record, superuser):
+def test_embargo_lift_without_draft(running_app, marc21_record, superuser):
     adminuser_identity = running_app.adminuser_identity
     service = current_records_marc21.records_service
 
@@ -215,14 +214,25 @@ def test_embargo_lift_without_draft(mock_arrow, running_app, marc21_record, supe
         "reason": None,
     }
 
-    # We need to set the current date in the past to pass the validations
-    mock_arrow.return_value = datetime(1954, 9, 29).replace(
-        tzinfo=timezone(timedelta(hours=2))
-    )
-    draft = service.create(identity=adminuser_identity, data=marc21_record)
-    record = service.publish(identity=adminuser_identity, id_=draft.id)
-    # Recover current date
-    mock_arrow.return_value = SimpleNamespace(datetime=datetime.now(timezone.utc))
+    with mock.patch(
+        "invenio_rdm_records.records.systemfields.access.embargo.datetime"
+    ) as mock_arrow:
+        # We need to set the current date in the past to pass the validations
+        mock_arrow.now.return_value = datetime(1954, 9, 29, tzinfo=timezone.utc)
+
+        with mock.patch(
+            "invenio_rdm_records.services.schemas.access.datetime"
+        ) as mock_arrow_access:
+            mock_arrow_access.now.return_value = datetime(
+                1954, 9, 29, tzinfo=timezone.utc
+            )
+
+            draft = service.create(identity=adminuser_identity, data=marc21_record)
+            record = service.publish(identity=adminuser_identity, id_=draft.id)
+
+            # Recover current date
+            mock_arrow_access.now.return_value = datetime.now(timezone.utc)
+        mock_arrow.now.return_value = datetime.now(timezone.utc)
 
     service.lift_embargo(identity=superuser.identity, _id=draft.id)
     record_lifted = service.record_cls.pid.resolve(record["id"])
@@ -233,8 +243,7 @@ def test_embargo_lift_without_draft(mock_arrow, running_app, marc21_record, supe
     assert record_lifted.access.status.value == "metadata-only"
 
 
-@mock.patch("arrow.utcnow")
-def test_embargo_lift_with_draft(mock_arrow, running_app, marc21_record, superuser):
+def test_embargo_lift_with_draft(running_app, marc21_record, superuser):
     adminuser_identity = running_app.adminuser_identity
     service = current_records_marc21.records_service
     # Add embargo to record
@@ -246,18 +255,28 @@ def test_embargo_lift_with_draft(mock_arrow, running_app, marc21_record, superus
         "reason": None,
     }
 
-    mock_arrow.return_value = datetime(1954, 9, 29).replace(
-        tzinfo=timezone(timedelta(hours=2))
-    )
-    draft = service.create(identity=adminuser_identity, data=marc21_record)
-    record = service.publish(identity=adminuser_identity, id_=draft.id)
-    # This draft simulates an existing one while lifting the record
-    ongoing_draft = service.edit(identity=adminuser_identity, id_=draft.id)
+    with mock.patch(
+        "invenio_rdm_records.records.systemfields.access.embargo.datetime"
+    ) as mock_arrow:
+        # We need to set the current date in the past to pass the validations
+        mock_arrow.now.return_value = datetime(1954, 9, 29, tzinfo=timezone.utc)
 
-    mock_arrow.return_value = SimpleNamespace(datetime=datetime.now(timezone.utc))
+        with mock.patch(
+            "invenio_rdm_records.services.schemas.access.datetime"
+        ) as mock_arrow_access:
+            mock_arrow_access.now.return_value = datetime(
+                1954, 9, 29, tzinfo=timezone.utc
+            )
 
-    # TODO: Record not always synced with database leads to an detached object. Can be removed after uow implemented
-    record._record.commit()
+            draft = service.create(identity=adminuser_identity, data=marc21_record)
+            record = service.publish(identity=adminuser_identity, id_=draft.id)
+
+            # This draft simulates an existing one while lifting the record
+            ongoing_draft = service.edit(identity=adminuser_identity, id_=draft.id)
+
+            # Recover current date
+            mock_arrow_access.now.return_value = datetime.now(timezone.utc)
+        mock_arrow.now.return_value = datetime.now(timezone.utc)
 
     service.lift_embargo(identity=superuser.identity, _id=record["id"])
     record_lifted = service.record_cls.pid.resolve(record["id"])
@@ -272,10 +291,7 @@ def test_embargo_lift_with_draft(mock_arrow, running_app, marc21_record, superus
     assert draft_lifted.access.protection.record == "public"
 
 
-@mock.patch("arrow.utcnow")
-def test_embargo_lift_with_updated_draft(
-    mock_arrow, running_app, marc21_record, superuser
-):
+def test_embargo_lift_with_updated_draft(running_app, marc21_record, superuser):
     adminuser_identity = running_app.adminuser_identity
     service = current_records_marc21.records_service
     # Add embargo to record
@@ -287,32 +303,41 @@ def test_embargo_lift_with_updated_draft(
         "reason": None,
     }
 
-    # We need to set the current date in the past to pass the validations
-    mock_arrow.return_value = datetime(1954, 9, 29).replace(
-        tzinfo=timezone(timedelta(hours=2))
-    )
-    draft = service.create(identity=adminuser_identity, data=marc21_record)
-    record = service.publish(identity=adminuser_identity, id_=draft.id)
-    # This draft simulates an existing one while lifting the record
-    service.edit(identity=adminuser_identity, id_=draft.id)
-    # Recover current date
-    mock_arrow.return_value = SimpleNamespace(datetime=datetime.now(timezone.utc))
+    with mock.patch(
+        "invenio_rdm_records.records.systemfields.access.embargo.datetime"
+    ) as mock_arrow:
+        # We need to set the current date in the past to pass the validations
+        mock_arrow.now.return_value = datetime(1954, 9, 29, tzinfo=timezone.utc)
 
-    # Change record's title and access field to be restricted
-    marc21_record["metadata"]["title"] = "Record modified by the user"
-    marc21_record["access"]["status"] = "restricted"
-    marc21_record["access"]["embargo"] = {
-        "active": False,
-        "until": None,
-        "reason": None,
-    }
-    # Update the ongoing draft with the new data simulating the user's input
-    ongoing_draft = service.update_draft(
-        identity=adminuser_identity, id_=draft.id, data=marc21_record
-    )
+        with mock.patch(
+            "invenio_rdm_records.services.schemas.access.datetime"
+        ) as mock_arrow_access:
+            mock_arrow_access.now.return_value = datetime(
+                1954, 9, 29, tzinfo=timezone.utc
+            )
 
-    # TODO: Record not always synced with database leads to an detached object. Can be removed after uow implemented
-    record._record.commit()
+            draft = service.create(identity=adminuser_identity, data=marc21_record)
+            record = service.publish(identity=adminuser_identity, id_=draft.id)
+
+            # This draft simulates an existing one while lifting the record
+            ongoing_draft = service.edit(identity=adminuser_identity, id_=draft.id)
+
+            # Change record's title and access field to be restricted
+            marc21_record["metadata"]["title"] = "Record modified by the user"
+            marc21_record["access"]["status"] = "restricted"
+            marc21_record["access"]["embargo"] = {
+                "active": False,
+                "until": None,
+                "reason": None,
+            }
+            # Update the ongoing draft with the new data simulating the user's input
+            ongoing_draft = service.update_draft(
+                identity=adminuser_identity, id_=draft.id, data=marc21_record
+            )
+
+            # Recover current date
+            mock_arrow_access.now.return_value = datetime.now(timezone.utc)
+        mock_arrow.now.return_value = datetime.now(timezone.utc)
 
     service.lift_embargo(_id=record["id"], identity=superuser.identity)
     record_lifted = service.record_cls.pid.resolve(record["id"])
