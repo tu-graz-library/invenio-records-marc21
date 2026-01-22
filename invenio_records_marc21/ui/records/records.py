@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -35,10 +35,11 @@ class PreviewFile:
     `invenio_previewer.api.PreviewFile`.
     """
 
-    def __init__(self, file_item, record_pid_value, url=None):
+    def __init__(self, file_item, record_pid_value, record=None, url=None):
         """Create a new PreviewFile."""
         self.file = file_item
         self.data = file_item.data
+        self.record = record
         self.size = self.data["size"]
         self.filename = self.data["key"]
         self.bucket = self.data["bucket_id"]
@@ -146,7 +147,7 @@ def record_file_preview(
         preview=1 if is_preview else 0,
     )
     # Find a suitable previewer
-    fileobj = PreviewFile(file_metadata, pid_value, url)
+    fileobj = PreviewFile(file_metadata, pid_value, record=record, url=url)
     for plugin in current_previewer.iter_previewers(
         previewers=[file_previewer] if file_previewer else None
     ):
