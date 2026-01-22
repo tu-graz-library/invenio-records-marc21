@@ -60,8 +60,8 @@ class RecordDeletionStatusEnum(enum.Enum):
 class Marc21Parent(BaseParentRecord):
     """Parent record."""
 
-    versions_model_cls = models.VersionsState
-    model_cls = models.ParentMetadata
+    versions_model_cls = models.Marc21VersionsState
+    model_cls = models.Marc21ParentMetadata
 
     schema = ConstantField("$schema", "local://marc21/parent-v2.0.0.json")
 
@@ -80,7 +80,7 @@ class Marc21Parent(BaseParentRecord):
 class DraftFile(BaseFileRecord):
     """Marc21 file associated with a marc21 draft model."""
 
-    model_cls = models.DraftFile
+    model_cls = models.Marc21DraftFile
     record_cls = None  # defined below
 
 
@@ -97,8 +97,8 @@ class CommonFieldsMixin:
 class Marc21Draft(Draft, CommonFieldsMixin):
     """Marc21 draft API."""
 
-    model_cls = models.DraftMetadata
-    versions_model_cls = models.VersionsState
+    model_cls = models.Marc21DraftMetadata
+    versions_model_cls = models.Marc21VersionsState
     parent_record_cls = Marc21Parent
 
     schema = ConstantField("$schema", "local://marc21/marc21-v2.0.0.json")
@@ -141,15 +141,15 @@ DraftFile.record_cls = Marc21Draft
 class RecordFile(BaseFileRecord):
     """Marc21 record file API."""
 
-    model_cls = models.RecordFile
+    model_cls = models.Marc21RecordFile
     record_cls = None  # defined below
 
 
 class Marc21Record(Record, CommonFieldsMixin):
     """Define API for Marc21 create and manipulate."""
 
-    model_cls = models.RecordMetadata
-    versions_model_cls = models.VersionsState
+    model_cls = models.Marc21RecordMetadata
+    versions_model_cls = models.Marc21VersionsState
     parent_record_cls = Marc21Parent
 
     schema = ConstantField("$schema", "local://marc21/marc21-v2.0.0.json")
