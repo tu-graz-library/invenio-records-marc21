@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -10,7 +10,6 @@
 
 
 """Files field tests."""
-
 
 from io import BytesIO
 
@@ -68,7 +67,7 @@ def test_record_file_update(testapp, db, location):
     assert rf["metadata"] == {"description": "A test file."}
     db.session.commit()
 
-    assert models.RecordFile.query.count() == 1
+    assert models.Marc21RecordFile.query.count() == 1
     assert ObjectVersion.query.count() == 0
 
     # Update
@@ -104,7 +103,7 @@ def test_record_file_update(testapp, db, location):
     record.commit()
     db.session.commit()
 
-    assert models.RecordFile.query.count() == 0
+    assert models.Marc21RecordFile.query.count() == 0
     assert FileInstance.query.count() == 1
     assert ObjectVersion.query.count() == 0
     assert Bucket.query.count() == 1
@@ -140,7 +139,7 @@ def test_record_files_clear(testapp, db, location):
     record.commit()
     db.session.commit()
 
-    assert models.RecordFile.query.count() == 3
+    assert models.Marc21RecordFile.query.count() == 3
     assert FileInstance.query.count() == 2
     assert ObjectVersion.query.count() == 2
     assert Bucket.query.count() == 1
@@ -151,7 +150,7 @@ def test_record_files_clear(testapp, db, location):
     record.commit()
     db.session.commit()
 
-    assert models.RecordFile.query.count() == 0
+    assert models.Marc21RecordFile.query.count() == 0
     assert FileInstance.query.count() == 2
     assert ObjectVersion.query.count() == 0
     assert Bucket.query.count() == 1

@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -11,12 +11,11 @@
 
 """Tests for the record PIDField."""
 
-
 from invenio_records_resources.records.systemfields import PIDField
 from sqlalchemy import inspect
 
 from invenio_records_marc21.records.api import Marc21Record
-from invenio_records_marc21.records.models import RecordMetadata
+from invenio_records_marc21.records.models import Marc21RecordMetadata
 from invenio_records_marc21.records.systemfields import (
     MarcPIDFieldContext,
     MarcRecordProvider,
@@ -44,7 +43,7 @@ def test_create_no_provider(testapp, db):
     """Test creation without a provider."""
 
     class Record(Marc21Record):
-        model_cls = RecordMetadata
+        model_cls = Marc21RecordMetadata
         pid = PIDField()
 
     record = Record.create({})
@@ -64,7 +63,7 @@ def test_create_different_key(testapp, db):
     """Test creation with different key."""
 
     class Record(Marc21Record):
-        model_cls = RecordMetadata
+        model_cls = Marc21RecordMetadata
 
         pid = PIDField(
             key="id",
