@@ -10,7 +10,6 @@
 
 """Marc21 Celery tasks."""
 
-
 from celery import shared_task
 from flask_principal import Identity
 from invenio_access.permissions import any_user, authenticated_user, system_process

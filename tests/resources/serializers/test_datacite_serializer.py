@@ -10,7 +10,6 @@
 
 """Resources serializers tests."""
 
-
 from invenio_records_marc21.resources.serializers import Marc21DataCite43JSONSerializer
 
 

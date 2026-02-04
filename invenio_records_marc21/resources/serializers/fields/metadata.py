@@ -10,7 +10,6 @@
 
 """Metadata field for marc21 records."""
 
-
 from marshmallow.fields import Field
 
 

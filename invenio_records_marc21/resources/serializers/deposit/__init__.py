@@ -10,7 +10,6 @@
 
 """Record response serializers."""
 
-
 from .serializer import Marc21DepositSerializer
 
 __all__ = ("Marc21DepositSerializer",)

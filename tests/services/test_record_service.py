@@ -9,7 +9,6 @@
 
 """Tests for marc21 Service."""
 
-
 from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
 from unittest import mock

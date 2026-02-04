@@ -10,7 +10,6 @@
 
 """Marc21 Record Service."""
 
-
 from invenio_db import db
 from invenio_rdm_records.services import RDMRecordService
 from invenio_records_resources.services.files.service import FileService

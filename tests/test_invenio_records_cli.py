@@ -10,7 +10,6 @@
 
 """Module cli tests."""
 
-
 from datetime import timedelta
 
 import arrow

@@ -8,7 +8,6 @@
 
 """Marc21 Templates models."""
 
-
 from invenio_db import db
 from invenio_records.models import RecordMetadataBase
 

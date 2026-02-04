@@ -9,6 +9,7 @@
 # details.
 
 """Permissions generators for Invenio Marc21 Records."""
+
 from typing import cast
 
 from flask import current_app, g

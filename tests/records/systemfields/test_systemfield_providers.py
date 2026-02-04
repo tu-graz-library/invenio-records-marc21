@@ -11,7 +11,6 @@
 
 """Tests for the record Pid Providers."""
 
-
 import uuid
 
 import pytest
