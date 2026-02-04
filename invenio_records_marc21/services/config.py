@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -18,11 +18,12 @@ from invenio_drafts_resources.services.records.config import (
     SearchDraftsOptions,
     SearchOptions,
     SearchVersionsOptions,
+    is_draft,
     is_record,
 )
 from invenio_indexer.api import RecordIndexer
 from invenio_rdm_records.services import facets as rdm_facets
-from invenio_records_resources.services import FileServiceConfig, pagination_links
+from invenio_records_resources.services import FileServiceConfig
 from invenio_records_resources.services.base.config import (
     ConfiguratorMixin,
     FromConfig,
@@ -30,8 +31,10 @@ from invenio_records_resources.services.base.config import (
     SearchOptionsMixin,
 )
 from invenio_records_resources.services.base.links import EndpointLink
-from invenio_records_resources.services.files.links import FileLink
-from invenio_records_resources.services.records.links import RecordLink
+from invenio_records_resources.services.files.links import FileEndpointLink
+from invenio_records_resources.services.records.links import (
+    pagination_endpoint_links,
+)
 
 from ..records import Marc21Draft, Marc21Parent, Marc21Record
 from . import facets
@@ -146,12 +149,15 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     # Permission policy
     default_files_enabled = FromConfig("MARC21_DEFAULT_FILES_ENABLED", default=True)
 
-    links_search = pagination_links("{+api}/publications{?args*}")
+    links_search = pagination_endpoint_links("marc21_records.search")
 
-    links_search_drafts = pagination_links("{+api}/user/publications{?args*}")
+    links_search_drafts = pagination_endpoint_links(
+        "marc21_records.search_user_records",
+    )
 
-    links_search_versions = pagination_links(
-        "{+api}/publications/{id}/versions{?args*}",
+    links_search_versions = pagination_endpoint_links(
+        "marc21_records.search_versions",
+        params=["pid_value"],
     )
 
     components = FromConfig(
@@ -189,12 +195,16 @@ class Marc21RecordFilesServiceConfig(FileServiceConfig, ConfiguratorMixin):
     permission_action_prefix = ""
 
     file_links_list = {
-        "self": RecordLink("{+api}/publications/{id}/files"),
+        "self": EndpointLink("marc21_record_files.search", params=["pid_value"]),
     }
 
     file_links_item = {
-        "self": FileLink("{+api}/publications/{id}/files/{key}"),
-        "content": FileLink("{+api}/publications/{id}/files/{key}/content"),
+        "self": FileEndpointLink(
+            "marc21_record_files.read", params=["pid_value", "key"]
+        ),
+        "content": FileEndpointLink(
+            "marc21_record_files.read_content", params=["pid_value", "key"]
+        ),
         "iiif_base": EndpointLink(
             "marc21iiif.base",
             params=["uuid"],
@@ -217,11 +227,19 @@ class Marc21DraftFilesServiceConfig(FileServiceConfig, ConfiguratorMixin):
     permission_action_prefix = "draft_"
 
     file_links_list = {
-        "self": RecordLink("{+api}/publications/{id}/draft/files"),
+        "self": EndpointLink("marc21_draft_files.search", params=["pid_value"]),
     }
 
     file_links_item = {
-        "self": FileLink("{+api}/publications/{id}/draft/files/{key}"),
-        "content": FileLink("{+api}/publications/{id}/draft/files/{key}/content"),
-        "commit": FileLink("{+api}/publications/{id}/draft/files/{key}/commit"),
+        "self": FileEndpointLink(
+            "marc21_draft_files.read", params=["pid_value", "key"]
+        ),
+        "content": FileEndpointLink(
+            "marc21_draft_files.read_content", params=["pid_value", "key"]
+        ),
+        "commit": FileEndpointLink(
+            "marc21_draft_files.create_commit",
+            params=["pid_value", "key"],
+            when=lambda file_draft, ctx: (is_draft(file_draft.record, ctx)),
+        ),
     }
