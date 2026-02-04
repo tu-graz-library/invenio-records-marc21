@@ -10,7 +10,6 @@
 
 """Tests for Resources UI marc21 serializer."""
 
-
 from invenio_records_marc21.resources.serializers.ui import Marc21UIJSONSerializer
 from invenio_records_marc21.resources.serializers.ui.schema import Marc21UISchema
 

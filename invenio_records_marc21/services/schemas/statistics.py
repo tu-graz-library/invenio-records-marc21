@@ -8,7 +8,6 @@
 
 """Tugraz statistic record schemas."""
 
-
 from marshmallow import Schema, fields
 
 

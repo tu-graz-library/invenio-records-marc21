@@ -14,7 +14,6 @@ See https://pytest-invenio.readthedocs.io/ for documentation on which test
 fixtures are available.
 """
 
-
 import pytest
 from flask import Flask
 from flask_principal import ActionNeed

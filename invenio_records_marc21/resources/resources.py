@@ -13,7 +13,6 @@
 
 """Marc21 Record Resource."""
 
-
 from collections.abc import Callable
 from typing import TypedDict, override
 

@@ -7,7 +7,6 @@
 
 """Marc21 records deposit backend."""
 
-
 from flask import current_app, g
 from flask_principal import Identity
 from invenio_i18n.ext import current_i18n

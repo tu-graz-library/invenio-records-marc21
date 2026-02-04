@@ -10,7 +10,6 @@
 
 """Test record AccessSchema."""
 
-
 from datetime import timedelta
 
 import arrow

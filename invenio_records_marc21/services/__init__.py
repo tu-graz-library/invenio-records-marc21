@@ -10,7 +10,6 @@
 
 """High-level API for wokring with Marc21 records, pids and search."""
 
-
 from .config import (
     Marc21DraftFilesServiceConfig,
     Marc21RecordFilesServiceConfig,

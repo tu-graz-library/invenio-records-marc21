@@ -10,7 +10,6 @@
 
 """Command-line tools for demo module."""
 
-
 from collections.abc import Callable
 from functools import wraps
 

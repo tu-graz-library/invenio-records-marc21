@@ -13,6 +13,7 @@
 
 
 """Routes for record-related pages provided by Invenio-Records-Marc21."""
+
 from functools import wraps
 
 from flask import g, request

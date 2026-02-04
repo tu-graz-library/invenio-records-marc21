@@ -9,7 +9,6 @@
 
 """Helpers for customizing the configuration in a controlled manner."""
 
-
 from invenio_drafts_resources.services.records.config import RecordServiceConfig
 
 

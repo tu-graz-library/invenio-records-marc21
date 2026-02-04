@@ -10,7 +10,6 @@
 
 """Marc21 field class."""
 
-
 from .metadata import (
     Marc21Metadata,
     convert_json_to_marc21xml,

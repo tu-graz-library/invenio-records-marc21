@@ -8,7 +8,6 @@
 
 """Marc21 Templates models."""
 
-
 from invenio_records.api import Record
 
 from .models import Marc21TemplateMetadata
