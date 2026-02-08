@@ -1,5 +1,5 @@
 ..
-    Copyright (C) 2021 Graz University of Technology.
+    Copyright (C) 2021-2026 Graz University of Technology.
 
     Invenio-Records-Marc21 is free software; you can redistribute it and/or
     modify it under the terms of the MIT License; see LICENSE file for more
@@ -7,6 +7,34 @@
 
 Changes
 =======
+
+Version v0.28.0 (released 2026-02-08)
+
+- chore(black): update formatting to >= 26.0
+- fix: links deprecation warning
+- chore(setup): bump dependencies
+- chore(setup): add ruff ignore rules
+- fix(versioning): missing records metadata version
+- chore: add alembic script to change column type
+- fix(ui): changed api
+- fix(tests): mock datetime.now
+- fix(tests): schema changes not applied
+- chore: remove unused linter
+- fix(tests): pid creation changed, tests removed
+- fix(tests): add parent.pids
+- chore: add nitpick_ignore
+- setup: move to python3.14
+- fix(alembic): add missing version table for files
+- chore(typing): add type hints
+- chore: replace deprecated RecordLink
+- refactor(template): improve template system
+- chore(typing): add type hints
+- feat: custom doi in 024
+- chore(typing): add type hints
+- feat(serializer): add isbn
+- fix(chore): indentation
+- fix: utcnow + refactor
+- feat(ui): use generated link not hardcoded
 
 Version v0.27.1 (release 2025-07-25)
 
