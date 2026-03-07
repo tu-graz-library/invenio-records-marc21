@@ -344,4 +344,5 @@ autoclass_content = "both"
 
 nitpick_ignore = [
     ("py:class", "flask.blueprints.Blueprint"),
+    ("py:class", "invenio_records_resources.services.records.results.RecordItem"),
 ]
