@@ -10,40 +10,52 @@
 
 """Tests for Resources UI marc21 serializer."""
 
+from flask import Flask
+
 from invenio_records_marc21.resources.serializers.ui import Marc21UIJSONSerializer
 from invenio_records_marc21.resources.serializers.ui.schema import Marc21UISchema
 
 
 def test_ui_json_serializer_init() -> None:
+    """Test ui json serializer."""
     marc = Marc21UIJSONSerializer()
     assert isinstance(marc.object_schema, Marc21UISchema)
 
 
-def test_ui_json_serializer_dump_obj(full_record: dict) -> None:
-    marc = Marc21UIJSONSerializer()
-    obj = marc.dump_obj(full_record)
+def test_ui_json_serializer_dump_obj(app: Flask, full_record: dict) -> None:
+    """Test ui json serializer."""
+    with app.app_context():
+        marc = Marc21UIJSONSerializer()
+        obj = marc.dump_obj(full_record)
 
-    expected = {
-        "languages": [],
-        "authors": [{"a": ["Philipp"], "8": []}],
-        "titles": ["The development of high strain actuator materials"],
-        "copyright": [],
-        "description": "",
-        "notes": [],
-        "resource_type": "",
-        "published": "",
-        "publisher": "TU Graz",
-        "license": {"url": "", "short": ""},
-        "youtube": "",
-        "isbn": None,
-    }
-    assert isinstance(obj["metadata"], dict)
-    assert expected == obj["ui"]["metadata"]
+        expected = {
+            "languages": [],
+            "authors": [{"a": ["Philipp"], "8": []}],
+            "titles": ["The development of high strain actuator materials"],
+            "copyright": [],
+            "description": "",
+            "notes": [],
+            "resource_type": "",
+            "published": "",
+            "publisher": "TU Graz",
+            "license": {"url": "", "short": ""},
+            "youtube": "",
+            "isbn": None,
+        }
+        assert isinstance(obj["metadata"], dict)
+        assert expected == obj["ui"]["metadata"]
 
 
-def test_ui_json_serializer_dump_list(list_records: list) -> None:
-    marc = Marc21UIJSONSerializer()
-    obj_list = marc.dump_list(list_records)
-    for record, obj in zip(obj_list["hits"]["hits"], list_records["hits"]["hits"]):
-        assert "metadata" in obj
-        assert record["metadata"] == obj["metadata"]
+def test_ui_json_serializer_dump_list(app: Flask, list_records: dict) -> None:
+    """Test ui json serializer."""
+    with app.app_context():
+        marc = Marc21UIJSONSerializer()
+        obj_list = marc.dump_list(list_records)
+
+        for record, obj in zip(
+            obj_list["hits"]["hits"],
+            list_records["hits"]["hits"],
+            strict=True,
+        ):
+            assert "metadata" in obj
+            assert record["metadata"] == obj["metadata"]
