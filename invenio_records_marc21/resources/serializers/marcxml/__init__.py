@@ -10,6 +10,9 @@
 
 """Marc21 record response xml serializer."""
 
-from .serializer import Marc21XMLSerializer
+from .serializer import Marc21OAIXMLSerializer, Marc21XMLSerializer
 
-__all__ = ("Marc21XMLSerializer",)
+__all__ = (
+    "Marc21XMLSerializer",
+    "Marc21OAIXMLSerializer",
+)
