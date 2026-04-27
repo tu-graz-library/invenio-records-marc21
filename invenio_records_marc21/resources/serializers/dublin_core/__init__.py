@@ -11,6 +11,12 @@
 
 """Dublin Core Serializer for Invenio Marc21 Records."""
 
-from .serializer import Marc21ToDublinCoreJSONSerializer
+from .serializer import (
+    Marc21ToDublinCoreJSONSerializer,
+    Marc21ToDublinCoreXMLSerializer,
+)
 
-__all__ = ("Marc21ToDublinCoreJSONSerializer",)
+__all__ = (
+    "Marc21ToDublinCoreJSONSerializer",
+    "Marc21ToDublinCoreXMLSerializer",
+)

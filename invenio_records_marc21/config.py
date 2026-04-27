@@ -202,6 +202,10 @@ MARC21_PERSISTENT_IDENTIFIER_PROVIDERS = [
         validators=[providers.BlockedPrefixes(config_names=["DATACITE_PREFIX"])],  # type: ignore[no-untyped-call]
         label=_("DOI"),
     ),
+    providers.OAIPIDProvider(
+        "oai",
+        label=_("OAI ID"),
+    ),
 ]
 """A list of configured persistent identifier providers.
 
@@ -217,6 +221,11 @@ The name is further used to configure the desired persistent identifiers (see
 MARC21_IDENTIFIERS_SCHEMES = {
     "doi": {"label": _("DOI"), "validator": is_doi, "datacite": "DOI"},
     "publ": {"label": _("DOI"), "validator": is_doi, "datacite": "DOI"},  # publisher
+    "oai": {
+        "providers": ["oai"],
+        "required": True,
+        "label": _("OAI"),
+    },
 }
 """These are used for main, alternate and related identifiers."""
 
@@ -234,6 +243,11 @@ MARC21_PERSISTENT_IDENTIFIERS = {
         "label": _("DOI"),
         "validator": is_doi,
         "normalizer": normalize_doi,
+    },
+    "oai": {
+        "providers": ["oai"],
+        "required": True,
+        "label": _("OAI"),
     },
 }
 """The configured persistent identifiers for records.

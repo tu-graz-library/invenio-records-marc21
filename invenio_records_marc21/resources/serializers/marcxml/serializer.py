@@ -101,6 +101,7 @@ class Marc21XMLSerializer(Marc21BASESerializer, Marc21XMLMixin):
 
         :param record: Record instance.
         """
+
         return self.convert_record(super().dump_obj(obj))
 
     def serialize_object(self, obj):
@@ -117,3 +118,15 @@ class Marc21XMLSerializer(Marc21BASESerializer, Marc21XMLMixin):
             list_obj.append(self.serialize_object(obj))
 
         return "\n".join(list_obj)
+
+
+class Marc21OAIXMLSerializer(Marc21XMLSerializer):
+
+    def dump_obj(self, obj):
+        """Returns only the serialized metadata."""
+        return etree.tostring(
+            self.convert_metadata(obj.get("metadata"), root=True),
+            pretty_print=True,
+            xml_declaration=True,
+            encoding="UTF-8",
+        ).decode("UTF-8")
