@@ -150,12 +150,12 @@ class PIDsComponent(BasePIDsComponent):
 class ParentPIDsComponent(ServiceComponent):
     """Service component for record parent PIDs."""
 
-    def create(
+    def create(  # type: ignore[override]
         self,
-        identity: Identity,
-        data: dict = None,
-        record: Marc21Record = None,
-        errors: dict = None,
+        _: Identity,
+        data: dict,
+        record: Marc21Record,
+        errors: dict | None = None,
     ) -> None:
         """This method is called on draft creation."""
         record.parent.pids = {}

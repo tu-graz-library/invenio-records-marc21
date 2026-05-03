@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -10,9 +10,9 @@
 
 """Default configuration."""
 
-import idutils
 from celery.schedules import crontab
 from flask_principal import RoleNeed
+from idutils import is_doi, normalize_doi
 from invenio_i18n import lazy_gettext as _
 from invenio_rdm_records.services import facets as rdm_facets
 from invenio_rdm_records.services.pids import providers
@@ -181,18 +181,18 @@ CELERY_BEAT_SCHEDULE = {
 #
 MARC21_PERSISTENT_IDENTIFIER_PROVIDERS = [
     # DataCite DOI provider
-    Marc21DataCitePIDProvider(
+    Marc21DataCitePIDProvider(  # type: ignore[no-untyped-call]
         "datacite",
-        client=providers.DataCiteClient("datacite", config_prefix="DATACITE"),
+        client=providers.DataCiteClient("datacite", config_prefix="DATACITE"),  # type: ignore[no-untyped-call]
         pid_type="doi",
-        serializer=Marc21DataCite43JSONSerializer(),
+        serializer=Marc21DataCite43JSONSerializer(),  # type: ignore[no-untyped-call]
         label=_("DOI"),
     ),
     # DOI provider for externally managed DOIs
-    providers.ExternalPIDProvider(
+    providers.ExternalPIDProvider(  # type: ignore[no-untyped-call]
         "external",
         "doi",
-        validators=[providers.BlockedPrefixes(config_names=["DATACITE_PREFIX"])],
+        validators=[providers.BlockedPrefixes(config_names=["DATACITE_PREFIX"])],  # type: ignore[no-untyped-call]
         label=_("DOI"),
     ),
 ]
@@ -208,7 +208,7 @@ The name is further used to configure the desired persistent identifiers (see
 
 
 MARC21_IDENTIFIERS_SCHEMES = {
-    "doi": {"label": _("DOI"), "validator": idutils.is_doi, "datacite": "DOI"},
+    "doi": {"label": _("DOI"), "validator": is_doi, "datacite": "DOI"},
 }
 """These are used for main, alternate and related identifiers."""
 
@@ -217,8 +217,8 @@ MARC21_PERSISTENT_IDENTIFIERS = {
         "providers": ["datacite", "external"],
         "required": True,
         "label": _("DOI"),
-        "validator": idutils.is_doi,
-        "normalizer": idutils.normalize_doi,
+        "validator": is_doi,
+        "normalizer": normalize_doi,
     },
 }
 """The configured persistent identifiers for records.
