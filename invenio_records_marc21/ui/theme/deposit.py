@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -42,11 +42,13 @@ def deposit_templates() -> list:
     return []
 
 
-def deposit_config(**kwargs):
+def deposit_config(**kwargs: dict) -> dict:
     """Create an deposit configuration."""
     app_config = current_app.config
     jsonschema = current_app.extensions["invenio-jsonschemas"]
     schema = {}
+    quota: dict = app_config.get("APP_RDM_DEPOSIT_FORM_QUOTA")
+    quota["quotaIncrease"] = {}
     if jsonschema:
         schema = jsonschema.get_schema(path="marc21/marc21-structure-v1.0.0.json")
     config = dict(
@@ -54,11 +56,11 @@ def deposit_config(**kwargs):
         default_locale=app_config.get("BABEL_DEFAULT_LOCALE", "en"),
         error="",
         schema=schema,
-        quota=app_config.get("APP_RDM_DEPOSIT_FORM_QUOTA"),
+        quota=quota,
         createUrl="/api/publications",
         apiHeaders=app_config.get("MARC21_API_HEADERS"),
         # UploadFilesToolbar  disable file upload
         canHaveMetadataOnlyRecords=True,
-        **kwargs
+        **kwargs,
     )
     return config
