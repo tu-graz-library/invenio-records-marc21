@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -219,6 +219,31 @@ class Marc21Metadata:
             raise TypeError(msg)
 
         self._json = _json["metadata"] if "metadata" in _json else _json
+
+    def get_field(self, selector: str, *, subf_value: str = "") -> dict:
+        """Get Field."""
+        category, ind1, ind2, subf_code = selector.split(".")
+        _, datafields = self.get_fields(category, ind1, ind2)
+        out = []
+        for field in datafields:
+            if (
+                subf_code
+                and subf_value
+                and field["subfields"].get(subf_code, [None])[0] == subf_value
+            ):
+                out.append(field)
+            elif subf_code and not subf_value and subf_code in field["subfields"]:
+                out.append(field)
+            elif (
+                not subf_code
+                and subf_value
+                and [subf_value] in field["subfields"].values()
+            ):
+                out.append(field)
+            elif not subf_code and not subf_value:
+                out.append(field)
+
+        return out[0]
 
     def get_fields(
         self,

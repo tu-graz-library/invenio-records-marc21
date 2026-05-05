@@ -188,6 +188,13 @@ MARC21_PERSISTENT_IDENTIFIER_PROVIDERS = [
         serializer=Marc21DataCite43JSONSerializer(),  # type: ignore[no-untyped-call]
         label=_("DOI"),
     ),
+    Marc21DataCitePIDProvider(  # type: ignore[no-untyped-call]
+        "publisher",
+        client=providers.DataCiteClient("datacite", config_prefix="DATACITE"),  # type: ignore[no-untyped-call]
+        pid_type="publ",  # publisher
+        serializer=Marc21DataCite43JSONSerializer(),  # type: ignore[no-untyped-call]
+        label=_("DOI"),
+    ),
     # DOI provider for externally managed DOIs
     providers.ExternalPIDProvider(  # type: ignore[no-untyped-call]
         "external",
@@ -209,6 +216,7 @@ The name is further used to configure the desired persistent identifiers (see
 
 MARC21_IDENTIFIERS_SCHEMES = {
     "doi": {"label": _("DOI"), "validator": is_doi, "datacite": "DOI"},
+    "publ": {"label": _("DOI"), "validator": is_doi, "datacite": "DOI"},  # publisher
 }
 """These are used for main, alternate and related identifiers."""
 
@@ -216,6 +224,13 @@ MARC21_PERSISTENT_IDENTIFIERS = {
     "doi": {
         "providers": ["datacite", "external"],
         "required": True,
+        "label": _("DOI"),
+        "validator": is_doi,
+        "normalizer": normalize_doi,
+    },
+    "publ": {  # publisher
+        "providers": ["datacite", "external"],
+        "required": False,
         "label": _("DOI"),
         "validator": is_doi,
         "normalizer": normalize_doi,

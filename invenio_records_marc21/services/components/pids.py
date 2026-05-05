@@ -19,10 +19,28 @@ from invenio_records_resources.services.uow import TaskOp
 
 from ...records.api import Marc21Draft, Marc21Record
 from ..pids.tasks import register_or_update_pid
+from ..record.metadata import Marc21Metadata
 
 
 class PIDsComponent(BasePIDsComponent):
     """Service component for PIDs."""
+
+    def _create_tugraz_publisher_pid(self, data: dict, record: Marc21Record) -> dict:
+        try:
+            metadata = Marc21Metadata(json=record.metadata)
+        except TypeError:
+            return
+
+        if not metadata.exists_field("024", "7", "_", "q", "tugraz-publisher"):
+            return
+
+        identifier_field = metadata.get_field("024.7..q", subf_value="tugraz-publisher")
+
+        return {
+            "client": "datacite",
+            "provider": "datacite",
+            "identifier": identifier_field["subfields"]["a"][0],
+        }
 
     def _add_other_standard_identifier(self, doi: dict, fields: dict) -> dict:
         """Add the other standard identifier to fields."""
@@ -33,11 +51,8 @@ class PIDsComponent(BasePIDsComponent):
         }
 
         field = fields.get("024", [])
-
-        if len(field) == 0:
-            field.append(matadata_doi)
-
-            fields.update({"024": field})
+        field.append(matadata_doi)
+        fields.update({"024": field})
 
         return fields
 
@@ -84,8 +99,45 @@ class PIDsComponent(BasePIDsComponent):
         """
         pids = data.get("pids", {})
         self.service.pids.pid_manager.validate(pids, record, errors)
+        record.pids = pids
+
+        pids = self.service.pids.pid_manager.create_all(
+            record,
+            pids=pids,
+            schemes=set(self.service.config.pids_required),
+        )
+
+        pid = self._create_tugraz_publisher_pid(data, record)
+
+        if "pids" not in data:
+            data["pids"] = {}
+
+        if pid:
+            data["pids"]["publ"] = pid
+            pids["publ"] = pid
 
         record.pids = pids
+
+        if "doi" in pids and data:
+            self._doi_identifier_to_metadata(pids["doi"], data)
+
+    def update_draft(  # type: ignore[override]
+        self,
+        identity: Identity,  # noqa: ARG002
+        data: dict,
+        record: Marc21Record,
+        errors: dict | None = None,
+    ) -> None:
+        """Update draft."""
+        pid = self._create_tugraz_publisher_pid(data, record)
+
+        if "pids" not in data:
+            data["pids"] = {}
+
+        if pid:
+            data["pids"]["publ"] = pid
+
+        super().update_draft(identity, data, record, errors)
 
     def publish(  # type: ignore[override]
         self,
@@ -123,10 +175,6 @@ class PIDsComponent(BasePIDsComponent):
         self.service.pids.pid_manager.reserve_all(draft, pids)
 
         record.pids = pids
-
-        if "doi" in pids:
-            data = copy(draft.model.data)
-            record.metadata = self._doi_identifier_to_metadata(pids["doi"], data)
 
         for scheme in pids:
             self.uow.register(TaskOp(register_or_update_pid, record["id"], scheme))
