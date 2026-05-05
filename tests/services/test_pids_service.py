@@ -61,6 +61,41 @@ def record(location):
     return record
 
 
+def test_reserve_pid(running_app, full_metadata):
+    """Reserve a new PID."""
+    service = current_records_marc21.records_service
+    adminuser_identity = running_app.adminuser_identity
+    draft = service.create(identity=adminuser_identity, metadata=full_metadata)
+
+    # draft = service.pids.create(identity=adminuser_identity, id_=draft.id, scheme="doi")
+    doi = draft["pids"]["doi"]["identifier"]
+
+    provider = service.pids.pid_manager._get_provider("doi", "datacite")
+    pid = provider.get(pid_value=doi)
+    assert pid.status == PIDStatus.NEW
+
+
+def test_discard_existing_pid(running_app, full_metadata):
+    """Discard a PID without error."""
+    service = current_records_marc21.records_service
+    adminuser_identity = running_app.adminuser_identity
+
+    draft = service.create(identity=adminuser_identity, metadata=full_metadata)
+
+    # draft = service.pids.create(identity=adminuser_identity, id_=draft.id, scheme="doi")
+
+    doi = draft["pids"]["doi"]["identifier"]
+    provider = service.pids.pid_manager._get_provider("doi", "datacite")
+    pid = provider.get(pid_value=doi)
+    assert pid.status == PIDStatus.NEW
+    draft = service.pids.discard(
+        identity=adminuser_identity, id_=draft.id, scheme="doi"
+    )
+    assert not draft["pids"].get("doi")
+    with pytest.raises(PIDDoesNotExistError):
+        pid = provider.get(pid_value=doi)
+
+
 def test_datacite_provider_configuration(record, mocker):
     def custom_format_func(*args):
         return "10.123/custom.func"
