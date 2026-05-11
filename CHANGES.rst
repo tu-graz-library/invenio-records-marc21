@@ -8,6 +8,16 @@
 Changes
 =======
 
+Version v0.29.0 (released 2026-05-11)
+
+- alembic: prevent dropping of already dropped index
+- feat(oai-pmh): enable oai-pmh for publications
+- feat(identifier): add publ(isher) custom doi
+- chore(type): add ignores to simplify typing
+- chore(compat): add quota, see rdm-records
+- fix(tests): app context needed
+- fix(docs): add to nitpick_ignore
+
 Version v0.28.0 (released 2026-02-08)
 
 - chore(black): update formatting to >= 26.0
