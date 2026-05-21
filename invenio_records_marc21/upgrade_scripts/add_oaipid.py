@@ -18,6 +18,16 @@ from invenio_rdm_records.services.pids.providers import OAIPIDProvider
 from invenio_records_marc21.proxies import current_records_marc21
 from invenio_records_marc21.records import Marc21Draft, Marc21Record
 
+try:
+    from invenio_catalogue_marc21.records import (
+        Marc21CatalogueDraft,
+        Marc21CatalogueRecord,
+    )
+
+    catalogue_package_installed = True
+except ImportError:
+    catalogue_package_installed = False
+
 
 def update_pids(record):
     """Update record."""
@@ -67,15 +77,39 @@ def update_record(record, pid):
         return error
 
 
+def is_catalogue_record(data):
+    return ("$schema" in data and "catalogue" in data["$schema"]) or "catalogue" in data
+
+
 def execute_upgrade():
     """Execute upgrade."""
     errors = []
 
-    apis = [Marc21Record, Marc21Draft]
+    apis = {
+        "records": {
+            "base": Marc21Record,
+        },
+        "drafts": {
+            "base": Marc21Draft,
+        },
+    }
 
-    for api_cls in apis:
-        for record_metadata in api_cls.model_cls.query.all():
+    if catalogue_package_installed:
+        apis["records"]["catalogue"] = Marc21CatalogueRecord
+        apis["drafts"]["catalogue"] = Marc21CatalogueDraft
+
+    for api_type in apis.values():
+        base_cls = api_type["base"]
+
+        for record_metadata in base_cls.model_cls.query.all():
             try:
+                data = record_metadata.data
+                use_catalogue_api = catalogue_package_installed and is_catalogue_record(
+                    data
+                )
+
+                api_cls = api_type["catalogue"] if use_catalogue_api else base_cls
+
                 record = api_cls(record_metadata.data, model=record_metadata)
                 pid, error_pid = update_pids(record)
                 error_record = update_record(record, pid)
