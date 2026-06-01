@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.30.0 (released 2026-06-01)
+
+- build(deps): bump invenio-previewer to 5.x
+- feat(search): set page title, description
+- feat(search): add MARC21_SEARCH_NAV_TEMPLATE config
+
 Version v0.29.0 (released 2026-05-11)
 
 - alembic: prevent dropping of already dropped index
