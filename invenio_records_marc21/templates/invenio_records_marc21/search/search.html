@@ -6,6 +6,8 @@
   details.
 #}
 {%- extends config.MARC21_BASE_TEMPLATE %}
+{%- set title = _("Publications") %}
+{%- set page_description = _("Search and discover scientific publications.") %}
 {%- block javascript %}
   {{ super() }}
   {{ webpack['invenio-records-marc21-search.js'] }}
