@@ -121,6 +121,13 @@ MARC21_SEARCH = {
 
 MARC21_BASE_TEMPLATE = "invenio_records_marc21/base.html"
 
+MARC21_SEARCH_NAV_TEMPLATE = None
+"""Template injected above the marc21 search app.
+
+Set to a template path to render a custom nav above the search results
+e.g. a resource type switcher. ``None`` disables the injection.
+"""
+
 MARC21_REST_ENDPOINTS = {}
 """REST API for invenio-records-marc21."""
 
