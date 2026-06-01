@@ -1,22 +1,21 @@
 {#
-Copyright (C) 2021 Graz University of Technology
+  Copyright (C) 2021-2026 Graz University of Technology.
 
-invenio-records-marc21 is free software; you can redistribute it and/or modify
-it under the terms of the MIT License; see LICENSE file for more details.
+  invenio-records-marc21 is free software; you can redistribute it and/or
+  modify it under the terms of the MIT License; see LICENSE file for more
+  details.
 #}
 {%- extends config.MARC21_BASE_TEMPLATE %}
-
 {%- block javascript %}
-{{ super() }}
-{{ webpack['invenio-records-marc21-search.js'] }}
+  {{ super() }}
+  {{ webpack['invenio-records-marc21-search.js'] }}
 {%- endblock %}
-
 {%- block page_body %}
-
-<div class="ui container">
+  <div class="ui container">
+    {%- if config.get('MARC21_SEARCH_NAV_TEMPLATE') %}
+      {%- include config.MARC21_SEARCH_NAV_TEMPLATE %}
+    {%- endif %}
     <div id="invenio-search-marc21-config"
-        data-invenio-search-config='{{ search_app_marc21_config() | tojson }}'>
-    </div>
-</div>
-
+         data-invenio-search-config='{{ search_app_marc21_config() | tojson }}'></div>
+  </div>
 {%- endblock page_body %}
