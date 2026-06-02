@@ -1,5 +1,5 @@
 {#
-Copyright (C) 2023 Graz University of Technology
+Copyright (C) 2023-2026 Graz University of Technology
 
 invenio-records-marc21 is free software; you can redistribute it and/or modify
 it under the terms of the MIT License; see LICENSE file for more details.
@@ -19,15 +19,17 @@ it under the terms of the MIT License; see LICENSE file for more details.
     {% include "invenio_app_rdm/users/header.html" %}
   {%- endblock user_dashboard_header %}
 
-  <div class="ui container rel-mt-2">
-    <a class="ui tiny button positive right floated labeled icon m-0" href="/publications/uploads/new" style="margin-top: 18px !important">
-      <i class="upload icon" aria-hidden="true"></i>
-      {{ _('New upload') }}
-    </a>
-  </div>
+  {%- block dashboard_actions %}
+    <div class="ui container rel-mt-2">
+      <a class="ui tiny button positive right floated labeled icon m-0" href="/publications/uploads/new" style="margin-top: 18px !important">
+        <i class="upload icon" aria-hidden="true"></i>
+        {{ _('New upload') }}
+      </a>
+    </div>
+  {%- endblock dashboard_actions %}
 
   <div class="ui container rel-mt-2">
-    <div id="invenio-search-marc21-config" data-invenio-search-config='{{ search_app_marc21_user_uploads_config() | tojson }}'>
+    <div id="invenio-search-marc21-config" class="uploads-search-app" data-invenio-search-config='{{ search_app_marc21_user_uploads_config() | tojson }}'>
     </div>
   </div>
 {%- endblock page_body %}
