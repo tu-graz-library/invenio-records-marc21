@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.31.0 (released 2026-06-02)
+
+- feat(uploads): add MARC21_UPLOADS_TEMPLATE hook
+- fix(config): keep downstream overrides
+- fix(links): add edit link default
+
 Version v0.30.0 (released 2026-06-01)
 
 - build(deps): bump invenio-previewer to 5.x
