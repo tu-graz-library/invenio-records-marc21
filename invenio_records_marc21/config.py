@@ -121,6 +121,9 @@ MARC21_SEARCH = {
 
 MARC21_BASE_TEMPLATE = "invenio_records_marc21/base.html"
 
+MARC21_UPLOADS_TEMPLATE = "invenio_records_marc21/user_dashboard/uploads.html"
+"""Template for the user's publication uploads dashboard."""
+
 MARC21_SEARCH_NAV_TEMPLATE = None
 """Template injected above the marc21 search app.
 

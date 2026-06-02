@@ -10,7 +10,7 @@
 
 """Routes for general pages provided by Invenio-Records-Marc21."""
 
-from flask import g, render_template
+from flask import current_app, g, render_template
 from flask_login import current_user, login_required
 from invenio_users_resources.proxies import current_user_resources
 
@@ -41,7 +41,7 @@ def uploads_marc21() -> str:
     )["avatar"]
 
     return render_template(
-        "invenio_records_marc21/user_dashboard/uploads.html",
+        current_app.config["MARC21_UPLOADS_TEMPLATE"],
         user_avatar=url,
     )
 
