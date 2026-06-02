@@ -73,7 +73,7 @@ class InvenioRecordsMARC21:
                     case dict() as container:
                         container.update(attr)
                     case _:
-                        app.config[configuration_variable] = attr
+                        app.config.setdefault(configuration_variable, attr)
 
             elif bool(pattern.match(configuration_variable)):
                 match attr:
