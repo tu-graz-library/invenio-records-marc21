@@ -13,6 +13,7 @@
 from os.path import splitext
 
 from flask import current_app
+from invenio_access import Permission
 from invenio_drafts_resources.services.records.config import (
     RecordServiceConfig,
     SearchDraftsOptions,
@@ -41,7 +42,7 @@ from . import facets
 from .components import DefaultRecordsComponents
 from .customizations import FromConfigPIDsProviders, FromConfigRequiredPIDs
 from .links import DefaultServiceLinks
-from .permissions import Marc21RecordPermissionPolicy
+from .permissions import Marc21RecordPermissionPolicy, replace_files_action
 from .schemas import Marc21ParentSchema, Marc21RecordSchema
 
 
@@ -74,6 +75,23 @@ def get_iiif_uuid_of_file_drafcord(file_drafcord, vars):
 
 
 ##### copy pasted from rdm-records end -----
+
+
+# see
+# https://github.com/inveniosoftware/invenio-drafts-resources/commit/520c951fa47308ad6c1da7291b4c9f9781122c90
+# why @staticmethod decorator is needed here, even it makes no sense in the
+# first thinking
+@staticmethod
+def lock_edit_published_files(service, identity, record=None, draft=None):
+    """Should published files be locked from editing in current record version."""
+    permission = Permission(replace_files_action)
+
+    if permission.allows(identity):
+        # user has the permission to update files and override the lock
+        return False
+
+    # default value
+    return True
 
 
 class Marc21SearchOptions(SearchOptions, SearchOptionsMixin):
@@ -145,6 +163,8 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
         "MARC21_FACETS",
         search_option_cls=Marc21SearchVersionsOptions,
     )
+
+    lock_edit_published_files = lock_edit_published_files
 
     # Permission policy
     default_files_enabled = FromConfig("MARC21_DEFAULT_FILES_ENABLED", default=True)
