@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -10,6 +10,7 @@
 
 """Permissions for Invenio Marc21 Records."""
 
+from invenio_access import action_factory
 from invenio_rdm_records.services.generators import IfRestricted
 from invenio_records_permissions.generators import (
     AnyUser,
@@ -24,6 +25,8 @@ from invenio_records_resources.services.files.transfer import (
 )
 
 from .generators import Marc21RecordCreators, Marc21RecordCurators, Marc21RecordManagers
+
+replace_files_action = action_factory("replace-files")
 
 
 class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
