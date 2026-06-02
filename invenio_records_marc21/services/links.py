@@ -63,6 +63,7 @@ DefaultServiceLinks = {
         if_=RecordEndpointLink("marc21_record_files.search"),
         else_=RecordEndpointLink("marc21_draft_files.search"),
     ),
-    "draft": RecordEndpointLink("marc21_records.read_draft", when=is_record),
+    "draft": RecordEndpointLink("invenio_records_marc21.deposit_edit", when=is_record),
+    "edit": RecordEndpointLink("marc21_records.edit"),
     "publish": RecordEndpointLink("marc21_records.publish", when=is_draft),
 }
