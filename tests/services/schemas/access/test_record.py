@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2023 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -41,7 +41,7 @@ def test_valid_metadata_protection(value):
 def test_invalid_metadata_protection():
     with pytest.raises(ValidationError) as e:
         AccessSchema().validate_record_protection("invalid")
-    assert e.value.messages[0] == _("'record' must be either 'public' or 'restricted'")
+    assert e.value.messages == _("'record' must be either 'public' or 'restricted'")
     assert e.value.field_name == "record"
 
 
@@ -53,5 +53,5 @@ def test_valid_files_protection(value):
 def test_invalid_files_protection():
     with pytest.raises(ValidationError) as e:
         AccessSchema().validate_files_protection("invalid")
-    assert e.value.messages[0] == _("'files' must be either 'public' or 'restricted'")
+    assert e.value.messages == _("'files' must be either 'public' or 'restricted'")
     assert e.value.field_name == "record"
