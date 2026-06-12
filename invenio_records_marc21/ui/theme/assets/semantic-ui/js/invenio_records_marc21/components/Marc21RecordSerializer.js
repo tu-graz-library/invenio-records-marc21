@@ -1,6 +1,6 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021-2024 Graz University of Technology.
+// Copyright (C) 2021-2026 Graz University of Technology.
 //
 // React-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
@@ -47,7 +47,7 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
               set(
                 deserializedErrors,
                 `metadata.fields.${j}.${keys[4]}`,
-                e.messages.join(" ")
+                e.messages
               );
               break;
             }
@@ -55,7 +55,7 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
           }
         }
       } else {
-        set(deserializedErrors, e.field, e.messages.join(" "));
+        set(deserializedErrors, e.field, e.messages);
       }
     }
     return deserializedErrors;
