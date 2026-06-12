@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.32.0 (released 2026-06-12)
+
+- feat(permission): override lock of files
+- feat(pids): raise error on validation
+- chore(types): improve type hints usage
+
 Version v0.31.0 (released 2026-06-02)
 
 - feat(uploads): add MARC21_UPLOADS_TEMPLATE hook
