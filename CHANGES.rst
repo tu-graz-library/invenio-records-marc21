@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v0.32.1 (released 2026-06-12)
+
+- fix(tests): format of error message changed
+
 Version v0.32.0 (released 2026-06-12)
 
 - feat(permission): override lock of files
