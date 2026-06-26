@@ -17,7 +17,6 @@ import pytest
 from invenio_i18n import lazy_gettext as _
 from invenio_rdm_records.services.schemas.access import AccessSchema
 from marshmallow import ValidationError
-from marshmallow.exceptions import ValidationError
 
 
 def test_valid_full():

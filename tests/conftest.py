@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -14,8 +14,8 @@ See https://pytest-invenio.readthedocs.io/ for documentation on which test
 fixtures are available.
 """
 
-from collections import namedtuple
 from datetime import timedelta
+from typing import Any, NamedTuple
 
 import arrow
 import pytest
@@ -25,6 +25,7 @@ from invenio_accounts.models import Role
 from invenio_app.factory import create_app as _create_app
 from invenio_rdm_records.services.pids import PIDManager, PIDsService, providers
 from invenio_records_resources.services import FileService
+from invenio_search import current_search, current_search_client
 
 from invenio_records_marc21.records import Marc21Draft, Marc21Parent, Marc21Record
 from invenio_records_marc21.resources.serializers.datacite import (
@@ -42,12 +43,12 @@ from invenio_records_marc21.services.pids import Marc21DataCitePIDProvider
 from .fake_datacite_client import FakeDataCiteClient
 
 
-def _(x):
+def _[T](x: T) -> T:
     """Identity function for string extraction."""
     return x
 
 
-@pytest.fixture()
+@pytest.fixture
 def embargoed_record():
     """Embargoed record."""
     embargoed_record = {
@@ -63,14 +64,14 @@ def embargoed_record():
                         "ind1": "_",
                         "ind2": "_",
                         "subfields": {"a": ["OeBB"], "2": ["oeb"]},
-                    }
+                    },
                 ],
                 "035": [
                     {
                         "ind1": "_",
                         "ind2": "_",
                         "subfields": {"a": ["(EXLNZ-43ACC_NETWORK)990110601970203331"]},
-                    }
+                    },
                 ],
                 "040": [
                     {
@@ -82,7 +83,7 @@ def embargoed_record():
                             "d": ["AT-UBTUG"],
                             "e": ["rakwb"],
                         },
-                    }
+                    },
                 ],
                 "041": [{"ind1": "_", "ind2": "_", "subfields": {"a": ["eng"]}}],
                 "044": [{"ind1": "_", "ind2": "_", "subfields": {"c": ["XA-AT"]}}],
@@ -91,7 +92,7 @@ def embargoed_record():
                         "ind1": "_",
                         "ind2": "_",
                         "subfields": {"a": ["53.16"], "2": ["bkl"]},
-                    }
+                    },
                 ],
                 "090": [{"ind1": "_", "ind2": "_", "subfields": {"h": ["g"]}}],
                 "100": [
@@ -99,7 +100,7 @@ def embargoed_record():
                         "ind1": "1",
                         "ind2": "_",
                         "subfields": {"a": ["Sch\u00fctz, Denis"], "4": ["aut"]},
-                    }
+                    },
                 ],
                 "245": [
                     {
@@ -107,11 +108,11 @@ def embargoed_record():
                         "ind2": "0",
                         "subfields": {
                             "a": [
-                                "<<The>> development of high strain actuator materials"
+                                "<<The>> development of high strain actuator materials",
                             ],
                             "c": ["Denis Sch\u00fctz"],
                         },
-                    }
+                    },
                 ],
                 "264": [
                     {"ind1": "3", "ind2": "0", "subfields": {"b": ["TU Graz"]}},
@@ -125,17 +126,21 @@ def embargoed_record():
                             "a": ["Getr. Z\u00e4hlung"],
                             "b": ["Ill., zahlr. graph. Darst."],
                         },
-                    }
+                    },
                 ],
                 "502": [
                     {
                         "ind1": "_",
                         "ind2": "_",
                         "subfields": {"a": ["Graz, Techn. Univ., Diss., 2012"]},
-                    }
+                    },
                 ],
                 "689": [
-                    {"ind1": "0", "ind2": "_", "subfields": {"5": ["AT-OBV", "ONBREB"]}}
+                    {
+                        "ind1": "0",
+                        "ind2": "_",
+                        "subfields": {"5": ["AT-OBV", "ONBREB"]},
+                    },
                 ],
                 "856": [
                     {
@@ -146,21 +151,21 @@ def embargoed_record():
                             "x": ["TUG"],
                             "3": ["Volltext"],
                         },
-                    }
+                    },
                 ],
                 "970": [
                     {
                         "ind1": "2",
                         "ind2": "_",
                         "subfields": {"a": ["TUG"], "d": ["HS-DISS"]},
-                    }
+                    },
                 ],
                 "974": [
                     {
                         "ind1": "0",
                         "ind2": "s",
                         "subfields": {"F": ["051"], "A": ["mu||w||"]},
-                    }
+                    },
                 ],
                 "996": [
                     {
@@ -168,32 +173,11 @@ def embargoed_record():
                         "ind2": "_",
                         "subfields": {
                             "a": [
-                                "Fak. f\u00fcr Techn. Chemie, Verfahrenstechn. und Biotechnologie"
+                                "Fak. f\u00fcr Techn. Chemie, Verfahrenstechn. und Biotechnologie",
                             ],
                             "9": ["local"],
                         },
-                    }
-                ],
-                "AVA": [
-                    {
-                        "ind1": "_",
-                        "ind2": "_",
-                        "subfields": {
-                            "0": ["990004519310204517"],
-                            "8": ["2237724340004517"],
-                            "a": ["43ACC_TUG"],
-                            "b": ["FHB"],
-                            "c": ["TUG Hochschulschriften (TUGHS)"],
-                            "d": ["6000/2012 S385"],
-                            "e": ["available"],
-                            "f": ["1"],
-                            "g": ["0"],
-                            "j": ["TUGHS"],
-                            "k": ["8"],
-                            "p": ["1"],
-                            "q": ["Hauptbibliothek"],
-                        },
-                    }
+                    },
                 ],
             },
             "leader": "01198nam a2200397 c 4500",
@@ -205,7 +189,7 @@ def embargoed_record():
             "embargo": {
                 "active": True,
                 "until": (arrow.utcnow().datetime + timedelta(days=-365)).strftime(
-                    "%Y-%m-%d"
+                    "%Y-%m-%d",
                 ),
                 "reason": None,
             },
@@ -218,7 +202,7 @@ def embargoed_record():
     return embargoed_record
 
 
-@pytest.fixture()
+@pytest.fixture
 def marc21_record():
     """Normal record."""
     marc21_record = {
@@ -234,14 +218,14 @@ def marc21_record():
                         "ind1": "_",
                         "ind2": "_",
                         "subfields": {"a": ["OeBB"], "2": ["oeb"]},
-                    }
+                    },
                 ],
                 "035": [
                     {
                         "ind1": "_",
                         "ind2": "_",
                         "subfields": {"a": ["(EXLNZ-43ACC_NETWORK)990110601970203331"]},
-                    }
+                    },
                 ],
                 "040": [
                     {
@@ -253,7 +237,7 @@ def marc21_record():
                             "d": ["AT-UBTUG"],
                             "e": ["rakwb"],
                         },
-                    }
+                    },
                 ],
                 "041": [{"ind1": "_", "ind2": "_", "subfields": {"a": ["eng"]}}],
                 "044": [{"ind1": "_", "ind2": "_", "subfields": {"c": ["XA-AT"]}}],
@@ -262,7 +246,7 @@ def marc21_record():
                         "ind1": "_",
                         "ind2": "_",
                         "subfields": {"a": ["53.16"], "2": ["bkl"]},
-                    }
+                    },
                 ],
                 "090": [{"ind1": "_", "ind2": "_", "subfields": {"h": ["g"]}}],
                 "100": [
@@ -270,7 +254,7 @@ def marc21_record():
                         "ind1": "1",
                         "ind2": "_",
                         "subfields": {"a": ["Sch\u00fctz, Denis"], "4": ["aut"]},
-                    }
+                    },
                 ],
                 "245": [
                     {
@@ -278,11 +262,11 @@ def marc21_record():
                         "ind2": "0",
                         "subfields": {
                             "a": [
-                                "<<The>> development of high strain actuator materials"
+                                "<<The>> development of high strain actuator materials",
                             ],
                             "c": ["Denis Sch\u00fctz"],
                         },
-                    }
+                    },
                 ],
                 "264": [
                     {"ind1": "3", "ind2": "0", "subfields": {"b": ["TU Graz"]}},
@@ -296,17 +280,21 @@ def marc21_record():
                             "a": ["Getr. Z\u00e4hlung"],
                             "b": ["Ill., zahlr. graph. Darst."],
                         },
-                    }
+                    },
                 ],
                 "502": [
                     {
                         "ind1": "_",
                         "ind2": "_",
                         "subfields": {"a": ["Graz, Techn. Univ., Diss., 2012"]},
-                    }
+                    },
                 ],
                 "689": [
-                    {"ind1": "0", "ind2": "_", "subfields": {"5": ["AT-OBV", "ONBREB"]}}
+                    {
+                        "ind1": "0",
+                        "ind2": "_",
+                        "subfields": {"5": ["AT-OBV", "ONBREB"]},
+                    },
                 ],
                 "856": [
                     {
@@ -317,14 +305,14 @@ def marc21_record():
                             "x": ["TUG"],
                             "3": ["Volltext"],
                         },
-                    }
+                    },
                 ],
                 "970": [
                     {
                         "ind1": "2",
                         "ind2": "_",
                         "subfields": {"a": ["TUG"], "d": ["HS-DISS"]},
-                    }
+                    },
                 ],
                 "971": [
                     {
@@ -342,7 +330,7 @@ def marc21_record():
                         "ind1": "0",
                         "ind2": "s",
                         "subfields": {"F": ["051"], "A": ["mu||w||"]},
-                    }
+                    },
                 ],
                 "996": [
                     {
@@ -350,32 +338,11 @@ def marc21_record():
                         "ind2": "_",
                         "subfields": {
                             "a": [
-                                "Fak. f\u00fcr Techn. Chemie, Verfahrenstechn. und Biotechnologie"
+                                "Fak. f\u00fcr Techn. Chemie, Verfahrenstechn. und Biotechnologie",
                             ],
                             "9": ["local"],
                         },
-                    }
-                ],
-                "AVA": [
-                    {
-                        "ind1": "_",
-                        "ind2": "_",
-                        "subfields": {
-                            "0": ["990004519310204517"],
-                            "8": ["2237724340004517"],
-                            "a": ["43ACC_TUG"],
-                            "b": ["FHB"],
-                            "c": ["TUG Hochschulschriften (TUGHS)"],
-                            "d": ["6000/2012 S385"],
-                            "e": ["available"],
-                            "f": ["1"],
-                            "g": ["0"],
-                            "j": ["TUGHS"],
-                            "k": ["8"],
-                            "p": ["1"],
-                            "q": ["Hauptbibliothek"],
-                        },
-                    }
+                    },
                 ],
             },
             "leader": "01198nam a2200397 c 4500",
@@ -395,13 +362,13 @@ def marc21_record():
     return marc21_record
 
 
-@pytest.fixture()
+@pytest.fixture
 def parent(app, db):
     """A parent record."""
     return Marc21Parent.create({})
 
 
-@pytest.fixture()
+@pytest.fixture
 def example_record(app, db):
     """Example record."""
     record = Marc21Draft.create({}, metadata={"title": "Test"})
@@ -468,19 +435,17 @@ def service(app):
     )
 
 
-RunningApp = namedtuple(
-    "RunningApp",
-    [
-        "app",
-        "db",
-        "service",
-        "location",
-        "adminuser_identity",
-    ],
-)
+class RunningApp(NamedTuple):
+    """Running app."""
+
+    app: Any
+    db: Any
+    service: Any
+    location: Any
+    adminuser_identity: Any
 
 
-@pytest.fixture()
+@pytest.fixture
 def admin_role_need(app, db):
     """Store 1 role with manager permission."""
     admin_role = Role(name="Marc21Manager")
@@ -491,7 +456,7 @@ def admin_role_need(app, db):
     return admin_role
 
 
-@pytest.fixture()
+@pytest.fixture
 def adminuser_identity(adminuser, admin_role_need):
     """Superuser identity fixture."""
     identity = adminuser.identity
@@ -500,7 +465,7 @@ def adminuser_identity(adminuser, admin_role_need):
     return identity
 
 
-@pytest.fixture()
+@pytest.fixture
 def adminuser(UserFixture, app, db, admin_role_need):
     """Superuser."""
     u = UserFixture(
@@ -517,7 +482,7 @@ def adminuser(UserFixture, app, db, admin_role_need):
     return u
 
 
-@pytest.fixture()
+@pytest.fixture
 def superuser_role_need(db):
     """Store 1 role with 'superuser-access' ActionNeed."""
     role = Role(name="superuser-access")
@@ -531,7 +496,7 @@ def superuser_role_need(db):
     return action_role.need
 
 
-@pytest.fixture()
+@pytest.fixture
 def superuser(UserFixture, app, db, superuser_role_need):
     """Superuser."""
     u = UserFixture(
@@ -549,7 +514,7 @@ def superuser(UserFixture, app, db, superuser_role_need):
     return u
 
 
-@pytest.fixture()
+@pytest.fixture
 def superuser_identity(superuser, superuser_role_need):
     """Superuser identity fixture."""
     identity = superuser.identity
@@ -596,15 +561,13 @@ def _search_delete_indexes(current_search):
 
 # overwrite pytest_invenio.fixture to only delete record indices
 # keeping vocabularies.
-@pytest.fixture()
+@pytest.fixture
 def search_clear(search):
     """Clear search indices after test finishes (function scope).
 
     This fixture rollback any changes performed to the indexes during a test,
     in order to leave search in a clean state for the next test.
     """
-    from invenio_search import current_search, current_search_client
-
     yield search
     _search_delete_indexes(current_search)
     _search_create_indexes(current_search, current_search_client)
@@ -614,7 +577,7 @@ def search_clear(search):
 def cli_runner(base_app):
     """Create a CLI runner for testing a CLI command."""
 
-    def cli_invoke(command, *args, input=None):
+    def cli_invoke(command, *args, input=None):  # noqa: A002
         return base_app.test_cli_runner().invoke(command, args, input=input)
 
     return cli_invoke
