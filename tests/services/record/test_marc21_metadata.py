@@ -63,15 +63,16 @@ def test_validate_metadata():
                         "ind1": "1",
                         "ind2": "0",
                         "subfields": {"a": ["laborum sunt ut nulla"]},
-                    }
-                ]
+                    },
+                ],
             },
-        }
+        },
     }
     assert metadata.json == expected_json
 
     metadata.emplace_datafield(
-        selector="245.1.0.", value="laborum sunt ut nulla et infinitum"
+        selector="245.1.0.",
+        value="laborum sunt ut nulla et infinitum",
     )
     expected_json = {
         "metadata": {
@@ -85,12 +86,12 @@ def test_validate_metadata():
                             "a": [
                                 "laborum sunt ut nulla",
                                 "laborum sunt ut nulla et infinitum",
-                            ]
+                            ],
                         },
                     },
-                ]
+                ],
             },
-        }
+        },
     }
     assert metadata.json == expected_json
 
@@ -115,9 +116,9 @@ def test_subfield_metadata():
                             "b": ["laborum sunt ut nulla"],
                         },
                     },
-                ]
+                ],
             },
-        }
+        },
     }
 
     assert metadata.json == expected_json
@@ -133,7 +134,7 @@ def test_controlfields_metadata():
         "metadata": {
             "leader": "00000nam a2200000zca4500",
             "fields": {"002": "laborum sunt ut nulla"},
-        }
+        },
     }
 
     assert metadata.json == expected_json
@@ -181,13 +182,21 @@ def test_get_field(marc21_record, full_metadata):
 
         assert (
             record.exists_field(
-                category="971", ind1="7", ind2=" ", subf_code="a", subf_value="gesperrt"
+                category="971",
+                ind1="7",
+                ind2=" ",
+                subf_code="a",
+                subf_value="gesperrt",
             )
             is True
         )
         assert (
             record.exists_field(
-                category="971", ind1="7", ind2=" ", subf_code="a", subf_value="world"
+                category="971",
+                ind1="7",
+                ind2=" ",
+                subf_code="a",
+                subf_value="world",
             )
             is False
         )
