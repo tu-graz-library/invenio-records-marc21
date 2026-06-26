@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -44,6 +44,111 @@ def test_create_metadata():
         },
     }
     assert metadata.json == expected
+
+
+def test_add_datafield():
+    """Test add_datafield."""
+    metadata = Marc21Metadata()
+    metadata.emplace_datafield(selector="245.1.0.a", value="laborum sunt ut nulla")
+    expected_json = {
+        "metadata": {
+            "leader": "00000nam a2200000zca4500",
+            "fields": {
+                "245": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
+                    },
+                ],
+            },
+        },
+    }
+    assert metadata.json == expected_json
+
+    metadata.add_datafield(selector="245.1.0.a", value="laborum sunt ut nulla")
+    expected_json = {
+        "metadata": {
+            "leader": "00000nam a2200000zca4500",
+            "fields": {
+                "245": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
+                    },
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
+                    },
+                ],
+            },
+        },
+    }
+    assert metadata.json == expected_json
+    metadata.add_datafield(selector="246.1.0.a", value="laborum sunt ut nulla")
+    expected_json = {
+        "metadata": {
+            "leader": "00000nam a2200000zca4500",
+            "fields": {
+                "245": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
+                    },
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
+                    },
+                ],
+                "246": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
+                    },
+                ],
+            },
+        },
+    }
+    assert metadata.json == expected_json
+
+    metadata.add_datafield(selector="246.1.0.a", value="laborum sunt ut nulla")
+    expected_json = {
+        "metadata": {
+            "leader": "00000nam a2200000zca4500",
+            "fields": {
+                "245": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
+                    },
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
+                    },
+                ],
+                "246": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
+                    },
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {"a": ["laborum sunt ut nulla"]},
+                    },
+                ],
+            },
+        },
+    }
+    assert metadata.json == expected_json
 
 
 def test_validate_metadata():
@@ -95,6 +200,136 @@ def test_validate_metadata():
     }
     assert metadata.json == expected_json
 
+    metadata.emplace_datafield(
+        selector="246.1.0.",
+        value="laborum sunt ut nulla et infinitum",
+    )
+    expected_json = {
+        "metadata": {
+            "leader": "00000nam a2200000zca4500",
+            "fields": {
+                "245": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {
+                            "a": [
+                                "laborum sunt ut nulla",
+                                "laborum sunt ut nulla et infinitum",
+                            ],
+                        },
+                    },
+                ],
+                "246": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {
+                            "a": [
+                                "laborum sunt ut nulla et infinitum",
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+    }
+    assert metadata.json == expected_json
+
+    metadata.add_datafield(
+        selector="247.1.0.",
+        value="laborum sunt ut nulla et infinitum",
+    )
+    expected_json = {
+        "metadata": {
+            "leader": "00000nam a2200000zca4500",
+            "fields": {
+                "245": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {
+                            "a": [
+                                "laborum sunt ut nulla",
+                                "laborum sunt ut nulla et infinitum",
+                            ],
+                        },
+                    },
+                ],
+                "246": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {
+                            "a": [
+                                "laborum sunt ut nulla et infinitum",
+                            ],
+                        },
+                    },
+                ],
+                "247": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {
+                            "a": [
+                                "laborum sunt ut nulla et infinitum",
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+    }
+    assert metadata.json == expected_json
+    metadata.emplace_datafield(
+        selector="247.1.0.",
+        value="laborum sunt ut nulla et infinitum",
+    )
+    expected_json = {
+        "metadata": {
+            "leader": "00000nam a2200000zca4500",
+            "fields": {
+                "245": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {
+                            "a": [
+                                "laborum sunt ut nulla",
+                                "laborum sunt ut nulla et infinitum",
+                            ],
+                        },
+                    },
+                ],
+                "246": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {
+                            "a": [
+                                "laborum sunt ut nulla et infinitum",
+                            ],
+                        },
+                    },
+                ],
+                "247": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {
+                            "a": [
+                                "laborum sunt ut nulla et infinitum",
+                                "laborum sunt ut nulla et infinitum",
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+    }
+    assert metadata.json == expected_json
+
 
 def test_subfield_metadata():
     """Test the construction and emplace_datafield method."""
@@ -123,6 +358,28 @@ def test_subfield_metadata():
 
     assert metadata.json == expected_json
 
+    metadata.emplace_datafield(selector="245.1.0.b", value="yes")
+
+    expected_json = {
+        "metadata": {
+            "leader": "00000nam a2200000zca4500",
+            "fields": {
+                "245": [
+                    {
+                        "ind1": "1",
+                        "ind2": "0",
+                        "subfields": {
+                            "a": ["laborum sunt ut nulla"],
+                            "b": ["laborum sunt ut nulla", "yes"],
+                        },
+                    },
+                ],
+            },
+        },
+    }
+
+    assert metadata.json == expected_json
+
 
 def test_controlfields_metadata():
     """Test controlfield."""
@@ -134,6 +391,17 @@ def test_controlfields_metadata():
         "metadata": {
             "leader": "00000nam a2200000zca4500",
             "fields": {"002": "laborum sunt ut nulla"},
+        },
+    }
+
+    assert metadata.json == expected_json
+
+    metadata.emplace_controlfield(tag="002", value="second round")
+
+    expected_json = {
+        "metadata": {
+            "leader": "00000nam a2200000zca4500",
+            "fields": {"002": "second round"},
         },
     }
 
