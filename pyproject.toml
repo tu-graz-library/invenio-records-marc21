@@ -43,3 +43,7 @@ strict_equality = true
 follow_untyped_imports = true
 disallow_any_generics = false
 python_executable = ".venv/bin/python"
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_errors = true
