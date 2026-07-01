@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -15,6 +15,7 @@ from functools import partial
 from flask_resources import BaseObjectSchema
 from invenio_i18n import get_locale
 from invenio_rdm_records.resources.serializers.ui.fields import AccessStatusField
+from marshmallow import pre_dump
 from marshmallow_utils.fields import FormatDate as BaseFormatDatetime
 from marshmallow_utils.fields import Function, SanitizedUnicode
 
@@ -52,7 +53,7 @@ class Marc21UISchema(BaseObjectSchema):
 
     access_status = AccessStatusField(attribute="access", dump_only=True)
 
-    creators = CreatorsField(attribute="metadata.fields")
+    creators = CreatorsField(attribute="creators")
 
     metadata = MetadataField(attribute="metadata")
 
@@ -61,3 +62,9 @@ class Marc21UISchema(BaseObjectSchema):
     updated = FormatDatetime(attribute="updated", format="long")
 
     version = Function(record_version)
+
+    @pre_dump
+    def extract_creators(self, data: dict, **__: dict) -> dict:
+        """Extract creators."""
+        data["creators"] = data.get("metadata")
+        return data

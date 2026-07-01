@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -11,181 +11,52 @@
 """Metadata field for marc21 records."""
 
 import re
-from contextlib import suppress
-from dataclasses import dataclass
-from typing import Dict, List
 
 from invenio_i18n import gettext as _
 from marshmallow.fields import Field
 
 from ....records.fields.resourcetype import ResourceTypeEnum
-
-
-class Marc21Controlfield:
-    """Marc21Controlfield."""
-
-    def __init__(self, value):
-        """Constructor."""
-        self.value = value
-
-
-@dataclass
-class Marc21Datafield:
-    """Marc21Datafield."""
-
-    ind1: str
-    ind2: str
-    subfields: Dict[str, List[str]]
-
-    def get(self, subfield_notation: str) -> List[str]:
-        """Get subfield value by subfield notation."""
-        return self.subfields.get(subfield_notation, [])
-
-    def __contains__(self, subfield_notation):
-        """Contains subfield_notation."""
-        return subfield_notation in self.subfields
-
-
-class Marc21Fields:
-    """Marc21Fields."""
-
-    def __init__(self, fields):
-        """Constructor."""
-        self.fields = {
-            field_number: [
-                (
-                    Marc21Datafield(**field)
-                    if isinstance(field, dict)
-                    else Marc21Controlfield(field)
-                )
-                for field in fs
-            ]
-            for field_number, fs in fields.items()
-        }
-
-    def __contains__(self, field_number):
-        """Check if a field_number exists in the field list."""
-        return field_number in self.fields
-
-    def get_fields(
-        self,
-        field_number: str,
-        ind1: str = None,
-        ind2: str = None,
-        subfield_notation: str = None,
-    ) -> List[Marc21Datafield]:
-        """Get field by and combination of parameter values."""
-        fields = self.fields.get(field_number, [])
-
-        if not fields:
-            return fields
-
-        if not ind1 and not ind2:
-            return fields
-
-        fields = [
-            field for field in fields if field.ind1 == ind1 and field.ind2 == ind2
-        ]
-
-        if not subfield_notation:
-            return fields
-
-        return [field for field in fields if subfield_notation in field]
-
-    def get_values(
-        self,
-        field_number: str,
-        ind1: str = None,
-        ind2: str = None,
-        subfield_notation: str = None,
-    ) -> List[str]:
-        """Get value of field by and combination of parameter values."""
-        fields = self.get_fields(field_number, ind1, ind2, subfield_notation)
-
-        if not fields:
-            return []
-
-        if not subfield_notation:
-            return fields
-
-        values = []
-        for field in fields:
-            with suppress(KeyError):
-                values += field.get(subfield_notation)
-
-        return values
-
-    def get_subfields(
-        self,
-        field_number: str,
-        ind1: str = None,
-        ind2: str = None,
-        subfield_notations: List[str] = None,
-    ) -> List[Dict[str, List[str]]]:
-        """Get subfields."""
-        mostly_important_subfield_notation = (
-            subfield_notations[0] if subfield_notations else None
-        )
-        fields = self.get_fields(
-            field_number, ind1, ind2, mostly_important_subfield_notation
-        )
-
-        if not fields:
-            return []
-
-        if not subfield_notations:
-            return fields
-
-        out = []
-        for field in fields:
-            obj = {subfield_notation: [] for subfield_notation in subfield_notations}
-            for subfield_notation in subfield_notations:
-                if subfield_notation in field:
-                    obj[subfield_notation] += field.get(subfield_notation)
-            out.append(obj)
-
-        return out
+from ....services.record.metadata import Marc21Metadata
 
 
 class MetadataField(Field):
     """Schema for the record metadata."""
 
-    def _serialize(self, value, attr, obj, **kwargs):
+    def _serialize(self, value: dict, attr: str, obj: dict, **__: dict) -> dict:
         """Serialise access status."""
-        fields = Marc21Fields(value.get("fields", {}))
-        out = {}
-
-        if not fields:
-            return out
+        metadata = Marc21Metadata(json=value)
 
         return {
-            "languages": fields.get_values("041", subfield_notation="a"),
-            "authors": self.get_authors(fields),
-            "titles": self.get_titles(fields),
-            "copyright": fields.get_values("264"),
-            "description": self.get_description(fields),
-            "notes": fields.get_values("500"),
-            "resource_type": self.get_resource_type(fields),
-            "published": self.get_published_month(fields),
-            "publisher": self.get_publisher(fields),
-            "license": self.get_license(fields),
-            "youtube": self.get_youtube(fields),
-            "isbn": self.get_isbn(fields),
+            "languages": metadata.get_values("041", subf_code="a"),
+            "authors": self.get_authors(metadata),
+            "titles": self.get_titles(metadata),
+            "copyright": metadata.get_values("264"),
+            "description": self.get_description(metadata),
+            "notes": metadata.get_values("500"),
+            "resource_type": self.get_resource_type(metadata),
+            "published": self.get_published_month(metadata),
+            "publisher": self.get_publisher(metadata),
+            "license": self.get_license(metadata),
+            "youtube": self.get_youtube(metadata),
+            "isbn": self.get_isbn(metadata),
+            "terms_of_use": self.get_terms_of_use(metadata),
+            "included_in": self.get_included_in(metadata),
+            "version": self.get_version_of_record(metadata),
         }
 
-    def get_authors(self, fields):
+    def get_authors(self, metadata: Marc21Metadata) -> list[dict]:
         """Get authors."""
         authors = []
 
-        if "100" in fields:
-            authors += fields.get_subfields("100", subfield_notations=["a", "8"])
+        _, author = metadata.get_fields("100")
+        authors += [a.subfields for a in author]
 
-        if "700" in fields:
-            authors += fields.get_subfields("700", subfield_notations=["a", "8"])
+        _, author = metadata.get_fields("700")
+        authors += [a.subfields for a in author]
 
         return authors
 
-    def get_titles(self, fields):
+    def get_titles(self, metadata: Marc21Metadata) -> list[str]:
         """Get title.
 
         The normal separator between the main title and the additional
@@ -196,8 +67,8 @@ class MetadataField(Field):
         should not be ':' because there is already the '=' as a
         separator.
         """
-        titles = fields.get_values("245", subfield_notation="a")
-        additional_titles = fields.get_values("245", subfield_notation="b")
+        titles = metadata.get_values("245", subf_code="a")
+        additional_titles = metadata.get_values("245", subf_code="b")
 
         if len(additional_titles) > 0 and additional_titles[0][0] != "=":
             titles += [":"]
@@ -206,75 +77,74 @@ class MetadataField(Field):
 
         return [re.sub(r"[<>]", "", title) for title in titles]
 
-    def get_published_month(self, fields):
+    def get_published_month(self, metadata: Marc21Metadata) -> str:
         """Get published month."""
-        values = fields.get_values("260", subfield_notation="c")
+        values = metadata.get_values("260", subf_code="c")
         if len(values) > 0:
             return "".join(values)
-        values = fields.get_values("264", subfield_notation="c")
+        values = metadata.get_values("264", subf_code="c")
         if len(values) > 0:
             return "".join(values)
         return ""
 
-    def get_publisher(self, fields):
+    def get_publisher(self, metadata: Marc21Metadata) -> str:
         """Get publisher."""
-        values = fields.get_values("260", subfield_notation="b")
+        values = metadata.get_values("260", subf_code="b")
         if len(values) > 0:
             return "".join(values)
-        values = fields.get_values("264", subfield_notation="b")
+        values = metadata.get_values("264", subf_code="b")
         if len(values) > 0:
             return "".join(values)
         return ""
 
-    def get_license(self, fields):
+    def get_license(self, metadata: Marc21Metadata) -> dict[str, str]:
         """Get license."""
-        shorts = fields.get_values("540", subfield_notation="f")
-        urls = fields.get_values("540", subfield_notation="u")
+        shorts = metadata.get_values("540", subf_code="f")
+        urls = metadata.get_values("540", subf_code="u")
 
         short = shorts[0] if shorts else ""
         url = urls[0] if urls else ""
         return {"url": url, "short": short}
 
-    def get_youtube(self, fields):
+    def get_youtube(self, metadata: Marc21Metadata) -> str:
         """Get youtube."""
-        fields = fields.get_fields("856")
+        _, fields = metadata.get_fields("856")
 
         if len(fields) == 0:
             return ""
 
         for field in fields:
-            if field.get("a") == ["youtube"]:
-                return field.get("u")[0]
+            if field.get("a") == "youtube":
+                return field.get("u")
 
         return ""
 
-    def get_publisher_doi(self, fields):
+    def get_publisher_doi(self, metadata: Marc21Metadata) -> str:
         """Get youtube."""
-        fields = fields.get_fields("856")
+        _, fields = metadata.get_fields("856")
 
         if len(fields) == 0:
             return ""
 
         for field in fields:
-            if field.get("a") == ["publisher"]:
-                return field.get("u")[0]
+            if field.get("a") == "publisher":
+                return field.get("u")
 
         return ""
 
-    def get_description(self, fields):
+    def get_description(self, metadata: Marc21Metadata) -> str:
         """Get descriptions."""
-        descriptions = fields.get_subfields("300", subfield_notations=["a", "b"])
+        _, descriptions = metadata.get_fields("300")
 
         out = []
         for desc in descriptions:
-            for val in desc.values():
-                out.append(", ".join(val))
+            out += [", ".join(val) for val in desc.subfields.values()]
 
         return ", ".join(out)
 
-    def get_resource_type(self, fields):
+    def get_resource_type(self, metadata: Marc21Metadata) -> str:
         """Get resource type."""
-        resource_type = fields.get_values("970", "2", "_", subfield_notation="d")
+        resource_type = metadata.get_values("970", ind1="2", subf_code="d")
         resource_types = {
             ResourceTypeEnum.HSMASTER.value: _("Masterthesis"),
             ResourceTypeEnum.HSDISS.value: _("Dissertation"),
@@ -282,11 +152,9 @@ class MetadataField(Field):
 
         if not resource_type:
             return ""
-        if resource_type[0] in resource_types.keys():
-            return resource_types.get(resource_type[0])
 
-        return resource_type[0]
+        return resource_types.get(resource_type[0], resource_type[0])
 
-    def get_isbn(self, fields):
+    def get_isbn(self, metadata: Marc21Metadata) -> str:
         """Get isbn."""
-        # print(f"MetadataField.get_isbn fields: {fields}")
+        # print(f"MetadataField.get_isbn metadata: {metadata}")
