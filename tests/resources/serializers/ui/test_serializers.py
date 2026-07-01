@@ -30,7 +30,7 @@ def test_ui_json_serializer_dump_obj(app: Flask, full_record: dict) -> None:
 
         expected = {
             "languages": [],
-            "authors": [{"a": ["Philipp"], "8": []}],
+            "authors": [{"a": ["Philipp"]}],
             "titles": ["The development of high strain actuator materials"],
             "copyright": [],
             "description": "",
