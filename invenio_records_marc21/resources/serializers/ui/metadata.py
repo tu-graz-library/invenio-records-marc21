@@ -158,3 +158,23 @@ class MetadataField(Field):
     def get_isbn(self, metadata: Marc21Metadata) -> str:
         """Get isbn."""
         # print(f"MetadataField.get_isbn metadata: {metadata}")
+
+    def get_terms_of_use(self, metadata: Marc21Metadata) -> str:
+        """Get terms of use."""
+        return metadata.get_value("542", subf_code="f")
+
+    def get_included_in(self, metadata: Marc21Metadata) -> str:
+        """Get included in."""
+        # 773 08 $$t, 773 08 $$d, 773 08 $$g
+        field = metadata.get_field("773.0.8.")
+        if field:
+            return f"{field.get("t")}, {field.get("d")}, {field.get("g")}"
+        return ""
+
+    def get_version_of_record(self, metadata: Marc21Metadata) -> str:
+        """Get version of record."""
+        # 787 08 $$o
+        field = metadata.get_field("787.0.8.o")
+        if field:
+            return f"https://doi.org/{field.get("o")}"
+        return ""

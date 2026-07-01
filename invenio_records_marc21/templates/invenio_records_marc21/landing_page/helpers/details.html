@@ -1,12 +1,12 @@
 {# -*- coding: utf-8 -*-
 
-  Copyright (C) 2021-2025 Graz University of Technology.
+  Copyright (C) 2021-2026 Graz University of Technology.
 
   Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
   under the terms of the MIT License; see LICENSE file for more details.
 #}
 
-{%- from "invenio_records_marc21/landing_page/macros/detail.html" import show_personal_name, show_thesis_information, show_title, show_physical_description, show_description, show_published, show_publisher, show_language, show_resource_type, show_license, show_youtube, show_publisher_doi %}
+{%- from "invenio_records_marc21/landing_page/macros/detail.html" import show_personal_name, show_thesis_information, show_title, show_physical_description, show_description, show_published, show_publisher, show_language, show_resource_type, show_license, show_youtube, show_publisher_doi, show_terms_of_use, show_included_in, show_version_of_record %}
 {%- from "invenio_records_marc21/landing_page/macros/doi.html" import show_doi %}
 
 <section class="ui segment rdm-sidebar">
@@ -30,5 +30,8 @@
     {{ show_language(metadata) }}
     {{ show_license(metadata) }}
     {{ show_youtube(metadata) }}
+    {{ show_terms_of_use(metadata) }}
+    {{ show_included_in(metadata) }}
+    {{ show_version_of_record(metadata) }}
   </div>
 </section>

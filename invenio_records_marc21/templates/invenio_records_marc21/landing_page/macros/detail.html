@@ -1,6 +1,6 @@
 {# -*- coding: utf-8 -*-
 
-  Copyright (C) 2021-2024 Graz University of Technology.
+  Copyright (C) 2021-2026 Graz University of Technology.
 
   Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
   under the terms of the MIT License; see LICENSE file for more details.
@@ -121,4 +121,22 @@
   {% set key = _("Type/Extent/Format") %}
   {% set value = metadata.descriptions %}
   {{ show_detail(key, value) }}
+{% endmacro %}
+
+{% macro show_terms_of_use(metadata) %}
+  {% set key = _("Terms of Use") %}
+  {% set value = metadata.terms_of_use %}
+  {{ show_detail(key, value) }}
+{% endmacro %}
+
+{% macro show_included_in(metadata) %}
+  {% set key = _("Included In") %}
+  {% set value = metadata.included_in %}
+  {{ show_detail(key, value) }}
+{% endmacro %}
+
+{% macro show_version_of_record(metadata) %}
+  {% set key = _("Version of the Record") %}
+  {% set value = metadata.version %}
+  {{ show_detail(key, value, "link") }}
 {% endmacro %}
