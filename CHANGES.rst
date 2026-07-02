@@ -8,6 +8,16 @@
 Changes
 =======
 
+Version v0.33.0 (released 2026-07-02)
+
+- chore(setup): ignore tests mypy
+- feat(ui): add new detail view information
+- refactor(ui): use Marc21Metadata
+- refactor(typing): Marc21Metadata
+- chore(tests): apply ruff rules
+- refactor(pids): remove unchanged code, use super
+- refactor(pids): move code to workflows-tugraz
+
 Version v0.32.1 (released 2026-06-12)
 
 - fix(tests): format of error message changed
