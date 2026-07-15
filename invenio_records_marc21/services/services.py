@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -81,7 +81,7 @@ class Marc21RecordService(RDMRecordService):
         :return: marc21 record item
         :rtype: `invenio_records_resources.services.records.results.RecordItem`
         """
-        data = self._create_data(identity, data, metadata, files, access)
+        data = self._create_data(data, metadata, access, files=files)
         return super().create(identity=identity, data=data)
 
     @unit_of_work()
@@ -109,7 +109,7 @@ class Marc21RecordService(RDMRecordService):
         :return: marc21 record item
         :rtype: `invenio_records_resources.services.records.results.RecordItem`
         """
-        data = self._create_data(identity, data, metadata, access=access)
+        data = self._create_data(data, metadata, access=access)
         return super().update_draft(
             identity=identity, id_=id_, data=data, revision_id=revision_id
         )
