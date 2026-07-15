@@ -8,6 +8,14 @@
 Changes
 =======
 
+Version v0.33.1 (released 2026-07-15)
+
+- chore(docs): remove docs
+- chore(typing): improve typing coverage
+- fix(refactoring): remove identity from call
+- chore(revert): revert remove of copy pasted code
+- chore(setupt): use direct path
+
 Version v0.33.0 (released 2026-07-02)
 
 - chore(setup): ignore tests mypy
