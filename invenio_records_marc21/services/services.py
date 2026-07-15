@@ -10,11 +10,12 @@
 
 """Marc21 Record Service."""
 
+from flask_principal import Identity
 from invenio_db import db
 from invenio_rdm_records.services import RDMRecordService
 from invenio_records_resources.services.files.service import FileService
 from invenio_records_resources.services.records.results import RecordItem
-from invenio_records_resources.services.uow import unit_of_work
+from invenio_records_resources.services.uow import UnitOfWork, unit_of_work
 
 from .config import Marc21DraftFilesServiceConfig, Marc21RecordFilesServiceConfig
 from .errors import EmbargoNotLiftedError
@@ -25,8 +26,13 @@ class Marc21RecordService(RDMRecordService):
     """Marc21 record service class."""
 
     def _create_data(
-        self, identity, data=None, metadata=None, files=False, access=None
-    ):
+        self,
+        data: dict,
+        metadata: Marc21Metadata,
+        access: dict | None = None,
+        *,
+        files: bool = False,
+    ) -> dict:
         """Create a data json.
 
         :param identity: Identity of user creating the record.
@@ -60,12 +66,12 @@ class Marc21RecordService(RDMRecordService):
     @unit_of_work()
     def create(
         self,
-        identity,
-        data=None,
-        metadata=Marc21Metadata(),
-        files=False,
-        access=None,
-        uow=None,
+        identity: Identity,
+        data: dict | None = None,
+        metadata: Marc21Metadata = Marc21Metadata(),
+        files: bool = False,
+        access: dict | None = None,
+        uow: UnitOfWork | None = None,
     ) -> RecordItem:
         """Create a draft record.
 
