@@ -83,10 +83,18 @@ class PIDsComponent(BasePIDsComponent):
         self.service.pids.pid_manager.validate(pids, record, errors, raise_errors=True)
         record.pids = pids
 
+        required_schemes = set(self.service.config.pids_required)
+
+        conditional_schemes = self.service.config.pids_conditional
+        for scheme in set(required_schemes):
+            condition_func = conditional_schemes.get(scheme)
+            if condition_func and not condition_func(record):
+                required_schemes.remove(scheme)
+
         pids = self.service.pids.pid_manager.create_all(
             record,
             pids=pids,
-            schemes=set(self.service.config.pids_required),
+            schemes=required_schemes,
         )
 
         record.pids = pids
@@ -108,7 +116,9 @@ class PIDsComponent(BasePIDsComponent):
         missing_required_schemes = (
             set(self.service.config.pids_required) - record_schemes - draft_schemes
         )
+
         self.service.pids.pid_manager.validate(draft_pids, record, raise_errors=True)
+
         changed_pids = {}
         for scheme in draft_schemes.intersection(record_schemes):
             record_id = record_pids[scheme]["identifier"]
@@ -116,11 +126,19 @@ class PIDsComponent(BasePIDsComponent):
             if record_id != draft_id:
                 changed_pids[scheme] = record_pids[scheme]
         self.service.pids.pid_manager.discard_all(changed_pids)
+
+        conditional_schemes = self.service.config.pids_conditional
+        for scheme in set(missing_required_schemes):
+            condition_func = conditional_schemes.get(scheme)
+            if condition_func and not condition_func(record):
+                missing_required_schemes.remove(scheme)
+
         pids = self.service.pids.pid_manager.create_all(
             draft,
             pids=draft_pids,
             schemes=missing_required_schemes,
         )
+
         self.service.pids.pid_manager.reserve_all(draft, pids)
         record.pids = pids
 
