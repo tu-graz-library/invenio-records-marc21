@@ -24,6 +24,7 @@ from invenio_drafts_resources.services.records.config import (
 )
 from invenio_indexer.api import RecordIndexer
 from invenio_rdm_records.services import facets as rdm_facets
+from invenio_rdm_records.services.customizations import FromConfigConditionalPIDs
 from invenio_records_resources.services import FileServiceConfig
 from invenio_records_resources.services.base.config import (
     ConfiguratorMixin,
@@ -201,6 +202,9 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     )
     pids_required = FromConfigRequiredPIDs(
         persistent_identifiers="MARC21_PERSISTENT_IDENTIFIERS",
+    )
+    pids_conditional = FromConfigConditionalPIDs(
+        pids_key="MARC21_PERSISTENT_IDENTIFIERS",
     )
 
 
