@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v0.34.0 (released 2026-07-22)
+
+- feat(ui): show publ doi
+- feat(pids): add conditional pids
+
 Version v0.33.1 (released 2026-07-15)
 
 - chore(docs): remove docs
