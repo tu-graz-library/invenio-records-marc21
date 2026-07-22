@@ -16,6 +16,13 @@
     {% if doi %}
       {{ show_doi(doi, record) }}
     {% endif %}
+    {#
+    TODO: this should not be here. publ is defined in
+    invenio-workflows-tugraz. this whole details.html file should live there
+    #}
+    {%- set doi = record.pids.get('publ', {}).get('identifier') %} {% if doi %}
+    {{ show_doi(doi, record) }} {% endif %} {{ show_personal_name(metadata) }}
+
     {{ show_personal_name(metadata) }}
     {{ show_title(metadata) }}
     {#
