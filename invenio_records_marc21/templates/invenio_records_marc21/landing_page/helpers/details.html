@@ -5,12 +5,10 @@
   Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
   under the terms of the MIT License; see LICENSE file for more details.
 #}
-
 {%- from "invenio_records_marc21/landing_page/macros/detail.html" import show_personal_name, show_thesis_information, show_title, show_physical_description, show_description, show_published, show_publisher, show_language, show_resource_type, show_license, show_youtube, show_publisher_doi, show_terms_of_use, show_included_in, show_version_of_record %}
 {%- from "invenio_records_marc21/landing_page/macros/doi.html" import show_doi %}
-
 <section class="ui segment rdm-sidebar">
-  <h2 class="ui small header">{{ _('Details')}}</h2>
+  <h2 class="ui small header">{{ _("Details") }}</h2>
   <div class="ui list">
     {%- set doi = record.pids.get('doi', {}).get('identifier') %}
     {% if doi %}
@@ -20,9 +18,10 @@
     TODO: this should not be here. publ is defined in
     invenio-workflows-tugraz. this whole details.html file should live there
     #}
-    {%- set doi = record.pids.get('publ', {}).get('identifier') %} {% if doi %}
-    {{ show_doi(doi, record) }} {% endif %} {{ show_personal_name(metadata) }}
-
+    {%- set doi = record.pids.get('publ', {}).get('identifier') %}
+    {% if doi %}
+      {{ show_doi(doi, record) }}
+    {% endif %}
     {{ show_personal_name(metadata) }}
     {{ show_title(metadata) }}
     {#
