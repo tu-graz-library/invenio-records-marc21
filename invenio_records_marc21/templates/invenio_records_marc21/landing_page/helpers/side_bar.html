@@ -6,10 +6,9 @@
   it under the terms of the MIT License; see LICENSE file for more details.
 #}
 <aside class="sixteen wide tablet five wide computer column sidebar">
-  {%  if record.stats %}
+  {% if record.stats %}
     {% include "invenio_records_marc21/landing_page/helpers/statistics.html" %}
   {% endif %}
-
   {% include "invenio_records_marc21/landing_page/helpers/details.html" %}
   {% include "invenio_records_marc21/landing_page/helpers/export.html" %}
 </aside>

@@ -7,22 +7,16 @@ Invenio-Records-Marc21 is free software; you can redistribute it and/or
 modify it under the terms of the MIT License; see LICENSE file for more
 details.
 #}
-
 {%- extends config.MARC21_BASE_TEMPLATE %}
-
-
 {%- from "invenio_records_marc21/landing_page/macros/detail.html" import record_detail %}
-
 {%- set metadata = record_ui["ui"]["metadata"] %}
-
 {% block head_title %}
   <title>
     {% for title in metadata.get('titles') %}
-      {{title}}
+      {{ title }}
     {% endfor %}
   </title>
 {% endblock head_title %}
-
 {%- block page_body %}
   <div class="ui container" id="marc21-landing-page">
     <div class="ui relaxed grid mt-5">
@@ -34,54 +28,46 @@ details.
                 <div class="two column row">
                   <div class="left floated left aligned column">
                     <div class="twelve wide column">
-                      <span class="ui" title="{{_('Published date')}}">
-                        {{ _("Published in") }} {{ metadata.published }}
-                      </span>
+                      <span class="ui" title="{{ _("Published date") }}">{{ _("Published in") }} {{ metadata.published }}</span>
                       {%- if record.ui.version %}
-                        <span class="label text-muted"> | Version {{ record.ui.version }}</span>
+                        <span class="label text-muted">| Version {{ record.ui.version }}</span>
                       {% endif %}
                       {%- if record.ui.isbn %}
-                        <span class="label text-muted"> | ISBN {{ record.ui.isbn }}</span>
+                        <span class="label text-muted">| ISBN {{ record.ui.isbn }}</span>
                       {% endif %}
                     </div>
                   </div>
                   <div class="right floated right aligned column">
                     {% if metadata.resource_type %}
-                      <span class="ui label small neutral" title="{{ _('Resource type') }}">
-                        {{ metadata.resource_type }}
-                      </span>
+                      <span class="ui label small neutral" title="{{ _("Resource type") }}">{{ metadata.resource_type }}</span>
                     {% endif %}
                     <span class="ui label small access-status {{ record.ui.access_status.id }}"
-                          title="{{ _('Access status') }}"
+                          title="{{ _("Access status") }}"
                           data-tooltip="{{ record.ui.access_status.description_l10n }}"
                           data-inverted="">
-                          {% if record.ui.access_status.icon %}
-                            <i class="icon {{ record.ui.access_status.icon }}"></i>
-                          {% endif %}
-                          {{ record.ui.access_status.title_l10n }}
+                      {% if record.ui.access_status.icon %}
+                        <i class="icon {{ record.ui.access_status.icon }}"></i>
+                      {% endif %}
+                      {{ record.ui.access_status.title_l10n }}
                     </span>
                   </div>
                 </div>
               </div>
             {%- endblock record_header -%}
-
             {%- block record_title -%}
               <div class="ui divider hidden"></div>
               {%- include "invenio_records_marc21/landing_page/helpers/title.html" %}
             {%- endblock record_title -%}
-
             {%- block record_files -%}
               <div class="top-padded"></div>
               <hr class="thin-line">
               {%- include "invenio_records_marc21/landing_page/helpers/files.html" %}
             {%- endblock record_files -%}
-
             {%- block record_footer -%}
               {%- include "invenio_records_marc21/landing_page/helpers/footer.html" %}
             {%- endblock record_footer -%}
           {%- endblock record_body %}
         </article>
-
         {% block record_sidebar %}
           {%- include "invenio_records_marc21/landing_page/helpers/side_bar.html" %}
         {% endblock record_sidebar %}
@@ -89,8 +75,6 @@ details.
     </div>
   </div>
 {%- endblock page_body %}
-
-
 {%- block javascript %}
   {{ super() }}
   {{ webpack["invenio-records-marc21-landing-page.js"] }}
