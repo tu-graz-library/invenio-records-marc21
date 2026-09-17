@@ -43,7 +43,7 @@ def test_ui_json_serializer_dump_obj(app: Flask, full_record: dict) -> None:
             "license": {"url": "", "short": ""},
             "version": "",
             "youtube": "",
-            "isbn": None,
+            "isbn": "",
         }
         assert isinstance(obj["metadata"], dict)
         assert expected == obj["ui"]["metadata"]

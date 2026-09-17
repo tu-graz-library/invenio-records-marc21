@@ -22,7 +22,13 @@ from ....services.record.metadata import Marc21Metadata
 class MetadataField(Field):
     """Schema for the record metadata."""
 
-    def _serialize(self, value: dict, attr: str, obj: dict, **__: dict) -> dict:
+    def _serialize(
+        self,
+        value: dict,
+        attr: str | None,  # noqa: ARG002
+        obj: dict,  # noqa: ARG002
+        **__: dict,
+    ) -> dict:
         """Serialise access status."""
         metadata = Marc21Metadata(json=value)
 
@@ -157,7 +163,7 @@ class MetadataField(Field):
 
     def get_isbn(self, metadata: Marc21Metadata) -> str:
         """Get isbn."""
-        # print(f"MetadataField.get_isbn metadata: {metadata}")
+        return ""
 
     def get_terms_of_use(self, metadata: Marc21Metadata) -> str:
         """Get terms of use."""
