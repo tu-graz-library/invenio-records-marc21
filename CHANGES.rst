@@ -8,6 +8,13 @@
 Changes
 =======
 
+Version v0.34.1 (released 2026-09-22)
+
+- chore(serializer): temporary solution for isbn
+- chore(html): only apply formatting
+- fix(ui): remove double person in detail
+- chore(setup): add djlint for formatting
+
 Version v0.34.0 (released 2026-07-22)
 
 - feat(ui): show publ doi
