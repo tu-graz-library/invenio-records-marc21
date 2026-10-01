@@ -116,6 +116,11 @@ msgstr "Masterarbeit"
 msgid "Dissertation"
 msgstr "Dissertation"
 
+#: invenio_records_marc21/services/errors.py:33
+msgid "Provide at least one Metadata entry before publishing."
+msgstr ""
+"Geben Sie vor dem Veröffentlichen mindestens einen Metadateneintrag an."
+
 #: invenio_records_marc21/services/facets.py:20
 #, fuzzy
 msgid "Status"

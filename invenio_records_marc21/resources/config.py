@@ -11,10 +11,17 @@
 """Resources configuration."""
 
 import marshmallow as ma
-from flask_resources import RequestBodyParser, ResponseHandler
+from flask_resources import (
+    HTTPJSONException,
+    RequestBodyParser,
+    ResponseHandler,
+    create_error_handler,
+)
 from invenio_drafts_resources.resources import RecordResourceConfig
 from invenio_records_resources.resources.files import FileResourceConfig
 from invenio_records_resources.resources.records.args import SearchRequestArgsSchema
+
+from invenio_records_marc21.services.errors import Marc21MissingMetadata
 
 from .deserializers import Marc21JSONDeserializer
 from .serializers import (
@@ -75,6 +82,12 @@ class Marc21RecordResourceConfig(RecordResourceConfig):
     request_view_args = {
         "pid_value": ma.fields.Str(),
         "pid_type": ma.fields.Str(),
+    }
+
+    error_handlers = {
+        Marc21MissingMetadata: create_error_handler(
+            lambda e: HTTPJSONException(code=422, description=str(e))
+        )
     }
 
 
