@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v0.34.2 (released 2026-10-01)
+
+- fix(permissions): add new permission
+- fix(config): v15 forward compatibility
+- fix(datacite): wrong type of creators
+
 Version v0.34.1 (released 2026-09-22)
 
 - chore(serializer): temporary solution for isbn
