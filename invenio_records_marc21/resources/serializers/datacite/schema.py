@@ -12,7 +12,7 @@
 
 from flask import current_app
 from marshmallow import Schema, missing
-from marshmallow.fields import Constant, Method, Nested
+from marshmallow.fields import Constant, List, Method, Nested
 
 
 def get_scheme_datacite(
@@ -43,7 +43,7 @@ class Marc21DataCite43Schema(Schema):
     identifiers = Method("get_identifiers")
     types = Method("get_type")
     titles = Method("get_titles")
-    creators = Nested(CreatorSchema43, attribute="metadata.fields")
+    creators = Method("get_creators")
     publisher = Method("get_publisher")
     publicationYear = Method("get_publication_year")  # noqa: N815
     schemaVersion = Constant("http://datacite.org/schema/kernel-4")  # noqa: N815
@@ -73,6 +73,12 @@ class Marc21DataCite43Schema(Schema):
 
         title_fields = titles_field.get("a", [""])
         return [{"title": title} for title in title_fields]
+
+    def get_creators(self, obj: dict) -> list[dict]:
+        """Get creators."""
+        creators = [CreatorSchema43().dump(obj["metadata"]["fields"])]
+
+        return creators
 
     def get_publisher(self, obj: dict) -> str:
         """Get publisher."""
