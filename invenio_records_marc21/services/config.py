@@ -25,6 +25,8 @@ from invenio_drafts_resources.services.records.config import (
 from invenio_indexer.api import RecordIndexer
 from invenio_rdm_records.services import facets as rdm_facets
 from invenio_rdm_records.services.customizations import FromConfigConditionalPIDs
+from invenio_rdm_records.services.schemas.quota import QuotaSchema
+from invenio_rdm_records.services.schemas.tombstone import TombstoneSchema
 from invenio_records_resources.services import FileServiceConfig
 from invenio_records_resources.services.base.config import (
     ConfiguratorMixin,
@@ -136,6 +138,8 @@ class Marc21RecordServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     # Schemas
     schema = Marc21RecordSchema
     schema_parent = Marc21ParentSchema
+    schema_tombstone = TombstoneSchema
+    schema_quota = QuotaSchema
 
     schema_secret_link = None
     review = None
