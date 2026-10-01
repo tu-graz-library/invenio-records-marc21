@@ -117,6 +117,7 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_draft_delete_files = can_curate + [Marc21RecordCreators()]
     can_draft_set_content_files = can_curate + [Marc21RecordCreators()]
     can_draft_commit_files = can_curate + [Marc21RecordCreators()]
+    can_draft_extract_file_metadata = [SystemProcess()]
 
     can_draft_get_content_files = [
         IfTransferType(LOCAL_TRANSFER_TYPE, can_draft_read_files),
@@ -178,6 +179,7 @@ class Marc21RecordPermissionPolicy(RecordPermissionPolicy):
     can_update_files = [Disable()]
     can_delete_files = [Disable()]
     can_commit_files = [Disable()]
+    can_extract_file_metadata = [SystemProcess()]
 
     # TODO: Add permissions for community when we add the feature!
 
