@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: invenio-records-marc21 0.2.1\n"
 "Report-Msgid-Bugs-To: info@tugraz.at\n"
-"POT-Creation-Date: 2024-05-19 10:39+0200\n"
-"PO-Revision-Date: 2024-05-19 10:40+0200\n"
+"POT-Creation-Date: 2026-10-01 14:28+0200\n"
+"PO-Revision-Date: 2026-10-01 14:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: de <LL@li.org>\n"
 "Language: de\n"
@@ -18,59 +18,61 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.12.1\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 3.9\n"
 
-#: invenio_records_marc21/config.py:179 invenio_records_marc21/config.py:186
-#: invenio_records_marc21/config.py:201 invenio_records_marc21/config.py:209
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:24
-#: tests/conftest.py:441 tests/conftest.py:448
-msgid "DOI"
-msgstr "DOI"
-
-#: tests/services/schemas/access/test_record.py:45
-msgid "'record' must be either 'public' or 'restricted'"
-msgstr "'Eintrag' muss entweder 'Öffentlich' oder 'Eingeschränkt' sein."
-
-#: tests/services/schemas/access/test_record.py:57
-msgid "'files' must be either 'public' or 'restricted'"
-msgstr "'Datei' muss entweder 'Öffentlich' oder 'Eingeschränkt' sein."
-
-#: invenio_records_marc21/config.py:54
+#: invenio_records_marc21/config.py:58
 msgid "Best match"
 msgstr "Höchste Übereinstimmung"
 
-#: invenio_records_marc21/config.py:58
+#: invenio_records_marc21/config.py:62
 msgid "Newest"
 msgstr "Neuester"
 
-#: invenio_records_marc21/config.py:62
+#: invenio_records_marc21/config.py:66
 msgid "Oldest"
 msgstr "Ältester"
 
-#: invenio_records_marc21/config.py:66
+#: invenio_records_marc21/config.py:70
 #, fuzzy
 msgid "Version"
 msgstr "Version"
 
-#: invenio_records_marc21/config.py:70
-msgid "Recently updated"
-msgstr "Kürzlich aktualisier"
-
 #: invenio_records_marc21/config.py:74
+msgid "Recently updated"
+msgstr "Kürzlich aktualisiert"
+
+#: invenio_records_marc21/config.py:78
 msgid "Least recently updated"
 msgstr "Am wenigsten aktuell"
 
-#: invenio_records_marc21/config.py:78
+#: invenio_records_marc21/config.py:82
 msgid "Most viewed"
 msgstr ""
 
-#: invenio_records_marc21/config.py:81
+#: invenio_records_marc21/config.py:86
 #, fuzzy
 #| msgid "Download"
 msgid "Most downloaded"
 msgstr "Herunterladen"
 
-#: invenio_records_marc21/errors.py:46
+#: invenio_records_marc21/config.py:199 invenio_records_marc21/config.py:206
+#: invenio_records_marc21/config.py:225 invenio_records_marc21/config.py:238
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:24
+#: tests/conftest.py:410 tests/conftest.py:417
+msgid "DOI"
+msgstr "DOI"
+
+#: invenio_records_marc21/config.py:210
+msgid "OAI ID"
+msgstr ""
+
+#: invenio_records_marc21/config.py:229 invenio_records_marc21/config.py:245
+#, fuzzy
+#| msgid "DOI"
+msgid "OAI"
+msgstr "DOI"
+
+#: invenio_records_marc21/errors.py:48
 msgid ""
 "The table you are looking for does not exist.\n"
 "Maybe you missed to re-setup the services after the marc21 module was "
@@ -78,45 +80,66 @@ msgid ""
 "Try to do a invenio-cli services setup -f"
 msgstr ""
 
-#: invenio_records_marc21/errors.py:51
+#: invenio_records_marc21/errors.py:53
 msgid ""
 "Connection to Services refused.\n"
 "Maybe you missed to start the services.\n"
 "Try to do a invenio-cli services setup -f"
 msgstr ""
 
-#: invenio_records_marc21/errors.py:56
+#: invenio_records_marc21/errors.py:57
 msgid "User has not the permissions."
 msgstr "Benutzer hat nicht die erforderliche Berechtigung."
 
-#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:225
+#: invenio_records_marc21/ext.py:175
+#: invenio_records_marc21/templates/invenio_records_marc21/search/search.html:9
+msgid "Publications"
+msgstr "Publikationen"
+
+#: invenio_records_marc21/resources/iiif.py:101
+msgid "Image size limit exceeded"
+msgstr ""
+
+#: invenio_records_marc21/resources/iiif.py:108
+msgid ""
+"The record associated with this file has been deleted. See deletion notice."
+msgstr ""
+
+#: invenio_records_marc21/resources/serializers/ui/metadata.py:155
+#: invenio_records_marc21/services/facets.py:36
 msgid "Masterthesis"
 msgstr "Masterarbeit"
 
-#: invenio_records_marc21/resources/serializers/ui/fields/metadata.py:226
+#: invenio_records_marc21/resources/serializers/ui/metadata.py:156
+#: invenio_records_marc21/services/facets.py:37
 #, fuzzy
 msgid "Dissertation"
 msgstr "Dissertation"
 
-#: invenio_records_marc21/services/facets.py:19
+#: invenio_records_marc21/services/facets.py:20
 #, fuzzy
 msgid "Status"
 msgstr "Status"
 
-#: invenio_records_marc21/services/facets.py:20
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:46
+#: invenio_records_marc21/services/facets.py:21
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:60
 msgid "Published"
 msgstr "Veröffentlicht"
 
-#: invenio_records_marc21/services/facets.py:20
+#: invenio_records_marc21/services/facets.py:21
 #, fuzzy
 #| msgid "Unpublished"
 msgid "Not published"
 msgstr "Unveröffentlicht"
 
-#: invenio_records_marc21/services/facets.py:26
+#: invenio_records_marc21/services/facets.py:27
 msgid "File type"
 msgstr "Datei-Typ"
+
+#: invenio_records_marc21/services/facets.py:34
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:42
+msgid "Resource type"
+msgstr "Ressource-Typ"
 
 #: invenio_records_marc21/services/schemas/__init__.py:35
 msgid "Invalid persistent identifier scheme."
@@ -131,6 +154,7 @@ msgid "New version"
 msgstr "Neue Version"
 
 #: invenio_records_marc21/templates/invenio_records_marc21/deposit/index.html:14
+#: invenio_records_marc21/templates/invenio_records_marc21/user_dashboard/uploads.html:26
 msgid "New upload"
 msgstr "Neuer upload"
 
@@ -147,19 +171,15 @@ msgstr "Zurück zu den Details"
 msgid "Jump up"
 msgstr "Zum Seitenbeginn"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:39
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:31
 msgid "Published date"
 msgstr "Veröffentlichungsdatum"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:40
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:31
 msgid "Published in"
 msgstr "Veröffentlicht im"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:49
-msgid "Resource type"
-msgstr "Ressource-Typ"
-
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:53
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/record.html:45
 msgid "Access status"
 msgstr "Zugriffsstatus"
 
@@ -191,11 +211,11 @@ msgid "Rights Holder(s)"
 msgstr "Rechteinhaber"
 
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/description.html:12
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:40
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:54
 msgid "Description"
 msgstr "Beschreibung"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/details.html:13
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/details.html:11
 msgid "Details"
 msgstr "Details"
 
@@ -235,29 +255,60 @@ msgstr ""
 msgid "Downloads"
 msgstr "Herunterladen"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:34
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/helpers/title.html:17
+msgid "Creators and contributors"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:48
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/files.html:51
 msgid "Name"
 msgstr "Name"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:52
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:66
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:85
+#, fuzzy
+#| msgid "Published"
+msgid "Publisher"
+msgstr "Veröffentlicht"
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:72
+msgid "License"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:79
+msgid "Youtube"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:91
 msgid "Language"
 msgstr "Sprache"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:58
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:97
 msgid "Resource Type"
 msgstr "Ressource-Typ"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:64
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:103
 msgid "Thesis Information"
 msgstr "Informationen zur Abschlussarbeit"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:70
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:109
 msgid "Title"
 msgstr "Titel"
 
-#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:82
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:121
 msgid "Type/Extent/Format"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:127
+msgid "Terms of Use"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:133
+msgid "Included In"
+msgstr ""
+
+#: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/detail.html:139
+msgid "Version of the Record"
 msgstr ""
 
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/doi.html:15
@@ -287,6 +338,10 @@ msgstr "Vorschau"
 #: invenio_records_marc21/templates/invenio_records_marc21/landing_page/macros/files.html:86
 msgid "Download"
 msgstr "Herunterladen"
+
+#: invenio_records_marc21/templates/invenio_records_marc21/search/search.html:10
+msgid "Search and discover scientific publications."
+msgstr ""
 
 #: invenio_records_marc21/templates/invenio_records_marc21/user_dashboard/uploads.html:7
 #, fuzzy
@@ -322,9 +377,13 @@ msgstr "ErstellerInnen"
 msgid "Curator"
 msgstr "Kurator"
 
-#: invenio_records_marc21/ui/theme/__init__.py:48
-msgid "Publications"
-msgstr "Publikationen"
+#: tests/services/schemas/access/test_record.py:43
+msgid "'record' must be either 'public' or 'restricted'"
+msgstr "'Eintrag' muss entweder 'Öffentlich' oder 'Eingeschränkt' sein."
+
+#: tests/services/schemas/access/test_record.py:55
+msgid "'files' must be either 'public' or 'restricted'"
+msgstr "'Datei' muss entweder 'Öffentlich' oder 'Eingeschränkt' sein."
 
 #~ msgid "Uploads"
 #~ msgstr "Upload"
