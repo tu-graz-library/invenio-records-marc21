@@ -17,6 +17,8 @@ from typing import cast
 from warnings import warn
 from xml.etree.ElementTree import Element
 
+from ..errors import Marc21MissingMetadata
+
 
 class QName:
     """Local Rewrite for lxml.etree.QName."""
@@ -397,10 +399,7 @@ class Marc21Metadata:
             and "fields" in _json
             and isinstance(_json["fields"], dict)
         ):
-            msg = (
-                "Marc21Metadata should get a dictionary with at least leader and fields"
-            )
-            raise TypeError(msg)
+            raise Marc21MissingMetadata
 
         _json = _json.get("metadata", _json)
 
