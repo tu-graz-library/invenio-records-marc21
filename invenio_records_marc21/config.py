@@ -137,10 +137,9 @@ MARC21_REST_ENDPOINTS = {}
 MARC21_RECORD_EXPORTERS = {
     "json": {
         "name": "JSON",
-        "serializer": (
-            "invenio_records_marc21.resources.serializers:Marc21JSONSerializer"
-        ),
+        "serializer": ("flask_resources.serializers:JSONSerializer"),
         "params": {"options": {"indent": 4, "sort_keys": True}},
+        "content-type": "application/json",
         "filename": "{id}.json",
     },
     "marcxml": {
