@@ -132,6 +132,8 @@ class Marc21Draft(Draft, CommonFieldsMixin):
 
     bucket = ModelField(dump=False)
 
+    metadata = DictField(clear_none=False, create_if_missing=True)
+
     pids = DictField("pids")
 
 
