@@ -10,6 +10,8 @@
 
 """Services exceptions."""
 
+from invenio_i18n import lazy_gettext as _
+
 
 class Marc21RecordsException(Exception):
     """Base exception for Marc21Records errors."""
@@ -21,3 +23,11 @@ class EmbargoNotLiftedError(Marc21RecordsException):
     def __init__(self, record_id: str) -> None:
         """Construct error."""
         super().__init__(f"Embargo could not be lifted for record: {record_id}")
+
+
+class Marc21MissingMetadata(Marc21RecordsException):
+    """Exception raised when MARC21 metadata is missing."""
+
+    def __init__(self):
+        """Construct error."""
+        super().__init__(_("Provide at least one Metadata entry before publishing."))
