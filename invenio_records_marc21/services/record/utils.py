@@ -16,11 +16,10 @@ from pathlib import Path
 
 from flask_principal import Identity
 from invenio_records_resources.services import FileService
+from invenio_records_resources.services.records.results import RecordItem
 from invenio_search import RecordsSearch
 from invenio_search.engine import dsl
 from marshmallow.exceptions import ValidationError
-
-from ...records.api import Marc21Draft
 
 # from ..services import Marc21RecordService
 from .types import DOI, ACNumber, DuplicateRecordError
@@ -54,7 +53,7 @@ def create_record(
     identity: Identity,
     *,
     do_publish: bool = True,
-) -> Marc21Draft:
+) -> RecordItem:
     """Create the record."""
     draft = service.create(data=data, identity=identity, files=True)
 

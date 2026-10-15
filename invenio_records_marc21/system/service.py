@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -17,6 +17,10 @@ from invenio_records_resources.services import RecordService
 @dataclass
 class Marc21Template:
     """Marc21 Template dataclass."""
+
+    def to_dict(self) -> dict:
+        """To dict."""
+        return {}
 
 
 #

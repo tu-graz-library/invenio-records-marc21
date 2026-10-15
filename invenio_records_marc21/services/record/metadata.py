@@ -21,22 +21,22 @@ from xml.etree.ElementTree import Element
 class QName:
     """Local Rewrite for lxml.etree.QName."""
 
-    def __init__(self, node):
+    def __init__(self, node: Element) -> None:
         """Constructor for QName."""
         self.node = node
 
     @property
-    def localname(self):
+    def localname(self) -> str:
         """Return localname from node with xpath."""
         return self.node.tag.split("}")[-1]
 
     @property
-    def namespace(self):
+    def namespace(self) -> str:
         """Return namespace from node with xpath."""
         return self.node.tag.split("}")[0][1:]
 
 
-def convert_json_to_marc21xml(record):
+def convert_json_to_marc21xml(record: dict) -> Element:
     """Convert marc21 json to marc21 xml."""
     visitor = JsonToXmlVisitor(record["leader"])
     visitor.visit(record["fields"])
@@ -46,20 +46,20 @@ def convert_json_to_marc21xml(record):
 class JsonToXmlVisitor:
     """JsonToXmlVisitor class."""
 
-    def __init__(self, leader_):
+    def __init__(self, leader_: str) -> None:
         """Constructor."""
-        self.namespace = "http://www.loc.gov/MARC21/slim"
+        self.namespace: str = "http://www.loc.gov/MARC21/slim"
         self.record = Element("record", xmlns=self.namespace)
 
         leader = Element(f"{{{self.namespace}}}leader")
         leader.text = leader_
         self.record.append(leader)
 
-    def get_xml_record(self):
+    def get_xml_record(self) -> Element:
         """Get xml record."""
         return self.record
 
-    def visit(self, fields):
+    def visit(self, fields: dict) -> None:
         """Default visit method."""
         for category, items in fields.items():
             if category == "AVA" or category == "AVE":
@@ -69,13 +69,13 @@ class JsonToXmlVisitor:
             else:
                 self.visit_datafield(category, items)
 
-    def visit_controlfield(self, category, value):
+    def visit_controlfield(self, category: str, value: str) -> None:
         """Visit controlfield."""
         controlfield = Element(f"{{{self.namespace}}}controlfield", {"tag": category})
         controlfield.text = value
         self.record.append(controlfield)
 
-    def visit_datafield(self, category, items):
+    def visit_datafield(self, category: str, items: list[dict]) -> None:
         """Visit datafield."""
         for item in items:
             ind1 = item["ind1"].replace("_", " ")
@@ -99,7 +99,7 @@ class JsonToXmlVisitor:
             self.record.append(datafield)
 
 
-def convert_marc21xml_to_json(record):
+def convert_marc21xml_to_json(record: Element) -> dict:
     """MARC21 Record class convert to json."""
     visitor = XmlToJsonVisitor()
     visitor.visit(record)
@@ -111,56 +111,56 @@ class XmlToJsonVisitor:
 
     def __init__(self) -> None:
         """Constructor."""
-        self.record = {"leader": "", "fields": {}}
+        self.record: dict[str, str | dict[str, list]] = {"leader": "", "fields": {}}
 
-    def process(self, node):
+    def process(self, node: Element) -> None:
         """Execute the corresponding method to the tag name."""
 
-        def func_not_found(*args, **kwargs):
+        def func_not_found(node: Element) -> None:
             localname = QName(node).localname
             namespace = QName(node).namespace
-            raise ValueError(f"NO visitor node: '{localname}' ns: '{namespace}'")
+            msg = f"NO visitor node: '{localname}' ns: '{namespace}'"
+            raise ValueError(msg)
 
         tag_name = QName(node).localname
         visit_func = getattr(self, f"visit_{tag_name}", func_not_found)
-        result = visit_func(node)
-        return result
+        visit_func(node)
 
-    def visit(self, node):
+    def visit(self, node: Element) -> None:
         """Visit default method and entry point for the class."""
         for child in node:
             self.process(child)
 
-    def append_string(self, tag: str, value: str):
+    def append_string(self, tag: str, value: str) -> None:
         """Append to the field dict a single string."""
         self.record["fields"][tag] = value
 
-    def append(self, tag: str, field: dict):
+    def append(self, tag: str, field: dict) -> None:
         """Append to the field tag list."""
         if tag not in self.record["fields"]:
             self.record["fields"][tag] = []
 
         self.record["fields"][tag].append(field)
 
-    def get_json_record(self):
+    def get_json_record(self) -> dict:
         """Get the mij representation of the marc21 xml record."""
         return self.record
 
-    def visit_record(self, node):
+    def visit_record(self, node: Element) -> None:
         """Visit the record."""
         self.record = {"leader": "", "fields": {}}
         self.visit(node)
 
-    def visit_leader(self, node):
+    def visit_leader(self, node: Element) -> None:
         """Visit the controlfield field."""
-        self.record["leader"] = node.text
+        self.record["leader"] = node.text or ""
 
-    def visit_controlfield(self, node):
+    def visit_controlfield(self, node: Element) -> None:
         """Visit the controlfield field."""
-        field = node.text
+        field = node.text or ""
         self.append_string(node.get("tag"), field)
 
-    def visit_datafield(self, node):
+    def visit_datafield(self, node: Element) -> None:
         """Visit the datafield field."""
         self.subfields = {}
         self.visit(node)
@@ -176,7 +176,7 @@ class XmlToJsonVisitor:
         }
         self.append(tag, field)
 
-    def visit_subfield(self, node):
+    def visit_subfield(self, node: Element) -> None:
         """Visit the subfield field."""
         subf_code = node.get("code")
 
