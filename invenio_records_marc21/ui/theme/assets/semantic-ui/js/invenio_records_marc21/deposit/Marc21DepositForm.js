@@ -1,6 +1,6 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021-2023 Graz University of Technology.
+// Copyright (C) 2021-2026 Graz University of Technology.
 //
 // Invenio-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
@@ -15,7 +15,7 @@ import {
   TemplateField,
 } from "@js/invenio_records_marc21/components";
 import { AccordionField } from "react-invenio-forms";
-import { Card, Container, Grid, Ref, Sticky } from "semantic-ui-react";
+import { Card, Container, Grid, Sticky } from "semantic-ui-react";
 import {
   AccessRightField,
   FileUploader,
@@ -96,75 +96,75 @@ export class Marc21DepositForm extends Component {
                 </AccordionField>
               </Grid.Column>
               {/* Sidebar start */}
-              <Ref innerRef={this.sidebarRef}>
-                <Grid.Column
-                  mobile={16}
-                  tablet={16}
-                  computer={5}
-                  className="deposit-sidebar"
-                >
-                  <Sticky context={this.sidebarRef} offset={20}>
-                    <Card>
-                      <Card.Content>
-                        <DepositStatusBox />
-                      </Card.Content>
-                      <Card.Content>
-                        <Grid relaxed>
-                          <Grid.Column
-                            computer={8}
-                            mobile={16}
-                            className="pb-0 left-btn-col"
-                          >
-                            <SaveButton fluid />
-                          </Grid.Column>
 
-                          <Grid.Column
-                            computer={8}
-                            mobile={16}
-                            className="pb-0 right-btn-col"
-                          >
-                            <PreviewButton fluid type="submit" />
-                          </Grid.Column>
+              <Grid.Column
+                ref={this.sidebarRef}
+                mobile={16}
+                tablet={16}
+                computer={5}
+                className="deposit-sidebar"
+              >
+                <Sticky context={this.sidebarRef} offset={20}>
+                  <Card>
+                    <Card.Content>
+                      <DepositStatusBox />
+                    </Card.Content>
+                    <Card.Content>
+                      <Grid relaxed>
+                        <Grid.Column
+                          computer={8}
+                          mobile={16}
+                          className="pb-0 left-btn-col"
+                        >
+                          <SaveButton fluid />
+                        </Grid.Column>
 
-                          <Grid.Column width={16} className="pt-10">
-                            <PublishButton fluid type="submit" record={record} />
-                          </Grid.Column>
-                        </Grid>
-                      </Card.Content>
-                    </Card>
-                  </Sticky>
+                        <Grid.Column
+                          computer={8}
+                          mobile={16}
+                          className="pb-0 right-btn-col"
+                        >
+                          <PreviewButton fluid type="submit" />
+                        </Grid.Column>
 
-                  <Sticky context={this.sidebarRef} offset={10}>
-                    {this.templates.length > 0 && (
-                      <TemplateField
-                        label={i18next.t("Templates")}
-                        labelIcon={"bookmark"}
-                        templates={this.templates}
-                      />
-                    )}
-                  </Sticky>
-                  <AccessRightField
-                    label={i18next.t("Visibility")}
-                    labelIcon="shield"
-                    fieldPath="access"
-                    record={record}
-                    recordRestrictionGracePeriod={100}
-                    allowRecordRestriction={false}
-                  />
-                  {permissions?.can_delete_draft && (
-                    <Card>
-                      <Card.Content>
-                        <DeleteButton
-                          fluid
-                          // TODO: make is_published part of the API response
-                          //       so we don't have to do this
-                          isPublished={record.is_published}
-                        />
-                      </Card.Content>
-                    </Card>
+                        <Grid.Column width={16} className="pt-10">
+                          <PublishButton fluid type="submit" record={record} />
+                        </Grid.Column>
+                      </Grid>
+                    </Card.Content>
+                  </Card>
+                </Sticky>
+
+                <Sticky context={this.sidebarRef} offset={10}>
+                  {this.templates.length > 0 && (
+                    <TemplateField
+                      label={i18next.t("Templates")}
+                      labelIcon={"bookmark"}
+                      templates={this.templates}
+                    />
                   )}
-                </Grid.Column>
-              </Ref>
+                </Sticky>
+                <AccessRightField
+                  label={i18next.t("Visibility")}
+                  labelIcon="shield"
+                  fieldPath="access"
+                  record={record}
+                  recordRestrictionGracePeriod={100}
+                  allowRecordRestriction={false}
+                />
+                {permissions?.can_delete_draft && (
+                  <Card>
+                    <Card.Content>
+                      <DeleteButton
+                        fluid
+                        // TODO: make is_published part of the API response
+                        //       so we don't have to do this
+                        isPublished={record.is_published}
+                      />
+                    </Card.Content>
+                  </Card>
+                )}
+              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Container>
