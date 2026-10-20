@@ -25,9 +25,3 @@ class Marc21DataCite43JSONSerializer(MarshmallowSerializer):
             format_serializer_cls=JSONSerializer,
             object_schema_cls=Marc21DataCite43Schema,
         )
-
-    # TODO: Remove when invenio_rdm_records.services.pids.providers.datacite.DataCitePIDProvider
-    # uses the new MarshmallowSerializer class
-    def dump_one(self, obj: dict) -> dict:
-        """Dump the object with extra information."""
-        return self.dump_obj(obj)

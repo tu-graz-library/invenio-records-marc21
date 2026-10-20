@@ -1,0 +1,182 @@
+{
+    "id": "9jkx5-hx115",
+    "pid": {
+        "pk": 58,
+        "status": "R",
+        "obj_type": "rec",
+        "pid_type": "marcid"
+    },
+    "pids": {
+        "doi": {
+            "identifier": "10.5281/inveniordm.1234",
+            "provider": "datacite",
+            "client": "inveniordm"
+        }
+    },
+    "files": {
+        "enabled": true
+    },
+    "access": {
+        "files": "restricted",
+        "embargo": {
+            "until": null, 
+            "active": false, 
+            "reason": null
+        },
+        "metadata": "restricted",
+        "status": "restricted"
+    },
+    "metadata": {
+        "leader": "01198nam a2200397 c 4500",
+        "fields": {
+            "007": "cr#|||||||||||",
+            "020": [
+                {
+                    "ind1": "_",
+                    "ind2": "_",
+                    "subfields": {
+                        "a": ["878-3-16-148410-0"],
+                        "q": ["E-Book"]
+                    }
+                }
+            ],
+            "022": [
+                {
+                    "ind1": "_",
+                    "ind2": "_",
+                    "subfields": {
+                        "a": ["9049-3630"]
+                    }
+                }
+            ],
+            "024": [
+                {
+                    "ind1": "7",
+                    "ind2": "_",
+                    "subfields": {
+                        "2": ["doi"],
+                        "a": ["10.5281/inveniordm.1234"],
+                        "q": ["tugraz-publisher"]
+                    }
+                }
+            ],
+            "041": [
+                {
+                    "ind1": "_",
+                    "ind2": "_",
+                    "subfields": {
+                        "a": ["eng"]
+                    }
+                }
+            ],
+            "100": [
+                {
+                    "ind1": "1",
+                    "ind2": "_",
+                    "subfields": {
+                        "2": ["0000-9001-1825-0097"],
+                        "a": ["Williams, Adam"],
+                        "u": ["University of Ipsumville"]
+                    }
+                }
+            ],
+            "245": [
+                {
+                    "ind1": "0",
+                    "ind2": "0",
+                    "subfields": {
+                        "a": ["The Core Architecture"],
+                        "b": ["Building the Systems of Tomorrow"]
+                    }
+                }
+            ],
+            "264": [
+                {
+                    "ind1": "_",
+                    "ind2": "1",
+                    "subfields": {
+                        "a": ["Ipsumville"],
+                        "b": ["University of Ipsumville Publishing"],
+                        "c": ["2026"]
+                    }
+                }
+            ],
+            "490": [
+                {
+                    "ind1": "0",
+                    "ind2": "_",
+                    "subfields": {
+                        "a": ["Advances in Core Architecture"],
+                        "v": ["123"]
+                    }
+                }
+            ],
+            "520": [
+                {
+                    "ind1": "_",
+                    "ind2": "_",
+                    "subfields": {
+                        "a": ["Example industry word baseline definition parameter structure network interface. Development standard framework optimization protocols benchmark systemic operational infrastructure. Variable input data stream feedback validation modular deployment algorithm. Integration standard dynamic structural analysis network capacity optimization matrix. Distributed computing pipeline efficiency evaluation criterion threshold methodology standard."]
+                    }
+                }
+            ],
+            "540": [
+                {
+                    "ind1": "_",
+                    "ind2": "_",
+                    "subfields": {
+                        "2": ["cc"],
+                        "a": ["Creative Commons Attribution 4.0 International License"],
+                        "f": ["CC BY 4.0"],
+                        "u": ["https://creativecommons.org/licenses/by/4.0/deed.en"]
+                    }
+                }
+            ],
+            "700": [
+                {
+                    "ind1": "1",
+                    "ind2": "_",
+                    "subfields": {
+                        "1": ["92mhbdp94"],
+                        "2": ["0000-9002-1825-0097"],
+                        "4": ["aut"],
+                        "a": ["Huxley, Karl"],
+                        "u": ["University of Ipsumville"]
+                    }
+                },
+                {
+                    "ind1": "1",
+                    "ind2": "_",
+                    "subfields": {
+                        "1": ["92mhbdp94"],
+                        "2": ["0000-9003-1825-0097"],
+                        "4": ["any"],
+                        "a": ["Meyers, Bernadette"],
+                        "u": ["University of Ipsumville"]
+                    }
+                },
+                {
+                    "ind1": "1",
+                    "ind2": "_",
+                    "subfields": {
+                        "a": ["Simon, James"]
+                    }
+                }
+            ],
+            "856": [
+                {
+                    "ind1": "4",
+                    "ind2": "0",
+                    "subfields": {
+                        "u": ["https://doi.org/10.5281/inveniordm.1234"]
+                    }
+                }
+            ]
+        }
+    },
+    "versions": {
+        "index": 1, 
+        "is_latest": true, 
+        "is_latest_draft": true
+    }
+}

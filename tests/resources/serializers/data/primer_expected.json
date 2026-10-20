@@ -1,0 +1,26 @@
+{
+    "schemaVersion": "http://datacite.org/schema/kernel-4",
+    "publicationYear": "2022",
+    "alternateIdentifiers": [
+        {
+            "alternateIdentifier": "10.5281/inveniordm.1234", 
+            "alternateIdentifierType": "DOI"
+        }
+    ],
+    "titles": [
+        {
+            "title": "<<The>> development of high strain actuator materials"
+        }
+    ],
+    "creators": [
+        {
+            "name": "Philipp"
+        }
+    ],
+    "publisher": "TU Graz",
+    "types": 
+        {
+            "resourceTypeGeneral": "Other", 
+            "resourceType": "Text"
+        }
+}

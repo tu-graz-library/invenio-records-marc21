@@ -1,0 +1,108 @@
+{
+    "types": 
+        {
+            "resourceTypeGeneral": "Book", 
+            "resourceType": "Text"
+        },
+    "titles": [
+        {
+            "title": "The Core Architecture"
+        },
+        {
+            "title": "Building the Systems of Tomorrow",
+            "titleType": "Subtitle"
+        }
+    ],
+    "creators": [
+        {
+            "name": "Williams, Adam",
+            "nameIdentifiers": [
+                {
+                    "schemeUri": "https://orcid.org/",
+                    "nameIdentifier": "https://orcid.org/0000-9001-1825-0097",
+                    "nameIdentifierScheme": "ORCID"
+                }
+            ],
+            "affiliation": [
+                {
+                    "name": "University of Ipsumville"
+                }
+            ]
+        },
+        {
+            "name": "Huxley, Karl",
+            "nameIdentifiers": [
+                {
+                    "schemeUri": "https://orcid.org/",
+                    "nameIdentifier": "https://orcid.org/0000-9002-1825-0097",
+                    "nameIdentifierScheme": "ORCID"
+                }
+            ],
+            "affiliation": [
+                {
+                    "name": "University of Ipsumville",
+                    "schemeUri": "https://ror.org/",
+                    "affiliationIdentifier": "https://ror.org/92mhbdp94",
+                    "affiliationIdentifierScheme": "ROR"
+                }
+            ]
+        }
+    ],
+    "publisher": "University of Ipsumville Publishing",
+    "publicationYear": "2026",
+    "schemaVersion": "http://datacite.org/schema/kernel-4",
+    "contributors": [
+        {
+            "name": "Simon, James",
+            "contributorType": "Other"
+        }
+    ],
+    "language": "eng",
+    "alternateIdentifiers": [
+        {
+            "alternateIdentifier": "10.5281/inveniordm.1234", 
+            "alternateIdentifierType": "DOI"
+        },
+        {
+            "alternateIdentifier": "878-3-16-148410-0", 
+            "alternateIdentifierType": "ISBN"
+        },
+        {
+            "alternateIdentifier": "9049-3630", 
+            "alternateIdentifierType": "ISSN"
+        },
+        {
+            "alternateIdentifier": "https://doi.org/10.5281/inveniordm.1234", 
+            "alternateIdentifierType": "DOI"
+        }
+    ],
+    "rightsList": [
+        {
+            "rightsUri": "https://creativecommons.org/licenses/by/4.0/deed.en",
+            "rightsIdentifier": "CC BY 4.0"
+        }
+    ],
+    "descriptions": [
+        {
+            "description": "Example industry word baseline definition parameter structure network interface. Development standard framework optimization protocols benchmark systemic operational infrastructure. Variable input data stream feedback validation modular deployment algorithm. Integration standard dynamic structural analysis network capacity optimization matrix. Distributed computing pipeline efficiency evaluation criterion threshold methodology standard.",
+            "descriptionType": "Abstract"
+        }
+    ],
+    "geoLocations": [
+        {
+            "geoLocationPlace": "Ipsumville"
+        }
+    ],
+    "relatedItems": [
+        {
+            "titles": [
+                {
+                    "title": "Advances in Core Architecture"
+                }
+            ],
+            "volume": "123",
+            "relationType": "IsPublishedIn",
+            "relatedItemType": "Book"
+        }
+    ]
+}

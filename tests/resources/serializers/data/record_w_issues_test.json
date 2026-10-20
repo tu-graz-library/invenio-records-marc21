@@ -1,0 +1,50 @@
+{
+    "id": "9jkx5-hx115",
+    "pid": {
+        "pk": 58,
+        "status": "R",
+        "obj_type": "rec",
+        "pid_type": "marcid"
+    },
+    "pids": {
+        "doi": {
+            "identifier": "10.5281/inveniordm.1234",
+            "provider": "datacite",
+            "client": "inveniordm"
+        }
+    },
+    "files": {
+        "enabled": true
+    },
+    "access": {
+        "files": "restricted",
+        "embargo": {
+            "until": null, 
+            "active": false, 
+            "reason": null
+        },
+        "metadata": "restricted",
+        "status": "restricted"
+    },
+    "metadata": {
+        "leader": "01198nam a2200397 c 4500",
+        "fields": {
+            "700": [
+                {
+                    "ind1": "1",
+                    "ind2": "_",
+                    "subfields": {
+                        "1": ["92mhbdp94"],
+                        "2": ["0000-9002-1825-0097"],
+                        "u": ["University of Ipsumville"]
+                    }
+                }
+            ]
+        }
+    },
+    "versions": {
+        "index": 1, 
+        "is_latest": true, 
+        "is_latest_draft": true
+    }
+}

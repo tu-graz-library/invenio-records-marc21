@@ -1,0 +1,26 @@
+{
+    "schemaVersion": "http://datacite.org/schema/kernel-4",
+    "publicationYear": "N/A",
+    "alternateIdentifiers": [
+        {
+            "alternateIdentifier": "10.5281/inveniordm.1234", 
+            "alternateIdentifierType": "DOI"
+        }
+    ],
+    "titles": [
+        {
+            "title": "N/A"
+        }
+    ],
+    "creators": [
+        {
+            "name": "N/A"
+        }
+    ],
+    "publisher": "N/A",
+    "types": 
+        {
+            "resourceTypeGeneral": "Other", 
+            "resourceType": "Text"
+        }
+}
