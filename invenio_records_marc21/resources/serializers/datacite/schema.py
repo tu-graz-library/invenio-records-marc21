@@ -16,6 +16,8 @@ from flask import current_app
 from marshmallow import Schema, missing
 from marshmallow.fields import Constant, Method
 
+from ....services.record import Marc21Metadata
+
 
 def get_scheme_datacite(
     scheme: dict,
@@ -30,11 +32,11 @@ def get_scheme_datacite(
 class Marc21DataCite43Schema(Schema):
     """DataCite JSON 4.3 Marshmallow Schema."""
 
+    _metadata = None
+
     # PIDS-FIXME: What about versioning links and related ids
     identifiers = Method("get_identifiers")
-    types = Method(
-        "get_type",
-    )  # todo ->: contact Alex regarding more exact type than "Other"
+    types = Method("get_type")  # todo ->: contact Alex regarding more exact type than "Other"
     titles = Method("get_titles")
     creators = Method("get_creators")
     publisher = Method("get_publisher")
@@ -50,6 +52,12 @@ class Marc21DataCite43Schema(Schema):
     descriptions = Method("get_description")
     geoLocations = Method("get_geoLocations")
     relatedItems = Method("get_relatedItems")
+
+    def _get_metadata(self, obj: dict) -> Marc21Metadata: 
+        """Cache Marc21 metadata."""
+        if self._metadata is None:
+            self._metadata = Marc21Metadata(json=obj.metadata)
+        return self._metadata
 
     def get_type(self, _: dict) -> dict[str, str]:
         """Get resource type."""
@@ -211,12 +219,21 @@ class Marc21DataCite43Schema(Schema):
             )
         return alternateIdentifiers
 
-    def get_titles(self, obj: dict) -> list[dict[str, str]]:
-        """Get titles list."""
-        titles_field = self._get_subfields(obj, "245")
 
-        title_fields = titles_field.get("a", [""])
-        return [{"title": title} for title in title_fields]
+    def get_titles(self, obj: dict) -> list[dict[str, str]] | missing:
+        """Get titles."""
+        titles = []
+        
+        title = self._get_metadata(obj).get_value("245", "1", "0", "a")
+        if title:
+            titles.append({"title": title})
+        
+        subtitle = self._get_metadata(obj).get_value("245", "1", "0", "b")
+        if subtitle:
+            titles.append({"title": subtitle, "titleType" : "Subtitle"})
+        
+        return titles or missing
+
 
     def get_creators(self, obj: dict) -> list[dict]:
         """Get creators."""
