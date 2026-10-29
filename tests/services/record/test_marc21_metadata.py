@@ -411,20 +411,25 @@ def test_controlfields_metadata():
         metadata.emplace_controlfield(tag="123", value="laborum sunt ut nulla")
 
 
-def test_json_type():
+def test_empty_metadata():
     """Test type of json."""
-    with pytest.raises(TypeError):
-        metadata = Marc21Metadata(json={"leader": ""})
+    metadata = Marc21Metadata(json={"leader": ""})
+    assert metadata.json["metadata"] == {"leader": "", "fields": {}}
 
-    with pytest.raises(TypeError):
-        metadata = Marc21Metadata(json={"fields": {}})
+    metadata = Marc21Metadata(json={"fields": {}})
+    assert metadata.json["metadata"] == {"leader": "", "fields": {}}
+
+    metadata = Marc21Metadata()
+    assert metadata.json["metadata"] == {
+        "leader": "00000nam a2200000zca4500",
+        "fields": {},
+    }
 
     with pytest.raises(TypeError):
         metadata = Marc21Metadata(json={"fields": ""})
 
-    metadata = Marc21Metadata()
     with pytest.raises(TypeError):
-        metadata.json = {}
+        metadata = Marc21Metadata(json={"leader": {}})
 
 
 def test_get_field(marc21_record, full_metadata):

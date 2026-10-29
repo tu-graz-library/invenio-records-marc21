@@ -391,22 +391,19 @@ class Marc21Metadata:
     @json.setter
     def json(self, _json: dict) -> None:
         """Metadata json setter method."""
-        if not (
-            isinstance(_json, dict)
-            and "leader" in _json
-            and "fields" in _json
-            and isinstance(_json["fields"], dict)
-        ):
-            msg = (
-                "Marc21Metadata should get a dictionary with at least leader and fields"
-            )
-            raise TypeError(msg)
-
         _json = _json.get("metadata", _json)
 
-        self.metadata.leader = _json["leader"]
+        if "leader" in _json and not isinstance(_json["leader"], str):
+            msg = "leader has to be a string"
+            raise TypeError(msg)
 
-        for tag, field in _json["fields"].items():
+        if "fields" in _json and not isinstance(_json["fields"], dict):
+            msg = "fields has to be a dict"
+            raise TypeError(msg)
+
+        self.metadata.leader = _json.get("leader", "")
+
+        for tag, field in _json.get("fields", {}).items():
             try:
                 int(tag)  # filter out AV* fields
             except ValueError:
