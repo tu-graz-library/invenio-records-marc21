@@ -56,6 +56,17 @@ export class Marc21DepositForm extends Component {
 
   render() {
     const { record, files, permissions, preselectedCommunity } = this.props;
+    let fields = [];
+    for (const key of Object.keys(record.metadata.fields)) {
+      for (const item of ["id", "ind1", "ind2", "subfield"]) {
+        fields.push(`metadata.fields.${key}.${item}`);
+      }
+    }
+
+    let sectionsConfig = {
+      "basic-metadata": fields,
+    };
+
     return (
       <DepositFormApp
         config={this.config}
@@ -65,7 +76,7 @@ export class Marc21DepositForm extends Component {
         permissions={permissions}
         recordSerializer={this.recordSerializer}
       >
-        <FormFeedback fieldPath="message" />
+        <FormFeedback fieldPath="message" sectionsConfig={sectionsConfig} />
         <Container style={{ marginTop: "10px" }}>
           <Grid>
             <Grid.Row>
