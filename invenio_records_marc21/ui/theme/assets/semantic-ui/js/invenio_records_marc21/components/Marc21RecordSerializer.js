@@ -6,7 +6,7 @@
 // modify it under the terms of the MIT License; see LICENSE file for more
 // details.
 
-import { set, get} from "lodash";
+import { set, get } from "lodash";
 import { DepositRecordSerializer } from "@js/invenio_rdm_records";
 
 export class Marc21RecordSerializer extends DepositRecordSerializer {
@@ -47,7 +47,7 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
               set(
                 deserializedErrors,
                 `metadata.fields.${j}.${keys[4]}`,
-                e.messages
+                e.messages.join(" "),
               );
               break;
             }
@@ -55,7 +55,7 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
           }
         }
       } else {
-        set(deserializedErrors, e.field, e.messages);
+        set(deserializedErrors, e.field, e.messages.join(" "));
       }
     }
     return deserializedErrors;
