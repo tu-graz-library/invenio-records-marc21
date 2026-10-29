@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2024 Graz University of Technology.
+# Copyright (C) 2024-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -10,7 +10,7 @@
 
 """Schema for marc21 deposit records."""
 
-from marshmallow.fields import Field
+from marshmallow.fields import Dict, Field, Str
 
 from ..schema import Marc21Schema
 
@@ -55,18 +55,10 @@ class MetadataDepositField(Field):
 class Marc21DepositSchema(Marc21Schema):
     """Marc21 deposit schema."""
 
-    class Meta:
-        """Meta class to accept unknwon fields."""
-
-        additional = (
-            "access",
-            "status",
-            "parent",
-            "links",
-            "files",
-            "is_published",
-            "pids",
-            "versions",
-        )
-
+    links = Dict()
+    files = Dict()
+    access = Dict()
+    parent = Dict()
+    status = Str()
+    versions = Dict()
     metadata = MetadataDepositField(attribute="metadata")

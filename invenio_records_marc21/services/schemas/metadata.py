@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -17,6 +17,7 @@ from fastjsonschema import compile
 from fastjsonschema.exceptions import JsonSchemaValueException
 from marshmallow import Schema, validates_schema
 from marshmallow.exceptions import ValidationError as MarshmallowValidationError
+from marshmallow.fields import Dict, Str
 
 
 def get_schema():
@@ -39,13 +40,8 @@ _schema_validator = compile(_schema)
 class MetadataSchema(Schema):
     """Schema for the record metadata."""
 
-    class Meta:
-        """Meta class to accept additional fields."""
-
-        additional = (
-            "leader",
-            "fields",
-        )
+    leader = Str()
+    fields = Dict()
 
     @validates_schema
     def validate(self, data, **kwargs):
