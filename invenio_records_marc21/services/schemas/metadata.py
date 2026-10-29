@@ -10,27 +10,27 @@
 
 """Marc21 record metadata field."""
 
-import json
-from os.path import dirname, join
+from functools import cache
+from json import loads
+from pathlib import Path
+from typing import cast
 
-from fastjsonschema import compile
+from fastjsonschema import compile  # noqa: A004
 from fastjsonschema.exceptions import JsonSchemaValueException
 from marshmallow import Schema, validates_schema
-from marshmallow.exceptions import ValidationError as MarshmallowValidationError
+from marshmallow.exceptions import ValidationError
 from marshmallow.fields import Dict, Str
 
+SCHEMA_PATH = (
+    Path(__file__).resolve().parents[2]
+    / "records/jsonschemas/marc21/marc21-structure-v1.0.0.json"
+)
 
-def get_schema():
+
+@cache
+def get_schema() -> dict:
     """Marc21 load json schema."""
-    with open(
-        join(
-            dirname(__file__),
-            "../../records/jsonschemas/marc21/marc21-structure-v1.0.0.json",
-        ),
-        "rb",
-    ) as fp:
-        input = fp.read()
-        return json.loads(input.decode("utf-8"))
+    return cast(dict, loads(SCHEMA_PATH.read_bytes()))
 
 
 _schema = get_schema()
@@ -41,10 +41,10 @@ class MetadataSchema(Schema):
     """Schema for the record metadata."""
 
     leader = Str()
-    fields = Dict()
+    fields = Dict()  # type: ignore[assignment]
 
     @validates_schema
-    def validate(self, data, **kwargs):
+    def validate(self, data: dict, **__: dict) -> None:
         """Perform validation on ``data``.
 
         Raise a :exc:`ValidationError` if validation
@@ -54,6 +54,7 @@ class MetadataSchema(Schema):
             _schema_validator(data)
         except JsonSchemaValueException as e:
             path = e.path[1:]
-            raise MarshmallowValidationError(
-                field_name=".".join(path), message=" ".join(e.message.split(" ")[1:])
-            )
+            raise ValidationError(
+                field_name=".".join(path),
+                message=" ".join(e.message.split(" ")[1:]),
+            ) from e

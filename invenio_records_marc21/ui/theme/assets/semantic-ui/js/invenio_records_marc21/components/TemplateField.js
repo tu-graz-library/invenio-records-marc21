@@ -1,6 +1,6 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021-2022 Graz University of Technology.
+// Copyright (C) 2021-2026 Graz University of Technology.
 //
 // React-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
@@ -37,21 +37,19 @@ class TemplateFieldComponent extends Component {
               label={label}
             />
 
-            {templates.map((value, index, array) => {
+            {templates.map((value, index) => {
               const arrayPath = fieldPath;
               const indexPath = index;
               const key = `${arrayPath}.${indexPath}`;
               return (
-                <>
-                  <Button
-                    key={key}
-                    onClick={() => this.setTemplate(value.values)}
-                    index={index}
-                    fluid
-                  >
-                    {value.name}
-                  </Button>
-                </>
+                <Button
+                  key={key}
+                  onClick={() => this.setTemplate(value.values)}
+                  index={index}
+                  fluid
+                >
+                  {value.name}
+                </Button>
               );
             })}
           </Form.Field>
@@ -63,9 +61,11 @@ class TemplateFieldComponent extends Component {
 
 class FormikTemplateField extends Component {
   render() {
+    const { fieldPath } = this.props;
+
     return (
       <FastField
-        name={this.props.fieldPath}
+        name={fieldPath}
         component={(formikProps) => (
           <TemplateFieldComponent formik={formikProps} {...this.props} />
         )}
@@ -94,4 +94,7 @@ FormikTemplateField.defaultProps = {
 
 const mapStateToProps = (state) => ({});
 
-export const TemplateField = connect(mapStateToProps, null)(FormikTemplateField);
+export const TemplateField = connect(
+  mapStateToProps,
+  null,
+)(FormikTemplateField);

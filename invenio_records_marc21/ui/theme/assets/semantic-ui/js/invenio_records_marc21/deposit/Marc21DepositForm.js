@@ -6,7 +6,6 @@
 // modify it under the terms of the MIT License; see LICENSE file for more
 // details.
 
-import _get from "lodash/get";
 import { i18next } from "@translations/invenio_records_marc21/i18next";
 import React, { Component, createRef } from "react";
 import {
@@ -30,12 +29,6 @@ import {
 import PropTypes from "prop-types";
 
 export class Marc21DepositForm extends Component {
-  accordionStyle = {
-    header: { className: "segment inverted brand" },
-  };
-
-  sidebarRef = createRef();
-
   constructor(props) {
     super(props);
     const { files, record } = this.props;
@@ -53,6 +46,12 @@ export class Marc21DepositForm extends Component {
       this.noFiles = true;
     }
   }
+
+  sidebarRef = createRef();
+
+  accordionStyle = {
+    header: { className: "segment inverted brand" },
+  };
 
   render() {
     const { record, files, permissions, preselectedCommunity } = this.props;
@@ -102,8 +101,9 @@ export class Marc21DepositForm extends Component {
                   includesPaths={["metadata.leader", "metadata.fields"]}
                   active
                   label={i18next.t("Metadata")}
+                  id="basic-metadata"
                 >
-                  <MetadataFields className={"metadata"} fieldPath="metadata" />
+                  <MetadataFields className="metadata" fieldPath="metadata" />
                 </AccordionField>
               </Grid.Column>
               {/* Sidebar start */}
@@ -150,7 +150,7 @@ export class Marc21DepositForm extends Component {
                   {this.templates.length > 0 && (
                     <TemplateField
                       label={i18next.t("Templates")}
-                      labelIcon={"bookmark"}
+                      labelIcon="bookmark"
                       templates={this.templates}
                     />
                   )}
@@ -162,6 +162,7 @@ export class Marc21DepositForm extends Component {
                   record={record}
                   recordRestrictionGracePeriod={100}
                   allowRecordRestriction={false}
+                  id="visibility-section"
                 />
                 {permissions?.can_delete_draft && (
                   <Card>

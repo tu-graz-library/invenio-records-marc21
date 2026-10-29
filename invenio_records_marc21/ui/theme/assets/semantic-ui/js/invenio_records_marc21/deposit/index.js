@@ -1,6 +1,6 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021-2023 Graz University of Technology.
+// Copyright (C) 2021-2026 Graz University of Technology.
 //
 // Invenio-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
@@ -20,5 +20,5 @@ ReactDOM.render(
     templates={getInputFromDOM("marc21-deposit-templates")}
     permissions={getInputFromDOM("marc21-deposit-permissions")}
   />,
-  document.getElementById("marc21-deposit-form")
+  document.getElementById("marc21-deposit-form"),
 );
