@@ -1,6 +1,6 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021-2022 Graz University of Technology.
+// Copyright (C) 2021-2026 Graz University of Technology.
 //
 // React-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
@@ -17,10 +17,10 @@ export class LeaderField extends Component {
     return (
       <>
         <TextField
-          fieldPath={`ldr`}
-          value={"LDR"}
+          fieldPath="ldr"
+          value="LDR"
           width={3}
-          className={"key narrow"}
+          className="key narrow"
           disabled
         />
         <TextField
@@ -28,7 +28,7 @@ export class LeaderField extends Component {
           width={15}
           required
           maxLength={24}
-          className={"narrow"}
+          className="narrow"
         />
       </>
     );
@@ -37,9 +37,4 @@ export class LeaderField extends Component {
 
 LeaderField.propTypes = {
   fieldPath: PropTypes.string.isRequired,
-  helpText: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-};
-
-LeaderField.defaultProps = {
-  helpText: "",
 };
