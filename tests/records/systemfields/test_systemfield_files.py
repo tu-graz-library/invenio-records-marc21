@@ -34,7 +34,7 @@ def test_class_attribute_access():
     assert isinstance(Record.files, FilesField)
 
 
-def test_record_files_create(testapp, db, location):
+def test_record_files_create(app, db, location):
     """Test record files bucket create."""
     record = Record.create({})
     assert record.bucket_id
@@ -52,7 +52,7 @@ def test_record_files_create(testapp, db, location):
     assert record["files"]["entries"] == {}
 
 
-def test_record_file_update(testapp, db, location):
+def test_record_file_update(app, db, location):
     """Test record files bucket update."""
 
     record = Record.create({})
@@ -112,7 +112,7 @@ def test_record_file_update(testapp, db, location):
     assert record["files"]["entries"] == {}
 
 
-def test_record_files_delete(testapp, db, location):
+def test_record_files_delete(app, db, location):
     """Test record files bucket delete."""
     record = Record.create({})
     bucket_id = record.bucket_id
@@ -126,7 +126,7 @@ def test_record_files_delete(testapp, db, location):
     assert Bucket.query.count() == 1
 
 
-def test_record_files_clear(testapp, db, location):
+def test_record_files_clear(app, db, location):
     """Test clearing record files."""
     record = Record.create({})
 
@@ -161,7 +161,7 @@ def test_record_files_clear(testapp, db, location):
     assert record["files"]["entries"] == {}
 
 
-def test_record_files_store(testapp, db, location):
+def test_record_files_store(app, db, location):
     """Test JSON stored for files."""
     record = Record.create({})
 

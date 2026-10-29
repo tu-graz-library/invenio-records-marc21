@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 #
-# Copyright (C) 2021-2025 Graz University of Technology.
+# Copyright (C) 2021-2026 Graz University of Technology.
 #
 # Invenio-Records-Marc21 is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -15,57 +15,17 @@ fixtures are available.
 """
 
 import pytest
-from flask import Flask
 from flask_principal import ActionNeed
 from invenio_access.models import ActionRoles
 from invenio_access.permissions import superuser_access
 from invenio_accounts.models import Role
-from invenio_db import InvenioDB
-from invenio_files_rest import InvenioFilesREST
-from invenio_jsonschemas import InvenioJSONSchemas
-from invenio_records import InvenioRecords
-from invenio_search import InvenioSearch
-
-from invenio_records_marc21 import InvenioRecordsMARC21
+from invenio_app.factory import create_app as _create_app
 
 
 @pytest.fixture(scope="module")
 def create_app(instance_path):
     """Application factory fixture for use with pytest-invenio."""
-
-    def _create_app(**config):
-        app_ = Flask(
-            __name__,
-            instance_path=instance_path,
-        )
-        app_.config.update(config)
-
-        InvenioDB(app_)
-        InvenioSearch(app_)
-        InvenioFilesREST(app_)
-        InvenioRecordsMARC21(app_)
-        return app_
-
     return _create_app
-
-
-@pytest.fixture(scope="module")
-def testapp(base_app, location):
-    """Application with just a database.
-
-    Pytest-Invenio also initialises ES with the app fixture.
-    """
-    InvenioRecords(base_app)
-    InvenioJSONSchemas(base_app)
-    yield base_app
-
-
-@pytest.fixture(scope="module")
-def appaccess(base_app, database):
-    """Create App  systemfields."""
-    InvenioRecords(base_app)
-    InvenioJSONSchemas(base_app)
-    yield base_app
 
 
 @pytest.fixture(scope="function")

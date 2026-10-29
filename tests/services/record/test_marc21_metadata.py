@@ -451,7 +451,7 @@ def test_get_field(marc21_record, full_metadata):
 
         _, datafields = record.get_fields(category="971", ind1="7", ind2=" ")
 
-        assert datafields[0]["subfields"]["a"] == ["gesperrt"]
+        assert datafields[0].get("a") == "gesperrt"
 
         assert (
             record.exists_field(

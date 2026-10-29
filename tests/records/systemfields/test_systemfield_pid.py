@@ -28,7 +28,7 @@ def test_class_attribute_pid():
     assert isinstance(Marc21Record.pid, MarcPIDFieldContext)
 
 
-def test_record_pid_creation(testapp, db):
+def test_record_pid_creation(app, db):
     """Test record creation."""
     record = Marc21Record.create({})
     assert record["id"] == record.pid.pid_value
@@ -39,7 +39,7 @@ def test_record_pid_creation(testapp, db):
     assert record.id == record.pid.object_uuid
 
 
-def test_create_no_provider(testapp, db):
+def test_create_no_provider(app, db):
     """Test creation without a provider."""
 
     class Record(Marc21Record):
@@ -59,7 +59,7 @@ def test_create_no_provider(testapp, db):
     assert record.id == record.pid.object_uuid
 
 
-def test_create_different_key(testapp, db):
+def test_create_different_key(app, db):
     """Test creation with different key."""
 
     class Record(Marc21Record):
@@ -78,7 +78,7 @@ def test_create_different_key(testapp, db):
     assert record["pid"]["pid_type"] == record.pid.pid_type
 
 
-def test_reading_a_pid(testapp, db):
+def test_reading_a_pid(app, db):
     """Test reading from dict."""
     record = Marc21Record(
         {
