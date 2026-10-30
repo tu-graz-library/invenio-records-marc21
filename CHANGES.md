@@ -1,40 +1,38 @@
-..
-    Copyright (C) 2021-2026 Graz University of Technology.
+<!--
+SPDX-FileCopyrightText: 2021-2026 Graz University of Technology.
+SPDX-License-Identifier: MIT
+-->
 
-    Invenio-Records-Marc21 is free software; you can redistribute it and/or
-    modify it under the terms of the MIT License; see LICENSE file for more
-    details.
+# Changes
 
-Changes
-=======
 
-Version v0.34.4 (released 2026-10-20)
+## Version v0.34.4 (released 2026-10-20)
 
 - chore(types): improve types
 
-Version v0.34.3 (released 2026-10-12)
+## Version v0.34.3 (released 2026-10-12)
 
 - fix(serializer): missing options parameter
 
-Version v0.34.2 (released 2026-10-01)
+## Version v0.34.2 (released 2026-10-01)
 
 - fix(permissions): add new permission
 - fix(config): v15 forward compatibility
 - fix(datacite): wrong type of creators
 
-Version v0.34.1 (released 2026-09-22)
+## Version v0.34.1 (released 2026-09-22)
 
 - chore(serializer): temporary solution for isbn
 - chore(html): only apply formatting
 - fix(ui): remove double person in detail
 - chore(setup): add djlint for formatting
 
-Version v0.34.0 (released 2026-07-22)
+## Version v0.34.0 (released 2026-07-22)
 
 - feat(ui): show publ doi
 - feat(pids): add conditional pids
 
-Version v0.33.1 (released 2026-07-15)
+## Version v0.33.1 (released 2026-07-15)
 
 - chore(docs): remove docs
 - chore(typing): improve typing coverage
@@ -42,7 +40,7 @@ Version v0.33.1 (released 2026-07-15)
 - chore(revert): revert remove of copy pasted code
 - chore(setupt): use direct path
 
-Version v0.33.0 (released 2026-07-02)
+## Version v0.33.0 (released 2026-07-02)
 
 - chore(setup): ignore tests mypy
 - feat(ui): add new detail view information
@@ -52,29 +50,29 @@ Version v0.33.0 (released 2026-07-02)
 - refactor(pids): remove unchanged code, use super
 - refactor(pids): move code to workflows-tugraz
 
-Version v0.32.1 (released 2026-06-12)
+## Version v0.32.1 (released 2026-06-12)
 
 - fix(tests): format of error message changed
 
-Version v0.32.0 (released 2026-06-12)
+## Version v0.32.0 (released 2026-06-12)
 
 - feat(permission): override lock of files
 - feat(pids): raise error on validation
 - chore(types): improve type hints usage
 
-Version v0.31.0 (released 2026-06-02)
+## Version v0.31.0 (released 2026-06-02)
 
 - feat(uploads): add MARC21_UPLOADS_TEMPLATE hook
 - fix(config): keep downstream overrides
 - fix(links): add edit link default
 
-Version v0.30.0 (released 2026-06-01)
+## Version v0.30.0 (released 2026-06-01)
 
 - build(deps): bump invenio-previewer to 5.x
 - feat(search): set page title, description
 - feat(search): add MARC21_SEARCH_NAV_TEMPLATE config
 
-Version v0.29.0 (released 2026-05-11)
+## Version v0.29.0 (released 2026-05-11)
 
 - alembic: prevent dropping of already dropped index
 - feat(oai-pmh): enable oai-pmh for publications
@@ -84,7 +82,7 @@ Version v0.29.0 (released 2026-05-11)
 - fix(tests): app context needed
 - fix(docs): add to nitpick_ignore
 
-Version v0.28.0 (released 2026-02-08)
+## Version v0.28.0 (released 2026-02-08)
 
 - chore(black): update formatting to >= 26.0
 - fix: links deprecation warning
@@ -112,63 +110,53 @@ Version v0.28.0 (released 2026-02-08)
 - fix: utcnow + refactor
 - feat(ui): use generated link not hardcoded
 
-Version v0.27.1 (release 2025-07-25)
+## Version v0.27.1 (release 2025-07-25)
 
 - fix(ui): display license with link
 
-
-Version v0.27.0 (release 2025-07-21)
+## Version v0.27.0 (release 2025-07-21)
 
 - ui: make edit link configurable
 - wip: iiif
 
-
-Version v0.26.1 (release 2025-06-17)
+## Version v0.26.1 (release 2025-06-17)
 
 - fix: record vs record_ui
 
-
-Version v0.26.0 (release 2025-06-14)
+## Version v0.26.0 (release 2025-06-14)
 
 - fix(tests): remove redundant files
 - setup: upgrade invenio-rdm-records
 
-
-Version v0.25.4 (release 2025-06-03)
+## Version v0.25.4 (release 2025-06-03)
 
 - revert: some details are wrong
 
-
-Version v0.25.3 (release 2025-06-02)
+## Version v0.25.3 (release 2025-06-02)
 
 - feat(ui): show doi to publisher
 - fix: manager should see results
 
-
-Version v0.25.2 (release 2025-05-22)
+## Version v0.25.2 (release 2025-05-22)
 
 - refactor(config): config variables init
 - fix(deserializer): AVE is allowed
 
-
-Version v0.25.1 (release 2025-05-19)
+## Version v0.25.1 (release 2025-05-19)
 
 - feat: imp file access permissions for MARC21 records
 
-
-Version v0.25.0 (release 2025-05-14)
+## Version v0.25.0 (release 2025-05-14)
 
 - wip: move documentation to README
 - ui: add new upload button
 - chore: fix indentation
 
-
-Version v0.24.1 (release 2025-04-30)
+## Version v0.24.1 (release 2025-04-30)
 
 - fix: jsonschema user
 
-
-Version v0.24.0 (release 2025-04-29)
+## Version v0.24.0 (release 2025-04-29)
 
 - fix(tests): add configuration
 - setup: add python3.13 support
@@ -178,8 +166,7 @@ Version v0.24.0 (release 2025-04-29)
 - metadata: add new method
 - feat: make links configurable
 
-
-Version v0.23.0 (release 2025-01-24)
+## Version v0.23.0 (release 2025-01-24)
 
 - cli: password is per default hided
 - setup: only for dev tags, will be removed
@@ -189,20 +176,17 @@ Version v0.23.0 (release 2025-01-24)
 - fix: datacite serialization
 - refactor: change internal representation to json
 
-
-Version v0.22.2 (release 2024-10-31)
+## Version v0.22.2 (release 2024-10-31)
 
 - fix: fields could be missing
 - ui: add elements to details
 - fix(deposit): page render and save a empty record
 
-
-Version v0.22.1 (release 2024-10-26)
+## Version v0.22.1 (release 2024-10-26)
 
 - fix: creator only allowed to interact with owned records
 
-
-Version v0.22.0 (release 2024-10-26)
+## Version v0.22.0 (release 2024-10-26)
 
 - ui: add separator ti author detail
 - setup: move to python 3.12
@@ -222,45 +206,38 @@ Version v0.22.0 (release 2024-10-26)
 - feat: resource type to search facets
 - feat: index static metadata fields
 
-
-Version v0.21.2 (release 2024-06-13)
+## Version v0.21.2 (release 2024-06-13)
 
 - feat: active dashoard menu item
 - fix: typo on attribute name
 
-
-Version v0.21.1 (release 2024-05-19)
+## Version v0.21.1 (release 2024-05-19)
 
 - translations: update wording
 - bugfix: search records user dashboard
 
-
-Version v0.21.0 (release 2024-05-06)
+## Version v0.21.0 (release 2024-05-06)
 
 - modification: change permission for managing record access
 - modifciation: documentation for statistic
 - modification: landing page record title
 - modification: init statistic for a record
 
-
-Version v0.20.0 (release 2024-03-08)
+## Version v0.20.0 (release 2024-03-08)
 
 - deps: remove upper limit of rdm-records
 - modification: pretty export records
 - fix(deposit): react remove deprecated dependency
 
-
-Version v0.19.1 (release 2024-02-19)
+## Version v0.19.1 (release 2024-02-19)
 
 - fix: embargo date could contain strings
 
-
-Version v0.19.0 (release 2024-02-19)
+## Version v0.19.0 (release 2024-02-19)
 
 - landingpage: embargo date from marc21 metadata
 
-
-Version v0.18.0 (release 2024-02-14)
+## Version v0.18.0 (release 2024-02-14)
 
 - fix: dashboard-visibility not working
 - modification(search): : Apply Same Style to Publication Search Bar
@@ -268,13 +245,11 @@ Version v0.18.0 (release 2024-02-14)
 - black: fix v24.2.0
 - fix: frontent serializer following whitespace
 
-
-Version v0.17.3 (release 2024-01-11)
+## Version v0.17.3 (release 2024-01-11)
 
 - fix: indexer needs queue name
 
-
-Version v0.17.2 (release 2024-01-07)
+## Version v0.17.2 (release 2024-01-07)
 
 - setup: add support for python3.10 and 3.11
 - fix: controlfield not correct build for marcxml
@@ -284,13 +259,11 @@ Version v0.17.2 (release 2024-01-07)
 - fix: missing special for AVE
 - bugfix: add schema to record
 
-
-Version v0.17.1 (release 2023-12-01)
+## Version v0.17.1 (release 2023-12-01)
 
 - alembic: add missing deletion_status
 
-
-Version v0.17.0 (release 2023-11-09)
+## Version v0.17.0 (release 2023-11-09)
 
 - ui: change dependency to invenio_rdm_records
 - bugfix: files links list
@@ -341,13 +314,11 @@ Version v0.17.0 (release 2023-11-09)
 - modification: api search options
 - modification: clean code
 
-
-Version v0.16.1 (release 2023-09-14)
+## Version v0.16.1 (release 2023-09-14)
 
 - fix: doi modal
 
-
-Version v0.16.0 (release 2023-09-14)
+## Version v0.16.0 (release 2023-09-14)
 
 - landing_page: conditional wrap show doi
 - modification: translations
@@ -358,8 +329,7 @@ Version v0.16.0 (release 2023-09-14)
 - landing_page: use improved export
 - bugfix: import landing page
 
-
-Version v0.15.0 (release 2023-09-12)
+## Version v0.15.0 (release 2023-09-12)
 
 - fix: create_record dangling draft
 - modification: gitignore
@@ -368,78 +338,62 @@ Version v0.15.0 (release 2023-09-12)
 - modification: add comments
 - modifications: marc21 service permissions
 
-
-Version v0.14.2 (release 2023-06-16)
+## Version v0.14.2 (release 2023-06-16)
 
 - fix: namespace handling was wrong
 
-
-Version v0.14.1 (release 2023-06-07)
+## Version v0.14.1 (release 2023-06-07)
 
 - fix: remove whitespace and close div tag
 
-
-Version v0.14.0 (release 2023-06-07)
+## Version v0.14.0 (release 2023-06-07)
 
 - modification: alembic scripts
 - modification: remove prefix in configuration variables
 
-
-Version v0.13.2 (release 2023-06-05)
+## Version v0.13.2 (release 2023-06-05)
 
 - bugfix: draft get file content
 
-
-Version v0.13.1 (release 2023-06-01)
+## Version v0.13.1 (release 2023-06-01)
 
 - bugfix: load default roles needed
 
-
-Version v0.13.0 (release 2023-05-25)
+## Version v0.13.0 (release 2023-05-25)
 
 - setup: remove compatibility check with python3.8
 - metadata: add methods to get fields and values
 
-
-Version v0.12.7 (release 2023-05-12)
+## Version v0.12.7 (release 2023-05-12)
 
 - metadata: subfs, character before numbers
 
-
-Version v0.12.6 (release 2023-05-11)
+## Version v0.12.6 (release 2023-05-11)
 
 - pids: remove 2 subfields
 
-
-Version v0.12.5 (release 2023-05-11)
+## Version v0.12.5 (release 2023-05-11)
 
 - fix: metadata export needs a space
 
-
-Version v0.12.4 (release 2023-05-10)
+## Version v0.12.4 (release 2023-05-10)
 
 - doi: apply marc21 request changes
 - tests: cleaned tests, remove unused statements
 - metadata: add 856 field after doi creation
 - modification: templates load from roles
 
-
-Version v0.12.3 (release 2023-04-28)
+## Version v0.12.3 (release 2023-04-28)
 
 - fix: distinguish between str and list
 
-
-Version v0.12.2 (release 2023-04-25)
+## Version v0.12.2 (release 2023-04-25)
 
 - bugfix: previewer allow to access files
 
+## Version v0.12.1 (release 2023-04-20)
 
-Version v0.12.1 (release 2023-04-20)
-
-
-
-
-Version v0.11.0 (release 2023-03-06)
+## Version v0.11.0 (release 2023-03-06)
 
 - permissions: re-add SystemProcess to can_manage
 - fix: to keep flask-babelex
@@ -450,28 +404,24 @@ Version v0.11.0 (release 2023-03-06)
 - bugfix: create new version
 - modification: dashboard records edit
 
-
-Version v0.10.0 (release 2023-02-13)
+## Version v0.10.0 (release 2023-02-13)
 
 - fix: category could be AVA
 - modification: add fix me in the future
 - modification: create dashboard entry for marc21
 
-
-Version v0.9.2 (release 2023-02-09)
+## Version v0.9.2 (release 2023-02-09)
 
 - fix: sort xml subfields generation
 - fix: the value in subfs is a list
 - fix: unify order of et.Element attributes
 
-
-Version v0.9.1 (release 2023-01-23)
+## Version v0.9.1 (release 2023-01-23)
 
 - fix: wrong alias for drafts and records
 - modification: record status in deposit
 
-
-Version v0.9.0 (release 2023-01-11)
+## Version v0.9.0 (release 2023-01-11)
 
 - metadata: use id property instead
 - fixes:
@@ -490,8 +440,7 @@ Version v0.9.0 (release 2023-01-11)
 - bugfix: files enabled
 - fix: correct CHANGES.rst
 
-
-Version v0.8.4 (release 2022-11-17)
+## Version v0.8.4 (release 2022-11-17)
 
 - fix:
 - api: add duplicate check function
@@ -509,8 +458,7 @@ Version v0.8.4 (release 2022-11-17)
 - modification: deposit structure
 - modification: deposit application
 
-
-Version v0.8.3 (release 2022-11-02)
+## Version v0.8.3 (release 2022-11-02)
 
 - fix
 - metadata: implement convert_json_to_marc21xml
@@ -519,75 +467,60 @@ Version v0.8.3 (release 2022-11-02)
 - improve: add subfs parameter to emplace_datafield
 - fix: remove import of semantic css
 
-
-Version v0.8.2 (release 2022-10-14)
+## Version v0.8.2 (release 2022-10-14)
 
 - fix: pypi-publish inherit secrets
 
-
-Version v0.8.1 (release 2022-10-14)
+## Version v0.8.1 (release 2022-10-14)
 
 - global: migrate publish to reusable workflows
 - setup: fix classifier
 
-
-Version v0.8.0 (release 2022-10-14)
+## Version v0.8.0 (release 2022-10-14)
 
 - tests: move to resuable workflows
 - tests: remove CACHE and MQ
 - setup: sort imports, remove doublets
 - global: migrate to opensearch2
 
-
-Version v0.7.5 (release 2022-09-27)
+## Version v0.7.5 (release 2022-09-27)
 
 - fix: javascript dependencies
 
-
-Version v0.7.4 (release 2022-09-27)
+## Version v0.7.4 (release 2022-09-27)
 
 - fix: ConfigurationMixin changed location
 - global: increase version of invenio-search
 
-
-Version v0.7.3 (release 2022-08-10)
+## Version v0.7.3 (release 2022-08-10)
 
 - fix use 009[7:11] for publication year
 
-
-Version v0.7.2 (release 2022-08-10)
+## Version v0.7.2 (release 2022-08-10)
 
 - modification: datacite schema\n\n changing the field numbers
 - tests: modification datacite testset
 - bugfix: pids components from rdm records
 
-
-Version v0.7.1 (release 2022-08-09)
+## Version v0.7.1 (release 2022-08-09)
 
 - fix: the missing mappings causes an error with the empty search feature
 
-
-Version v0.7.0 (release 2022-08-04)
+## Version v0.7.0 (release 2022-08-04)
 
 - improve (WIP) landing page and search results
 
-
-Version v0.6.0 (release 2022-08-01)
+## Version v0.6.0 (release 2022-08-01)
 
 - make the jsonschema less restrictive
 
-
-Version v0.5.2 (release 2022-07-29)
+## Version v0.5.2 (release 2022-07-29)
 
 - use search react components provided by invenio-app-rdm
 - update the search initial query state
 
+## Version v0.5.1 (release 2022-07-07)
 
-Version v0.5.1 (release 2022-07-07)
-
-
-
-
-Version 0.0.1 (released TBD)
+## Version 0.0.1 (released TBD)
 
 - Initial public release.

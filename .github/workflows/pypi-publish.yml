@@ -4,6 +4,21 @@ on:
       - v*
 
 jobs:
-  build-n-publish:
-    uses: tu-graz-library/.github/.github/workflows/pypi-publish.yml@main
-    secrets: inherit
+  build:
+    uses: tu-graz-library/.github/.github/workflows/pypi-build.yml@main
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@v1.14.3

@@ -1,12 +1,9 @@
-// This file is part of Invenio.
-//
-// Copyright (C) 2020-2021 CERN.
-// Copyright (C) 2020-2021 Northwestern University.
-// Copyright (C) 2021-2024 Graz University of Technology.
-//
-// Invenio-Records-Marc21 is free software; you can redistribute it and/or
-// modify it under the terms of the MIT License; see LICENSE file for more
-// details.
+/*
+ * SPDX-FileCopyrightText: 2020-2021 CERN.
+ * SPDX-FileCopyrightText: 2020-2021 Northwestern University.
+ * SPDX-FileCopyrightText: 2021-2026 Graz University of Technology.
+ * SPDX-License-Identifier: MIT
+ */
 
 import React, { useState } from "react";
 import { Grid, Icon } from "semantic-ui-react";

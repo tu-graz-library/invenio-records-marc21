@@ -1,14 +1,184 @@
+# SPDX-FileCopyrightText: 2021-2026 Graz University of Technology.
+# SPDX-License-Identifier: MIT
+
+[project]
+name = "invenio-records-marc21"
+description = "Invenio Marc21 datamodel."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Graz University of Technology." }]
+keywords = ["Marc21", "invenio", "record"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3.14",
+]
+urls = { Repository = "https://github.com/tu-graz-library/invenio-records-marc21" }
+dependencies = [
+  "arrow>=1.0.0",
+  "fastjsonschema>=2.16.0",
+  "invenio-rdm-records>=24.0.0",
+  "invenio-stats>=6.0.0",
+  "lxml>=4.6.2",
+]
+dynamic = ["version"]
+
+[project.entry-points."flask.commands"]
+marc21 = "invenio_records_marc21.cli:marc21"
+
+[project.entry-points."invenio_access.actions"]
+replace_files = "invenio_records_marc21.services.permissions:replace_files_action"
+
+[project.entry-points."invenio_assets.webpack"]
+invenio_records_marc21_theme = "invenio_records_marc21.ui.theme.webpack:theme"
+
+[project.entry-points."invenio_base.api_apps"]
+invenio_records_marc21 = "invenio_records_marc21:InvenioRecordsMARC21"
+
+[project.entry-points."invenio_base.api_blueprints"]
+invenio_records_marc21_record = "invenio_records_marc21.views:create_record_bp"
+invenio_records_marc21_record_files = "invenio_records_marc21.views:create_record_files_bp"
+invenio_records_marc21_draft_files = "invenio_records_marc21.views:create_draft_files_bp"
+invenio_records_marc21_parent_links = "invenio_records_marc21.views:create_parent_record_links_bp"
+invenio_records_marc21_iiif = "invenio_records_marc21.views:create_iiif_bp"
+invenio_records_marc21_ext = "invenio_records_marc21.views:blueprint"
+
+[project.entry-points."invenio_base.api_finalize_app"]
+invenio_records_marc21 = "invenio_records_marc21.ext:api_finalize_app"
+
+[project.entry-points."invenio_base.apps"]
+invenio_records_marc21 = "invenio_records_marc21:InvenioRecordsMARC21"
+
+[project.entry-points."invenio_base.blueprints"]
+invenio_records_marc21_ui = "invenio_records_marc21.ui:create_blueprint"
+invenio_records_marc21_ext = "invenio_records_marc21.views:blueprint"
+
+[project.entry-points."invenio_base.finalize_app"]
+invenio_records_marc21 = "invenio_records_marc21.ext:finalize_app"
+
+[project.entry-points."invenio_celery.tasks"]
+invenio_marc21_records_services = "invenio_records_marc21.services.tasks"
+invenio_marc21_records_pids = "invenio_records_marc21.services.pids.tasks"
+invenio_marc21_records_tasks = "invenio_records_marc21.fixtures.tasks"
+invenio_marc21_records_demo = "invenio_records_marc21.tasks"
+
+[project.entry-points."invenio_db.alembic"]
+invenio_records_marc21 = "invenio_records_marc21:alembic"
+
+[project.entry-points."invenio_db.models"]
+invenio_records_marc21_model = "invenio_records_marc21.records.models"
+invenio_records_marc21_template_model = "invenio_records_marc21.system.models"
+
+[project.entry-points."invenio_i18n.translations"]
+messages = "invenio_records_marc21"
+
+[project.entry-points."invenio_jsonschemas.schemas"]
+marc21 = "invenio_records_marc21.records.jsonschemas"
+
+[project.entry-points."invenio_search.mappings"]
+marc21records = "invenio_records_marc21.records.mappings"
+
+[project.optional-dependencies]
+tests = [
+  "decorator>=5.0.0",
+  "djlint>=1.0.0",
+  "invenio-app>=3.0.0,<4.0.0",
+  "invenio-cache>=v3.0.0",
+  "invenio-db>=2.2.0,<3.0.0",
+  "invenio-i18n>=3.0.0,<4.0.0",
+  "invenio-previewer>=5.0.0,<6.0.0",
+  "invenio-search[opensearch2]>=3.0.0,<4.0.0",
+  "pytest-black>=0.6.0",
+  "pytest-invenio>=4.0.0,<5.0.0",
+  "pytest-mock>=1.6.0",
+]
+
 [build-system]
-requires = ["setuptools", "wheel", "babel>2.8"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.babel]
+[tool.babel.compile_catalog]
+directory = "invenio_records_marc21/translations/"
+use_fuzzy = true
+
+[tool.babel.extract_messages]
+copyright_holder = "Graz University of Technology"
+mapping_file = "pyproject.toml"
+output_file = "invenio_records_marc21/translations/messages.pot"
+add_comments = "NOTE"
+
+[tool.babel.init_catalog]
+input_file = "invenio_records_marc21/translations/messages.pot"
+output_dir = "invenio_records_marc21/translations/"
+
+[[tool.babel.mappings]]
+method = "javascript"
+pattern = "**.js"
+encoding = "utf-8"
+extract_messages = "$._, jQuery._"
+
+[[tool.babel.mappings]]
+method = "python"
+pattern = "**.py"
+encoding = "utf-8"
+
+[[tool.babel.mappings]]
+method = "jinja2"
+pattern = "**/templates/**.html"
+encoding = "utf-8"
+
+[tool.hatch.version]
+path = "invenio_records_marc21/__init__.py"
+
+[tool.hatch.build]
+artifacts = [
+  "*.mo",
+]
+exclude = [
+  ".github/**",
+  "tests/**",
+  ".gitignore",
+  "eslint.config.js",
+  "run-tests.sh",
+]
+
+[tool.hatch.build.targets.sdist]
+include = ["/invenio_records_marc21"]
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+extra_checks = true
+strict = true
+strict_bytes = true
+strict_equality = true
+follow_untyped_imports = true
+disallow_any_generics = false
+python_executable = ".venv/bin/python"
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_errors = true
+
+[tool.pytest.ini_options]
+addopts = "--isort --black --cov=invenio_records_marc21 --cov-report=term-missing"
+testpaths = "tests invenio_records_marc21"
 
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
   "BLE001",
-  "D203", "D211", "D212", "D213", "D301", "D401", "D404",
+  "D203",
+  "D211",
+  "D212",
+  "D213",
+  "D301",
+  "D401",
+  "D404",
   "E501",
-  "FA100", "FA102",
+  "FA100",
+  "FA102",
   "FIX002",
   "INP001",
   "N999",
@@ -25,25 +195,21 @@ ignore = [
   "UP009",
 ]
 
-
 [tool.ruff.lint.per-file-ignores]
 "tests/**.py" = [
-  "ANN001", "ANN002", "ANN201", "ANN202",
+  "ANN001",
+  "ANN002",
+  "ANN201",
+  "ANN202",
   "ARG001",
-  "D103", "D401",
+  "D103",
+  "D401",
   "N803",
-  "S105", "S106", "S108", "S311",
+  "S105",
+  "S106",
+  "S108",
+  "S311",
 ]
 
-[tool.mypy]
-extra_checks = true
-strict = true
-strict_bytes = true
-strict_equality = true
-follow_untyped_imports = true
-disallow_any_generics = false
-python_executable = ".venv/bin/python"
-
-[[tool.mypy.overrides]]
-module = "tests.*"
-ignore_errors = true
+[tool.ruff.lint.flake8-copyright]
+notice-rgx = "(?i)# SPDX-FileCopyrightText:\\s\\d{4}(-(\\d{4}|present))*"
