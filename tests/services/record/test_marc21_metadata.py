@@ -11,6 +11,7 @@
 
 import pytest
 
+from invenio_records_marc21.services.errors import Marc21MissingMetadata
 from invenio_records_marc21.services.record import Marc21Metadata
 
 
@@ -413,17 +414,17 @@ def test_controlfields_metadata():
 
 def test_json_type():
     """Test type of json."""
-    with pytest.raises(TypeError):
+    with pytest.raises(Marc21MissingMetadata):
         metadata = Marc21Metadata(json={"leader": ""})
 
-    with pytest.raises(TypeError):
+    with pytest.raises(Marc21MissingMetadata):
         metadata = Marc21Metadata(json={"fields": {}})
 
-    with pytest.raises(TypeError):
+    with pytest.raises(Marc21MissingMetadata):
         metadata = Marc21Metadata(json={"fields": ""})
 
     metadata = Marc21Metadata()
-    with pytest.raises(TypeError):
+    with pytest.raises(Marc21MissingMetadata):
         metadata.json = {}
 
 
