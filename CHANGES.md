@@ -5,6 +5,18 @@ SPDX-License-Identifier: MIT
 
 # Changes
 
+## Version v0.35.0 (released 2026-11-03)
+
+- chore: refactor
+- chore(tests): housekeeping
+- chore: linting
+- fix(ui): enable feedback message
+- fix(ui): wrong type of error message
+- refactor(metadata): remove check
+- fix(schema): forward compatibility to marshmallow4
+- chore(ui): forward compatibility to react-18
+- feat(datacite): send additional metadata
+
 
 ## Version v0.34.4 (released 2026-10-20)
 
