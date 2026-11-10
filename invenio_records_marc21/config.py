@@ -44,6 +44,12 @@ MARC21_FACETS = {
             "field": "files.types",
         },
     },
+    "publisher": {
+        "facet": facets.publisher,
+        "ui": {
+            "field": "metadata.publisher",
+        },
+    },
 }
 
 MARC21_SORT_OPTIONS = {
@@ -86,6 +92,7 @@ MARC21_SEARCH_DRAFTS = {
         "resource_type",
         "access_status",
         "is_published",
+        "publisher",
     ],
     "sort": [
         "bestmatch",
@@ -100,6 +107,7 @@ MARC21_SEARCH = {
     "facets": [
         "resource_type",
         "access_status",
+        "publisher",
     ],
     "sort": [
         "bestmatch",
