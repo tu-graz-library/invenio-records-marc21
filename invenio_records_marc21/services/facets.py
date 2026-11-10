@@ -30,3 +30,8 @@ resource_type = TermsFacet(
         ResourceTypeEnum.HSDISS.value: _("Dissertation"),
     },
 )
+
+publisher = TermsFacet(
+    field="metadata.fields.264.subfields.b",
+    label=_("Publisher"),
+)
