@@ -1,0 +1,101 @@
+{
+    "fields": [
+        {
+            "id": "007",
+            "ind1": "",
+            "ind2": "",
+            "subfield": "cr#|||||||||||"
+        },
+        {
+            "id": "020",
+            "ind1": "_",
+            "ind2": "_",
+            "subfield": "$$a 878-3-16-148410-0 $$q E-Book"
+        },
+        {
+            "id": "022",
+            "ind1": "_",
+            "ind2": "_",
+            "subfield": "$$a 9049-3630"
+        },
+        {
+            "id": "041",
+            "ind1": "_",
+            "ind2": "_",
+            "subfield": "$$a eng"
+        },
+        {
+            "id": "100",
+            "ind1": "1",
+            "ind2": "_",
+            "subfield": "$$1 92mhbdp94 $$2 0000-9001-1825-0097 $$4 aut $$4 edt $$a Williams, Adam $$u University of Ipsumville"
+        },
+        {
+            "id": "245",
+            "ind1": "1",
+            "ind2": "0",
+            "subfield": "$$a The Core Architecture $$b Building the Systems of Tomorrow"
+        },
+        {
+            "id": "264",
+            "ind1": "_",
+            "ind2": "1",
+            "subfield": "$$a Ipsumville $$b University of Ipsumville Publishing $$c 2026"
+        },
+        {
+            "id": "490",
+            "ind1": "0",
+            "ind2": "_",
+            "subfield": "$$a Advances in Core Architecture $$v 123"
+        },
+        {
+            "id": "520",
+            "ind1": "_",
+            "ind2": "_",
+            "subfield": "$$a Example industry word baseline definition parameter structure network interface. Development standard framework optimization protocols benchmark systemic operational infrastructure. Variable input data stream feedback validation modular deployment algorithm. Integration standard dynamic structural analysis network capacity optimization matrix. Distributed computing pipeline efficiency evaluation criterion threshold methodology standard."
+        },
+        {
+            "id": "540",
+            "ind1": "_",
+            "ind2": "_",
+            "subfield": "$$2 cc $$a Creative Commons Attribution 4.0 International License $$f CC BY 4.0 $$u https://creativecommons.org/licenses/by/4.0/deed.en"
+        },
+        {
+            "id": "653",
+            "ind1": "_",
+            "ind2": "_",
+            "subfield": "$$a Future Technology"
+        },
+        {
+            "id": "653",
+            "ind1": "_",
+            "ind2": "_",
+            "subfield": "$$a Core Architecture"
+        },
+        {
+            "id": "700",
+            "ind1": "1",
+            "ind2": "_",
+            "subfield": "$$1 92mhbdp94 $$2 0000-9002-1825-0097 $$4 aut $$a Huxley, Karl $$u University of Ipsumville"
+        },
+        {
+            "id": "700",
+            "ind1": "1",
+            "ind2": "_",
+            "subfield": "$$1 92mhbdp94 $$2 0000-9003-1825-0097 $$4 edt $$a Meyers, Bernadette $$u University of Ipsumville"
+        },
+        {
+            "id": "700",
+            "ind1": "1",
+            "ind2": "_",
+            "subfield": "$$1 92mhbdp94 $$2 0000-9004-1825-0097 $$a Simon, James $$u University of Ipsumville"
+        },
+        {
+            "id": "970",
+            "ind1": "2",
+            "ind2": "_",
+            "subfield": "$$b 2026 $$c University of Ipsumville $$d Monografie"
+        }
+    ],
+    "leader": "00000nam a2200000zca4500"
+}

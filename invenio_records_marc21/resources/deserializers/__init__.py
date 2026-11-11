@@ -3,6 +3,9 @@
 
 """Record deserializers."""
 
-from .deserializer import Marc21JSONDeserializer
+from .deserializer import Marc21JSONDeserializer, Marc21Schema
 
-__all__ = ("Marc21JSONDeserializer",)
+__all__ = (
+    "Marc21JSONDeserializer",
+    "Marc21Schema",
+)
