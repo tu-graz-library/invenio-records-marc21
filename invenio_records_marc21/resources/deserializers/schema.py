@@ -3,6 +3,8 @@
 
 """Marc21 record response deserializers."""
 
+from collections import defaultdict
+
 from marshmallow import EXCLUDE, Schema, fields, pre_load
 
 
@@ -36,16 +38,18 @@ class Marc21Schema(Schema):
                 if field["id"] not in fields:
                     fields[field["id"]] = []
 
-                subfields = {
-                    v[0:1]: [v[2:].strip()] for v in field["subfield"].split("$$")[1:]
-                }
+                subfields = defaultdict(list)
+                for v in field["subfield"].split("$$")[1:]:
+                    key = v[0:1]
+                    val = v[2:].strip()
+                    subfields[key].append(val)
 
                 fields[field["id"]].append(
                     {
                         "ind1": field["ind1"],
                         "ind2": field["ind2"],
                         "subfields": subfields,
-                    }
+                    },
                 )
 
         return {
