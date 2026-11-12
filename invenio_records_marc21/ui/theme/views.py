@@ -69,11 +69,12 @@ def deposit_edit(
     """Edit an existing deposit."""
     serializer = Marc21DepositSerializer()
     record = serializer.dump_obj(draft.to_dict())
+    permissions = draft.has_permissions_to(["new_version", "delete_draft"])
 
     return render_template(
         "invenio_records_marc21/deposit/index.html",
         forms_config=deposit_config(apiUrl=f"/api/publications/{pid_value}/draft"),
         record=record,
         files=draft_files.to_dict(),
-        permissions=draft.has_permissions_to(["new_version"]),
+        permissions=permissions,
     )
