@@ -1,9 +1,30 @@
 {
     "schemaVersion": "http://datacite.org/schema/kernel-4",
     "publicationYear": "N/A",
+    "contributors": [
+        {
+            "name": "N/A",
+            "contributorType": "Other",
+            "nameIdentifiers": [
+                {
+                    "schemeUri": "https://orcid.org/",
+                    "nameIdentifier": "https://orcid.org/0000-9002-1825-0097",
+                    "nameIdentifierScheme": "ORCID"
+                }
+            ],
+            "affiliation": [
+                {
+                    "name": "University of Ipsumville",
+                    "schemeUri": "https://ror.org/",
+                    "affiliationIdentifier": "https://ror.org/92mhbdp94",
+                    "affiliationIdentifierScheme": "ROR"
+                }
+            ]
+        }
+    ],
     "alternateIdentifiers": [
         {
-            "alternateIdentifier": "10.5281/inveniordm.1234", 
+            "alternateIdentifier": "10.5281/inveniordm.1234",
             "alternateIdentifierType": "DOI"
         }
     ],
@@ -18,9 +39,9 @@
         }
     ],
     "publisher": "N/A",
-    "types": 
+    "types":
         {
-            "resourceTypeGeneral": "Other", 
+            "resourceTypeGeneral": "Other",
             "resourceType": "Text"
         }
 }

@@ -5,11 +5,47 @@
 
 """DataCite based Schema for Invenio RDM Records."""
 
-from flask import current_app
-from marshmallow import Schema, missing, pre_dump
-from marshmallow.fields import Constant, Method
+import inspect
+from collections.abc import Callable
+from functools import wraps
+from typing import Any, Concatenate, overload
 
-from ....services.record import Marc21Metadata
+from flask import current_app
+from marshmallow import Schema, missing
+from marshmallow.fields import Constant, Field, Method
+from marshmallow.utils import _Missing
+
+from invenio_records_marc21.services.record import Marc21Metadata
+
+
+@overload
+def metadata[SelfT, **P, T](
+    f: Callable[Concatenate[SelfT, Marc21Metadata, P], T],
+) -> Callable[Concatenate[SelfT, dict, P], T]:
+    """Metadata-decorator for the "get_..."-methods inside Marc21DataCite43Schema."""
+
+
+@overload
+def metadata[SelfT, A, **P, T](
+    f: Callable[Concatenate[SelfT, A, Marc21Metadata, P], T],
+) -> Callable[Concatenate[SelfT, A, dict, P], T]:
+    """Metadata-decorator for the "serialize"-methods inside CreatorField and ContributorField."""
+
+
+def metadata(f: Callable[..., Any]) -> Callable[..., Any]:
+    """Decorator to fetch metadata as Marc21Metadata."""
+    signature = inspect.signature(f)
+
+    @wraps(f)
+    def inner(*args: Any, **kwargs: Any) -> Any:
+        bound = signature.bind(*args, **kwargs)
+
+        obj = bound.arguments["obj"]
+        bound.arguments["obj"] = Marc21Metadata(json=obj["metadata"])
+
+        return f(*bound.args, **bound.kwargs)
+
+    return inner
 
 
 def get_scheme_datacite(
@@ -22,19 +58,173 @@ def get_scheme_datacite(
     return config_item.get(scheme, {}).get("datacite", default)
 
 
+class PersonSchema43(Schema):
+    """Creator/contributor schema for v4.3."""
+
+    name = Method("get_name")
+    nameIdentifiers = Method("get_name_identifier_orcid")  # noqa: N815
+    affiliation = Method("get_affiliation_ror")
+    contributorType = Method("get_contribution_type")  # noqa: N815
+
+    def get_name(self, obj: dict) -> str | _Missing:
+        """Get a persons name."""
+        return obj.get("subfields", {}).get("a", [""])[0] or "N/A"
+
+    def get_name_identifier_orcid(self, obj: dict) -> list[dict] | _Missing:
+        """Assemble name identifier dict for ORCID."""
+        if contributor_id := obj.get("subfields", {}).get("2", [""])[0]:
+            return [
+                {
+                    "nameIdentifier": f"https://orcid.org/{contributor_id}",
+                    "nameIdentifierScheme": "ORCID",
+                    "schemeUri": "https://orcid.org/",
+                },
+            ]
+        return missing
+
+    def get_affiliation_ror(self, obj: dict) -> list[dict] | _Missing:
+        """Assemble affiliation dict for ROR."""
+        affiliation = {}
+
+        contributor_affl = obj.get("subfields", {}).get("u", [""])[0]
+        contributor_affl_id = obj.get("subfields", {}).get("1", [""])[0]
+
+        if contributor_affl:
+            affiliation["name"] = contributor_affl
+        if contributor_affl_id:
+            affiliation["affiliationIdentifier"] = (
+                f"https://ror.org/{contributor_affl_id}"
+            )
+            affiliation["affiliationIdentifierScheme"] = "ROR"
+            affiliation["schemeUri"] = "https://ror.org/"
+
+        return [affiliation] if affiliation else missing
+
+    def get_contribution_type(self, obj: dict) -> str:
+        """Get contribution type."""
+        kind_of_contribution = {
+            "aut": "Creator",
+            "edt": "Editor",
+            "other": "Other",
+        }
+
+        contribution_type = obj.get("subfields", {}).get("4", [""])[0] or "other"
+
+        return kind_of_contribution.get(contribution_type, "Other")
+
+
+def load_persons_from_marc21(
+    obj: Marc21Metadata,
+    field_number: str,
+    default_contribution: str | None = None,
+    include_contribution: str | None = None,
+    exclude_contribution: str | None = None,
+    consider_contribution: int | None = None,
+) -> list[dict]:
+    """Load persons from a marc21 field considering include_/exclude_contributions."""
+    loaded_persons = []
+
+    person_fields = obj.get_fields(*field_number.split("."))
+
+    for person in person_fields[1]:
+
+        base_person = person.to_obj()
+
+        contributions = [
+            v.strip() for v in (person.get("4") or default_contribution or "").split()
+        ]
+
+        if consider_contribution is not None:
+            contributions = [contributions[consider_contribution]]
+
+        for contribution in contributions:
+
+            if include_contribution and contribution != include_contribution:
+                continue
+
+            if exclude_contribution and contribution == exclude_contribution:
+                continue
+
+            base_person["subfields"]["4"] = [contribution]
+            loaded_persons.append(base_person)
+
+    return loaded_persons
+
+
+class CreatorField(Field):
+    """Class to extract creators from metadata."""
+
+    @metadata
+    def serialize(
+        self,
+        attr: str,
+        obj: Marc21Metadata,
+        accessor: Callable[[Any, str, Any], Any] | None,
+        **kwargs,
+    ) -> list:
+        """Generate a list of creators."""
+        creators_marc21 = load_persons_from_marc21(
+            obj=obj,
+            field_number="100.1.",
+            default_contribution="aut",
+            consider_contribution=0,  # avoid duplicates
+        ) + load_persons_from_marc21(
+            obj=obj,
+            field_number="700.1.",
+            include_contribution="aut",
+        )
+
+        # creator is mandatory: add dummy entry if creators_marc21 is empty
+        if not creators_marc21:
+            creators_marc21 = [{"ind1": "1", "ind2": "_", "subfields": {"a": ["N/A"]}}]
+
+        creators = [
+            PersonSchema43(exclude=("contributorType",)).dump(p)
+            for p in creators_marc21
+        ]
+
+        return creators
+
+
+class ContributorField(Field):
+    """Class to extract contributors from metadata."""
+
+    @metadata
+    def serialize(
+        self,
+        attr: str,
+        obj: Marc21Metadata,
+        accessor: Callable[[Any, str, Any], Any] | None,
+        **kwargs,
+    ) -> list | _Missing:
+        """Generate a list of contributors."""
+        contributors_marc21 = load_persons_from_marc21(
+            obj=obj,
+            field_number="100.1.",
+            include_contribution="edt",
+        ) + load_persons_from_marc21(
+            obj=obj,
+            field_number="700.1.",
+            default_contribution="other",
+            exclude_contribution="aut",
+        )
+
+        contributors = [PersonSchema43().dump(p) for p in contributors_marc21]
+
+        return contributors or missing
+
+
 class Marc21DataCite43Schema(Schema):
     """DataCite JSON 4.3 Marshmallow Schema."""
 
-    _pids = None
-
     types = Method("get_type")
     titles = Method("get_titles")
-    creators = Method("get_creators")
+    creators = CreatorField()
     publisher = Method("get_publisher")
     publicationYear = Method("get_publication_year")  # noqa: N815
     schemaVersion = Constant("http://datacite.org/schema/kernel-4")  # noqa: N815
     subjects = Method("get_subject")
-    contributors = Method("get_contributors")
+    contributors = ContributorField()
     language = Method("get_language")
     dates = Method("get_dates")
     alternateIdentifiers = Method("get_alternate_identifiers")  # noqa: N815
@@ -43,95 +233,6 @@ class Marc21DataCite43Schema(Schema):
     descriptions = Method("get_description")
     geoLocations = Method("get_geo_locations")  # noqa: N815
     relatedItems = Method("get_related_items")  # noqa: N815
-
-    @pre_dump
-    def _pre_format_metadata(
-        self,
-        obj: dict,
-        *,
-        many: bool,
-        **_kwargs: object,
-    ) -> Marc21Metadata:
-        self._pids = obj.get("pids", {})
-        return Marc21Metadata(json=obj["metadata"])
-
-    def _get_contributor_by_type(
-        self,
-        obj: Marc21Metadata,
-        field_number: str,
-        allowed_contribution_types: list[str],
-    ) -> list[dict[str, str | list]]:
-        """Get list of get_contributors."""
-        kind_of_contributor = {
-            "aut": "Creator",
-            "edt": "Editor",
-            "other": "Other",
-        }
-
-        contributors: list[dict[str, str | list[dict[str, str]]]] = []
-
-        contributor_fields = obj.get_fields(*field_number.split("."))
-        for entry in contributor_fields[1]:
-            contributor_name = entry.get("a")
-            contributor_type = entry.get("4") or "empty"
-
-            if not contributor_name:
-                continue
-
-            if contributor_type and contributor_type not in allowed_contribution_types:
-                continue
-
-            contributor = {
-                "name": contributor_name,
-                "contributorType": kind_of_contributor.get(contributor_type, "Other"),
-            }
-
-            # ORCID
-            contributor_id = entry.get("2")
-            if contributor_id:
-                contributor["nameIdentifiers"] = [
-                    {
-                        "nameIdentifier": f"https://orcid.org/{contributor_id}",
-                        "nameIdentifierScheme": "ORCID",
-                        "schemeUri": "https://orcid.org/",
-                    },
-                ]
-
-            # ROR
-            affiliation = {}
-
-            contributor_affl = entry.get("u")
-            contributor_affl_id = entry.get("1")
-
-            if contributor_affl:
-                affiliation["name"] = contributor_affl
-            if contributor_affl_id:
-                affiliation["affiliationIdentifier"] = (
-                    f"https://ror.org/{contributor_affl_id}"
-                )
-                affiliation["affiliationIdentifierScheme"] = "ROR"
-                affiliation["schemeUri"] = "https://ror.org/"
-            if affiliation:
-                contributor["affiliation"] = [affiliation]
-
-            contributors.append(contributor)
-        return contributors
-
-    def _get_related_identifiers_by_field(
-        self,
-        obj: Marc21Metadata,
-        field_number: str,
-        id_type: str,
-    ) -> list[dict[str, str]]:
-        """Get related identifiers of a particular type."""
-        return [
-            {
-                "relationType": "IsPublishedIn",
-                "relatedIdentifier": identifier,
-                "relatedIdentifierType": id_type,
-            }
-            for identifier in obj.get_values(*field_number.split("."))
-        ]
 
     def _get_alternate_identifiers_by_field(
         self,
@@ -148,6 +249,7 @@ class Marc21DataCite43Schema(Schema):
             for identifier in obj.get_values(*field_number.split("."))
         ]
 
+    @metadata
     def get_type(self, obj: Marc21Metadata) -> dict[str, str]:
         """Get resource type."""
         map_970d_to_datacite = {
@@ -187,6 +289,7 @@ class Marc21DataCite43Schema(Schema):
             "resourceType": "Text",
         }
 
+    @metadata
     def get_titles(self, obj: Marc21Metadata) -> list[dict[str, str]]:
         """Get titles."""
         titles: list[dict[str, str]] = []
@@ -208,24 +311,7 @@ class Marc21DataCite43Schema(Schema):
 
         return [{"title": "N/A"}]
 
-    def get_creators(self, obj: Marc21Metadata) -> list[dict]:
-        """Get creators."""
-        creators = self._get_contributor_by_type(
-            obj,
-            field_number="100.1.",
-            allowed_contribution_types=["aut", "empty"],
-        ) + self._get_contributor_by_type(
-            obj,
-            field_number="700.1.",
-            allowed_contribution_types=["aut"],
-        )
-
-        # keep it lean: creators do not expect contributorType
-        for creator in creators:
-            creator.pop("contributorType", None)
-
-        return creators or [{"name": "N/A"}]
-
+    @metadata
     def get_publisher(self, obj: Marc21Metadata) -> str:
         """Get publisher."""
         publisher_260 = obj.get_value(category="260", subf_code="b")
@@ -238,6 +324,7 @@ class Marc21DataCite43Schema(Schema):
 
         return current_app.config.get("MARC21_DATACITE_DEFAULT_PUBLISHER") or "N/A"
 
+    @metadata
     def get_publication_year(self, obj: Marc21Metadata) -> str:
         """Get publication year from edtf date."""
         publication_dates = obj.get_value(category="008")
@@ -252,41 +339,33 @@ class Marc21DataCite43Schema(Schema):
 
         return "N/A"
 
-    def get_subject(self, obj: Marc21Metadata) -> list[dict[str, str]] | missing:
+    @metadata
+    def get_subject(self, obj: Marc21Metadata) -> list[dict[str, str]] | _Missing:
         """Get subjects (keywords)."""
         return [
             {"subject": subject}
             for subject in obj.get_values(category="653", subf_code="a")
         ] or missing
 
-    def get_contributors(self, obj: Marc21Metadata) -> list[dict[str, str]] | missing:
-        """Get list of get_contributors."""
-        return (
-            self._get_contributor_by_type(
-                obj,
-                field_number="700.1.",
-                allowed_contribution_types=["edt", "empty"],
-            )
-            or missing
-        )
-
-    def get_language(self, obj: Marc21Metadata) -> str | missing:
+    @metadata
+    def get_language(self, obj: Marc21Metadata) -> str | _Missing:
         """Get language."""
         return obj.get_value(category="041", subf_code="a") or missing
 
-    def get_dates(self, _obj: Marc21Metadata) -> list | missing:
+    @metadata
+    def get_dates(self, obj: Marc21Metadata) -> list | _Missing:
         """Get list of date-dicts."""
         # not implemented yet
         return missing
 
     def get_alternate_identifiers(
         self,
-        obj: Marc21Metadata,
-    ) -> list[dict[str, str]] | missing:
+        obj: dict,
+    ) -> list[dict[str, str]] | _Missing:
         """Get alternate identifiers."""
         # pids
         pids = []
-        for scheme, id_ in self._pids.items():
+        for scheme, id_ in obj["pids"].items():
             id_scheme = get_scheme_datacite(
                 scheme,
                 "MARC21_IDENTIFIERS_SCHEMES",
@@ -301,40 +380,44 @@ class Marc21DataCite43Schema(Schema):
                     },
                 )
 
-        # further identifiers
+        # further identifiers from metadata
+        metadata = Marc21Metadata(json=obj["metadata"])
+
         ebook_isbn = self._get_alternate_identifiers_by_field(
-            obj,
+            metadata,
             field_number="020...a",
             id_type="ISBN",
         )
         print_isbn = self._get_alternate_identifiers_by_field(
-            obj,
+            metadata,
             field_number="020...z",
             id_type="ISBN",
         )
         issn = self._get_alternate_identifiers_by_field(
-            obj,
+            metadata,
             field_number="022...a",
             id_type="ISSN",
         )
         doi = self._get_alternate_identifiers_by_field(
-            obj,
+            metadata,
             field_number="856.4.0.u",
             id_type="DOI",
         )
 
         return pids + ebook_isbn + print_isbn + issn + doi or missing
 
+    @metadata
     def get_related_identifiers(
         self,
-        _obj: Marc21Metadata,
-    ) -> list[dict[str, str]] | missing:
+        obj: Marc21Metadata,
+    ) -> list[dict[str, str]] | _Missing:
         """Get related identifiers."""
         # not implemented yet
         # make use of self._get_related_identifiers_by_field
         return missing
 
-    def get_rights_list(self, obj: Marc21Metadata) -> list[dict[str, str]] | missing:
+    @metadata
+    def get_rights_list(self, obj: Marc21Metadata) -> list[dict[str, str]] | _Missing:
         """Get list of rights-dicts."""
         return [
             {
@@ -344,7 +427,8 @@ class Marc21DataCite43Schema(Schema):
             for entry in obj.get_fields(category="540")[1]
         ] or missing
 
-    def get_description(self, obj: Marc21Metadata) -> list[dict[str, str]] | missing:
+    @metadata
+    def get_description(self, obj: Marc21Metadata) -> list[dict[str, str]] | _Missing:
         """Get description."""
         return (
             [{"description": description, "descriptionType": "Abstract"}]
@@ -352,7 +436,8 @@ class Marc21DataCite43Schema(Schema):
             else missing
         )
 
-    def get_geo_locations(self, obj: Marc21Metadata) -> list[dict[str, str]] | missing:
+    @metadata
+    def get_geo_locations(self, obj: Marc21Metadata) -> list[dict[str, str]] | _Missing:
         """Get publication location."""
         return (
             [{"geoLocationPlace": place}]
@@ -360,13 +445,25 @@ class Marc21DataCite43Schema(Schema):
             else missing
         )
 
-    def get_related_items(self, obj: Marc21Metadata) -> list[dict] | missing:
+    def get_related_items(self, obj: dict) -> list[dict] | _Missing:
         """Get related items (e.g. a series the publication belongs to)."""
+        metadata = Marc21Metadata(json=obj["metadata"])
+
         related_items = []
 
         # series + volume
-        series_title = obj.get_value(category="490", ind1="0", ind2="", subf_code="a")
-        series_volume = obj.get_value(category="490", ind1="0", ind2="", subf_code="v")
+        series_title = metadata.get_value(
+            category="490",
+            ind1="0",
+            ind2="",
+            subf_code="a",
+        )
+        series_volume = metadata.get_value(
+            category="490",
+            ind1="0",
+            ind2="",
+            subf_code="v",
+        )
         if series_title and series_volume:
             related_items.append(
                 {
@@ -378,13 +475,13 @@ class Marc21DataCite43Schema(Schema):
             )
 
         # proceedings
-        proceedings_title = obj.get_value(
+        proceedings_title = metadata.get_value(
             category="773",
             ind1="0",
             ind2="8",
             subf_code="t",
         )
-        proceedings_isbn = obj.get_value(
+        proceedings_isbn = metadata.get_value(
             category="773",
             ind1="0",
             ind2="8",

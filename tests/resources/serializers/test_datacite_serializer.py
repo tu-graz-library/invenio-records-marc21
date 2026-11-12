@@ -34,6 +34,8 @@ def load_as_json(func: callable) -> any:
         ("publ_ebook2_test", "publ_ebook2_expected"),
         ("publ_article_test", "publ_article_expected"),
         ("record_w_issues_test", "record_w_issues_expected"),
+        ("contribution_types_test", "contribution_types_expected"),
+        ("contribution_types2_test", "contribution_types2_expected"),
     ],
 )
 @load_as_json
