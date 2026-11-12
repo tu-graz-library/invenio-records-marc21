@@ -373,7 +373,7 @@
                         "type": "text"
                       },
                       "b": {
-                        "type": "text"
+                        "type": "keyword"
                       },
                       "c": {
                         "type": "text"
