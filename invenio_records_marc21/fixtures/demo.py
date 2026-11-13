@@ -71,6 +71,7 @@ def create_fake_data() -> dict:
     person_title = fake.suffix_nonbinary()
     create_date = fake.date_time_this_decade()
     country_code = fake.country_code()
+    relationship = random.choice(["aut", "edt", "ivr"])
 
     data_to_use = {
         "files": {
@@ -115,7 +116,7 @@ def create_fake_data() -> dict:
                         "ind1": "1",
                         "ind2": "_",
                         "subfields": {
-                            "4": [country_code],
+                            "4": [relationship],
                             "a": [f"{first_name}, {last_name}"],
                         },
                     },
