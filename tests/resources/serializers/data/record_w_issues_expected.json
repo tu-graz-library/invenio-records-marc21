@@ -1,9 +1,9 @@
 {
     "schemaVersion": "http://datacite.org/schema/kernel-4",
-    "publicationYear": "N/A",
+    "publicationYear": "1440",
     "alternateIdentifiers": [
         {
-            "alternateIdentifier": "10.5281/inveniordm.1234", 
+            "alternateIdentifier": "10.5281/inveniordm.1234",
             "alternateIdentifierType": "DOI"
         }
     ],
@@ -18,9 +18,9 @@
         }
     ],
     "publisher": "N/A",
-    "types": 
+    "types":
         {
-            "resourceTypeGeneral": "Other", 
+            "resourceTypeGeneral": "Other",
             "resourceType": "Text"
         }
 }

@@ -5,6 +5,7 @@
 
 from json import load
 from pathlib import Path
+from typing import Any
 
 import decorator
 import pytest
@@ -12,7 +13,7 @@ import pytest
 from invenio_records_marc21.resources.serializers import Marc21DataCite43JSONSerializer
 
 
-def load_as_json(func: callable) -> any:
+def load_as_json(func: callable) -> Any:  # noqa: ANN401
     """Decorate to load content of file as dictionary from a json file."""
 
     def wrapper(*args: dict, **__: dict) -> any:
@@ -34,6 +35,8 @@ def load_as_json(func: callable) -> any:
         ("publ_ebook2_test", "publ_ebook2_expected"),
         ("publ_article_test", "publ_article_expected"),
         ("record_w_issues_test", "record_w_issues_expected"),
+        ("contribution_types_test", "contribution_types_expected"),
+        ("contribution_types2_test", "contribution_types2_expected"),
     ],
 )
 @load_as_json

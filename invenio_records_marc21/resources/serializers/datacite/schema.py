@@ -9,7 +9,8 @@ from flask import current_app
 from marshmallow import Schema, missing, pre_dump
 from marshmallow.fields import Constant, Method
 
-from ....services.record import Marc21Metadata
+from invenio_records_marc21.services.record import Marc21Metadata
+from invenio_records_marc21.services.record.metadata import DataField
 
 
 def get_scheme_datacite(
@@ -26,6 +27,7 @@ class Marc21DataCite43Schema(Schema):
     """DataCite JSON 4.3 Marshmallow Schema."""
 
     _pids = None
+    _persons = []
 
     types = Method("get_type")
     titles = Method("get_titles")
@@ -44,6 +46,18 @@ class Marc21DataCite43Schema(Schema):
     geoLocations = Method("get_geo_locations")  # noqa: N815
     relatedItems = Method("get_related_items")  # noqa: N815
 
+    def _load_persons(self, obj: Marc21Metadata) -> list:
+        """Load all persons - creators and contributors - from metadata."""
+        return self._get_contributor_by_type(
+            obj=obj,
+            field_number="100.1.",
+            default_contribution="aut",
+        ) + self._get_contributor_by_type(
+            obj=obj,
+            field_number="700.1.",
+            default_contribution="other",
+        )
+
     @pre_dump
     def _pre_format_metadata(
         self,
@@ -53,68 +67,89 @@ class Marc21DataCite43Schema(Schema):
         **_kwargs: object,
     ) -> Marc21Metadata:
         self._pids = obj.get("pids", {})
-        return Marc21Metadata(json=obj["metadata"])
+        metadata = Marc21Metadata(json=obj["metadata"])
+        self._persons = self._load_persons(metadata)
+        return metadata
 
-    def _get_contributor_by_type(
+    def _get_contribution_type(
         self,
-        obj: Marc21Metadata,
-        field_number: str,
-        allowed_contribution_types: list[str],
-    ) -> list[dict[str, str | list]]:
-        """Get list of get_contributors."""
+        contribution: str,
+        default_contribution: str,
+    ) -> str:
+        """Get contribution type."""
         kind_of_contributor = {
             "aut": "Creator",
             "edt": "Editor",
             "other": "Other",
         }
+        return kind_of_contributor.get(
+            contribution,
+            kind_of_contributor.get(default_contribution, "Other"),
+        )
 
+    def _get_name_identifier_orcid(self, field: DataField) -> dict | None:
+        """Assemble name identifier dict for ORCID."""
+        if contributor_id := field.get("2"):
+            return {
+                "nameIdentifier": f"https://orcid.org/{contributor_id}",
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org/",
+            }
+        return None
+
+    def _get_affiliation_ror(self, field: DataField) -> dict | None:
+        """Assemble affiliation dict for ROR."""
+        affiliation = {}
+
+        contributor_affl = field.get("u")
+        contributor_affl_id = field.get("1")
+
+        if contributor_affl:
+            affiliation["name"] = contributor_affl
+        if contributor_affl_id:
+            affiliation["affiliationIdentifier"] = (
+                f"https://ror.org/{contributor_affl_id}"
+            )
+            affiliation["affiliationIdentifierScheme"] = "ROR"
+            affiliation["schemeUri"] = "https://ror.org/"
+
+        return affiliation or None
+
+    def _get_contributor_by_type(
+        self,
+        obj: Marc21Metadata,
+        field_number: str,
+        default_contribution: str,
+    ) -> list[dict[str, str | list]]:
+        """Get list of get_contributors."""
         contributors: list[dict[str, str | list[dict[str, str]]]] = []
 
         contributor_fields = obj.get_fields(*field_number.split("."))
+
         for entry in contributor_fields[1]:
-            contributor_name = entry.get("a")
-            contributor_type = entry.get("4") or "empty"
+            for contribution in [
+                v.strip() for v in (entry.get("4") or default_contribution).split()
+            ]:
+                contributor_name = entry.get("a")
 
-            if not contributor_name:
-                continue
+                if not contributor_name:
+                    continue
+                contributor = {"name": contributor_name}
 
-            if contributor_type and contributor_type not in allowed_contribution_types:
-                continue
-
-            contributor = {
-                "name": contributor_name,
-                "contributorType": kind_of_contributor.get(contributor_type, "Other"),
-            }
-
-            # ORCID
-            contributor_id = entry.get("2")
-            if contributor_id:
-                contributor["nameIdentifiers"] = [
-                    {
-                        "nameIdentifier": f"https://orcid.org/{contributor_id}",
-                        "nameIdentifierScheme": "ORCID",
-                        "schemeUri": "https://orcid.org/",
-                    },
-                ]
-
-            # ROR
-            affiliation = {}
-
-            contributor_affl = entry.get("u")
-            contributor_affl_id = entry.get("1")
-
-            if contributor_affl:
-                affiliation["name"] = contributor_affl
-            if contributor_affl_id:
-                affiliation["affiliationIdentifier"] = (
-                    f"https://ror.org/{contributor_affl_id}"
+                contributor["contributorType"] = self._get_contribution_type(
+                    contribution=contribution,
+                    default_contribution=default_contribution,
                 )
-                affiliation["affiliationIdentifierScheme"] = "ROR"
-                affiliation["schemeUri"] = "https://ror.org/"
-            if affiliation:
-                contributor["affiliation"] = [affiliation]
 
-            contributors.append(contributor)
+                # ORCID
+                if contributor_id := self._get_name_identifier_orcid(entry):
+                    contributor["nameIdentifiers"] = [contributor_id]
+
+                # ROR
+                if affiliation := self._get_affiliation_ror(entry):
+                    contributor["affiliation"] = [affiliation]
+
+                contributors.append(contributor)
         return contributors
 
     def _get_related_identifiers_by_field(
@@ -208,22 +243,16 @@ class Marc21DataCite43Schema(Schema):
 
         return [{"title": "N/A"}]
 
-    def get_creators(self, obj: Marc21Metadata) -> list[dict]:
+    def get_creators(self, _: Marc21Metadata) -> list[dict]:
         """Get creators."""
-        creators = self._get_contributor_by_type(
-            obj,
-            field_number="100.1.",
-            allowed_contribution_types=["aut", "empty"],
-        ) + self._get_contributor_by_type(
-            obj,
-            field_number="700.1.",
-            allowed_contribution_types=["aut"],
-        )
-
+        creators = [
+            person.copy()
+            for person in self._persons
+            if person["contributorType"] == "Creator"
+        ]
         # keep it lean: creators do not expect contributorType
         for creator in creators:
             creator.pop("contributorType", None)
-
         return creators or [{"name": "N/A"}]
 
     def get_publisher(self, obj: Marc21Metadata) -> str:
@@ -250,7 +279,7 @@ class Marc21DataCite43Schema(Schema):
         if ppdmcn:
             return ppdmcn
 
-        return "N/A"
+        return "1440"
 
     def get_subject(self, obj: Marc21Metadata) -> list[dict[str, str]] | missing:
         """Get subjects (keywords)."""
@@ -259,16 +288,11 @@ class Marc21DataCite43Schema(Schema):
             for subject in obj.get_values(category="653", subf_code="a")
         ] or missing
 
-    def get_contributors(self, obj: Marc21Metadata) -> list[dict[str, str]] | missing:
+    def get_contributors(self, _: Marc21Metadata) -> list[dict[str, str]] | missing:
         """Get list of get_contributors."""
-        return (
-            self._get_contributor_by_type(
-                obj,
-                field_number="700.1.",
-                allowed_contribution_types=["edt", "empty"],
-            )
-            or missing
-        )
+        return [
+            person for person in self._persons if person["contributorType"] != "Creator"
+        ] or missing
 
     def get_language(self, obj: Marc21Metadata) -> str | missing:
         """Get language."""
