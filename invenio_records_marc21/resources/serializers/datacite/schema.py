@@ -279,7 +279,7 @@ class Marc21DataCite43Schema(Schema):
         if ppdmcn:
             return ppdmcn
 
-        return "N/A"
+        return "1440"
 
     def get_subject(self, obj: Marc21Metadata) -> list[dict[str, str]] | missing:
         """Get subjects (keywords)."""
