@@ -36,6 +36,9 @@ MARC21_FACETS = {
         "facet": facets.resource_type,
         "ui": {
             "field": "metadata.resource_type",
+            "childAgg": {
+                "field": "resource_type.subtype",
+            },
         },
     },
     "file_type": {

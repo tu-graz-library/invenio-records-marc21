@@ -532,6 +532,9 @@
                       "k": {
                         "type": "text",
                         "index": false
+                      },
+                      "q": {
+                        "type": "keyword"
                       }
                     }
                   }

@@ -4,7 +4,10 @@
 """Marc21 Record Service facets config."""
 
 from invenio_i18n import gettext as _
-from invenio_records_resources.services.records.facets import TermsFacet
+from invenio_records_resources.services.records.facets import (
+    NestedTermsFacet,
+    TermsFacet,
+)
 
 from ..records.fields.resourcetype import ResourceTypeEnum
 
@@ -22,8 +25,9 @@ filetype = TermsFacet(
 )
 
 
-resource_type = TermsFacet(
+resource_type = NestedTermsFacet(
     field="metadata.fields.970.subfields.d",
+    subfield="metadata.fields.970.subfields.q",
     label=_("Resource type"),
     value_labels={
         ResourceTypeEnum.HSMASTER.value: _("Masterthesis"),
