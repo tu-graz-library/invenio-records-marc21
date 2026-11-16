@@ -5,6 +5,13 @@ SPDX-License-Identifier: MIT
 
 # Changes
 
+## Version v0.36.0 (released 2026-11-16)
+
+- feat(facets): subfacet for resource_type
+- feat(deposit): allow delete draft by policy
+- feat(facets): add publisher facet
+- fix(demo): provide relationship in 100.1.0.4
+
 ## Version v0.35.0 (released 2026-11-03)
 
 - chore: refactor
