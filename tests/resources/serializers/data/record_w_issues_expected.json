@@ -1,6 +1,6 @@
 {
     "schemaVersion": "http://datacite.org/schema/kernel-4",
-    "publicationYear": "N/A",
+    "publicationYear": "{{CURRENT_YEAR}}",
     "contributors": [
         {
             "name": "N/A",

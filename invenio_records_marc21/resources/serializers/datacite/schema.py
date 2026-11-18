@@ -324,20 +324,31 @@ class Marc21DataCite43Schema(Schema):
 
         return current_app.config.get("MARC21_DATACITE_DEFAULT_PUBLISHER") or "N/A"
 
-    @metadata
-    def get_publication_year(self, obj: Marc21Metadata) -> str:
+    def get_publication_year(self, obj: dict) -> str:
         """Get publication year from edtf date."""
-        publication_dates = obj.get_value(category="008")
-        publication_year: str = publication_dates[7:11] if publication_dates else ""
-        if len(publication_year) == 4 and publication_year.isdigit():
+        year_length = 4
+        marc_008_year_start = 7
+        marc_008_year_end = 11
+
+        default_creation_date = obj.created
+
+        metadata = Marc21Metadata(json=obj["metadata"])
+
+        publication_dates = metadata.get_value(category="008")
+        publication_year: str = (
+            publication_dates[marc_008_year_start:marc_008_year_end]
+            if publication_dates
+            else ""
+        )
+        if len(publication_year) == year_length and publication_year.isdigit():
             return publication_year
 
         # Production, Publication, Distribution, Manufacture, and Copyright Notice
-        ppdmcn = obj.get_value(category="264", ind1="", ind2="1", subf_code="c")
+        ppdmcn = metadata.get_value(category="264", ind1="", ind2="1", subf_code="c")
         if ppdmcn:
             return ppdmcn
 
-        return "N/A"
+        return str(default_creation_date.year)
 
     @metadata
     def get_subject(self, obj: Marc21Metadata) -> list[dict[str, str]] | _Missing:

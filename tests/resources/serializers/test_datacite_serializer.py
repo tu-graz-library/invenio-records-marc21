@@ -3,12 +3,15 @@
 
 """Resources datacite serializer tests."""
 
-from json import load
+from datetime import UTC, datetime
+from json import load, loads
 from pathlib import Path
 
 import decorator
 import pytest
+from jinja2 import Environment, FileSystemLoader
 
+from invenio_records_marc21.records.api import Marc21Record
 from invenio_records_marc21.resources.serializers import Marc21DataCite43JSONSerializer
 
 
@@ -17,11 +20,31 @@ def load_as_json(func: callable) -> any:
 
     def wrapper(*args: dict, **__: dict) -> any:
         parent = Path(__file__).parent
+
+        # load test data
+        with Path(f"{parent}/data/base_record_test.json").open() as fp:
+            record = load(fp)
+
         with Path(f"{parent}/data/{args[2]}.json").open() as fp:
             test = load(fp)
-        with Path(f"{parent}/data/{args[3]}.json").open() as fp:
-            expected = load(fp)
-        return func(args[1], test, expected)
+
+        record["metadata"] = test
+
+        # load expected data
+        env = Environment(
+            loader=FileSystemLoader(f"{parent}/data/"),
+            autoescape=False,  # noqa: S701
+        )
+        template = env.get_template(f"{args[3]}.json")
+
+        replace_metadata = {
+            "CURRENT_YEAR": datetime.now(UTC).year,
+        }
+
+        rendered = template.render(replace_metadata)
+        expected = loads(rendered)
+
+        return func(args[1], record, expected)
 
     return decorator.decorator(wrapper, func)
 
@@ -42,7 +65,7 @@ def load_as_json(func: callable) -> any:
 def test_datacite43_serializer(app, test, expected):
     """Test serializer to DataCite 4.3 JSON."""
     with app.app_context():
+        record = Marc21Record.create(data=test)
         serializer = Marc21DataCite43JSONSerializer()
-        serialized_record = serializer.dump_obj(test)
-
+        serialized_record = serializer.dump_obj(record)
     assert serialized_record == expected

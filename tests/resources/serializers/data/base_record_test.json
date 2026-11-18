@@ -1,0 +1,35 @@
+{
+    "$schema": "local://marc21/marc21-v2.0.0.json",
+    "id": "9jkx5-hx115",
+    "pid": {
+        "pk": 58,
+        "status": "R",
+        "obj_type": "rec",
+        "pid_type": "marcid"
+    },
+    "pids": {
+        "doi": {
+            "identifier": "10.5281/inveniordm.1234",
+            "provider": "datacite",
+            "client": "inveniordm"
+        }
+    },
+    "files": {
+        "enabled": true
+    },
+    "media_files": {
+        "enabled": true
+    },
+    "notes": [
+        "test record"
+    ],
+    "access": {
+        "record": "public",
+        "files": "public",
+        "embargo": {
+            "active": false,
+            "until": null,
+            "reason": null
+        }
+    }
+}
