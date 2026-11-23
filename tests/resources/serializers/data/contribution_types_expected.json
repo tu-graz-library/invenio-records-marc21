@@ -1,0 +1,43 @@
+{
+    "types":
+        {
+            "resourceTypeGeneral": "Other",
+            "resourceType": "Text"
+        },
+    "titles": [
+        {
+            "title": "Persons with different roles"
+        }
+    ],
+    "creators": [
+        {
+            "name": "Williams, Adam"
+        },
+        {
+            "name": "Huxley, Karl"
+        }
+    ],
+    "publisher": "N/A",
+    "publicationYear": "2026",
+    "schemaVersion": "http://datacite.org/schema/kernel-4",
+    "contributors": [
+        {
+            "name": "Williams, Adam",
+            "contributorType": "Editor"
+        },
+        {
+            "name": "Huxley, Karl",
+            "contributorType": "Editor"
+        },
+        {
+            "name": "Simon, James",
+            "contributorType": "Other"
+        }
+    ],
+    "alternateIdentifiers": [
+        {
+            "alternateIdentifier": "10.5281/inveniordm.1234",
+            "alternateIdentifierType": "DOI"
+        }
+    ]
+}

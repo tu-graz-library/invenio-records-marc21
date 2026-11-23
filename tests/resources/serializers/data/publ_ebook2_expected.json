@@ -1,7 +1,7 @@
 {
-    "types": 
+    "types":
         {
-            "resourceTypeGeneral": "Book", 
+            "resourceTypeGeneral": "Book",
             "resourceType": "Text"
         },
     "titles": [
@@ -53,6 +53,25 @@
     "schemaVersion": "http://datacite.org/schema/kernel-4",
     "contributors": [
         {
+            "name": "Meyers, Bernadette",
+            "contributorType": "Other",
+            "nameIdentifiers": [
+                {
+                    "schemeUri": "https://orcid.org/",
+                    "nameIdentifier": "https://orcid.org/0000-9003-1825-0097",
+                    "nameIdentifierScheme": "ORCID"
+                }
+            ],
+            "affiliation": [
+                {
+                    "name": "University of Ipsumville",
+                    "schemeUri": "https://ror.org/",
+                    "affiliationIdentifier": "https://ror.org/92mhbdp94",
+                    "affiliationIdentifierScheme": "ROR"
+                }
+            ]
+        },
+        {
             "name": "Simon, James",
             "contributorType": "Other"
         }
@@ -60,19 +79,19 @@
     "language": "eng",
     "alternateIdentifiers": [
         {
-            "alternateIdentifier": "10.5281/inveniordm.1234", 
+            "alternateIdentifier": "10.5281/inveniordm.1234",
             "alternateIdentifierType": "DOI"
         },
         {
-            "alternateIdentifier": "878-3-16-148410-0", 
+            "alternateIdentifier": "878-3-16-148410-0",
             "alternateIdentifierType": "ISBN"
         },
         {
-            "alternateIdentifier": "9049-3630", 
+            "alternateIdentifier": "9049-3630",
             "alternateIdentifierType": "ISSN"
         },
         {
-            "alternateIdentifier": "https://doi.org/10.5281/inveniordm.1234", 
+            "alternateIdentifier": "https://doi.org/10.5281/inveniordm.1234",
             "alternateIdentifierType": "DOI"
         }
     ],
