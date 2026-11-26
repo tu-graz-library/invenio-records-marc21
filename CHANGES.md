@@ -5,6 +5,11 @@ SPDX-License-Identifier: MIT
 
 # Changes
 
+## Version v0.37.0 (released 2026-11-26)
+
+- feat(datacite): add related_identifier mapping
+- fix(deserializer): preserve repeated subfields
+
 ## Version v0.36.0 (released 2026-11-16)
 
 - feat(facets): subfacet for resource_type
