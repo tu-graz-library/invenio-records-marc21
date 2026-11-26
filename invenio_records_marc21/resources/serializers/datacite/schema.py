@@ -327,11 +327,22 @@ class Marc21DataCite43Schema(Schema):
 
     def get_related_identifiers(
         self,
-        _obj: Marc21Metadata,
+        obj: Marc21Metadata,
     ) -> list[dict[str, str]] | missing:
         """Get related identifiers."""
-        # not implemented yet
-        # make use of self._get_related_identifiers_by_field
+        related_identifier = obj.get_field("020...")
+
+        if related_identifier:
+            isbn = related_identifier.get("9") or related_identifier.get("a")
+
+            return [
+                {
+                    "relationType": "IsPartOf",
+                    "relatedIdentifier": isbn,
+                    "relatedIdentifierType": "ISBN",
+                },
+            ]
+
         return missing
 
     def get_rights_list(self, obj: Marc21Metadata) -> list[dict[str, str]] | missing:
