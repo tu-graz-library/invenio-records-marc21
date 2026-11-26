@@ -17,7 +17,7 @@ from .services import (
     create_record,
 )
 
-__version__ = "0.36.0"
+__version__ = "0.37.0"
 
 __all__ = (
     "DuplicateRecordError",
