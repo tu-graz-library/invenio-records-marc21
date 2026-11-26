@@ -49,6 +49,13 @@
         }
     ],
     "publisher": "University of Ipsumville Publishing",
+    "relatedIdentifiers": [
+        {
+            "relatedIdentifier": "878-3-16-148410-0",
+            "relatedIdentifierType": "ISBN",
+            "relationType": "IsPartOf"
+        }
+    ],
     "publicationYear": "2026",
     "schemaVersion": "http://datacite.org/schema/kernel-4",
     "contributors": [
