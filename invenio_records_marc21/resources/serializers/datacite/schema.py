@@ -87,7 +87,7 @@ class Marc21DataCite43Schema(Schema):
             }
 
             # ORCID
-            contributor_id = entry.get("2")
+            contributor_id = entry.get("1")
             if contributor_id:
                 contributor["nameIdentifiers"] = [
                     {
@@ -101,16 +101,10 @@ class Marc21DataCite43Schema(Schema):
             affiliation = {}
 
             contributor_affl = entry.get("u")
-            contributor_affl_id = entry.get("1")
 
             if contributor_affl:
                 affiliation["name"] = contributor_affl
-            if contributor_affl_id:
-                affiliation["affiliationIdentifier"] = (
-                    f"https://ror.org/{contributor_affl_id}"
-                )
-                affiliation["affiliationIdentifierScheme"] = "ROR"
-                affiliation["schemeUri"] = "https://ror.org/"
+
             if affiliation:
                 contributor["affiliation"] = [affiliation]
 

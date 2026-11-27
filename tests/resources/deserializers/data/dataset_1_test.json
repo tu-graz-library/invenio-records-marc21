@@ -28,7 +28,7 @@
             "id": "100",
             "ind1": "1",
             "ind2": "_",
-            "subfield": "$$1 92mhbdp94 $$2 0000-9001-1825-0097 $$4 aut $$4 edt $$a Williams, Adam $$u University of Ipsumville"
+            "subfield": "$$1 0000-9001-1825-0097 $$4 aut $$4 edt $$a Williams, Adam $$u University of Ipsumville"
         },
         {
             "id": "245",
@@ -76,19 +76,19 @@
             "id": "700",
             "ind1": "1",
             "ind2": "_",
-            "subfield": "$$1 92mhbdp94 $$2 0000-9002-1825-0097 $$4 aut $$a Huxley, Karl $$u University of Ipsumville"
+            "subfield": "$$1 0000-9002-1825-0097 $$4 aut $$a Huxley, Karl $$u University of Ipsumville"
         },
         {
             "id": "700",
             "ind1": "1",
             "ind2": "_",
-            "subfield": "$$1 92mhbdp94 $$2 0000-9003-1825-0097 $$4 edt $$a Meyers, Bernadette $$u University of Ipsumville"
+            "subfield": "$$1 0000-9003-1825-0097 $$4 edt $$a Meyers, Bernadette $$u University of Ipsumville"
         },
         {
             "id": "700",
             "ind1": "1",
             "ind2": "_",
-            "subfield": "$$1 92mhbdp94 $$2 0000-9004-1825-0097 $$a Simon, James $$u University of Ipsumville"
+            "subfield": "$$1 0000-9004-1825-0097 $$a Simon, James $$u University of Ipsumville"
         },
         {
             "id": "970",

@@ -1,7 +1,7 @@
 {
-    "types": 
+    "types":
         {
-            "resourceTypeGeneral": "ConferencePaper", 
+            "resourceTypeGeneral": "ConferencePaper",
             "resourceType": "Text"
         },
     "titles": [
@@ -25,10 +25,7 @@
             ],
             "affiliation": [
                 {
-                    "name": "University of Ipsumville",
-                    "schemeUri": "https://ror.org/",
-                    "affiliationIdentifier": "https://ror.org/92mhbdp94",
-                    "affiliationIdentifierScheme": "ROR"
+                    "name": "University of Ipsumville"
                 }
             ]
         },
@@ -43,10 +40,7 @@
             ],
             "affiliation": [
                 {
-                    "name": "University of Ipsumville",
-                    "schemeUri": "https://ror.org/",
-                    "affiliationIdentifier": "https://ror.org/92mhbdp94",
-                    "affiliationIdentifierScheme": "ROR"
+                    "name": "University of Ipsumville"
                 }
             ]
         }
@@ -75,10 +69,7 @@
             ],
             "affiliation": [
                 {
-                    "name": "University of Ipsumville",
-                    "schemeUri": "https://ror.org/",
-                    "affiliationIdentifier": "https://ror.org/92mhbdp94",
-                    "affiliationIdentifierScheme": "ROR"
+                    "name": "University of Ipsumville"
                 }
             ]
         }
@@ -86,11 +77,11 @@
     "language": "eng",
     "alternateIdentifiers": [
         {
-            "alternateIdentifier": "10.5281/inveniordm.1234", 
+            "alternateIdentifier": "10.5281/inveniordm.1234",
             "alternateIdentifierType": "DOI"
         },
         {
-            "alternateIdentifier": "https://doi.org/10.5281/inveniordm.1234", 
+            "alternateIdentifier": "https://doi.org/10.5281/inveniordm.1234",
             "alternateIdentifierType": "DOI"
         }
     ],

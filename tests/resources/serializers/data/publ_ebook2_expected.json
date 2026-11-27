@@ -1,7 +1,7 @@
 {
-    "types": 
+    "types":
         {
-            "resourceTypeGeneral": "Book", 
+            "resourceTypeGeneral": "Book",
             "resourceType": "Text"
         },
     "titles": [
@@ -40,10 +40,7 @@
             ],
             "affiliation": [
                 {
-                    "name": "University of Ipsumville",
-                    "schemeUri": "https://ror.org/",
-                    "affiliationIdentifier": "https://ror.org/92mhbdp94",
-                    "affiliationIdentifierScheme": "ROR"
+                    "name": "University of Ipsumville"
                 }
             ]
         }
@@ -67,19 +64,19 @@
     "language": "eng",
     "alternateIdentifiers": [
         {
-            "alternateIdentifier": "10.5281/inveniordm.1234", 
+            "alternateIdentifier": "10.5281/inveniordm.1234",
             "alternateIdentifierType": "DOI"
         },
         {
-            "alternateIdentifier": "878-3-16-148410-0", 
+            "alternateIdentifier": "878-3-16-148410-0",
             "alternateIdentifierType": "ISBN"
         },
         {
-            "alternateIdentifier": "9049-3630", 
+            "alternateIdentifier": "9049-3630",
             "alternateIdentifierType": "ISSN"
         },
         {
-            "alternateIdentifier": "https://doi.org/10.5281/inveniordm.1234", 
+            "alternateIdentifier": "https://doi.org/10.5281/inveniordm.1234",
             "alternateIdentifierType": "DOI"
         }
     ],
