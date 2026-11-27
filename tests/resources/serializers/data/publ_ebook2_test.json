@@ -19,8 +19,8 @@
     "access": {
         "files": "restricted",
         "embargo": {
-            "until": null, 
-            "active": false, 
+            "until": null,
+            "active": false,
             "reason": null
         },
         "metadata": "restricted",
@@ -74,7 +74,7 @@
                     "ind1": "1",
                     "ind2": "_",
                     "subfields": {
-                        "2": ["0000-9001-1825-0097"],
+                        "1": ["0000-9001-1825-0097"],
                         "a": ["Williams, Adam"],
                         "u": ["University of Ipsumville"]
                     }
@@ -137,8 +137,7 @@
                     "ind1": "1",
                     "ind2": "_",
                     "subfields": {
-                        "1": ["92mhbdp94"],
-                        "2": ["0000-9002-1825-0097"],
+                        "1": ["0000-9002-1825-0097"],
                         "4": ["aut"],
                         "a": ["Huxley, Karl"],
                         "u": ["University of Ipsumville"]
@@ -148,8 +147,7 @@
                     "ind1": "1",
                     "ind2": "_",
                     "subfields": {
-                        "1": ["92mhbdp94"],
-                        "2": ["0000-9003-1825-0097"],
+                        "1": ["0000-9003-1825-0097"],
                         "4": ["any"],
                         "a": ["Meyers, Bernadette"],
                         "u": ["University of Ipsumville"]
@@ -175,8 +173,8 @@
         }
     },
     "versions": {
-        "index": 1, 
-        "is_latest": true, 
+        "index": 1,
+        "is_latest": true,
         "is_latest_draft": true
     }
 }
